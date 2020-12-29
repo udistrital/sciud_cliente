@@ -1,0 +1,357 @@
+[
+	{
+		"id": 1,
+		"researcher": {
+			"id": 31,
+			"created_at": "2020-10-28T18:25:59.858Z",
+			"updated_at": "2020-10-28T18:25:59.858Z",
+			"orcid_id": "12a213",
+			"scientific_signature": "Castro, E.",
+			"identification_number": "79602309",
+			"oas_researcher_id": "79555555",
+			"mobile_number": "311-118-0860",
+			"address": "16193 Schuppe Port"
+		},
+		"role_id": 1,
+		"role_name": "Director",
+		"gm_state_id": 1,
+		"gm_state_name": "Activo",
+		"gm_periods": [
+			{
+				"id": 1,
+				"initial_date": "2020-10-28",
+				"final_date": null,
+				"role_id": 1,
+				"roleName": "Director"
+			}
+		],
+		"oas_details": {
+			"Id": 418,
+			"TipoDocumentoId": {
+				"Id": 3,
+				"Nombre": "CÉDULA DE CIUDADANÍA",
+				"Descripcion": "CÉDULA DE CIUDADANÍA",
+				"CodigoAbreviacion": "CC",
+				"Activo": true,
+				"NumeroOrden": 0,
+				"FechaCreacion": "2019-11-07 20:38:40.920912 +0000 +0000",
+				"FechaModificacion": "2019-11-07 20:38:40.920912 +0000 +0000"
+			},
+			"TerceroId": {
+				"Id": 9451,
+				"NombreCompleto": "Diego Alfonso Vargas Villegas",
+				"PrimerNombre": "Diego",
+				"SegundoNombre": "Alfonso",
+				"PrimerApellido": "Vargas",
+				"SegundoApellido": "Villegas",
+				"LugarOrigen": 0,
+				"FechaNacimiento": "2000-08-10T12:00:00Z",
+				"Activo": true,
+				"TipoContribuyenteId": {
+					"Id": 1,
+					"Nombre": "PERSONA NATURAL",
+					"Descripcion": "",
+					"CodigoAbreviacion": "P_NATURAL",
+					"Activo": true,
+					"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+					"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+				},
+				"FechaCreacion": "2020-10-22 07:07:25.782754 +0000 +0000",
+				"FechaModificacion": "2020-10-22 07:07:25.782841 +0000 +0000",
+				"UsuarioWSO2": ""
+			},
+			"Numero": "79602309",
+			"DigitoVerificacion": 0,
+			"CiudadExpedicion": 0,
+			"FechaExpedicion": null,
+			"Activo": true,
+			"DocumentoSoporte": 0,
+			"FechaCreacion": "2020-10-22 07:08:14.421244 +0000 +0000",
+			"FechaModificacion": "2020-10-22 07:08:14.421338 +0000 +0000"
+		}
+	},
+	{
+		"id": 2,
+		"researcher": {
+			"id": 2,
+			"created_at": "2020-10-26T21:31:17.723Z",
+			"updated_at": "2020-10-26T21:31:17.723Z",
+			"orcid_id": "fl6tfth16r",
+			"scientific_signature": "Blanda, GJZ",
+			"identification_number": "1010166438",
+			"oas_researcher_id": "2",
+			"mobile_number": "+678 699.586.7371",
+			"address": "6477 Schuppe Glens, West Richberg, MA 77392-2618"
+		},
+		"role_id": 2,
+		"role_name": "Estudiante",
+		"gm_state_id": 1,
+		"gm_state_name": "Activo",
+		"gm_periods": [
+			{
+				"id": 2,
+				"initial_date": "2020-10-28",
+				"final_date": null,
+				"role_id": 2,
+				"roleName": "Estudiante"
+			}
+		],
+		"oas_details": {
+			"Id": 632,
+			"TipoDocumentoId": {
+				"Id": 3,
+				"Nombre": "CÉDULA DE CIUDADANÍA",
+				"Descripcion": "CÉDULA DE CIUDADANÍA",
+				"CodigoAbreviacion": "CC",
+				"Activo": true,
+				"NumeroOrden": 0,
+				"FechaCreacion": "2019-11-07 20:38:40.920912 +0000 +0000",
+				"FechaModificacion": "2019-11-07 20:38:40.920912 +0000 +0000"
+			},
+			"TerceroId": {
+				"Id": 9666,
+				"NombreCompleto": "Ivan Dario Rivera Gallego",
+				"PrimerNombre": "Ivan",
+				"SegundoNombre": "Dario",
+				"PrimerApellido": "Rivera",
+				"SegundoApellido": "Gallego",
+				"LugarOrigen": 0,
+				"FechaNacimiento": "1986-08-19T05:00:00Z",
+				"Activo": true,
+				"TipoContribuyenteId": {
+					"Id": 1,
+					"Nombre": "PERSONA NATURAL",
+					"Descripcion": "",
+					"CodigoAbreviacion": "P_NATURAL",
+					"Activo": true,
+					"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+					"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+				},
+				"FechaCreacion": "2020-10-22 08:48:36.818313 +0000 +0000",
+				"FechaModificacion": "2020-10-22 08:48:36.818392 +0000 +0000",
+				"UsuarioWSO2": ""
+			},
+			"Numero": "1010166438",
+			"DigitoVerificacion": 0,
+			"CiudadExpedicion": 0,
+			"FechaExpedicion": null,
+			"Activo": true,
+			"DocumentoSoporte": 0,
+			"FechaCreacion": "2020-10-22 08:48:45.731659 +0000 +0000",
+			"FechaModificacion": "2020-10-22 08:48:45.731736 +0000 +0000"
+		}
+	},
+	{
+		"id": 3,
+		"researcher": {
+			"id": 5,
+			"created_at": "2020-10-26T21:31:17.870Z",
+			"updated_at": "2020-10-26T21:31:17.870Z",
+			"orcid_id": "mzh5xyu7zg",
+			"scientific_signature": "Swift, GOZ",
+			"identification_number": "1013635157",
+			"oas_researcher_id": "15",
+			"mobile_number": "+240 471-390-4888",
+			"address": "Apt. 982 75267 Veum Roads, Lemkeport, KY 02393-2830"
+		},
+		"role_id": 2,
+		"role_name": "Estudiante",
+		"gm_state_id": 1,
+		"gm_state_name": "Activo",
+		"gm_periods": [
+			{
+				"id": 3,
+				"initial_date": "2020-10-28",
+				"final_date": null,
+				"role_id": 2,
+				"roleName": "Estudiante"
+			}
+		],
+		"oas_details": {
+			"Id": 557,
+			"TipoDocumentoId": {
+				"Id": 3,
+				"Nombre": "CÉDULA DE CIUDADANÍA",
+				"Descripcion": "CÉDULA DE CIUDADANÍA",
+				"CodigoAbreviacion": "CC",
+				"Activo": true,
+				"NumeroOrden": 0,
+				"FechaCreacion": "2019-11-07 20:38:40.920912 +0000 +0000",
+				"FechaModificacion": "2019-11-07 20:38:40.920912 +0000 +0000"
+			},
+			"TerceroId": {
+				"Id": 9591,
+				"NombreCompleto": "Oscar Alonso Beltran Castro",
+				"PrimerNombre": "Oscar",
+				"SegundoNombre": "Alonso",
+				"PrimerApellido": "Beltran",
+				"SegundoApellido": "Castro",
+				"LugarOrigen": 0,
+				"FechaNacimiento": "1992-09-19T04:00:00Z",
+				"Activo": true,
+				"TipoContribuyenteId": {
+					"Id": 1,
+					"Nombre": "PERSONA NATURAL",
+					"Descripcion": "",
+					"CodigoAbreviacion": "P_NATURAL",
+					"Activo": true,
+					"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+					"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+				},
+				"FechaCreacion": "2020-10-22 08:48:35.548367 +0000 +0000",
+				"FechaModificacion": "2020-10-22 08:48:35.54843 +0000 +0000",
+				"UsuarioWSO2": ""
+			},
+			"Numero": "1013635157",
+			"DigitoVerificacion": 0,
+			"CiudadExpedicion": 0,
+			"FechaExpedicion": null,
+			"Activo": true,
+			"DocumentoSoporte": 0,
+			"FechaCreacion": "2020-10-22 08:48:44.341158 +0000 +0000",
+			"FechaModificacion": "2020-10-22 08:48:44.34121 +0000 +0000"
+		}
+	},
+	{
+		"id": 4,
+		"researcher": {
+			"id": 6,
+			"created_at": "2020-10-26T21:31:17.912Z",
+			"updated_at": "2020-10-26T21:31:17.912Z",
+			"orcid_id": "ei7pxa4oxe",
+			"scientific_signature": "Beier, VQC",
+			"identification_number": "1013664602",
+			"oas_researcher_id": "20",
+			"mobile_number": "+501 332-566-0349",
+			"address": "330 Frami Orchard, North Ken, FL 80935"
+		},
+		"role_id": 2,
+		"role_name": "Estudiante",
+		"gm_state_id": 1,
+		"gm_state_name": "Activo",
+		"gm_periods": [
+			{
+				"id": 4,
+				"initial_date": "2020-10-28",
+				"final_date": null,
+				"role_id": 2,
+				"roleName": "Estudiante"
+			}
+		],
+		"oas_details": {
+			"Id": 663,
+			"TipoDocumentoId": {
+				"Id": 3,
+				"Nombre": "CÉDULA DE CIUDADANÍA",
+				"Descripcion": "CÉDULA DE CIUDADANÍA",
+				"CodigoAbreviacion": "CC",
+				"Activo": true,
+				"NumeroOrden": 0,
+				"FechaCreacion": "2019-11-07 20:38:40.920912 +0000 +0000",
+				"FechaModificacion": "2019-11-07 20:38:40.920912 +0000 +0000"
+			},
+			"TerceroId": {
+				"Id": 9697,
+				"NombreCompleto": "Reynaldo Andres Castellar Contreras",
+				"PrimerNombre": "Reynaldo",
+				"SegundoNombre": "Andres",
+				"PrimerApellido": "Castellar",
+				"SegundoApellido": "Contreras",
+				"LugarOrigen": 0,
+				"FechaNacimiento": "1996-01-25T05:00:00Z",
+				"Activo": true,
+				"TipoContribuyenteId": {
+					"Id": 1,
+					"Nombre": "PERSONA NATURAL",
+					"Descripcion": "",
+					"CodigoAbreviacion": "P_NATURAL",
+					"Activo": true,
+					"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+					"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+				},
+				"FechaCreacion": "2020-10-22 08:48:37.307002 +0000 +0000",
+				"FechaModificacion": "2020-10-22 08:48:37.307068 +0000 +0000",
+				"UsuarioWSO2": ""
+			},
+			"Numero": "1013664602",
+			"DigitoVerificacion": 0,
+			"CiudadExpedicion": 0,
+			"FechaExpedicion": null,
+			"Activo": true,
+			"DocumentoSoporte": 0,
+			"FechaCreacion": "2020-10-22 08:48:46.252064 +0000 +0000",
+			"FechaModificacion": "2020-10-22 08:48:46.252111 +0000 +0000"
+		}
+	},
+	{
+		"id": 5,
+		"researcher": {
+			"id": 11,
+			"created_at": "2020-10-26T21:31:18.115Z",
+			"updated_at": "2020-10-26T21:31:18.115Z",
+			"orcid_id": "mb9a739gms",
+			"scientific_signature": "Fay, LEG",
+			"identification_number": "1015398879",
+			"oas_researcher_id": "13",
+			"mobile_number": "+27 464.758.7023",
+			"address": "88366 Lorinda Springs, Gabrielview, SD 84867"
+		},
+		"role_id": 2,
+		"role_name": "Estudiante",
+		"gm_state_id": 1,
+		"gm_state_name": "Activo",
+		"gm_periods": [
+			{
+				"id": 5,
+				"initial_date": "2020-10-28",
+				"final_date": null,
+				"role_id": 2,
+				"roleName": "Estudiante"
+			}
+		],
+		"oas_details": {
+			"Id": 579,
+			"TipoDocumentoId": {
+				"Id": 3,
+				"Nombre": "CÉDULA DE CIUDADANÍA",
+				"Descripcion": "CÉDULA DE CIUDADANÍA",
+				"CodigoAbreviacion": "CC",
+				"Activo": true,
+				"NumeroOrden": 0,
+				"FechaCreacion": "2019-11-07 20:38:40.920912 +0000 +0000",
+				"FechaModificacion": "2019-11-07 20:38:40.920912 +0000 +0000"
+			},
+			"TerceroId": {
+				"Id": 9613,
+				"NombreCompleto": "Nestor Fernando Alvarez Gomez",
+				"PrimerNombre": "Nestor",
+				"SegundoNombre": "Fernando",
+				"PrimerApellido": "Alvarez",
+				"SegundoApellido": "Gomez",
+				"LugarOrigen": 0,
+				"FechaNacimiento": "1987-03-31T05:00:00Z",
+				"Activo": true,
+				"TipoContribuyenteId": {
+					"Id": 1,
+					"Nombre": "PERSONA NATURAL",
+					"Descripcion": "",
+					"CodigoAbreviacion": "P_NATURAL",
+					"Activo": true,
+					"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+					"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+				},
+				"FechaCreacion": "2020-10-22 08:48:35.925244 +0000 +0000",
+				"FechaModificacion": "2020-10-22 08:48:35.925307 +0000 +0000",
+				"UsuarioWSO2": ""
+			},
+			"Numero": "1015398879",
+			"DigitoVerificacion": 0,
+			"CiudadExpedicion": 0,
+			"FechaExpedicion": null,
+			"Activo": true,
+			"DocumentoSoporte": 0,
+			"FechaCreacion": "2020-10-22 08:48:44.743506 +0000 +0000",
+			"FechaModificacion": "2020-10-22 08:48:44.743671 +0000 +0000"
+		}
+	}
+]

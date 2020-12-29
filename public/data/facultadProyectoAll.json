@@ -1,0 +1,732 @@
+{
+    "Body": [
+        {
+            "Id": 8,
+            "Nombre": "VICERRECTORIA ACADEMICA",
+            "Padre": 0,
+            "Hija": 0,
+            "Opciones": [
+                {
+                    "Id": 67,
+                    "Nombre": "INSTITUTO DE LENGUAS - ILUD",
+                    "Padre": 8,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 42,
+                    "Nombre": "CATEDRA UNESCO EN DESARROLLO DEL NINO",
+                    "Padre": 8,
+                    "Hija": 0,
+                    "Opciones": null
+                }
+            ]
+        },
+        {
+            "Id": 14,
+            "Nombre": "FACULTAD DE INGENIERIA",
+            "Padre": 0,
+            "Hija": 0,
+            "Opciones": [
+                {
+                    "Id": 63,
+                    "Nombre": "ESPECIALIZACION EN TELEINFORMATICA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 74,
+                    "Nombre": "INGENIERIA ELECTRONICA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 22,
+                    "Nombre": "MAESTRIA EN INGENIERIA INDUSTRIAL",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 70,
+                    "Nombre": "INGENIERIA CATASTRAL Y GEODESIA - ICG",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 16,
+                    "Nombre": "ESPECIALIZACION EN INFORMATICA Y AUTOMATICA INDUSTRIAL",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 204,
+                    "Nombre": "MAESTRIA EN INGENIERIA CON ENFASIS EN INGENIERIA ELECTRONICA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 34,
+                    "Nombre": "ESPECIALIZACION EN HIGIENE, SEGURIDAD Y SALUD EN EL TRABAJO",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 19,
+                    "Nombre": "ESPECIALIZACION EN PROYECTOS INFORMATICOS",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 61,
+                    "Nombre": "ESPECIALIZACION EN SISTEMAS DE INFORMACION GEOGRAFICA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 73,
+                    "Nombre": "INGENIERIA ELECTRICA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 62,
+                    "Nombre": "ESPECIALIZACION EN TELECOMUNICACIONES MOVILES",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 150,
+                    "Nombre": "DOCTORADO EN INGENIERIA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 21,
+                    "Nombre": "MAESTRIA EN CIENCIAS DE LA INFORMACION Y LAS COMUNICACIONES",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 72,
+                    "Nombre": "INGENIERIA DE SISTEMAS",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 25,
+                    "Nombre": "ESPECIALIZACION EN BIOINGENIERIA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 79,
+                    "Nombre": "INGENIERIA INDUSTRIAL",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 18,
+                    "Nombre": "ESPECIALIZACION EN INGENIERIA DE SOFTWARE",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 51,
+                    "Nombre": "ESPECIALIZACION EN AVALUOS ",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 57,
+                    "Nombre": "ESPECIALIZACION EN GESTION DE PROYECTOS DE INGENIERIA",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 166,
+                    "Nombre": "MAESTRIA EN TELECOMUNICACIONES MOVILES",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 171,
+                    "Nombre": "PROYECTO PLANESTIC-UD",
+                    "Padre": 14,
+                    "Hija": 0,
+                    "Opciones": null
+                }
+            ]
+        },
+        {
+            "Id": 17,
+            "Nombre": "FACULTAD DE CIENCIAS Y EDUCACION",
+            "Padre": 0,
+            "Hija": 0,
+            "Opciones": [
+                {
+                    "Id": 26,
+                    "Nombre": "LICENCIATURA EN BIOLOGIA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 206,
+                    "Nombre": "ARCHIVISTICA Y GESTION DE LA INFORMACION DIGITAL",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 91,
+                    "Nombre": "MATEMATICAS",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 27,
+                    "Nombre": "LICENCIATURA EN EDUCACION BASICA CON ENFASIS EN CIENCIAS SOCIALES",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 141,
+                    "Nombre": "MAESTRIA EN PEDAGOGIA DE LA LENGUA MATERNA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 207,
+                    "Nombre": "LICENCIATURA EN EDUCACION INFANTIL",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 155,
+                    "Nombre": "PROYECTO ACADEMICO TRANSVERSAL DE FORMACION DE PROFESORES  PARA POBLACIONES CON NECESIDADES EDUCATIVAS ESPECIALES - ",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 49,
+                    "Nombre": "ESPECIALIZACION EN EDUCACION EN TECNOLOGIA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 58,
+                    "Nombre": "ESPECIALIZACION EN INFANCIA, CULTURA Y DESARROLLO",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 90,
+                    "Nombre": "MAESTRIA EN LINGUISTICA APLICADA A LA ENSENANZA DEL INGLES",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 127,
+                    "Nombre": "PROYECTO ACADEMICO DE INVESTIGACION Y EXTENSION DE PEDAGOGIA - PAIEP",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 31,
+                    "Nombre": "LICENCIATURA EN QUIMICA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 59,
+                    "Nombre": "ESPECIALIZACION EN LENGUAJE Y PEDAGOGIA DE PROYECTOS",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 151,
+                    "Nombre": "MAESTRIA EN EDUCACION",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 170,
+                    "Nombre": "DOCTORADO EN ESTUDIOS SOCIALES",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 55,
+                    "Nombre": "ESPECIALIZACION EN EDUCACION Y GESTION AMBIENTAL",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 125,
+                    "Nombre": "DOCTORADO INTERINSTITUCIONAL EN EDUCACION",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 142,
+                    "Nombre": "MAESTRIA EN COMUNICACION-EDUCACION",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 30,
+                    "Nombre": "LICENCIATURA EN EDUCACION BASICA CON ENFASIS EN MATEMATICAS",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 52,
+                    "Nombre": "ESPECIALIZACION EN DESARROLLO HUMANO CON ENFASIS EN  PROCESOS AFECTIVOS Y CREATIVIDAD",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 64,
+                    "Nombre": "ESPECIALIZACION EN GERENCIA DE PROYECTOS  EDUCATIVOS INSTITUCIONALES",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 28,
+                    "Nombre": "LICENCIATURA EN EDUCACION BASICA CON ENFASIS EN HUMANIDADES Y LENGUA CASTELLANA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 159,
+                    "Nombre": "MAESTRIA EN EDUCACION EN TECNOLOGIA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 205,
+                    "Nombre": "COMUNICACION SOCIAL Y PERIODISMO",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 87,
+                    "Nombre": "LICENCIATURA EN EDUCACION BASICA CON ENFASIS EN EDUCACION ARTISTICA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 89,
+                    "Nombre": "MAESTRIA EN INVESTIGACION SOCIAL INTERDISCIPLINARIA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 24,
+                    "Nombre": "LICENCIATURA EN FISICA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 54,
+                    "Nombre": "ESPECIALIZACION EN EDUCACION MATEMATICA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 88,
+                    "Nombre": "LICENCIATURA EN PEDAGOGIA INFANTIL",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 29,
+                    "Nombre": "LICENCIATURA EN EDUCACION BASICA CON ENFASIS EN INGLES",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 60,
+                    "Nombre": "ESPECIALIZACION EN PEDAGOGIA DE LA COMUNICACION Y MEDIOS INTERACTIVOS (NO SE OFERTA)",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 169,
+                    "Nombre": "MAESTRIA EN INFANCIA Y CULTURA",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 174,
+                    "Nombre": "MAESTRIA EN EDUCACION PARA LA PAZ",
+                    "Padre": 17,
+                    "Hija": 0,
+                    "Opciones": null
+                }
+            ]
+        },
+        {
+            "Id": 35,
+            "Nombre": "FACULTAD DE ARTES -  ASAB",
+            "Padre": 0,
+            "Hija": 0,
+            "Opciones": [
+                {
+                    "Id": 40,
+                    "Nombre": "ARTES PLASTICAS Y VISUALES",
+                    "Padre": 35,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 146,
+                    "Nombre": "MAESTRIA EN ESTUDIOS ARTISTICOS",
+                    "Padre": 35,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 147,
+                    "Nombre": "ARTE DANZARIO",
+                    "Padre": 35,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 39,
+                    "Nombre": "ARTES MUSICALES",
+                    "Padre": 35,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 38,
+                    "Nombre": "ARTES ESCENICAS",
+                    "Padre": 35,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 208,
+                    "Nombre": "DOCTORADO EN ESTUDIOS ARTISTICOS",
+                    "Padre": 35,
+                    "Hija": 0,
+                    "Opciones": null
+                }
+            ]
+        },
+        {
+            "Id": 65,
+            "Nombre": "FACULTAD DE MEDIO AMBIENTE",
+            "Padre": 0,
+            "Hija": 0,
+            "Opciones": [
+                {
+                    "Id": 56,
+                    "Nombre": "ESPECIALIZACION EN GERENCIA DE RECURSOS NATURALES",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 113,
+                    "Nombre": "TECNOLOGIA EN TOPOGRAFIA",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 23,
+                    "Nombre": "INGENIERIA TOPOGRAFICA",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 112,
+                    "Nombre": "TECNOLOGIA EN SANEAMIENTO AMBIENTAL",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 121,
+                    "Nombre": "ADMINISTRACION AMBIENTAL",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 69,
+                    "Nombre": "INGENIERIA AMBIENTAL",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 111,
+                    "Nombre": "TECNOLOGIA EN GESTION AMBIENTAL Y SERVICIOS PUBLICOS",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 37,
+                    "Nombre": "ADMINISTRACION DEPORTIVA",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 50,
+                    "Nombre": "ESPECIALIZACION EN AMBIENTE Y DESARROLLO LOCAL",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 53,
+                    "Nombre": "ESPECIALIZACION EN DISENO DE VIAS URBANAS TRANSITO Y TRANSPORTE",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 78,
+                    "Nombre": "INGENIERIA FORESTAL",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 140,
+                    "Nombre": "MAESTRIA EN DESARROLLO SUSTENTABLE Y GESTION AMBIENTAL",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 145,
+                    "Nombre": "MAESTRIA EN MANEJO, USO Y CONSERVACION DEL BOSQUE",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 149,
+                    "Nombre": "INGENIERIA SANITARIA",
+                    "Padre": 65,
+                    "Hija": 0,
+                    "Opciones": null
+                }
+            ]
+        },
+        {
+            "Id": 66,
+            "Nombre": "FACULTAD TECNOLOGICA",
+            "Padre": 0,
+            "Hija": 0,
+            "Opciones": [
+                {
+                    "Id": 201,
+                    "Nombre": "INGENIERIA CIVIL ARTICULADO POR CICLOS PROPEDEUTICOS CON TECNOLOGIA EN CONSTRUCCIONES CIVILES",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 116,
+                    "Nombre": "TECNOLOGIA EN SISTEMATIZACION DE DATOS (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 115,
+                    "Nombre": "TECNOLOGIA MECANICA (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 71,
+                    "Nombre": "INGENIERIA DE PRODUCCION (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 75,
+                    "Nombre": "INGENIERIA EN CONTROL",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 76,
+                    "Nombre": "INGENIERIA EN DISTRIBUCION Y REDES ELECTRICAS",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 114,
+                    "Nombre": "TECNOLOGIA  INDUSTRIAL (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 13,
+                    "Nombre": "INGENIERIA EN TELEMATICA",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 77,
+                    "Nombre": "INGENIERIA EN TELECOMUNICACIONES",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 199,
+                    "Nombre": "INGENIERIA MECANICA ARTICULADO POR CICLOS PROPEDEUTICOS CON TECNOLOGIA EN MECANICA INDUSTRIAL",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 110,
+                    "Nombre": "TECNOLOGIA EN SISTEMAS ELECTRICOS DE MEDIA Y BAJA TENSION",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 202,
+                    "Nombre": "INGENIERIA ELECTRICA ARTICULADO POR CICLOS PROPEDEUTICOS CON TECNOLOGIA EN SISTEMAS ELECTRICOS DE MEDIA Y BAJA TENSION",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 203,
+                    "Nombre": "INGENIERIA EN CONTROL E INGENIERIA EN TELECOMUNICACIONES ARTICULADOS POR CICLOS PROPEDEUTICOS EN TECNOLOGIA EN ELECTRONICA",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 173,
+                    "Nombre": "MAESTRIA EN INGENIERIA CIVIL",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 200,
+                    "Nombre": "INGENIERIA EN TELEMATICA ARTICULADO POR CICLOS PROPEDEUTICOS CON TECNOLOGIA EN SISTEMATIZACION DE DATOS ",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 80,
+                    "Nombre": "INGENIERIA MECANICA",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 109,
+                    "Nombre": "TECNOLOGIA EN CONSTRUCCIONES CIVILES (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 139,
+                    "Nombre": "INGENIERIA ELECTRICA (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 198,
+                    "Nombre": "INGENIERIA DE PRODUCCION ARTICULADO POR CICLOS PROPEDEUTICOS CON TECNOLOGIA EN GESTION DE LA PRODUCCION INDUSTRIAL",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 68,
+                    "Nombre": "INGENIERIA CIVIL (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                },
+                {
+                    "Id": 108,
+                    "Nombre": "TECNOLOGIA ELECTRONICA (POR CICLOS PROPEDEUTICOS)",
+                    "Padre": 66,
+                    "Hija": 0,
+                    "Opciones": null
+                }
+            ]
+        }
+    ],
+    "Type": "success"
+}

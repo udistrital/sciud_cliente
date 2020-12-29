@@ -1,0 +1,46 @@
+{
+	"impersonate": true,
+	"env": {
+		"development": {
+			"name": "dev",
+			"url": "http://localhost:4500",
+			"urlDocs": "http://antares:3000"
+		},
+		"production": {
+			"name": "prod",
+			"url": "https://support.nemedi.com/udistrital/siciud-v2",
+			"urlDocs": "https://siciud-v2-api.nemedi.com"
+		}
+	},
+	"api": {
+		"rest": {
+			"token_name": "token_local",
+			"url1": "https://digital.nemedi.com/siciud-v2-back/api/v1",
+			"url": "https://siciud-v2-api.nemedi.com/api/v1",
+			"url2": "http://200.69.103.88:3114/api/v1"
+		},
+		"oas": {
+			"token_name": "token_oas",
+			"token_value": "33890e1a-7a84-3a78-9d9e-a8beda3452e1",
+			"VUE_APP_AUTH_URL": "",
+			"url": "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
+		}
+	},
+	"auth": {
+		"oidc": {
+			"AUTORIZATION_URL": "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
+			"URL_USER_INFO": "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
+			"CLIENTE_ID": "k1wCyBLq8NYU1KOXF0ufhBmSKOEa",
+			"RESPONSE_TYPE": "id_token token",
+			"SCOPE": "openid email",
+			"SIGN_OUT_URL": "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
+			"SIGN_OUT_APPEND_TOKEN": "true",
+			"SIGN_OUT_REDIRECT_URL": "{baseUrl}/logout",
+			"REDIRECT_URL": "{baseUrl}/login"
+		},
+		"oidc_bk": {
+			"SIGN_OUT_REDIRECT_URL": "http://200.69.103.88:3115/",
+			"REDIRECT_URL": "http://200.69.103.88:3115/"
+		}
+	}
+}

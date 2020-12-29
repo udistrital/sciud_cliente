@@ -1,0 +1,27 @@
+{
+	"research_group": {
+		"facultyIds": [1],
+		"curricular_projectIds": [1, 10, 3],
+		"research_focus_ids": ["1", "2", "5"],
+		"cine_detailed_area_ids": [1, 2],
+		"name": "Grupo con OECD",
+		"acronym": "gco",
+		"description": "HOliu",
+		"cidcRegistrationDate": "2020-05-08T05:00:00.000Z",
+		"cidcActNumber": "30",
+		"facultyActNumber": "20",
+		"facultyRegistrationDate": "2020-05-08T05:00:00.000Z",
+		"state_group_id": "1",
+		"mission": "product.mission",
+		"vision": "product.vision",
+
+		"director_name_tmp": "Raul Picapiedra",
+
+		"snies_id": "2",
+		"colcienciasCode": "20",
+		"email": "product.email",
+		"gruplac": "product.gruplac",
+		"webpage": "product.webpage",
+		"oecd_discipline_ids": [1, 2]
+	}
+}

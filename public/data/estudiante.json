@@ -1,0 +1,46 @@
+[
+	{
+		"Id": 401,
+		"TipoDocumentoId": {
+			"Id": 14,
+			"Nombre": "CARNÉ ESTUDIANTE",
+			"Descripcion": "CARNÉ ESTUDIANTE",
+			"CodigoAbreviacion": "CODE",
+			"Activo": true,
+			"NumeroOrden": 0,
+			"FechaCreacion": "2020-08-24 12:00:00.945684 +0000 +0000",
+			"FechaModificacion": "2020-08-24 12:00:00.945684 +0000 +0000"
+		},
+		"TerceroId": {
+			"Id": 9444,
+			"NombreCompleto": "TONY STARK",
+			"PrimerNombre": "TONY",
+			"SegundoNombre": "",
+			"PrimerApellido": "STARK",
+			"SegundoApellido": "",
+			"LugarOrigen": 0,
+			"FechaNacimiento": "1963-03-01T00:00:00Z",
+			"Activo": true,
+			"TipoContribuyenteId": {
+				"Id": 1,
+				"Nombre": "PERSONA NATURAL",
+				"Descripcion": "",
+				"CodigoAbreviacion": "P_NATURAL",
+				"Activo": true,
+				"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+				"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+			},
+			"FechaCreacion": "2020-08-24 12:00:00.945647 +0000 +0000",
+			"FechaModificacion": "2020-08-24 12:00:00.365448 +0000 +0000",
+			"UsuarioWSO2": ""
+		},
+		"Numero": "202102020522",
+		"DigitoVerificacion": 0,
+		"CiudadExpedicion": 0,
+		"FechaExpedicion": null,
+		"Activo": true,
+		"DocumentoSoporte": 2,
+		"FechaCreacion": "2020-08-24 12:00:00.321457 +0000 +0000",
+		"FechaModificacion": "2020-08-24 12:00:00.123457 +0000 +0000"
+	}
+]

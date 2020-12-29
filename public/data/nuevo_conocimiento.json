@@ -1,0 +1,207 @@
+[
+	{
+		"name": "Libros resultado de investigación",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut",
+				"authors": "Vincent",
+				"entailment": "Interno",
+				"co_authors": "Evelyn",
+				"entailment_co": "Interno",
+				"date_publication": "03/29/2021",
+				"name_publisher": "Odio Nam Interdum Foundation",
+				"isbn": "38260456",
+				"contry_publisher": "Colombia",
+				"city_publisher": "Bogota",
+				"observation": "nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor",
+				"url": "http://www.nowebsitesupermart.com",
+				"support": ""
+			},
+			{
+				"id": 2,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet",
+				"authors": "Melvin",
+				"entailment": "Interno",
+				"co_authors": "Sarah",
+				"entailment_co": "Interno",
+				"date_publication": "06/10/2021",
+				"name_publisher": "Non Foundation",
+				"isbn": "38260427399",
+				"contry_publisher": "Colombia",
+				"city_publisher": "Bogota",
+				"observation": "consequat enim diam vel arcu. Curabitur ut",
+				"url": "http://www.nowebsitesupermart.com",
+				"support": ""
+			},
+			{
+				"id": 3,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "Praesent eu nulla at sem molestie sodales. Mauris blandit enim",
+				"authors": "Phillip",
+				"entailment": "Interno",
+				"co_authors": "Joan",
+				"entailment_co": "Interno",
+				"date_publication": "04/20/2020",
+				"name_publisher": "Egestas Duis LLP",
+				"isbn": "38260429",
+				"contry_publisher": "Colombia",
+				"city_publisher": "Bogota",
+				"observation": "eu arcu. Morbi sit amet massa. Quisque porttitor eros nec tellus.",
+				"url": "http://www.nowebsitesupermart.com",
+				"support": ""
+			},
+			{
+				"id": 4,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante,",
+				"authors": "Felix",
+				"entailment": "Interno",
+				"co_authors": "Kalia",
+				"entailment_co": "Interno",
+				"date_publication": "02/23/2021",
+				"name_publisher": "Orci Luctus Et Inc.",
+				"isbn": "3427399",
+				"contry_publisher": "Colombia",
+				"city_publisher": "Bogota",
+				"observation": "sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel nisl. Quisque fringilla euismod enim.",
+				"url": "http://www.nowebsitesupermart.com",
+				"support": ""
+			}
+		]
+	},
+
+	{
+		"name": "Artículos de investigación A1, A2, B y C",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "consequat nec, mollis vitae, posuere at, velit. Cras lorem lorem,",
+				"article_tittle": "Super Mart of the West article",
+				"authors": "Thaddeus",
+				"entailment": "Interno",
+				"co_authors": "Quemby",
+				"entailment_co": "Interno",
+				"date_publication": "08/07/2020",
+				"date_approval": "08/07/2020",
+				"volume": "2",
+				"main_page": "34",
+				"final_page": "34",
+				"issn": "3427399",
+				"doi": "436346346",
+				"type-article": "investigation",
+				"observation": "metus. Vivamus euismod urna. Nullam lobortis",
+				"url": "http://www.nowebsitesupermart.com",
+				"support": ""
+			}
+		]
+	},
+	{
+		"name": "Capítulos en libro resultado de investigación",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "Super Mart of the West",
+				"chapter_tittle": "Super Mart of the West chapter",
+				"authors": "702 SW 8th Street",
+				"co_authors": "Bentonville",
+				"date_publication": "08/07/2010",
+				"isbn": "3427399",
+				"doi": "2345235235",
+				"name_publisher": "Mattis Semper Ltd",
+				"contry_publisher": "Colombia",
+				"city_publisher": "Bogota",
+				"observation": "metus. Vivamus euismod urna. Nullam lobortis",
+				"url": "http://www.nowebsitesupermart.com",
+				"support": ""
+			}
+		]
+	},
+
+	{
+		"name": "Patentes",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"proyect_id": "23",
+				"patent_number": "r43245",
+				"patent_status": "solicitud",
+				"tittle": "Super Mart of the patent",
+				"patent_certificate": "certificado",
+				"authors": "Bentonville",
+				"date_publication": "08/07/2010",
+				"contry_publisher": "Colombia",
+				"publication_gazette": "Arkansas",
+				"support": ""
+			}
+		]
+	},
+
+	{
+		"name": "Variedad vegetal",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "Super Mart of the patent",
+				"authors": "Bentonville",
+				"date_publication": "08/07/2010",
+				"cycle_type": "corto",
+				"request_status": "obtenida",
+				"support": ""
+			}
+		]
+	},
+	{
+		"name": "Variedad animal",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"proyect_id": "23",
+				"tittle": "Super Mart of the patent",
+				"authors": "Bentonville",
+				"date_publication": "08/07/2010",
+				"cycle_type": "corto",
+				"request_status": "obtenida",
+				"certificate": "",
+				"support": ""
+			}
+		]
+	},
+	{
+		"name": "Obras de Investigacion Creacion en Artes, Arquitectura y Diseño",
+		"details": [
+			{
+				"id": 1,
+				"proyect_id": "23",
+				"tittle": "placerat. Cras dictum ultricies ligula. Nullam enim. Sed nulla ante,",
+				"authors": "Felix",
+				"entailment": "Interno",
+				"co_authors": "Kalia",
+				"entailment_co": "Interno",
+				"date_publication": "02/23/2021",
+				"nature": "Creacion efimera",
+				"knowledge_area": "ciencias",
+				"proyect_tittle": "sociis natoque penatibus enim.",
+				"url": "http://www.nowebsitesupermart.com",
+				"Awards": "unico",
+				"types_awards": "Nacional",
+				"class": [1, 2],
+				"support": ""
+			}
+		]
+	}
+]

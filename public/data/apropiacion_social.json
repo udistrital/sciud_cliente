@@ -1,0 +1,35 @@
+[
+	{
+		"name": "Participación ciudadana en CTeI",
+		"details": [
+			{
+				"id": 1,
+				"category": "A",
+				"registry_number": "2er1e1er123",
+				"tittle": "arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut",
+				"authors": "Vincent",
+				"date_publication": "03/29/2021",
+				"contry_publisher": "Colombia",
+				"publication_gazette": "Arkansas",
+				"observation": "nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor",
+				"support": ""
+			}
+		]
+	},
+	{
+		"name": "Estrategias pedagógicas para el fomento de la CTeI",
+		"details": []
+	},
+	{
+		"name": "Comunicación social del conocimiento",
+		"details": []
+	},
+	{
+		"name": "Circulación de conocimiento especializado",
+		"details": []
+	},
+	{
+		"name": "Reconocimientos",
+		"details": []
+	}
+]

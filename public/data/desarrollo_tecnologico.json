@@ -1,0 +1,108 @@
+[
+	{
+		"name": "Productos Empresariales",
+		"details": [
+			{
+				"id": 1,
+				"name":"Secreto empresarial",
+				"more":[
+					{
+						"id": 1,
+						"category": "A",
+						"registry_number": "2er1e1er123",
+						"tittle": "arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut",
+						"authors": "Vincent",
+						"date_publication": "03/29/2021",
+						"contry_publisher": "Colombia",
+						"observation": "nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor",
+						"support": ""
+					},
+					{
+						"id": 2,
+						"category": "A",
+						"registry_number": "2er1treg4123",
+						"tittle": "elit, pellentesque a, facilisis non, bibendum sed, est. Nunc laoreet",
+						"authors": "Melvin",
+						"date_publication": "06/10/2021",
+						"contry_publisher": "Colombia",
+						"observation": "consequat enim diam vel arcu. Curabitur ut",
+						"support": ""
+					}
+				]
+			},
+			{
+				"id": 2,
+				"name":"Spin- off y Start-up",
+				"more":[
+					{
+						"id": 1,
+						"category": "A",
+						"registry_number": "2er1e1er123",
+						"tittle": "arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut",
+						"authors": "Vincent",
+						"date_publication": "03/29/2021",
+						"contry_publisher": "Colombia",
+						"observation": "nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor",
+						"support": ""
+					}
+				]
+			},
+			{
+				"id": 3,
+				"name":"Empresas creativas y culturales",
+				"more":[]
+			},
+			{
+				"id": 4,
+				"name":"Innovación generada en la gestión empresarial ",
+				"more":[]
+			},
+			{
+				"id": 5,
+				"name":"Innovación en procedimiento y servicio",
+				"more":[]
+			},
+			{
+				"id": 6,
+				"name":"Innovación en procedimiento y servicio",
+				"more":[]
+			}
+
+
+		]
+	},
+
+	{
+		"name": "Productos tecnológicos certificados o validados",
+		"details": [
+			{
+
+				
+				"id": 1,
+				"name":"Software",
+				"more":[
+					{
+						"id": 1,
+				"category": "A",
+				"registry_number": "2er1e1er123",
+				"date_publication": "03/29/2021",
+				"description": "arcu. Sed et libero. Proin mi. Aliquam gravida mauris ut",
+				"Design": "Vincent imperdiet non, vestibulum nec",
+				"observation": "nec, leo. Morbi neque tellus, imperdiet non, vestibulum nec, euismod in, dolor. Fusce feugiat. Lorem ipsum dolor",
+				"support": ""
+					}
+				]
+			
+				
+			}
+		]
+	},
+	{
+		"name": "Regulaciones, normas, reglamentos o legislaciones",
+		"details": []
+	},
+	{
+		"name": "Consultorías científico-tecnológicas e informes técnicos finales",
+		"details": []
+	}
+]

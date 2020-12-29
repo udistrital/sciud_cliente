@@ -1,0 +1,64 @@
+[
+	{
+		"id": 1,
+		"name": "Plano"
+	},
+	{
+		"id": 2,
+		"name": "Textos"
+	},
+	{
+		"id": 3,
+		"name": "Bocetos"
+	},
+	{
+		"id": 4,
+		"name": "Modelaciones 2D,3D,4D"
+	},
+	{
+		"id": 5,
+		"name": "Maquetas"
+	},
+	{
+		"id": 6,
+		"name": "Fotografias"
+	},
+	{
+		"id": 7,
+		"name": "Realizacion"
+    }
+    ,
+	{
+		"id": 8,
+		"name": "Obras acabadas"
+	},
+	{
+		"id": 9,
+		"name": "Grabaciones"
+	},
+	{
+		"id": 10,
+		"name": "Filmaciones"
+	},
+	{
+		"id": 11,
+		"name": "Videos"
+	},
+	{
+		"id": 12,
+		"name": "Animaciones"
+	},
+	{
+		"id": 13,
+		"name": "Evidencias de Montaje"
+	}
+]
+
+
+
+
+
+
+
+
+

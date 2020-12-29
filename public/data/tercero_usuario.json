@@ -1,0 +1,19 @@
+{
+	"at_hash": "hd3TciDo-QXZbgCiGDlXGg",
+	"sub": "arodriguez",
+	"aud": ["k1wCyBLq8NYU1KOXF0ufhBmSKOEa"],
+	"role": [
+		"CONTRATISTA",
+		"Internal/everyone",
+		"Application/arodriguez_cidc_SANDBOX",
+		"Application/arodriguez_cidc_PRODUCTION"
+	],
+	"azp": "k1wCyBLq8NYU1KOXF0ufhBmSKOEa",
+	"iss": "autenticacion.portaloas.udistrital.edu.co",
+	"documento": "1032479929",
+	"documento_compuesto": "CC1032479929",
+	"exp": 1600715478,
+	"nonce": "24c469acdf212980748360ccc0352dad",
+	"iat": 1600711878,
+	"email": "arodriguez@udistrital.edu.co"
+}

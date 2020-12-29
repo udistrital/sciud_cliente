@@ -1,0 +1,46 @@
+[
+	{
+		"Id": 399,
+		"TipoDocumentoId": {
+			"Id": 3,
+			"Nombre": "CÉDULA DE CIUDADANÍA",
+			"Descripcion": "CÉDULA DE CIUDADANÍA",
+			"CodigoAbreviacion": "CC",
+			"Activo": true,
+			"NumeroOrden": 0,
+			"FechaCreacion": "2019-11-07 20:38:40.920912 +0000 +0000",
+			"FechaModificacion": "2019-11-07 20:38:40.920912 +0000 +0000"
+		},
+		"TerceroId": {
+			"Id": 9442,
+			"NombreCompleto": "Adriana Milena Rodríguez Escalona",
+			"PrimerNombre": "Adriana",
+			"SegundoNombre": "Milena",
+			"PrimerApellido": "Rodríguez",
+			"SegundoApellido": "Escalona",
+			"LugarOrigen": 0,
+			"FechaNacimiento": "1995-05-05T05:00:00Z",
+			"Activo": true,
+			"TipoContribuyenteId": {
+				"Id": 1,
+				"Nombre": "PERSONA NATURAL",
+				"Descripcion": "",
+				"CodigoAbreviacion": "P_NATURAL",
+				"Activo": true,
+				"FechaCreacion": "2019-11-25 20:39:54.419232 +0000 +0000",
+				"FechaModificacion": "2019-11-25 20:39:54.419232 +0000 +0000"
+			},
+			"FechaCreacion": "2020-02-29 19:02:12.127214 +0000 +0000",
+			"FechaModificacion": "2020-02-29 19:02:12.127311 +0000 +0000",
+			"UsuarioWSO2": "admin"
+		},
+		"Numero": "80761795",
+		"DigitoVerificacion": 0,
+		"CiudadExpedicion": 0,
+		"FechaExpedicion": null,
+		"Activo": true,
+		"DocumentoSoporte": 2,
+		"FechaCreacion": "2020-02-29 19:02:12.357723 +0000 +0000",
+		"FechaModificacion": "2020-02-29 19:02:12.357816 +0000 +0000"
+	}
+]

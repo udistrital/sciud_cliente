@@ -1,0 +1,38 @@
+[
+	{
+		"id": 2,
+		"colciencias_call_id": 1,
+		"year_call": 2015,
+		"colciencias_category_id": 2,
+		"research_group_id": 1,
+		"knowledge_area": "Ciencias Naturales",
+		"knowledge_subarea": null
+	},
+	{
+		"id": 3,
+		"colciencias_call_id": 2,
+		"year_call": 2016,
+		"colciencias_category_id": 4,
+		"research_group_id": 1,
+		"knowledge_area": "Ciencias Naturales",
+		"knowledge_subarea": null
+	},
+	{
+		"id": 4,
+		"colciencias_call_id": 3,
+		"year_call": 2016,
+		"colciencias_category_id": 3,
+		"research_group_id": 1,
+		"knowledge_area": "Ciencias Naturales",
+		"knowledge_subarea": null
+	},
+	{
+		"id": 5,
+		"colciencias_call_id": 4,
+		"year_call": 2017,
+		"colciencias_category_id": 3,
+		"research_group_id": 1,
+		"knowledge_area": "Ciencias Naturales",
+		"knowledge_subarea": null
+	}
+]
