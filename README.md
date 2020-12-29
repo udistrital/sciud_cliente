@@ -59,10 +59,16 @@ Para construir la imagen y compilar la versión de producción:
 docker build -t cidc.udistrital.edu.co/siciud:v2.0 .
 ```
 
-Para ejecutar la imagen en el contenedor 'siciud-v2-front' exponiendo el puerto '8080' desacopladamente:
+Para ejecutar **por primera vez** la imagen en el contenedor 'siciud-v2-front' exponiendo el puerto '8080':
 
 ```bash
-docker run -it -p `**`8080`**`:80 -d --name `**`siciud-v2-front`**` cidc.udistrital.edu.co/siciud:v2.0
+docker run -it -p 8080:80 -d --name siciud-v2-front cidc.udistrital.edu.co/siciud:v2.0
+```
+
+Para las ejecuciones posteriores del contenedor 'siciud-v2-front' previamente creado:
+
+```bash
+docker run siciud-v2-front
 ```
 
 ### Ejecución docker-compose
