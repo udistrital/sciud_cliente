@@ -53,8 +53,16 @@ Para cambiar el puerto y/o el host por defecto se debe editar el archivo _**'pac
 
 ### Ejecución Dockerfile
 
+Para construir la imagen y compilar la versión de producción:
+
 ```bash
-# Does not apply
+docker build -t cidc.udistrital.edu.co/siciud:v2.0 .
+```
+
+Para ejecutar la imagen en el contenedor 'siciud-v2-front' exponiendo el puerto '8080' desacopladamente:
+
+```bash
+docker run -it -p **8080**:80 -d --name **siciud-v2-front** cidc.udistrital.edu.co/siciud:v2.0
 ```
 
 ### Ejecución docker-compose

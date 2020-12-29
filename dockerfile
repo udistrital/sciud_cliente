@@ -20,7 +20,7 @@ COPY --from=node /app/dist /usr/local/apache2/htdocs
 EXPOSE 80
 
 # Now let's build the Docker image of our Vue.js app:
-# docker build -t ud-cidc/siciud-v2 .
+# docker build -t cidc.udistrital.edu.co/siciud:v2.0 .
 # Finally, let's run our Vue.js app in a Docker container:
-# docker run -it -p 8080:80 --rm --name siciud-v2-front ud-cidc/siciud-v2
+# docker run -it -p 8080:80 -d --name siciud-v2-front cidc.udistrital.edu.co/siciud:v2.0
 # We should be able to access our Vue.js app on localhost:8080.
