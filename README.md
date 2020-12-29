@@ -68,7 +68,13 @@ docker run -it -p 8080:80 -d --name siciud-v2-front cidc.udistrital.edu.co/siciu
 Para las ejecuciones posteriores del contenedor 'siciud-v2-front' previamente creado:
 
 ```bash
-docker run siciud-v2-front
+docker start siciud-v2-front
+```
+
+Para detener el contenedor 'siciud-v2-front' creado:
+
+```bash
+docker stop siciud-v2-front
 ```
 
 ### Ejecución docker-compose
