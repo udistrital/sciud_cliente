@@ -28,7 +28,7 @@ const store = {
             let url=args.url;
             let objSen=args.obj;
             console.log("UPDATE!",objSen);
-			api()
+			api()  
 				.put(url, objSen)
 				.then((r) => {
 					args.cb(r.data);

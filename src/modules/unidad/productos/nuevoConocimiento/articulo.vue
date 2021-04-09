@@ -15,7 +15,7 @@
 					</button>
 				</div>
 			</div>
-			<Integrantes  id="panel-articulo-integrantes" ep="papers" :product-id="baseObj.id" />
+  			<Integrantes  id="panel-articulo-integrantes" ep="papers" :product-id="baseObj.id" />
 		</div>
 		
 		<div class="docs slide">
@@ -32,7 +32,7 @@
 					</button>
 				</div>
 			</div>
-			<Documentos id="panel-articulo-documentos" ep="papers" :product-id="baseObj.id" :tipos="tiposDocumento" />
+ 			<Documentos id="panel-articulo-documentos" ep="papers" :product-id="baseObj.id" :tipos="tiposDocumento" />
 		</div> 
 		
 		<DxValidationGroup ref="basicGroup">

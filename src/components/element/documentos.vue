@@ -97,7 +97,7 @@
 						<h2>
 							<i class="icon-database mr-1 color-main-600"></i>
 							<span class="font-weight-semibold">Documentos Guardados</span>
-						</h2>
+						</h2>  
 					</div>
 					<div class="header-elements">							
 						<button type="button" @click.prevent="documentAdd()" title="Regresar al listado" class="btn btn-main  " id="btn-add">
