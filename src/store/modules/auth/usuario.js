@@ -52,6 +52,7 @@ const store = {
 				console.log("getOasUser => ", args);
 				// Verifica que el usuario no exista ya en el state
 				let user_oas_details = getters.getUserOasDetails(args.doc);
+				console.log("user_oas_details", user_oas_details);
 				if (typeof user_oas_details !== "undefined") {
 					console.log("Usuario encontrado en state: ", user_oas_details);
 					// 202104020302: Devuelve la respuesta de acuerdo a los parámetros recibidos
@@ -109,29 +110,6 @@ const store = {
 			console.log("SEND", user);
 			return await api()
 				.post(`users`, { user: user })
-				.then((r) => {
-					return r.data;
-				});
-		},
-
-		// Agregado por camorenos@udistrital.edu.co 08-04-2021-02:30
-		async ingegSend({ commit, state, dispatch }, dto) {
-			console.log("SEND", dto.obj);
-			let data=dto.obj;
-			return await api()
-				.post(dto.url, data )
-				.then((r) => {
-					return r.data;
-				});
-		},
-		
-		async ingegUpdate({ commit, state, dispatch }, dto) {
-			console.log("SEND", dto.obj);
-			let data=dto.obj;
-			let url=dto.url+"/"+dto.idint;
-			console.log("url update participants", dto.url+"/"+dto.obj.id)
-			return await api()
-				.put(url, data )
 				.then((r) => {
 					return r.data;
 				});

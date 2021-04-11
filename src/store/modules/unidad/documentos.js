@@ -3,20 +3,37 @@ import vuex from "vuex";
 import vue from "vue";
 import api from "@/store/api";
 vue.use(vuex);
-
-// Store
 const store = {
 	namespaced: true,
 	state: {
 		items: [],
 	},
-	
-    actions: {
-        
+	actions: {
+		get({ commit, state }, args) {
+			api()
+				.get(`research_units/${args.id}/documents/`)
+				.then((r) => {
+					args.cb(r.data.data);
+				});
+		},
+		add({ commit, state }, args) {
+			api()
+				.post(`research_units/${args.id}/documents/`, { document: args.document })
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+		edit({ commit, state }, args) {
+			api()
+				.put(`research_units/${args.id}/documents/`, { document: args.document })
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
 		save({ commit, state, dispatch }, args) {
 			console.log("CREATE!");
-            let url=args.url;
-            let objSen=args.obj;
+			let url = args.url;
+			let objSen = args.obj;
 			api()
 				.post(url, objSen)
 				.then((r) => {
@@ -25,10 +42,10 @@ const store = {
 		},
 		update({ commit, state, dispatch }, args) {
 			console.log("UPDATE!");
-            let url=args.url;
-            let objSen=args.obj;
-            console.log("UPDATE!",objSen);
-			api()  
+			let url = args.url;
+			let objSen = args.obj;
+			console.log("UPDATE!", objSen);
+			api()
 				.put(url, objSen)
 				.then((r) => {
 					args.cb(r.data);
@@ -36,8 +53,8 @@ const store = {
 		},
 		active({ commit, state, dispatch }, args) {
 			console.log("Indica si el archivo esta activado", args);
-            let url=args.url;
-            let objSen=args.obj;
+			let url = args.url;
+			let objSen = args.obj;
 			api()
 				.put(url, objSen)
 				.then((r) => {
@@ -46,8 +63,8 @@ const store = {
 				});
 		},
 		documents({ commit, state, dispatch }, args) {
-            let url=args.url;
-            // let objSen=args.obj;
+			let url = args.url;
+			// let objSen=args.obj;
 			api()
 				.get(url)
 				.then((r) => {
@@ -56,18 +73,12 @@ const store = {
 				});
 		},
 	},
-
 	mutations: {
 		SetData(state, data) {
-			// for (let x = 0; x < data.length; x++) {
-			// 	let o = data[x];
-			// 	if (o.avance !== null) o.avance = o.avance.toString().replace(".", ",") + "%";
-			// }
 			state.items = data;
 		},
 	},
-	
-    getters: {
+	getters: {
 		items: (state, getters) => {
 			return state.items;
 		},
@@ -78,7 +89,6 @@ const store = {
 			}
 		},
 	},
-
 };
 
 export default store;

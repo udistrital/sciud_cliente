@@ -10,9 +10,7 @@ const store = {
 	state: {
 		items: [],
 	},
-	
-    actions: {
-        
+	actions: {
 		save({ commit, state, dispatch }, args) {
 			console.log("CREATE!");
 			api()
@@ -46,19 +44,34 @@ const store = {
 					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
 				});
 		},
+		// Agregado por camorenos@udistrital.edu.co 08-04-2021-02:30
+		async participantCreate({ commit, state, dispatch }, dto) {
+			console.log("SEND", dto.obj);
+			let data = dto.obj;
+			return await api()
+				.post(dto.url, data)
+				.then((r) => {
+					return dto.cb(r.data);
+				});
+		},
+		async participantUpdate({ commit, state, dispatch }, dto) {
+			console.log("SEND", dto.obj);
+			let data = dto.obj;
+			let url = dto.url + "/" + dto.idint;
+			console.log("url update participants", dto.url + "/" + dto.obj.id);
+			return await api()
+				.put(url, data)
+				.then((r) => {
+					return dto.cb(r.data);
+				});
+		},
 	},
-
 	mutations: {
 		SetData(state, data) {
-			// for (let x = 0; x < data.length; x++) {
-			// 	let o = data[x];
-			// 	if (o.avance !== null) o.avance = o.avance.toString().replace(".", ",") + "%";
-			// }
 			state.items = data;
 		},
 	},
-	
-    getters: {
+	getters: {
 		items: (state, getters) => {
 			return state.items;
 		},
@@ -69,7 +82,6 @@ const store = {
 			}
 		},
 	},
-
 };
 
 export default store;

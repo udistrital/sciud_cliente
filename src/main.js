@@ -98,6 +98,9 @@ vue.mixin({
 		...mapActions("auth/login", ["AuthLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+		capitalize(e) {
+			e.component.instance().option("value", this.$titleCase(e.value));
+		},
 		confirmLeave() {
 			return window.confirm("Do you really want to leave? you have unsaved changes!");
 		},
@@ -153,6 +156,18 @@ vue.mixin({
 		},
 		yesNo(cellInfo) {
 			return cellInfo.value ? "SI" : "NO";
+		},
+		siNo() {
+			return [
+				{
+					id: 1,
+					name: "SI",
+				},
+				{
+					id: 0,
+					name: "NO",
+				},
+			];
 		},
 		nullText(cellInfo) {
 			if (cellInfo.valueText.length > 0) {

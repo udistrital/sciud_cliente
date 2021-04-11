@@ -410,6 +410,7 @@ export default {
 		root = this;
 		console.log(root.$sep);
 		root.loaderElement = "#panel-unidades .card-body";
+		root.loadMembers();
 		console.log("INTEGRANTES MOUNTED!");
 	},
 	computed: {
@@ -574,6 +575,7 @@ export default {
 			// console.log("e", e);
 		},
 		loadMembers() {
+			// console.clear();
 			cmds.hide();
 			let g = this.grid;
 			g.pageSize(gridSize);

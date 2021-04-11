@@ -3,9 +3,8 @@
 		<div class="col-md-4 col-xs-12">
 			<div class="form-group">
 				<label>País:</label>
-				<!--  -->
-				<!-- :value.sync="book.category_id" -->
 				<DxSelectBox
+					:value.sync="syncObject.geo_country_id"
 					:search-enabled="true"
 					placeholder="Seleccione..."
 					class="form-control"
@@ -23,8 +22,8 @@
 		<div class="col-md-4 col-xs-12">
 			<div class="form-group">
 				<label>Estado:</label>
-				<!-- :value.sync="book.category_id" -->
 				<DxSelectBox
+					:value.sync="syncObject.geo_state_id"
 					:disabled="states <= 0"
 					:search-enabled="true"
 					placeholder="Seleccione..."
@@ -43,8 +42,6 @@
 		<div class="col-md-4 col-xs-12">
 			<div class="form-group">
 				<label>Ciudad:</label>
-				<!--  -->
-				<!--  -->
 				<DxSelectBox
 					:disabled="cities <= 0"
 					:search-enabled="true"

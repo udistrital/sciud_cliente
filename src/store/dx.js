@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+// https://js.devexpress.com/Documentation/ApiReference/Data_Layer/CustomStore
 import api from "./api";
 import CustomStore from "devextreme/data/custom_store";
 const isNotEmpty = (value) => value !== undefined && value !== null && value !== "";
@@ -20,12 +21,12 @@ let baseEntity = null,
 		"totalSummary",
 		"userData",
 	];
-export default (o = { endPoint: null, key: ["id"], onLoading: null, onApiLoaded: null, onLoaded: null, loadBaseEntity: true, ids: null }) => {
+export default (o = { endPoint: null, key: ["id"], onLoading: null, onApiLoaded: null, onLoaded: null, loadBaseEntity: false, ids: null }) => {
 	// let url = "http://localhost:4500/data/_tst5.json"
 	return new CustomStore({
 		key: o.key,
 		loadMode: "processed", // "raw",
-		load: (loadOptions) => {
+		load: async (loadOptions) => {
 			let params = "?";
 			// 202103120940: Agrega un parametro ids si se recibe el listado
 			if (typeof o.ids !== "undefined" && o.ids.length > 0) params += `ids=${o.ids.join(",")}&`;
@@ -35,9 +36,9 @@ export default (o = { endPoint: null, key: ["id"], onLoading: null, onApiLoaded:
 				}
 			});
 			params = params.slice(0, -1);
-			return api()
+			return await api()
 				.get(`${o.endPoint}${params}`)
-				.then((r) => {
+				.then(async (r) => {
 					if (r.data.data.length > 0 && baseEntity === null && o.loadBaseEntity) {
 						console.log(window.vm.$sep);
 						console.log("baseEntity!");
@@ -51,7 +52,7 @@ export default (o = { endPoint: null, key: ["id"], onLoading: null, onApiLoaded:
 					}
 					// console.clear();
 					if (window.vm.$isFunction(o.onApiLoaded)) {
-						o.onApiLoaded(r.data);
+						return await o.onApiLoaded(r.data);
 					} else {
 						return r.data;
 					}

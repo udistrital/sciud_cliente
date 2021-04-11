@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="page-header header-elements-md-inline">
+		<div class="page-header header-elements-md-inline" id="panel-unidades-head">
 			<div class="page-title d-flex">
 				<h1>
 					<i class="icon-books mr-1 color-main-600"></i>
@@ -10,15 +10,17 @@
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 			<div class="header-elements" v-if="editMode">
-				<button
-					type="button"
-					@click="add()"
+				<a
+					href="#"
+					@click.prevent="add()"
 					title="Nueva Unidad de Investigación..."
 					class="btn btn-main btn-labeled btn-labeled-left legitRipple slide"
 					id="btn-add"
+					><b><i class="icon-database-add"></i></b> Nueva Unidad</a
 				>
-					<b><i class="icon-database-add"></i></b> Nueva Unidad
-				</button>
+				<a href="#" @click.prevent="reload()" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left legitRipple slide btn-back ml-3"
+					><b><i class="icon-arrow-left"></i></b> Volver a Unidades</a
+				>
 			</div>
 		</div>
 
@@ -46,7 +48,7 @@
 								<DxColumnChooser :enabled="true" mode="dragAndDrop" />
 								<DxSorting mode="multiple" /><!-- single, multiple, none" -->
 								<DxPaging :page-size="dgPageSize" />
-								<DxFilterRow :visible="false" />
+								<DxFilterRow :visible="true" />
 								<DxLoadPanel :enabled="false" />
 								<DxGroupPanel :visible="true" :allow-column-dragging="true" />
 								<DxGrouping :auto-expand-all="false" />
@@ -60,11 +62,11 @@
 									:allowed-page-sizes="dgPageSizes"
 									info-text="Página {0} de {1} ({2} unidades de investigación)"
 								/>
-								<DxSearchPanel :visible="true" :highlight-case-sensitive="true" />
+								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 								<DxColumn
+									:allow-filtering="false"
 									:sort-index="1"
 									sort-order="asc"
-									:allow-filtering="false"
 									data-field="id"
 									caption="Id"
 									data-type="int"
@@ -72,19 +74,40 @@
 									:allow-sorting="true"
 									:width="70"
 								/>
-								<DxColumn data-field="group_type_name" caption="Tipo" data-type="string" alignment="left" :visible="true" :width="170" />
-								<DxColumn data-field="name" caption="Nombre" data-type="string" alignment="left" :visible="true" cell-template="titleCase" />
-								<DxColumn :visible="false" data-field="acronym" caption="Acrónimo" data-type="string" alignment="center" :width="100" cell-template="tplNull" />
+								<DxColumn :allow-filtering="true" data-field="group_type_id" caption="Tipo" data-type="int" alignment="left" :visible="true" :width="180">
+									<DxLookup :data-source="tiposUnidad" value-expr="id" display-expr="st_name" />
+								</DxColumn>
 								<DxColumn
+									:allow-filtering="true"
+									data-field="name"
+									caption="Nombre"
+									data-type="string"
+									alignment="left"
+									:visible="true"
+									cell-template="titleCase"
+								/>
+								<DxColumn
+									:allow-filtering="false"
+									:visible="false"
+									data-field="acronym"
+									caption="Acrónimo"
+									data-type="string"
+									alignment="center"
+									:width="100"
+									cell-template="tplNull"
+								/>
+								<DxColumn
+									:allow-filtering="false"
 									:visible="false"
 									data-field="cidc_registration_date"
-									caption="Fecha Registro CIDC"
+									caption="Registro CIDC"
 									alignment="center"
 									data-type="date"
 									format="dd/MM/yyyy"
 									:width="130"
 								/>
 								<DxColumn
+									:allow-filtering="false"
 									data-field="cidc_act_number"
 									caption="No. Acta CIDC"
 									data-type="string"
@@ -94,8 +117,9 @@
 									cell-template="tplNull"
 								/>
 								<DxColumn
+									:allow-filtering="false"
 									data-field="faculty_registration_date"
-									caption="Fecha Registro Facultad"
+									caption="Registro Facultad"
 									data-type="date"
 									format="dd/MM/yyyy"
 									alignment="center"
@@ -103,6 +127,7 @@
 									:width="130"
 								/>
 								<DxColumn
+									:allow-filtering="false"
 									data-field="faculty_act_number"
 									caption="No. Acta Facultad"
 									data-type="string"
@@ -112,22 +137,59 @@
 									cell-template="tplNull"
 								/>
 								<DxColumn
-									data-field="member_ids.length"
+									:allow-filtering="false"
+									data-field="member_count"
 									caption="Miembros"
 									data-type="int"
 									alignment="center"
-									:allow-grouping="false"
-									:allow-filtering="false"
+									:allow-grouping="true"
 									:allow-search="false"
 									:allow-sorting="true"
 									:visible="true"
 									:width="100"
 								/>
-								<DxColumn data-field="email" caption="Email" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplEmail" />
-								<DxColumn data-field="gruplac" caption="GrupLAC" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplUrl" />
-								<DxColumn data-field="webpage" caption="Página Web" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplUrl" />
-								<DxColumn data-field="group_state_name" caption="Estado" data-type="string" alignment="center" :visible="true" :width="100" />
-								<DxColumn caption="" name="idEdit" data-field="id" :width="50" alignment="center" cell-template="tplCommands" />
+								<DxColumn
+									:allow-filtering="false"
+									data-field="email"
+									caption="Email"
+									data-type="string"
+									alignment="center"
+									:visible="true"
+									:width="100"
+									cell-template="tplEmail"
+								/>
+								<DxColumn
+									:allow-filtering="false"
+									data-field="gruplac"
+									caption="GrupLAC"
+									data-type="string"
+									alignment="center"
+									:visible="true"
+									:width="100"
+									cell-template="tplUrl"
+								/>
+								<DxColumn
+									:allow-filtering="false"
+									data-field="webpage"
+									caption="Página Web"
+									data-type="string"
+									alignment="center"
+									:visible="true"
+									:width="100"
+									cell-template="tplUrl"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="group_state_id"
+									caption="Estado"
+									data-type="string"
+									alignment="center"
+									:visible="true"
+									:width="100"
+								>
+									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
+								</DxColumn>
+								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="50" alignment="center" cell-template="tplCommands" />
 								<template #tplUrl="{ data }">
 									<a
 										v-if="data.value && data.value.trim() !== 'NULL' && data.value.trim().length > 5"
@@ -214,6 +276,7 @@ import {
 	DxGrouping,
 	DxGroupItem,
 	DxGroupPanel,
+	DxLookup,
 	DxLoadPanel,
 	DxPager,
 	DxPaging,
@@ -229,6 +292,7 @@ export default {
 	components: {
 		DxColumn,
 		DxColumnChooser,
+		DxLookup,
 		DxDataGrid,
 		DxExport,
 		DxFilterRow,
@@ -269,7 +333,13 @@ export default {
 	},
 	computed: {
 		...mapGetters("unidad", ["documents", "states", "types"]),
-		// ...mapState("unidad", ["loading"]),
+		...mapGetters("core/tipo", ["subtypesByType"]),
+		tiposUnidad() {
+			return this.subtypesByType(2);
+		},
+		estadosUnidad() {
+			return this.subtypesByType(1);
+		},
 		dataSource: function() {
 			// 202103120855: Obtiene los grupos del usuario actual si es participante
 			var ids = [];
@@ -289,6 +359,11 @@ export default {
 					setTimeout(function() {
 						root.scrollTop();
 					}, 300);
+				},
+				onApiLoaded: async (results) => {
+					console.log(this.$sep);
+					console.log("onApiLoaded => ", results);
+					return results;
 				},
 				onLoaded: function(result, baseEntity) {
 					root.isLoading = false;
@@ -320,7 +395,7 @@ export default {
 		...mapActions("nuxeo", { fUpload: "upload", fCreate: "createDoc" }),
 		...mapActions("auth/usuario", ["getGroupRoles"]),
 		...mapActions("unidad", ["getTypes", "getStates", "getResearchers", "saveUnit"]),
-		...mapActions("unidad/doc", { getDocs: "get" }),
+		...mapActions("unidad/documentos", { getDocs: "get" }),
 		customizeText(cellInfo) {
 			console.log("cellInfo", cellInfo);
 			return cellInfo.value + "$";
@@ -352,19 +427,24 @@ export default {
 				},
 			});
 		},
+		reload() {
+			window.location.reload();
+		},
 		cancel() {
 			// root.editMode = false;
 			console.log(this.$sep);
 			$("#title").html("Unidades de Investigación");
 			$("#msg").html("");
-			// root.scrollTop();
+			$("#panel-unidades-head .btn-back").fadeOut();
 			$("#panel-unidades .data").fadeOut(window.speed, function() {
 				var g = $("#panel-unidades .grid");
 				g.fadeIn(window.speed, function() {
 					$("#btn-add").fadeIn();
 					root.unidad = root.$clone(this.baseEntity);
-					root.$refs.Tabs.clearMembers();
-					root.$refs.Tabs.changeTab(0);
+					setTimeout(function() {
+						root.$refs.Tabs.clearMembers();
+						root.$refs.Tabs.changeTab(0);
+					}, 300);
 				});
 			});
 		},
@@ -378,6 +458,7 @@ export default {
 			root.$refs.Tabs.changeTab(0);
 			$("#panel-unidades .grid").fadeOut(window.speed, function() {
 				console.log("END #panel-unidades fadeOut!");
+				$("#panel-unidades-head .btn-back").fadeIn();
 				$("#panel-unidades .data").fadeIn(window.speed, function() {
 					root.scrollTop();
 					console.log("END #panel-unidades .data fadeIn!");
@@ -412,14 +493,17 @@ export default {
 			$("#btn-add").fadeOut(window.speed);
 			$("#title").html(`${u.group_type_name} &raquo; `);
 			$("#msg").html(m);
+			// 202104102143: Carga documentos
 			this.getDocs({
 				id: u.id,
 				cb: function(docs) {
-					console.log("Docs", docs);
+					console.log(root.$sep);
+					console.log("Documentos", docs);
 					u["documents"] = docs;
 					root.unidad = u;
 					$("#panel-unidades .grid").fadeOut(window.speed, function() {
 						root.loadHide();
+						$("#panel-unidades-head .btn-back").fadeIn();
 						$("#panel-unidades .data").fadeIn(window.speed, function() {
 							// root.scrollTop();
 						});
@@ -439,13 +523,13 @@ export default {
 			this.grid.endUpdate = () => {};
 		},
 		onContentReady() {
-			// this.loadingVisible = false;
-			// console.log("onContentReady!");
-			$(".commands a").click(function() {
-				console.log("Come on lets show the dropdown!!");
-			});
-			var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>Selector de Columnas:</span>";
-			if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
+			// // this.loadingVisible = false;
+			// // console.log("onContentReady!");
+			// $(".commands a").click(function() {
+			// 	console.log("Come on lets show the dropdown!!");
+			// });
+			// var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>Selector de Columnas:</span>";
+			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
 		},
 	},
 };

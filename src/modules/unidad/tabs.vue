@@ -25,6 +25,7 @@
 	</div>
 </template>
 <script>
+/* eslint-disable no-unused-vars */
 let $ = window.jQuery;
 import DxTabPanel, { DxItem } from "devextreme-vue/tab-panel";
 let root = null;
@@ -130,7 +131,7 @@ export default {
 						comp.groupResearchers = [];
 						comp.loadMembers();
 					}
-					root.loadShow("Cargando usuarios", $("#panel-unidades .card-body")[0]);
+					// root.loadShow("Cargando usuarios", $("#panel-unidades .card-body")[0]);
 					break;
 				case 2:
 					console.log("institucional");

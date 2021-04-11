@@ -542,10 +542,13 @@ export default {
 		...mapActions("unidad/cine", { getCine: "all" }),
 		...mapActions("unidad/oas", { getFacultades: "facultades" }),
 		getDocument(document_type_id) {
-			return typeof this.group.documents !== "undefined" ? root.group.documents.find((o) => o.document_type.id == document_type_id) : null;
+			// console.log("state.documents", this.documents);
+			// console.log(`getDocument(${document_type_id}) => group: `, this.group);
+			return typeof this.group.documents !== "undefined" ? root.group.documents.find((o) => o.document_type_id == document_type_id) : null;
 		},
 		getLink(document_type_id) {
 			var doc = root.getDocument(document_type_id);
+			console.log("document", doc);
 			return doc !== null ? `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${doc.id}/file:content/${doc.path}` : null;
 		},
 		save() {
@@ -600,7 +603,7 @@ export default {
 			}
 		},
 		sbFacultadChange(e) {
-			console.clear();
+			// console.clear();
 			console.log("value", e.value);
 			console.log("facultades", this.facultades);
 			if (typeof e.value !== "undefined") {

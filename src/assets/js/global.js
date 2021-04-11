@@ -72,7 +72,7 @@ export default {
 
 		//202103201537 creacion de una nueva alerta Carlos A. M
 		vue.prototype.$alert = function(message) {
-			const callback=null;
+			const callback = null;
 			this.$nextTick(function() {
 				let dialog = custom({
 					onShowing: function() {
@@ -87,7 +87,7 @@ export default {
 							onClick: function() {
 								return false;
 							},
-						}
+						},
 					],
 				});
 				window.jQuery(".dx-dialog").addClass("confirm");
@@ -96,7 +96,7 @@ export default {
 				});
 			});
 		};
-		
+
 		// 202009240327
 		vue.prototype.$confirm = function(message, callback) {
 			this.$nextTick(function() {
@@ -277,24 +277,30 @@ export default {
 			return object.sort(sort_by(field, reverse, (o) => (typeof o === "string" ? o.toUpperCase() : o)));
 		};
 
-		// 202009091002: Capitalize
-		vue.prototype.$capitalize = function(string) {
-			if (typeof string !== "string") return string;
-			string = string.toLowerCase();
-			return string.charAt(0).toUpperCase() + string.slice(1);
-		};
-
 		// 202009091002: ReplaceAll
 		vue.prototype.$replaceAll = function(string, from, to) {
 			var re = new RegExp(from, "g");
 			return string.replace(re, to);
 		};
 
+		// 202104102245: Clean double and leading spaces
+		vue.prototype.$clean = function(string) {
+			if (typeof string !== "string") return string;
+			return string.replace(/ +(?= )/g, "").trim();
+		};
+
+		// 202009091002: Capitalize
+		vue.prototype.$capitalize = function(string) {
+			if (typeof string !== "string") return string;
+			string = string.toLowerCase();
+			return this.$clean(string.charAt(0).toUpperCase() + string.slice(1)).trim();
+		};
+
 		// 202009091156: titleCase
-		vue.prototype.$titleCase = function(phrase, exceptions) {
-			if (typeof exceptions !== "array") exceptions = ["de", "del", "en", "y", "la", "a", "e"];
+		vue.prototype.$titleCase = function(string, exceptions = ["de", "del", "en", "y", "la", "los", "el", "a", "e"]) {
+			if (typeof string !== "string") return string;
 			var res = [];
-			var words = this.$replaceAll(phrase, "  ", " ").split(" ");
+			var words = this.$replaceAll(string, "  ", " ").split(" ");
 			words.forEach((word) => {
 				if (exceptions.includes(word.toLowerCase())) {
 					res.push(word.toLowerCase());
@@ -304,13 +310,14 @@ export default {
 				}
 			});
 			words = res.join(" ");
-			return words;
+			return words.trim();
 		};
 
 		// 202009091156: titleCase
 		vue.prototype.$formatDocument = function(doc, noval = "--") {
+			if (typeof doc === "undefined") return noval;
 			let v = "value" in doc ? doc.value : doc;
-			if (typeof v !== undefined && v !== null) {
+			if (typeof v !== "undefined" && v !== null) {
 				return v
 					.toString()
 					.split(/(?=(?:...)*$)/)
@@ -408,6 +415,12 @@ export default {
 		vue.prototype.$clone = function(source, cleanProperties = false) {
 			const cloned = Object.assign({}, source);
 			return cleanProperties ? this.$cleanProperties(cloned) : cloned;
+		};
+
+		// 202104110402: Formatea la fecha
+		vue.prototype.$formatDate = function(e) {
+			console.log("$formatDate", e);
+			return e;
 		};
 
 		// 201906121015: Obtiene la fecha formateada

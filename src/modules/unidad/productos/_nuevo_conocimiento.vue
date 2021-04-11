@@ -2,19 +2,21 @@
 	<div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :animation-enabled="false" :multiple="false">
-				<DxItem title="Libro">
+				<!--
+					<DxItem title="Libro">
 					<template #default>
 						<Libro :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
+				-->
 				<DxItem title="Artículo">
 					<template #default>
-						<Articulo :group="group" :editMode="editMode"/>
+						<Articulo :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				<DxItem title="Nota Científica">
+
+				<!-- <DxItem title="Nota Científica">
 					<template #default>
-						<!-- <Articulo :group="group" /> -->
 						<Nota :group="group" :editMode="editMode"/>
 					</template>
 				</DxItem>
@@ -30,7 +32,6 @@
 				</DxItem>
 				<DxItem title="Variedad Vegetal">
 					<template #default>
-						<!-- <Articulo :group="group" /> -->
 						<Vegetales :group="group" :editMode="editMode"/>
 					</template>
 				</DxItem>
@@ -48,7 +49,7 @@
 					<template #default>
 						<Obra :group="group" :editMode="editMode" />
 					</template>
-				</DxItem>
+				</DxItem> -->
 			</DxTabPanel>
 		</div>
 	</div>
@@ -61,15 +62,15 @@ export default {
 	components: {
 		DxItem,
 		DxTabPanel,
-		Libro: () => import("@/modules/unidad/productos/nuevoConocimiento/libro"),
 		Articulo: () => import("@/modules/unidad/productos/nuevoConocimiento/articulo"),
-		Capitulo: () => import("./nuevoConocimiento/capitulo"),
-		Poblacion: () => import("./nuevoConocimiento/poblacion"),
-		Nuevaraza: () => import("./nuevoConocimiento/nuevaRaza"),
-		Patente: () => import("./nuevoConocimiento/patente"),
-		Obra: () => import("./nuevoConocimiento/obras"),
-		Nota: () => import("./nuevoConocimiento/notas"),
-		Vegetales: () => import("./nuevoConocimiento/vegetales"),
+		// Libro: () => import("@/modules/unidad/productos/nuevoConocimiento/libro"),
+		// Capitulo: () => import("./nuevoConocimiento/capitulo"),
+		// Poblacion: () => import("./nuevoConocimiento/poblacion"),
+		// Nuevaraza: () => import("./nuevoConocimiento/nuevaRaza"),
+		// Patente: () => import("./nuevoConocimiento/patente"),
+		// Obra: () => import("./nuevoConocimiento/obras"),
+		// Nota: () => import("./nuevoConocimiento/notas"),
+		// Vegetales: () => import("./nuevoConocimiento/vegetales"),
 	},
 	mounted() {
 		root = this;

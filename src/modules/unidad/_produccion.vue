@@ -6,7 +6,7 @@
 					<template #title="{ data }"
 						><div class="col pt-2 pb-2"><i :class="'icon-' + data.icon"></i>{{ data.title }}</div></template
 					>
-					<DxItem title="Generación de Nuevo Conocimiento" icon="brain" id="generacion" data-idx="1" :element-attr="{ class: 'diego' }">
+					<DxItem title="Generación de Nuevo Conocimiento" icon="brain" id="generacion" data-idx="1">
 						<template #default>
 							<NuevoConocimiento :group="group" :editMode="editMode" />
 						</template>
@@ -29,15 +29,11 @@
 				</DxAccordion>
 			</div>
 		</div>
-		<!-- <div class="row">
-			<div class="col pt-2">
-				<DxButton @click="cancelFn" class="nb">
-					<template #default>
-						<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
-							<b><i class="icon-database-remove"></i></b> CANCELAR
-						</span>
-					</template>
-				</DxButton>
+		<!-- <div class="row mt-3">
+			<div class="col">
+				<a href="#" @click.prevent="cancelFn" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple"
+					><b><i class="icon-database-remove"></i></b> CANCELAR
+				</a>
 			</div>
 		</div> -->
 	</div>

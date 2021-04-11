@@ -1,105 +1,105 @@
 <template>
 	<div class="col p-3" id="producto-documentos">
 		<DxValidationGroup ref="basicGroup">
-		<div class="row dataDoc slidex"  v-if="editMode">
-			<div class="col">
-				<div class="card">
-					<div class="card-header main">Agregar Documento</div>
-					<div class="card-body mb-0 pb-0 pt-3">
-						<DxValidationGroup ref="vGroup">
-							<div class="row">
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Tipo:</label>
-										<DxSelectBox
-											:grouped="false"
-											:data-source="tipos"
-											:value.sync="baseObj.document_type_id"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											class="form-control"
-											display-expr="st_name"
-											value-expr="id"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxSelectBox>
+			<div class="row dataDoc slidex" v-if="editMode">
+				<div class="col">
+					<div class="card">
+						<div class="card-header main">Agregar Documento</div>
+						<div class="card-body mb-0 pb-0 pt-3">
+							<DxValidationGroup ref="vGroup">
+								<div class="row">
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Tipo:</label>
+											<DxSelectBox
+												:grouped="false"
+												:data-source="tipos"
+												:value.sync="baseObj.document_type_id"
+												:search-enabled="false"
+												placeholder="Seleccione..."
+												class="form-control"
+												display-expr="st_name"
+												value-expr="id"
+											>
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxSelectBox>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<label>Nombre:</label>
-										<DxTextBox :value.sync="baseObj.doc_name" placeholder="Nombre(s)" class="form-control" :read-only="false" mode="text">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Nombre:</label>
+											<DxTextBox :value.sync="baseObj.doc_name" placeholder="Nombre(s)" class="form-control" :read-only="false" mode="text">
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxTextBox>
+										</div>
 									</div>
-								</div>
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Doc. de constitución:</label>
-										<a href="#" target="_blank" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
-											<b><i class="icon-link"></i></b> DOCUMENTO ACTUAL
-										</a>
-										<DxFileUploader
-											label-text=""
-											upload-mode="useForm"
-											accept="document/*.pdf"
-											:max-file-size="4000000"
-											id="establishment_document"
-											select-button-text="CAMBIAR"
-											:allowed-file-extensions="['.pdf']"
-											@valueChanged="fileSelected($event, 108)"
-											@contentReady="fileReady($event)"
-										>
-											<!-- <DxValidator>
+									<div class="col-md-3">
+										<div class="form-group">
+											<label>Doc. de constitución:</label>
+											<a href="#" target="_blank" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+												<b><i class="icon-link"></i></b> DOCUMENTO ACTUAL
+											</a>
+											<DxFileUploader
+												label-text=""
+												upload-mode="useForm"
+												accept="document/*.pdf"
+												:max-file-size="4000000"
+												id="establishment_document"
+												select-button-text="CAMBIAR"
+												:allowed-file-extensions="['.pdf']"
+												@valueChanged="fileSelected($event, 108)"
+												@contentReady="fileReady($event)"
+											>
+												<!-- <DxValidator>
 												<DxRequiredRule />
 											</DxValidator> -->
-										</DxFileUploader>
+											</DxFileUploader>
+										</div>
 									</div>
 								</div>
-							</div>
-						</DxValidationGroup>
-					</div>
-					<div class="card-footer">
-						<div class="row">
-							<div class="col">
-								<DxButton @click="userCancel" class="nb">
-									<template #default>
-										<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
-											<b><i class="icon-database-remove"></i></b> CANCELAR
-										</span>
-									</template>
-								</DxButton>
-							</div>
-							<div class="col text-right">
-								<DxButton @click="docSave" class="nb">
-									<template #default>
-										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-											GUARDAR <b><i class="icon-database-add"></i></b>
-										</span>
-									</template>
-								</DxButton>
+							</DxValidationGroup>
+						</div>
+						<div class="card-footer">
+							<div class="row">
+								<div class="col">
+									<DxButton @click="userCancel" class="nb">
+										<template #default>
+											<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+												<b><i class="icon-database-remove"></i></b> CANCELAR
+											</span>
+										</template>
+									</DxButton>
+								</div>
+								<div class="col text-right">
+									<DxButton @click="docSave" class="nb">
+										<template #default>
+											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+												GUARDAR <b><i class="icon-database-add"></i></b>
+											</span>
+										</template>
+									</DxButton>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		</DxValidationGroup>
-		<div class="row gridDoc" >
+		<div class="row gridDoc">
 			<div class="col">
 				<div class="page-header header-elements-md-inline">
 					<div class="page-title d-flex">
 						<h2>
 							<i class="icon-database mr-1 color-main-600"></i>
 							<span class="font-weight-semibold">Documentos Guardados</span>
-						</h2>  
+						</h2>
 					</div>
-					<div class="header-elements">							
+					<div class="header-elements">
 						<button type="button" @click.prevent="documentAdd()" title="Regresar al listado" class="btn btn-main  " id="btn-add">
 							<b><i class="dx-icon-chevrondoubleleft"></i></b> Agregar Documento
 						</button>
@@ -160,7 +160,7 @@
 								data-field="doc_name"
 								data-type="string"
 							/>
-							
+
 							<DxColumn
 								:allow-filtering="true"
 								:allow-sorting="true"
@@ -182,7 +182,7 @@
 								data-field="document_type_name"
 								data-type="string"
 							/>
-							
+
 							<DxColumn
 								:allow-filtering="true"
 								:allow-sorting="true"
@@ -223,15 +223,7 @@
 								data-field="role_name"
 								data-type="string"
 							/> -->
-							<DxColumn
-								:width="100"
-								data-field="active"
-								caption="Activo"
-								data-type="date"
-								alignment="center"
-								:visible="true"
-								:customize-text="yesNo"
-							/>
+							<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 
 							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 							<template #tpl="{ data }">
@@ -250,7 +242,6 @@
 						</DxDataGrid>
 					</div>
 				</div>
-				
 			</div>
 		</div>
 	</div>
@@ -267,7 +258,6 @@ import {
 	DxColumnChooser,
 	DxExport,
 	DxDataGrid,
-	
 	DxGrouping,
 	DxGroupItem,
 	DxGroupPanel,
@@ -329,7 +319,7 @@ export default {
 			doc_path: "/documents/papers/artiiculo_de_pruebas_demo_2021%.pdf",
 			doc_size: 427751,
 			document_type_id: null,
-			created_by: 2
+			created_by: 2,
 		},
 		dsMembers: new DataSource({
 			store: new CustomStore({
@@ -408,7 +398,7 @@ export default {
 	},
 	methods: {
 		// ...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
-		...mapActions("unidad/documents", ["save", "update", "documents"]),
+		...mapActions("unidad/documentos", ["save", "update", "documents"]),
 		fileReady(e) {
 			// console.clear();
 			// console.log(e);
@@ -445,15 +435,15 @@ export default {
 			//console.clear();
 			console.log("data", data);
 			//root.baseObj=root.baseEnt;
-			this.editDoc=true;
-			root.baseObj=data;
+			this.editDoc = true;
+			root.baseObj = data;
 			root.panelGridDoc.fadeOut(window.speed, function(params) {
 				root.panelDataDoc.fadeIn(window.speed, function(params) {});
 			});
 		},
 		documentAdd() {
-			this.editDoc=false;
-			root.baseObj=root.baseEnt;
+			this.editDoc = false;
+			root.baseObj = root.baseEnt;
 			root.panelGridDoc.fadein(window.speed, function(params) {
 				root.panelDataDoc.fadeOut(window.speed, function(params) {});
 			});
@@ -525,17 +515,16 @@ export default {
 		},
 		docSave() {
 			console.log("Entrando a metodo de guardado de datos");
-			// let data="int";	
-			let objectSent={};
-			let point="documents";
+			// let data="int";
+			let objectSent = {};
+			let point = "documents";
 			var result = false;
-			if(root.editDoc){
-				point=`${this.ep}/${this.productId}/${point}/${root.baseObj.id}`;
-			} 
-			else {
-				point=`${this.ep}/${this.productId}/${point}`;
+			if (root.editDoc) {
+				point = `${this.ep}/${this.productId}/${point}/${root.baseObj.id}`;
+			} else {
+				point = `${this.ep}/${this.productId}/${point}`;
 			}
-			objectSent= root.baseObj;
+			objectSent = root.baseObj;
 
 			result = root.$refs.vGroup.instance.validate();
 			if (result.isValid) {
@@ -551,13 +540,13 @@ export default {
 				};
 				console.log("dto", dto);
 				root.grid.refresh();
-				if(root.editDoc) root.update(dto); 
+				if (root.editDoc) root.update(dto);
 				else root.save(dto);
 				root.loadHide();
 			}
-			console.log("dto", );
-			root.baseObj=root.baseEnt;
-			this.editDoc=false;
+			console.log("dto");
+			root.baseObj = root.baseEnt;
+			this.editDoc = false;
 		},
 
 		onContentReady(e) {
@@ -577,7 +566,7 @@ export default {
 			this.grid = e.component;
 			this.loadEnd();
 		},
-		
+
 		onOptionChanged() {
 			// console.log("e", e);
 		},
@@ -618,7 +607,6 @@ export default {
 		// 		}
 		// 	}
 		// },
-		
 	},
 };
 </script>
