@@ -28,7 +28,6 @@ Object.defineProperty(vue.prototype, "$loader", {
 });
 
 // Generales
-window.speed = 500;
 window.authChecking = false;
 window.authCheckingTime = 5; // Minutos
 
@@ -98,6 +97,9 @@ vue.mixin({
 		...mapActions("auth/login", ["AuthLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+		go(path) {
+			this.$router.push({ path: path });
+		},
 		capitalize(e) {
 			e.component.instance().option("value", this.$titleCase(e.value));
 		},
@@ -113,7 +115,7 @@ vue.mixin({
 				e.returnValue = "";
 			}
 		},
-		loadShow(msg, element) {
+		loaderShow(msg, element) {
 			let root = this;
 			if (!root.$loader.visible) {
 				// console.log(window.vm.$sep);
@@ -128,7 +130,7 @@ vue.mixin({
 				// console.log(window.vm.$sep);
 			}
 		},
-		loadHide() {
+		loaderHide() {
 			let root = this;
 			if (root.$loader.visible) {
 				// console.log(window.vm.$sep);
@@ -244,10 +246,7 @@ function createVue() {
 axios
 	.get(process.env.BASE_URL + "data/config.json")
 	.then(({ data }) => {
-		// window.config = loadVars(data);
 		window.config = data;
-		// if (window.config.impersonate) store.dispatch("auth/SetImpersonation", createVue);
-		// else
 		createVue();
 		console.log("window.vm.$store", window.vm.$store);
 	})

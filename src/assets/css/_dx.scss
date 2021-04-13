@@ -1061,3 +1061,21 @@ $color: rgb(182, 182, 182);
 		font-weight: 400;
 	}
 }
+
+.cmd-item.dx-list-item-content {
+	i {
+		min-width: 20px;
+	}
+}
+
+.dx-button-has-text {
+	background-color: $main-color-600 !important;
+	.dx-button-content {
+		.dx-button-text {
+			font-weight: 600 !important;
+			font-size: 0.94rem !important;
+			font-family: $font-family !important;
+			color: #fff !important;
+		}
+	}
+}

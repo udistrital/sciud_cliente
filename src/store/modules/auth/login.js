@@ -161,7 +161,6 @@ const store = {
 		},
 		authenticated: (state, getters) => {
 			// 202010220210: Validación de expiración token OAS
-			if (window.config.impersonate) return true;
 			if (state.oasToken !== null && !oidc.expired(OAS_TOKEN_EXP_AT)) return true;
 			return false;
 		},

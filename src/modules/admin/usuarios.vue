@@ -9,16 +9,154 @@
 			</div>
 			<div class="header-elements">
 				<span id="panel-usuarios-cmds">
-					<button type="button" @click.prevent="addOas()" title="Crear usuario OAS..." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
+					<a href="#" @click.prevent="addOas" title="Crear usuario OAS..." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
 						<b><i class="icon-database-add"></i></b> CREAR USUARIO OAS
-					</button>
-					<button type="button" @click.prevent="add()" title="Asociar usuario..." class="btn btn-main btn-labeled btn-labeled-left legitRipple ml-3">
+					</a>
+					<a href="#" @click.prevent="add" title="Asociar usuario..." class="btn btn-main btn-labeled btn-labeled-left legitRipple ml-3">
 						<b><i class="icon-database-add"></i></b> ASOCIAR USUARIO
-					</button>
+					</a>
 				</span>
 			</div>
 		</div>
-		<Usuario :userRoles="roles" :baseObj="baseObj" :saveFn="save" :cancelFn="cancel" id="panel-usuarios-data" />
+		<div class="row slide" id="panel-usuarios-oas">
+			<div class="col">
+				<div class="card main">
+					<div class="card-header main">Crear Usuario OAS</div>
+					<div class="card-body pb-0 pt-2">
+						<DxValidationGroup ref="vgUserOas">
+							<div class="row">
+								<div class="col-md-10">
+									<div class="row">
+										<div class="col">
+											<div class="form-group">
+												<label>Primer Nombre:</label>
+												<DxTextBox
+													:show-clear-button="true"
+													:value.sync="tercero.PrimerNombre"
+													class="form-control"
+													placeholder="Primer Nombre"
+													@value-changed="capitalize"
+												>
+													<DxValidator>
+														<DxRequiredRule />
+													</DxValidator>
+												</DxTextBox>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Segundo Nombre:</label>
+												<DxTextBox
+													:show-clear-button="true"
+													:value.sync="tercero.SegundoNombre"
+													class="form-control"
+													placeholder="Segundo Nombre"
+													@value-changed="capitalize"
+												>
+													<DxValidator>
+														<DxRequiredRule />
+													</DxValidator>
+												</DxTextBox>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Primer Apellido:</label>
+												<DxTextBox
+													:show-clear-button="true"
+													:value.sync="tercero.PrimerApellido"
+													class="form-control"
+													placeholder="Primer Apellido"
+													@value-changed="capitalize"
+												>
+													<DxValidator>
+														<DxRequiredRule />
+													</DxValidator>
+												</DxTextBox>
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Segundo Apellido:</label>
+												<DxTextBox
+													:show-clear-button="true"
+													:value.sync="tercero.SegundoApellido"
+													class="form-control"
+													placeholder="Primer Apellido"
+													@value-changed="capitalize"
+												>
+													<DxValidator>
+														<DxRequiredRule />
+													</DxValidator>
+												</DxTextBox>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Documento de Identidad:</label>
+										<DxNumberBox :show-clear-button="true" :value.sync="cedula.Numero" class="form-control" placeholder="Documento de Identidad">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxNumberBox>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Rol:</label>
+										<DxSelectBox
+											:grouped="false"
+											:data-source="roles"
+											:value.sync="baseObj.user_role_id"
+											:search-enabled="false"
+											placeholder="Seleccione..."
+											class="form-control"
+											display-expr="name"
+											value-expr="id"
+										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxSelectBox>
+									</div>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group">
+										<label>Nombre Completo:</label>
+										<DxTextBox :value.sync="nombre_completo" placeholder="Nombre Completo" class="form-control" :read-only="true" name="name" mode="text" />
+									</div>
+								</div>
+							</div>
+						</DxValidationGroup>
+					</div>
+					<div class="card-footer">
+						<div class="row">
+							<div class="col">
+								<DxButton @click="cancel" class="nb">
+									<template #default>
+										<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+											<b><i class="icon-database-remove"></i></b> CANCELAR
+										</span>
+									</template>
+								</DxButton>
+							</div>
+							<div class="col text-right">
+								<DxButton @click="saveOas" class="nb">
+									<template #default>
+										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+											GUARDAR <b><i class="icon-database-add"></i></b>
+										</span>
+									</template>
+								</DxButton>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<Usuario :userRoles="roles" :baseObj="baseObj" :saveFn="save" :cancelFn="cancel" id="panel-usuarios-data" ref="Usuario" />
 		<div class="row" id="panel-usuarios-grid">
 			<div class="col">
 				<div class="card" id="data-container">
@@ -93,6 +231,7 @@
 									data-type="string"
 								/>
 								<DxColumn
+									:sort-index="0"
 									:allow-filtering="true"
 									:allow-sorting="true"
 									:customize-text="nullText"
@@ -130,8 +269,9 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						<strong>baseObj:</strong> {{ JSON.stringify(baseObj, null, 3) }} <br />
-						<strong><a href="#" @click.prevent="getUserOasDetails('79602309')">getUserOasDetails</a></strong>
+						<span class="font-weight-semibold">baseObj:</span> {{ JSON.stringify(baseObj, null, 3) }} <br />
+						<span class="font-weight-semibold">tercero:</span> {{ JSON.stringify(tercero, null, 3) }} <br />
+						<span class="font-weight-semibold">cedula:</span> {{ JSON.stringify(cedula, null, 3) }} <br />
 					</div>
 				</div>
 			</div>
@@ -140,10 +280,8 @@
 </template>
 
 <script>
-/* eslint-disable vue/no-unused-components */
-let root = null;
-let $ = window.jQuery;
-// 202103081123: Grilla DX
+let root = null,
+	$ = window.jQuery;
 import DxStore from "@/store/dx";
 import {
 	DxColumn,
@@ -161,8 +299,7 @@ import {
 	DxSorting,
 	DxSummary,
 } from "devextreme-vue/data-grid";
-import { DxDateBox, DxFileUploader, DxButton, DxSelectBox, DxSwitch, DxTagBox, DxTextArea, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
-import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
+import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
 import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
 import { mapActions, mapGetters } from "vuex";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
@@ -172,11 +309,8 @@ export default {
 		DxColumn,
 		DxButton,
 		DxLookup,
-		DxNumberBoxButton,
 		DxColumnChooser,
 		DxDataGrid,
-		DxDateBox,
-		DxFileUploader,
 		DxFilterRow,
 		DxGrouping,
 		DxGroupItem,
@@ -189,9 +323,6 @@ export default {
 		DxSelectBox,
 		DxSorting,
 		DxSummary,
-		DxSwitch,
-		DxTagBox,
-		DxTextArea,
 		DxTextBox,
 		DxNumberBox,
 		DxValidationGroup,
@@ -205,15 +336,17 @@ export default {
 		grupo: null,
 		results: "",
 		testId: "1032479929",
-		isValid: false,
 		panelCmd: null,
 		panelGrid: null,
 		panelData: null,
+		panelOas: null,
+		actionTitle: null,
+		gridLoading: false,
 		baseObj: {
 			name: null,
 			identification_number: null,
 			oas_user_id: null,
-			user_role_id: 0,
+			user_role_id: null,
 			active: true,
 			created_by: 0,
 			updated_by: 0,
@@ -221,69 +354,85 @@ export default {
 				TerceroId: { Id: 0, NombreCompleto: null },
 			},
 		},
-		lookupData: ["Not Started", "Need Assistance", "In Progress"],
-		// searchButton: {
-		// 	text: "Buscar",
-		// 	onClick: async () => {
-		// 		// console.clear();
-		// 		let id = root.baseObj.identification_number;
-		// 		console.log("Documento", id);
-		// 		if (id !== null && id.toString().length > 0) {
-		// 			root.loadShow("Buscando usuario", "#data .card-body");
-		// 			// 202103121500: Verifica que no exista ya localmente
-		// 			let r = await root.getUser(id);
-		// 			console.log("r", r);
-		// 			if (r.length > 0) {
-		// 				root.loadHide();
-		// 				root.$info(`El usuario con el documento "${id}" ya se encuentra registrado.`, function() {});
-		// 			} else {
-		// 				root.getOasUser({
-		// 					doc: id,
-		// 					cb: function(usr) {
-		// 						// console.clear();
-		// 						console.log("User", usr);
-		// 						root.loadHide();
-		// 						if (typeof usr.Id !== "undefined") {
-		// 							root.baseObj.oas_user_id = usr.Id.toString();
-		// 							root.baseObj.name = usr.TerceroId.NombreCompleto;
-		// 						} else {
-		// 							root.$info(`No se encontró ningún usuario con el documento "${id}"`, function() {});
-		// 						}
-		// 					},
-		// 				});
-		// 			}
-		// 		}
-		// 	},
-		// },
+		tercero: {
+			NombreCompleto: null,
+			PrimerNombre: null,
+			SegundoNombre: null,
+			PrimerApellido: null,
+			SegundoApellido: null,
+			LugarOrigen: 0,
+			FechaNacimiento: "1992-05-29T12:00:00Z",
+			Activo: true,
+			TipoContribuyenteId: {
+				Id: 1,
+				Nombre: "PERSONA NATURAL",
+				Descripcion: "",
+				CodigoAbreviacion: "P_NATURAL",
+				Activo: true,
+			},
+		},
+		cedula: {
+			Numero: null,
+			DigitoVerificacion: 0,
+			CiudadExpedicion: 0,
+			FechaExpedicion: null,
+			Activo: true,
+			TerceroId: {},
+			TipoDocumentoId: {
+				Id: 3,
+				Nombre: "CÉDULA DE CIUDADANÍA",
+				Descripcion: "CÉDULA DE CIUDADANÍA",
+				CodigoAbreviacion: "CC",
+				Activo: true,
+				NumeroOrden: 0,
+			},
+		},
 	}),
-	mounted() {
+	created() {
 		root = this;
-		console.log("Roles", root.roles);
-		console.log("User", root.user);
+	},
+	mounted() {
 		root.loaderElement = ".card-body.grid";
 		root.loaderMessage = "Cargando usuarios";
 		root.baseObj.created_by = root.user_id;
 		root.baseObj.updated_by = root.user_id;
 		let root_id = "#panel-usuarios";
-		root.panelCmd = $(`${root_id}-cmds`);
-		root.panelGrid = $(`${root_id}-grid`);
-		root.panelData = $(`${root_id}-data`);
-		console.log("User", root.user);
+		root.panelCmd = `${root_id}-cmds`;
+		root.panelGrid = `${root_id}-grid`;
+		root.panelData = `${root_id}-data`;
+		root.actionTitle = `${root_id}-data #action-title`;
+		root.panelOas = `${root_id}-oas`;
+		// 202104121825: TO para esperar la cargar de módulos
+		setTimeout(function() {
+			// DxNumberBox del documento de identidad, niveles de ref
+			root.nbId = root.$refs.Usuario.$refs.nbId.instance.instance();
+			console.log("root.nbId options =>", root.nbId.option());
+		}, 2000);
 	},
 	computed: {
 		...mapGetters("usuario", ["getUserOasDetails"]),
+		nombre_completo: () => {
+			let n = [];
+			let t = root.tercero;
+			if (t.PrimerNombre !== null) n.push(t.PrimerNombre);
+			if (t.SegundoNombre !== null) n.push(t.SegundoNombre);
+			if (t.PrimerApellido !== null) n.push(t.PrimerApellido);
+			if (t.SegundoApellido !== null) n.push(t.SegundoApellido);
+			root.tercero.NombreCompleto = n.join(" ");
+			return root.tercero.NombreCompleto;
+		},
 		dataSource: function() {
 			// // console.clear();
 			return DxStore({
 				key: ["id"],
 				endPoint: "users",
 				onLoading: function(loadOptions) {
-					root.mode = "loading";
 					console.log("loadOptions", loadOptions);
 					$("#btn-add").fadeOut();
 					console.log(root._sep);
 					console.log("onLoading");
-					root.loadShow();
+					root.gridLoading = true;
+					root.loaderShow();
 					setTimeout(function() {
 						console.log("SCROLL!");
 						root.scrollTop();
@@ -300,17 +449,19 @@ export default {
 						field: "identification_number",
 						cb: function(result) {
 							console.log(root._sep);
-							root.mode = null;
 							console.log("RESULTADOS", result);
 							root.grid.getVisibleRows().forEach((row) => {
 								var filtered = result.filter((o) => o.id === row.data.id);
 								if (filtered.length > 0) {
-									// console.log("filtered[0]", filtered[0]);
 									Object.assign(row.data, filtered[0]);
 									root.grid.repaintRows([row.rowIndex]);
 								}
 							});
-							$("#btn-add").fadeIn();
+							console.log("FINALIZÓ CARGA DE DETALLES!");
+							if (root.gridLoading) {
+								root.gridLoading = false;
+								root.loaderHide();
+							}
 						},
 					});
 				},
@@ -318,67 +469,106 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("auth/usuario", ["getUser", "saveUser", "updateUser", "getOasUsers", "getOasUser"]),
+		...mapActions("auth/usuario", ["getUser", "saveUser", "saveUserOas", "updateUser", "getOasUsers", "getOasUser"]),
 		search() {
-			// console.clear();
 			console.log("DOC", this.baseObj.identification_number);
 		},
+		userExists: async (id) => {
+			let r = await root.getUser(id);
+			if (r.length > 0) {
+				root.loaderHide();
+				root.$info(`El usuario con el documento "${id}" ya se encuentra registrado.`);
+				return true;
+			} else return false;
+		},
+		save(validationGroup) {
+			if (validationGroup === "skip" || validationGroup.validate().isValid) {
+				console.log("Save => Usuario Enviado =>", root.baseObj);
+				if (!validationGroup === "skip") root.loaderShow("Guardando usuario", root.panelData);
+				let fn = root.saveUser;
+				if (root.mode == "edit") {
+					fn = root.updateUser;
+					root.baseObj.updated_by = root.user_id;
+				} else root.baseObj.updated_by = root.user_id;
+				fn({
+					user: root.baseObj,
+					cb: function(result) {
+						console.log("USUARIO GUARDADO! =>", result);
+						root.cancel();
+						root.grid.refresh();
+					},
+				});
+			}
+		},
+		saveOas: async () => {
+			console.clear();
+			let valid = root.$refs.vgUserOas.instance.validate().isValid;
+			console.log("isValid", valid);
+			if (valid) {
+				root.loaderMessage = "Creando Usuario OAS";
+				root.loaderElement = "#panel-usuarios-oas .card";
+				root.loaderShow();
+				let exist = await root.userExists(root.cedula.Numero);
+				console.log("EXISTE?", exist);
+				if (!exist)
+					root.saveUserOas({
+						tercero: root.tercero,
+						cedula: root.cedula,
+						cb: function(result) {
+							console.log("USUARIO OAS GUARDADO! Recibido =>", result);
+							root.baseObj.name = result.TerceroId.NombreCompleto;
+							root.baseObj.identification_number = result.Numero;
+							root.baseObj.oas_user_id = result.TerceroId.Id;
+							root.baseObj.active = true;
+							root.save("skip");
+						},
+					});
+			}
+		},
+		addOas() {
+			root.mode = "add-oas";
+			$(root.panelCmd).fadeOut();
+			$(root.panelGrid).fadeOut(function() {
+				$(root.panelOas).fadeIn();
+			});
+		},
 		add() {
-			console.log("root.panelData", root.panelData);
-			// root.panelData.find(".card-header").html(`<i class="icon-database-add"></i>&nbsp;&nbsp;Creando ${tit}`);
-			root.panelCmd.fadeOut(window.speed);
-			root.panelGrid.fadeOut(window.speed, function() {
-				root.panelData.fadeIn(window.speed, function() {});
+			root.mode = "add";
+			// 202104121835: Cambia el numberbox en el sub nivel
+			root.nbId.option("readOnly", false);
+			$(root.actionTitle).text("Asociar usuario");
+			$(root.panelCmd).fadeOut();
+			$(root.panelGrid).fadeOut(function() {
+				$(root.panelData).fadeIn();
 			});
 		},
 		edit(data) {
-			// console.clear();
+			root.mode = "edit";
 			console.log("data", data);
 			data["identification_number"] = parseInt(data["identification_number"]);
 			if (typeof data.oas_details.TerceroId === "undefined") {
 				data["oas_details"] = { TerceroId: { Id: 0, NombreCompleto: null } };
+			} else {
+				data.oas_id = data.oas_details.TerceroId.Id;
+				data.name = data.oas_details.TerceroId.NombreCompleto;
 			}
+			// 202104121835: Cambia el numberbox en el sub nivel
+			root.nbId.option("readOnly", true);
 			this.baseObj = window.vm.$clone(data);
-			// root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;${tit}`);
-			root.panelCmd.fadeOut(window.speed);
-			root.panelGrid.fadeOut(window.speed, function() {
-				root.panelData.fadeIn(window.speed, function() {});
+			$(root.actionTitle).text("Editar Usuario");
+			$(root.panelCmd).fadeOut();
+			$(root.panelGrid).fadeOut(function() {
+				$(root.panelData).fadeIn();
 			});
 		},
 		cancel() {
-			console.log("CANCEL!");
-			$("#data-panel-usuario").fadeOut(window.speed, function() {
-				$("#btn-add,#panel-usuarios").fadeIn(window.speed, function() {});
-			});
-		},
-		roleText(cellInfo) {
-			let res = "--";
-			// console.log("root.roles", root.roles);
-			if (typeof cellInfo.value !== undefined && cellInfo.value !== null) {
-				var r = root.roles.filter((o) => o.id.toString() === cellInfo.valueText);
-				// console.log("cellInfo.valueText", cellInfo.valueText);
-				if (r.length > 0) res = r[0].name;
-			}
-			return res;
-		},
-		dateText(cellInfo) {
-			if (typeof cellInfo.value !== undefined && cellInfo.value !== null) {
-				return cellInfo.valueText;
-			} else {
-				return "--";
-			}
-		},
-		async save() {
-			// console.clear();
-			this.baseObj.created_by = root.user_id;
-			console.log("Obj", this.baseObj);
-			root.loadShow("Buscando usuario", "#data .card-body");
-			let r = await root.saveUser(this.baseObj);
-			console.log("Saved", r);
-			root.loadHide();
-			root.grid.refresh();
-			root.$info(`El usuario con el documento "${this.baseObj.identification_number}" se asoció exitosamente!`, function() {
-				root.cancel();
+			console.log("root.mode =>", root.mode);
+			$(root.mode == "add-oas" ? root.panelOas : root.panelData).fadeOut(function() {
+				$(root.panelCmd).fadeIn();
+				$(root.panelGrid).fadeIn(function() {
+					root.$refs.vgUserOas.instance.reset();
+					root.mode = null;
+				});
 			});
 		},
 		enable(id) {
@@ -398,34 +588,32 @@ export default {
 					let usr = data.data;
 					usr.active = state;
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
-					root.loadShow();
+					root.loaderShow();
 					root.updateUser({
 						user: usr,
 						cb: function(result) {
 							console.log("Result", result);
 							root.grid.refresh();
-							root.loadHide();
+							root.loaderHide();
 						},
 					});
 				}
 			});
 		},
-
 		gridInit(e) {
-			let root = this;
 			root.grid = e.component;
 			// 202103311458: https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Events/
 			root.grid.on({
 				optionChanged: (e) => {
 					if (e.fullName == "paging.pageIndex") {
 						console.log("optionChanged", e);
-						root.loadShow();
+						root.loaderShow();
 					}
 				},
 				contentReady: () => {
 					// console.log("contentReady", e);
-					// console.log("root.mode", root.mode);
-					if (root.mode == null) root.loadHide();
+					console.log("root.gridLoading", root.gridLoading);
+					if (!root.gridLoading) root.loaderHide();
 				},
 				editorPreparing: (e) => {
 					console.log("onEditorPreparing", e);

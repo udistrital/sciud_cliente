@@ -13,12 +13,12 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Articulo.." class="btn btn-main btn-labeled btn-labeled-left " id="btn-add">
+								<button type="button" @click.prevent="add()" title="Nuevo Articulo.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> NUEVO ARTICULO
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al Artículo.." class="btn btn-main btn-labeled btn-labeled-left " id="btn-add">
+								<button type="button" @click.prevent="retorno()" title="Volver al Artículo.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-arrow-left"></i></b> VOLVER A ARTÍCULOS
 								</button>
 							</span>
@@ -27,6 +27,7 @@
 				</div>
 			</div>
 		</div>
+		<Documentos id="panel-articulo-documentos" end-point="papers" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
 		<Participantes id="panel-articulo-participantes" end-point="papers" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -282,7 +283,7 @@
 							:allowed-page-sizes="dgPageSizes"
 							info-text="Página {0} de {1} ({2} artículos)"
 						/>
-						<DxSearchPanel :visible="totaCount > 0" :highlight-case-sensitive="true" />
+						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 						<DxColumn
 							data-field="id"
@@ -314,7 +315,15 @@
 							:allow-grouping="false"
 							:allow-filtering="false"
 						/>
-						<DxColumn data-field="category_name" caption="Categoría" data-type="string" alignment="center" :visible="true" :allow-grouping="true" width="100" />
+						<DxColumn
+							data-field="category_name"
+							caption="Categoría"
+							data-type="string"
+							alignment="center"
+							:visible="false"
+							:allow-grouping="true"
+							width="100"
+						/>
 						<DxColumn data-field="colciencias_call_name" caption="Colciencias" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="doi" caption="DOI" data-type="string" alignment="center" :visible="false" :allow-grouping="false" :allow-filtering="false" />
 						<DxColumn
@@ -425,7 +434,7 @@
 <script>
 /* eslint-disable no-unused-vars */
 /* eslint-disable vue/no-unused-components */
-let art_root = null;
+let root = null;
 let $ = window.jQuery;
 import DxStore from "@/store/dx";
 import {
@@ -492,6 +501,7 @@ export default {
 	data: () => ({
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
+		totaCount: 0,
 		grid: null,
 		mode: null,
 		unidad: null,
@@ -504,12 +514,11 @@ export default {
 		panelData: null,
 		panelGrid: null,
 		panelParticipantes: null,
-		panelDocumentos: null,
+		panelDocs: null,
 		panelCmds: null,
 		baseEntity: null,
 		docLink: null,
 		firstLoad: true,
-		validationGroup: null,
 		now: new Date(),
 		baseEnt: null,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
@@ -534,41 +543,42 @@ export default {
 			volume: null,
 		},
 	}),
-	mounted() {
+	created() {
 		// console.clear();
-		art_root = this;
-		art_root.baseEnt = this.$clone(this.baseObj);
-		art_root.getConvocatorias();
-		art_root.tipos = art_root.subtypesByType(5);
-		art_root.subtipos = art_root.subtypesByType(12);
-		art_root.tiposDocumento = art_root.subtypesByType(23);
-		console.log("art_root.tipos", art_root.tipos);
-		art_root.validationGroup = art_root.$refs.basicGroup.instance;
-		// art_root.validationGroup = art_root.$refs.basicGroup.instance;
-		art_root.panelData = $("#panel-articulo .data");
-		art_root.panelGrid = $("#panel-articulo .grid");
-		art_root.paneldocs = $("#panel-articulo .docs");
-		art_root.panelCmds = $("#panel-articulo .cmds");
-		art_root.panelCmdBack = $("#panel-articulo .cmds-back");
-		art_root.loaderMessage = "Cargando Artículos";
-		art_root.loaderElement = "#panel-articulo .data";
+		root = this;
+		root.baseEnt = this.$clone(this.baseObj);
+		root.getConvocatorias();
+		root.tipos = root.subtypesByType(5);
+		root.subtipos = root.subtypesByType(12);
+		root.tiposDocumento = root.subtypesByType(23);
+	},
+	mounted() {
+		console.log("root.tipos", root.tipos);
+		root.panelData = $("#panel-articulo .data");
+		root.panelGrid = $("#panel-articulo .grid");
+		root.panelCmds = $("#panel-articulo .cmds");
+		root.panelCmdBack = $("#panel-articulo .cmds-back");
+		root.panelDocs = $("#panel-articulo-documentos");
+		root.loaderMessage = "Cargando Artículos";
+		root.loaderElement = "#panel-articulo .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
-			console.log("art_root.group", this.group);
+			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
 				endPoint: `research_units/${this.group.id}/papers`,
 				onLoading: function(loadOptions) {
-					art_root.loadShow("Cargando Artículos", art_root.panelGrid);
+					root.loaderShow("Cargando Artículos", root.panelGrid);
 				},
 				onLoaded: function(results, baseEntity) {
+					// console.clear();
 					console.log("results", results);
-					art_root.totaCount = results.totalCount;
-					art_root.loadHide();
+					root.totaCount = results.totalCount;
+					root.loaderHide();
 				},
 			});
 		},
@@ -580,149 +590,122 @@ export default {
 
 		participantes(data) {
 			// console.clear();
-			art_root.section = "participantes";
+			root.section = "participantes";
 			console.log("participantes", data.row.data);
-			art_root.baseObj = data.row.data;
-			art_root.panelCmds.fadeOut(window.speed);
-
+			root.baseObj = data.row.data;
+			// 202104111513: Error
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			let rd = data.row.data;
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
+			root.baseObj = rd;
+			root.panelCmds.fadeOut();
 			$("#panel-articulo .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
-			art_root.panelParticipantes = $("#panel-articulo-participantes");
-			art_root.panelGrid.fadeOut(window.speed, function(params) {
-				art_root.panelCmdBack.fadeIn(window.speed);
-				art_root.panelParticipantes.fadeIn(window.speed, function(params) {});
+			root.panelParticipantes = $("#panel-articulo-participantes");
+			console.log("root.panelParticipantes", root.panelParticipantes.length);
+			$("#panel-articulo-documentos").hide();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelCmdBack.fadeIn();
+				$("#panel-articulo-participantes .grid").fadeIn();
+				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
 
 		documentos(data) {
 			// console.clear();
 			console.log("documentos", data.row.data);
-			art_root.section = "documentos";
-			art_root.baseObj = data.row.data;
-			$("#panel-articulo .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
-			art_root.panelCmds.fadeOut(window.speed);
-			art_root.panelGrid.fadeOut(window.speed, function(params) {
-				art_root.paneldocs.fadeIn(window.speed, function(params) {});
+			root.section = "documentos";
+			// 202104111513: Error
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			let rd = data.row.data;
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
+			root.baseObj = rd;
+			$("#panel-articulo .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.title}`);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelCmdBack.fadeIn();
+				$("#panel-articulo-documentos").fadeIn(function(params) {});
 			});
 		},
 
 		retorno() {
-			console.log(art_root.section);
-			if (art_root.section == "participantes") {
-				art_root.panelCmdBack.fadeOut();
-				art_root.panelParticipantes.fadeOut(window.speed, function(params) {
-					art_root.panelCmds.fadeIn();
-					art_root.panelGrid.fadeIn(window.speed, function(params) {});
+			console.log(root.section);
+			root.panelCmdBack.fadeOut();
+			if (root.section == "participantes") {
+				root.panelParticipantes.fadeOut(function(params) {
+					root.panelCmds.fadeIn();
+					root.panelGrid.fadeIn(function(params) {});
 				});
 			} else {
 				console.log("Regresar!");
-				art_root.panelCmdBack.fadeOut();
-				art_root.paneldocs.fadeOut(window.speed, function(params) {
-					art_root.panelCmds.fadeIn();
-					art_root.panelGrid.fadeIn(window.speed, function(params) {});
+				console.log("root.panelDocs", root.panelDocs);
+				$("#panel-articulo-documentos").fadeOut(function(params) {
+					root.panelCmds.fadeIn();
+					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
 			$("#panel-articulo .item-title").html("");
-			art_root.baseObj = this.$clone(art_root.baseEnt);
-			art_root.section = null;
+			root.baseObj = this.$clone(root.baseEnt);
+			root.section = null;
 		},
 
 		save() {
 			console.log(this.$sep);
-			var result = art_root.validationGroup.validate();
+			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
 			if (result.isValid) {
 				console.log("VALID!");
-				art_root.scrollTop();
-				art_root.panelCmds.fadeOut();
-				// art_root.loadingElement = ;
-				let msg = (art_root.mode == "add" ? "Creando" : "Actualizando") + " Artículo";
-				art_root.loadShow(msg, art_root.panelData);
-				if (art_root.mode == "add") art_root.baseObj.created_by = art_root.user_id;
-				if (art_root.mode == "edit") art_root.baseObj.updated_by = art_root.user_id;
+				root.scrollTop();
+				root.panelCmds.fadeOut();
+				// root.loaderElement = ;
+				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Artículo";
+				root.loaderShow(msg, root.panelData);
+				if (root.mode == "add") root.baseObj.created_by = root.user_id;
+				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
 				let dto = {
-					unidadId: art_root.group.id,
-					paper: art_root.baseObj,
+					unidadId: root.group.id,
+					paper: root.baseObj,
 					cb: function(item) {
 						console.log("item", item);
-						art_root.grid.refresh();
-						art_root.loadHide();
-						art_root.cancel();
+						root.grid.refresh();
+						root.loaderHide();
+						root.cancel();
 					},
 				};
-				console.log("art_root.mode", art_root.mode);
-				if (art_root.mode == "edit") art_root.objUpdate(dto);
-				else art_root.objSave(dto);
+				console.log("root.mode", root.mode);
+				if (root.mode == "edit") root.objUpdate(dto);
+				else root.objSave(dto);
 			}
 		},
 
 		edit(data) {
-			art_root.mode = "edit";
+			root.mode = "edit";
 			console.log("data", data);
-			art_root.baseObj = data;
+			root.baseObj = data;
 
-			art_root.panelCmds.fadeOut(window.speed);
-			art_root.panelGrid.fadeOut(window.speed, function(params) {
-				art_root.panelData.fadeIn(window.speed, function(params) {});
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelData.fadeIn(function(params) {});
 			});
 		},
 
 		add() {
 			console.log("ADD");
-			art_root.mode = "add";
-			art_root.baseObj = this.$clone(this.baseEnt);
-			art_root.panelCmds.fadeOut(window.speed);
-			art_root.panelGrid.fadeOut(window.speed, function(params) {
-				art_root.panelData.fadeIn(window.speed, function(params) {});
+			root.mode = "add";
+			root.baseObj = this.$clone(this.baseEnt);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelData.fadeIn(function(params) {});
 			});
 		},
 
 		cancel() {
 			console.log("CANCEL!");
-			art_root.panelData.fadeOut(window.speed, function(params) {
-				art_root.panelCmds.fadeIn(window.speed);
-				art_root.panelGrid.fadeIn(window.speed, function(params) {});
+			root.panelData.fadeOut(function(params) {
+				root.panelCmds.fadeIn();
+				root.panelGrid.fadeIn(function(params) {});
 			});
-		},
-
-		fileReady(e) {
-			// console.clear();
-			// console.log(e);
-			var el = $(e.element);
-			el.find(".dx-fileuploader-upload-button,.dx-fileuploader-input-container").hide();
-			var btn = el.find(".dx-fileuploader-button.dx-button-has-text:first");
-			btn
-				.removeClass("dx-fileuploader-button dx-button dx-button-normal dx-button-mode-contained dx-widget dx-button-has-text")
-				.addClass("btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100");
-			// console.log(btn.html());
-			btn.html('<b><i class="icon-link"></i></b>' + btn.find(".dx-button-text").html());
-			// btn-labeled btn-labeled-left legitRipple
-			// el.find(".dx-fileuploader-button").hide();
-		},
-
-		fileSelected(e) {
-			let doc = { name: e.element.id, file: e.value[0] };
-			// this.setDocument(doc);
-			// console.clear();
-			console.log("doc", doc);
-			// console.log(e);
-			// var el = $(e.element);
-			// var files = e.value;
-			// if (files.length > 0) {
-			// 	el.find(".btn").hide();
-			// 	el.find(".dx-fileuploader-upload-button").hide();
-			// 	el.find(".dx-fileuploader-input-wrapper").hide();
-			// 	var ei = el.find(".dx-fileuploader-file-name");
-			// 	// ei.html("<i class='icon-file-pdf'></i>&nbsp;" + ei.html());
-			// 	var w = Math.round(el.parents(".form-grupo:first").width()) - 75;
-			// 	// console.log("w", w);
-			// 	// el.find(".dx-fileuploader-file-status-message").css({
-			// 	//   width: "100%",
-			// 	// });
-			// 	ei.removeAttr("style").css({ "max-width": w + "px" });
-			// } else {
-			// 	el.find(".dx-fileuploader-input-wrapper").show();
-			// 	el.find(".btn").show();
-			// }
 		},
 
 		active(data, state) {
@@ -735,9 +718,9 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
-					art_root.loadShow(`${am}`, art_root.panelGrid);
+					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
-						url: `research_units/${art_root.group.id}/papers/${data.data.id}/active`,
+						url: `research_units/${root.group.id}/papers/${data.data.id}/active`,
 						paper: {
 							paper: {
 								active: state,
@@ -746,17 +729,17 @@ export default {
 						},
 						cb: function(result) {
 							console.log("Result", result);
-							art_root.grid.refresh();
-							art_root.loadHide();
-							// art_root.cancel(validationGroup);
-							// $("#data").fadeOut(window.speed, function () {
-							// $("#grid").fadeIn(window.speed, function () {});
+							root.grid.refresh();
+							root.loaderHide();
+							// root.cancel(validationGroup);
+							// $("#data").fadeOut(function () {
+							// $("#grid").fadeIn(function () {});
 							// });
 						},
 					};
 					console.log("dto", dto);
-					art_root.elementoActive(dto);
-					art_root.loadHide();
+					root.elementoActive(dto);
+					root.loaderHide();
 				}
 			});
 		},
@@ -766,13 +749,13 @@ export default {
 		},
 
 		onContentReady() {
-			$(".commands a").click(function() {
-				console.log("Come on lets show the dropdown!!");
-			});
-			var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
-			var b = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(b);
+			// $(".commands a").click(function() {
+			// 	console.log("Come on lets show the dropdown!!");
+			// });
+			// var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
+			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
+			// var b = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
+			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(b);
 		},
 	},
 };

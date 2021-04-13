@@ -506,8 +506,8 @@ export default {
 		console.log(this.$sep);
 		console.log("_basicos.vue mounted!");
 		root.postMount = false;
-		root.loadingElement = "#data";
-		root.loadingMessage = "Guardando Grupo<br/>de Investigación";
+		root.loaderElement = "#data";
+		root.loaderMessage = "Guardando Grupo<br/>de Investigación";
 		root.validationGroup = root.$refs.basicGroup.instance;
 		root.getCine(root.getFacultades());
 	},

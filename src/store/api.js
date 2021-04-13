@@ -28,7 +28,7 @@ export default (source = "rest", args = {}) => {
 			});
 			myDialog.show().then((dialogResult) => {
 				console.log(dialogResult.buttonText);
-				window.vm.loadHide();
+				window.vm.loaderHide();
 			});
 		}
 	};
@@ -64,7 +64,8 @@ export default (source = "rest", args = {}) => {
 		base = window.config.api.oas;
 		axiosConfig.baseURL = base.url;
 		// 202010211336: Usa 'token_value' si esta definido en 'config.json', de lo contrario consulta locaStorage
-		token = window.config.impersonate ? base.token_value : window.localStorage.getItem(base.token_name);
+		// 202104121525: Se elimina 'impersonate'
+		token = window.localStorage.getItem(base.token_name);
 		// 202103120344: Si se recibe un token en args lo usa
 		if (typeof args.token !== "undefined") token = args.token;
 		// console.log("tokenOas", token);

@@ -2,6 +2,31 @@
 import { custom } from "devextreme/ui/dialog";
 import retina from "retinajs";
 
+//#region jQuery
+
+// 202104121500: Define la velocidad por defecto de las transiciones
+// https://stackoverflow.com/a/4086780
+jQuery.fx.speeds._default = 500;
+// console.log("jQuery.fx.speeds", jQuery.fx.speeds);
+
+jQuery.fn.clear = function(clearHidden = false) {
+	return this.each(function() {
+		var els = window.jQuery(this).find("input, textarea, select");
+		els.each(function(index) {
+			var type = this.type,
+				tag = this.tagName.toLowerCase();
+			if (type === "hidden" && clearHidden !== undefined && clearHidden) this.value = "";
+			else if (type === "text" || type === "password" || tag === "textarea") this.value = "";
+			else if (type === "checkbox" || type === "radio") this.checked = false;
+			else if (tag === "select") this.selectedIndex = 0;
+		});
+	});
+};
+
+//#endregion
+
+//#region Vue
+
 // This exports the plugin object.
 export default {
 	// 202009240640: Disable console
@@ -489,3 +514,5 @@ export default {
 		};
 	},
 };
+
+//#endregion

@@ -18,9 +18,6 @@ const store = {
 			if (state.facultades.length <= 0) {
 				console.log("rootState", rootState);
 				// TODO: 202009240908: Ajustar al tener tokens integrados
-				// let u = rootState.auth.user;
-				// let uType = typeof u === "string" ? JSON.parse(u).type : u.type;
-				// let imp = uType === "local" || uType === "impersonated";
 				// 202010220138: Si es local usa el json local
 				// 202010211342: En 'api' se valida la presencia de un token local
 				// api(imp ? "local" : "oas")

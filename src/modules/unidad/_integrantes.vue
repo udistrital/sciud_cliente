@@ -351,7 +351,7 @@ export default {
 				let id = root.baseObj.identification_number;
 				console.log("Documento", id);
 				if (id !== null && id.toString().length > 0) {
-					root.loadShow("Buscando usuario");
+					root.loaderShow("Buscando usuario");
 
 					// 202103171618: Verifica que no exista en el grupo actual ->  80192128 1000136995
 					let exists = false;
@@ -365,7 +365,7 @@ export default {
 					});
 					if (exists) {
 						root.$info(`El usuario con el documento "${id}" ya se<br>encuentra registrado como investigador en el grupo.`);
-						root.loadHide();
+						root.loaderHide();
 						return false;
 					}
 
@@ -376,7 +376,7 @@ export default {
 						m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
 						m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
 						root.$info(m);
-						root.loadHide();
+						root.loaderHide();
 						return false;
 					}
 
@@ -384,7 +384,7 @@ export default {
 					let r = await root.getResearcher(id);
 					console.log("r", r);
 					if (r.length > 0) {
-						root.loadHide();
+						root.loaderHide();
 						root.$info(`El usuario con el documento "${id}" ya se encuentra registrado.`, function() {});
 					} else {
 						root.getOasUser({
@@ -392,7 +392,7 @@ export default {
 							cb: function(usr) {
 								// console.clear();
 								console.log("User", usr);
-								root.loadHide();
+								root.loaderHide();
 								if (typeof usr.Id !== "undefined") {
 									root.baseObj.oas_user_id = usr.Id.toString();
 									root.baseObj.name = usr.TerceroId.NombreCompleto;
@@ -449,19 +449,19 @@ export default {
 			root.baseObj.identification_number = parseInt(data.oas_details.Numero);
 			root.baseObj.role_id = parseInt(data.role_id);
 			$(".card-header.main").html("Editando integrante");
-			$("#panel-integrantes").fadeOut(window.speed, function() {
-				$("#panel-integrantes-data").fadeIn(window.speed, function() {});
+			$("#panel-integrantes").fadeOut(function() {
+				$("#panel-integrantes-data").fadeIn();
 			});
 		},
 		userAdd() {
 			$(".card-header.main").html("Nuevo integrante");
-			$("#panel-integrantes").fadeOut(window.speed, function() {
-				$("#panel-integrantes-data").fadeIn(window.speed, function() {});
+			$("#panel-integrantes").fadeOut(function() {
+				$("#panel-integrantes-data").fadeIn();
 			});
 		},
 		userCancel() {
-			$("#panel-integrantes-data").fadeOut(window.speed, function() {
-				$("#panel-integrantes").fadeIn(window.speed, function() {});
+			$("#panel-integrantes-data").fadeOut(function() {
+				$("#panel-integrantes").fadeIn();
 			});
 		},
 		async userSave() {
@@ -470,10 +470,10 @@ export default {
 			var result = this.$refs.vGroup.instance.validate();
 			console.log("result", result);
 			if (result.isValid) {
-				root.loadShow("Buscando usuario", "#data .card-body");
+				root.loaderShow("Buscando usuario", "#data .card-body");
 				let r = await root.saveUser(this.baseObj);
 				console.log("Saved", r);
-				root.loadHide();
+				root.loaderHide();
 				root.grid.refresh();
 				root.$info(`El usuario con el documento "${this.baseObj.identification_number}" se asoció exitosamente!`, function() {
 					root.cancel();
@@ -481,7 +481,7 @@ export default {
 			}
 		},
 		loadEnd() {
-			this.loadHide();
+			this.loaderHide();
 			this.loading = false;
 			cmds = $("#tab-integrantes .row.cmds");
 
@@ -538,7 +538,7 @@ export default {
 			console.log("e", e);
 			if (!root.loading) {
 				root.loading = true;
-				root.loadShow("Cargando integrantes", $("#panel-unidades .card-body")[0]);
+				root.loaderShow("Cargando integrantes", $("#panel-unidades .card-body")[0]);
 				let items = [];
 				root.grid
 					.getVisibleRows()

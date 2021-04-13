@@ -561,3 +561,57 @@ span.cmds {
 		font-weight: 400;
 	}
 }
+
+.group-detail {
+	.title {
+		line-height: 2.4rem;
+		font-size: 2.3rem;
+		font-weight: 300;
+		letter-spacing: -2.8px;
+		i {
+			line-height: 2.4rem;
+			font-weight: 500;
+			color: $main-color-500;
+			font-size: 2rem;
+			margin-right: 0.15rem;
+		}
+	}
+	.sub-title {
+		line-height: 1.8rem;
+		font-size: 1.8rem;
+		font-weight: 400;
+		letter-spacing: -1.8px;
+		i {
+			font-weight: 500;
+			color: $main-color-500;
+			font-size: 1.4rem;
+			margin-right: 0.15rem;
+		}
+	}
+	fieldset {
+		margin: 0;
+		border: 1px solid #ccc;
+		padding: 0.5rem 1rem;
+		border-radius: 5px;
+
+		legend {
+			margin: 0;
+			padding: 0;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+			padding-bottom: 0.5rem;
+			width: auto;
+			color: $main-color-500;
+			line-height: 1.5rem;
+			font-size: 1.5rem;
+			font-weight: 400;
+			letter-spacing: -1.2px;
+			border: none;
+		}
+	}
+	.sep {
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid red;
+	}
+}

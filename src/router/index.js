@@ -35,16 +35,40 @@ let routes = new router({
 			component: () => import("@/components/global/login_denied.vue"),
 		},
 		{
-			path: "/item",
-			name: "item",
-			meta: { title: "Item", requiresAuth: true },
-			component: () => import("@/components/item.vue"),
-		},
-		{
-			path: "/unidad",
 			name: "unidad",
+			path: "/unidad",
 			meta: { title: "Unidades de Investigación", requiresAuth: true },
 			component: () => import("@/modules/unidad/"),
+		},
+		{
+			name: "unidad-nueva",
+			path: "/unidad/nueva",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/unidad/informacion"),
+		},
+		{
+			name: "unidad-info",
+			path: "/unidad/:unidadId",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/unidad/informacion"),
+		},
+		{
+			name: "unidad-documentos",
+			path: "/unidad/:unidadId/documentos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/unidad/documentos"),
+		},
+		{
+			name: "unidad-integrantes",
+			path: "/unidad/:unidadId/integrantes",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/unidad/integrantes"),
+		},
+		{
+			name: "unidad-produccion",
+			path: "/unidad/:unidadId/produccion",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/unidad/produccion"),
 		},
 		{
 			path: "/convocatoria",

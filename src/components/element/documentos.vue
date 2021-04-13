@@ -1,7 +1,7 @@
 <template>
-	<div class="col p-3" id="producto-documentos">
+	<div class="col p-0 m-0 docs slide" :id="id">
 		<DxValidationGroup ref="basicGroup">
-			<div class="row dataDoc slidex" v-if="editMode">
+			<div class="row data slide" v-if="editMode">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">Agregar Documento</div>
@@ -40,7 +40,7 @@
 
 									<div class="col-md-3">
 										<div class="form-group">
-											<label>Doc. de constitución:</label>
+											<label>Documento:</label>
 											<a href="#" target="_blank" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
 												<b><i class="icon-link"></i></b> DOCUMENTO ACTUAL
 											</a>
@@ -67,7 +67,7 @@
 						<div class="card-footer">
 							<div class="row">
 								<div class="col">
-									<DxButton @click="userCancel" class="nb">
+									<DxButton @click="documentCancel" class="nb">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
 												<b><i class="icon-database-remove"></i></b> CANCELAR
@@ -90,29 +90,18 @@
 				</div>
 			</div>
 		</DxValidationGroup>
-		<div class="row gridDoc">
+		<div class="row grid">
 			<div class="col">
-				<div class="page-header header-elements-md-inline">
-					<div class="page-title d-flex">
-						<h2>
-							<i class="icon-database mr-1 color-main-600"></i>
-							<span class="font-weight-semibold">Documentos Guardados</span>
-						</h2>
-					</div>
-					<div class="header-elements">
-						<button type="button" @click.prevent="documentAdd()" title="Regresar al listado" class="btn btn-main  " id="btn-add">
-							<b><i class="dx-icon-chevrondoubleleft"></i></b> Agregar Documento
-						</button>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col">
+						<button type="button" @click.prevent="documentAdd()" title="Nuevo Documento.." class="btn btn-main btn-labeled btn-labeled-left" id="btn-add-doc">
+							<b><i class="icon-database-add"></i></b> NUEVO DOCUMENTO
+						</button>
 						<DxDataGrid
 							class="main"
 							width="100%"
 							:dataSource="dataSource"
 							@initialized="gridInit"
-							@content-ready="onContentReady"
 							:allow-column-reordering="false"
 							:remote-operations="true"
 							:hover-state-enabled="true"
@@ -120,7 +109,7 @@
 							:show-borders="false"
 						>
 							<DxExport :enabled="false" />
-							<DxColumnChooser :enabled="true" mode="dragAndDrop" />
+							<DxColumnChooser :enabled="false" mode="dragAndDrop" />
 							<DxSorting mode="multiple" /><!-- single, multiple, none" -->
 							<DxPaging :page-size="10" />
 							<!-- <DxFilterRow :visible="false" /> -->
@@ -137,7 +126,7 @@
 								:allowed-page-sizes="dgPageSizes"
 								info-text="Página {0} de {1} ({2} integrantes en el grupo)"
 							/>
-							<DxSearchPanel :visible="true" :highlight-case-sensitive="false" />
+							<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
 							<DxColumn
 								:allow-grouping="false"
 								:allow-filtering="false"
@@ -321,71 +310,66 @@ export default {
 			document_type_id: null,
 			created_by: 2,
 		},
-		dsMembers: new DataSource({
-			store: new CustomStore({
-				key: "id",
-				loadMode: "processed", // "raw",
-				load: (loadOptions) => {
-					console.log("loadOptions", loadOptions);
-					return root.groupResearchers;
-				},
-				onLoaded: function(result) {
-					console.log("onLoaded", result);
-					$("#producto-integrantes .card-body").show();
-				},
-			}),
-		}),
 	}),
 	mounted() {
 		root = this;
-		root.panelDataDoc = $("#producto-documentos .dataDoc");
-		root.panelGridDoc = $("#producto-documentos .gridDoc");
+		root.panelDataDoc = $("#" + root.id + " .data");
+		root.panelGridDoc = $("#" + root.id + " .grid");
 		root.baseEnt = this.$clone(root.baseObj);
 		console.log(root.$sep);
-		root.loaderElement = "#panel-unidades .card-body";
+		// }/research_units/1/documents/
+		root.loaderElement = "#" + root.id;
 		console.log("Documents MOUNTED!");
 	},
 	computed: {
 		...mapGetters("unidad", ["researchers"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
+		ep: () => {
+			return `${root.endPoint}/${root.mainObj.id}/documents`;
+		},
 		dataSource: function() {
-			//console.clear();
-			// console.log("tipo", tipo);
-			console.log("root.baseObj", root.baseObj);
+			root = this;
+			console.log("root.mainObj", root.mainObj);
+			if (root.mainObj.id === null) return null;
 			return DxStore({
 				key: ["id"],
-				endPoint: `${this.ep}/${this.productId}/documents`,
-				// endPoint: `research_units/papers`,
+				endPoint: root.ep,
 				loadBaseEntity: false,
 				onLoading: function() {
-					root.loadShow();
+					root.loaderShow();
 					setTimeout(function() {
 						root.scrollTop();
 					}, 300);
 				},
 				onLoaded: function(results) {
+					console.clear();
 					console.log("results", results);
-					root.loadHide();
+					$("#" + root.id + " .grid").fadeIn();
+					root.loaderHide();
 				},
 			});
 		},
 	},
 	props: {
+		mainObj: {
+			type: Object,
+			default: () => null,
+		},
 		editMode: {
 			type: Boolean,
 			default: true,
-		},
-		ep: {
-			type: String,
-			default: () => null,
 		},
 		tipos: {
 			type: Array,
 			default: () => [],
 		},
-		productId: {
-			type: Number,
-			default: () => 19,
+		endPoint: {
+			type: String,
+			default: () => "research_units",
+		},
+		id: {
+			type: String,
+			default: () => "panel-documentos",
 		},
 		saveFn: {
 			type: Function,
@@ -437,41 +421,27 @@ export default {
 			//root.baseObj=root.baseEnt;
 			this.editDoc = true;
 			root.baseObj = data;
-			root.panelGridDoc.fadeOut(window.speed, function(params) {
-				root.panelDataDoc.fadeIn(window.speed, function(params) {});
+			root.panelGridDoc.fadeOut(function(params) {
+				root.panelDataDoc.fadeIn(function(params) {});
 			});
 		},
 		documentAdd() {
 			this.editDoc = false;
 			root.baseObj = root.baseEnt;
-			root.panelGridDoc.fadein(window.speed, function(params) {
-				root.panelDataDoc.fadeOut(window.speed, function(params) {});
+			root.panelGridDoc.fadeOut(function(params) {
+				root.panelDataDoc.fadeIn();
 			});
 		},
-		userCancel() {
-			$("#producto-integrantes-data").fadeOut(window.speed, function() {
-				$("#producto-integrantes-grid").fadeIn(window.speed, function() {});
+		documentCancel() {
+			this.editDoc = false;
+			root.baseObj = root.baseEnt;
+			root.panelDataDoc.fadeOut(function(params) {
+				root.panelGridDoc.fadeIn();
 			});
 		},
-		// async userSave() {
-		// 	root.baseObj.created_by = root.user_id;
-		// 	console.log("Obj", root.baseObj);
-		// 	var result = this.$refs.vGroup.instance.validate();
-		// 	console.log("result", result);
-		// 	if (result.isValid) {
-		// 		root.loadShow("Buscando usuario", "#data .card-body");
-		// 		let r = await root.saveUser(root.baseObj);
-		// 		console.log("Saved", r);
-		// 		root.loadHide();
-		// 		root.grid.refresh();
-		// 		root.$info(`El usuario con el documento "${root.baseObj.identification_number}" se asoció exitosamente!`, function() {
-		// 			root.cancel();
-		// 		});
-		// 	}
-		// },
 
 		loadEnd() {
-			this.loadHide();
+			this.loaderHide();
 			this.loading = false;
 			cmds = $("#producto-integrantes .row.cmds");
 
@@ -520,43 +490,33 @@ export default {
 			let point = "documents";
 			var result = false;
 			if (root.editDoc) {
-				point = `${this.ep}/${this.productId}/${point}/${root.baseObj.id}`;
+				point = `${this.ep}/${root.baseObj.id}`;
 			} else {
-				point = `${this.ep}/${this.productId}/${point}`;
+				point = `${this.ep}`;
 			}
 			objectSent = root.baseObj;
 
 			result = root.$refs.vGroup.instance.validate();
 			if (result.isValid) {
-				root.loadShow();
+				root.loaderShow();
 				var dto = {
 					url: point,
 					obj: objectSent,
 					cb: function(result) {
 						console.log("Result", result);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 					},
 				};
 				console.log("dto", dto);
 				root.grid.refresh();
 				if (root.editDoc) root.update(dto);
 				else root.save(dto);
-				root.loadHide();
+				root.loaderHide();
 			}
 			console.log("dto");
 			root.baseObj = root.baseEnt;
 			this.editDoc = false;
-		},
-
-		onContentReady(e) {
-			$(".commands a").click(function() {
-				console.log("Come on lets show the dropdown!!");
-			});
-			var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
-			var b = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(b);
 		},
 		cancel() {
 			return null;
@@ -564,49 +524,9 @@ export default {
 		gridInit(e) {
 			console.log("e", e);
 			this.grid = e.component;
+			$(".dx-toolbar-after").append($("#btn-add-doc"));
 			this.loadEnd();
 		},
-
-		onOptionChanged() {
-			// console.log("e", e);
-		},
-		// onContentReady(e) {
-		// 	console.log("e", e);
-		// 	if (!root.loading) {
-		// 		root.loading = true;
-		// 		root.loadShow("Cargando integrantes", $("#panel-unidades .card-body")[0]);
-		// 		let items = [];
-		// 		root.grid
-		// 			.getVisibleRows()
-		// 			.filter((o) => o.rowType === "data")
-		// 			.forEach((row) => {
-		// 				if (!("oas_details" in row.data)) items.push(row.data);
-		// 			});
-		// 		if (items.length > 0) {
-		// 			root.getOasUsers({
-		// 				users: items,
-		// 				field: "researcher.identification_number",
-		// 				cb: function(result) {
-		// 					console.log(root._sep);
-		// 					console.log("RESULTADOS", result);
-		// 					root.grid.getVisibleRows().forEach((row) => {
-		// 						console.log("row", row);
-		// 						if (row.rowType === "data") {
-		// 							var filtered = result.filter((o) => o.id === row.data.id);
-		// 							if (filtered.length > 0) {
-		// 								Object.assign(row.data, filtered[0]);
-		// 								root.grid.repaintRows([row.rowIndex]);
-		// 							}
-		// 						}
-		// 					});
-		// 					root.loadEnd();
-		// 				},
-		// 			});
-		// 		} else {
-		// 			root.loadEnd();
-		// 		}
-		// 	}
-		// },
 	},
 };
 </script>

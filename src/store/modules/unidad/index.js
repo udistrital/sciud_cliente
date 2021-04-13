@@ -11,10 +11,12 @@ vue.use(vuex);
 const store = {
 	namespaced: true,
 	state: {
+		item: null,
 		items: [],
 		states: [],
 		types: [],
 		documents: [],
+		currentItems: [],
 		researchGroups: [],
 		members: [],
 		loading: true,
@@ -29,6 +31,26 @@ const store = {
 						commit("SetData", r.data);
 					});
 			}
+		},
+		// 202104111004: Guarda una unidad en el estado
+		setUnit({ commit, state }, unidad) {
+			// console.clear();
+			state.item = unidad;
+			console.log("setUnit", state.item);
+		},
+		// 202104110615: Obtiene la información de una unidad
+		getUnit({ commit, dispatch, state }, args) {
+			console.log("getUnit", args);
+			if (state.item !== null && state.item.id.toString() === args.id.toString()) {
+				console.log("getUnit encontrado!", state.item);
+				return args.cb(state.item);
+			}
+			api()
+				.get(`research_units/${args.id}`)
+				.then((r) => {
+					state.item = r.data;
+					return args.cb(r.data);
+				});
 		},
 		// 202103291114: Carga los estados de las unidades
 		async getStates({ commit, dispatch, state }, unidadId) {
@@ -50,21 +72,22 @@ const store = {
 						commit("setTypes", r.data);
 					});
 		},
-		async getResearchers({ commit, dispatch, state }, unidadId) {
-			state.loading = true;
-			let exists = false;
-			state.researchGroups.forEach((group) => {
-				if (group.unidadId === unidadId) {
-					exists = true;
-					return;
-				}
-			});
-			if (!exists)
-				await api()
-					.get(`research_units/${unidadId}/group_member`)
-					.then((r) => {
-						commit("setResearchGroup", { unidadId: unidadId, items: r.data });
-					});
+		getResearchers({ commit, dispatch, state }, args) {
+			// let o = state.researchGroups.find((o) => o.id === args.id);
+			// if (typeof o !== "undefined") {
+			// 	console.log(window.vm.$sep);
+			// 	console.log("RESEARCH GROUP FROM STATE!", o);
+			// 	args.cb(o);
+			// } else
+			api()
+				.get(`research_units/${args.id}/group_member`)
+				.then((r) => {
+					let o = { id: args.id, researchers: r.data };
+					// state.researchGroups.push(o);
+					// console.log(window.vm.$sep);
+					// console.log("RESEARCH GROUP FROM API!", o);
+					args.cb(o);
+				});
 		},
 		getMembers({ commit, dispatch, state }, args) {
 			state.loading = true;
@@ -86,7 +109,15 @@ const store = {
 		// 202103171451: Guarda un investigador
 		async saveResearcher({ commit, state, dispatch }, item) {
 			return await api()
-				.post(`researcher`, { researcher: item })
+				.post(`researchers`, { researcher: item })
+				.then((r) => {
+					return r.data;
+				});
+		},
+		// 202104111338: Actualiza un investigador
+		async updateResearcher({ commit, state, dispatch }, item) {
+			return await api()
+				.put(`researchers/${item.id}`, { researcher: item })
 				.then((r) => {
 					return r.data;
 				});
@@ -180,6 +211,10 @@ const store = {
 			}
 			console.log("state.documents AFTER", state.documents);
 		},
+		// 202104110625: Almacena en el estado las unidades actuales de la grilla
+		setCurrentGroups({ commit, dispatch, state }, items) {
+			state.currentItems = items;
+		},
 	},
 	mutations: {
 		setTypes(state, types) {
@@ -190,9 +225,12 @@ const store = {
 			state.states = states;
 			state.loading = false;
 		},
-		setResearchGroup(state, group) {
-			state.researchGroups.push(group);
-			state.loading = false;
+		setResearchGroup(state, args) {
+			console.log(window.vm.$sep);
+			let g = { id: args.id, items: args.items };
+			state.researchGroups.push(g);
+			console.log("setResearchGroup", state.researchGroups);
+			return args.cb(g);
 		},
 		SetMembers(state, args) {
 			console.log("SetMembers", args);

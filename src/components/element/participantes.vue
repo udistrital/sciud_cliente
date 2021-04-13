@@ -512,10 +512,19 @@ export default {
 		console.log(this.$sep);
 		console.log("destroyed participantes.vue");
 	},
-	mounted() {
+	created() {
 		root = this;
+		root.getResearchers({
+			id: this.group.id,
+			cb: function(results) {
+				console.log(root.$sep);
+				root.groupResearchers = results.researchers;
+				console.log("root.groupResearchers", root.groupResearchers);
+			},
+		});
+	},
+	mounted() {
 		console.log(root.$sep);
-		root.groupResearchers = root.researchers(root.group.id);
 		root.rolesParticipante = root.subtypesByType(32);
 		root.valGroupExt = root.$refs.valGroupExt.instance;
 		root.valGroupInt = root.$refs.valGroupInt.instance;
@@ -529,7 +538,6 @@ export default {
 		console.log("participantes MOUNTED!");
 	},
 	computed: {
-		...mapGetters("unidad", ["researchers"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
 
 		dataSourceExt: function() {
@@ -541,7 +549,7 @@ export default {
 				onLoading: function() {
 					root.loading = true;
 					// root.loaderMessage = "Cargando Participantes";
-					// root.loadShow();
+					// root.loaderShow();
 				},
 				onLoaded: function(results) {
 					console.log("results participantes externos", results);
@@ -559,18 +567,20 @@ export default {
 				onLoading: function() {
 					root.loading = true;
 					// root.loaderMessage = "Cargando Participantes";
-					// root.loadShow();
+					// root.loaderShow();
 				},
 				onApiLoaded: async (internals) => {
 					// 202104110311: Modifica la información recibida del Endpoint antes de enviarla a la grilla
+					// console.clear();
 					console.log(root._sep);
+					console.log("root.groupResearchers", root.groupResearchers);
 					console.log("onApiLoaded", internals);
 					let researchers_to_oas = [];
 					internals.data.forEach((item) => {
-						console.log("item", item);
-						console.log("root.groupResearchers", root.groupResearchers);
+						root.groupResearchers.forEach((rs) => {
+							console.log(rs.researcher.id + "==" + item.researcher_id);
+						});
 						let researcher = root.groupResearchers.find((o) => o.researcher.id == item.researcher_id);
-						console.log("researcher", researcher);
 						if (typeof researcher !== "undefined") researchers_to_oas.push(researcher);
 					});
 					console.log("researchers_to_oas", researchers_to_oas);
@@ -592,6 +602,8 @@ export default {
 									console.log("item", item);
 								}
 							});
+							// console.clear();
+							console.log("internals", internals);
 							return internals;
 						},
 					});
@@ -641,7 +653,7 @@ export default {
 	methods: {
 		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
 		...mapActions("unidad/integrantes", ["participantCreate", "participantUpdate"]),
-		...mapActions("unidad", ["getResearcher", "saveResearcher", "addResearcherToGroup", "researchers"]),
+		...mapActions("unidad", ["getResearcher", "getResearchers", "saveResearcher", "addResearcherToGroup", "researchers"]),
 
 		userEdit(data, accion) {
 			root.editParticipante = true;
@@ -651,14 +663,14 @@ export default {
 			this.baseObj = data;
 			this.idint = data.id;
 			console.log("id data ", data.id);
-			root.parent.panelCmdBack.fadeOut(window.speed);
+			root.parent.panelCmdBack.fadeOut();
 			if (accion == "int") {
-				root.panelGrid.fadeOut(window.speed, function(params) {
-					root.panelInt.fadeIn(window.speed, function(params) {});
+				root.panelGrid.fadeOut(function(params) {
+					root.panelInt.fadeIn(function(params) {});
 				});
 			} else {
-				root.panelGrid.fadeOut(window.speed, function(params) {
-					root.panelExt.fadeIn(window.speed, function(params) {});
+				root.panelGrid.fadeOut(function(params) {
+					root.panelExt.fadeIn(function(params) {});
 				});
 			}
 		},
@@ -668,32 +680,32 @@ export default {
 			root.editandoInterno = false;
 			root.editandoExterno = false;
 			root.baseObj = root.baseEnt;
-			root.parent.panelCmdBack.fadeOut(window.speed);
+			root.parent.panelCmdBack.fadeOut();
 			if (accion == "int") {
 				console.log("root.group", root.group);
 				console.log("groupResearchers", root.groupResearchers);
-				root.panelGrid.fadeOut(window.speed, function(params) {
-					root.panelInt.fadeIn(window.speed, function(params) {});
+				root.panelGrid.fadeOut(function(params) {
+					root.panelInt.fadeIn(function(params) {});
 				});
 			} else {
-				root.panelGrid.fadeOut(window.speed, function(params) {
-					root.panelExt.fadeIn(window.speed, function(params) {});
+				root.panelGrid.fadeOut(function(params) {
+					root.panelExt.fadeIn(function(params) {});
 				});
 			}
 		},
 
 		userCancel() {
 			if (root.panelInt.is(":visible")) {
-				root.panelInt.fadeOut(window.speed, function(params) {
-					root.parent.panelCmdBack.fadeIn(window.speed);
-					root.panelGrid.fadeIn(window.speed, function(params) {
+				root.panelInt.fadeOut(function(params) {
+					root.parent.panelCmdBack.fadeIn();
+					root.panelGrid.fadeIn(function(params) {
 						root.valGroupInt.reset();
 					});
 				});
 			} else {
-				root.panelExt.fadeOut(window.speed, function(params) {
-					root.parent.panelCmdBack.fadeIn(window.speed);
-					root.panelGrid.fadeIn(window.speed, function(params) {
+				root.panelExt.fadeOut(function(params) {
+					root.parent.panelCmdBack.fadeIn();
+					root.panelGrid.fadeIn(function(params) {
 						root.valGroupExt.reset();
 					});
 				});
@@ -741,7 +753,7 @@ export default {
 			}
 
 			if (result.isValid) {
-				root.loadShow();
+				root.loaderShow();
 				var dto = {
 					url: `${this.endPoint}/${this.product.id}/${point}`,
 					obj: objectSent,
@@ -750,7 +762,7 @@ export default {
 						console.log("Result", result);
 						if (data === "int") root.gridInt.refresh();
 						else root.gridExt.refresh();
-						// root.loadHide();
+						// root.loaderHide();
 						root.userCancel();
 					},
 				};
@@ -774,7 +786,7 @@ export default {
 						cb: function(usr) {
 							// console.clear();
 							console.log("User", usr);
-							root.loadHide();
+							root.loaderHide();
 							if (typeof usr.Id !== "undefined") {
 								root.baseObj["oas_user_id"] = usr.Id.toString();
 								root.baseObj.name = usr.TerceroId.NombreCompleto;
@@ -857,7 +869,7 @@ export default {
 
 		loadEnd() {
 			this.loading = false;
-			this.loadHide();
+			this.loaderHide();
 			console.log("loadEnd => root.loading => ", root.loading);
 		},
 	},

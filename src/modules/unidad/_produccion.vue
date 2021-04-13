@@ -29,24 +29,15 @@
 				</DxAccordion>
 			</div>
 		</div>
-		<!-- <div class="row mt-3">
-			<div class="col">
-				<a href="#" @click.prevent="cancelFn" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple"
-					><b><i class="icon-database-remove"></i></b> CANCELAR
-				</a>
-			</div>
-		</div> -->
 	</div>
 </template>
 <script>
 let root;
 import DxAccordion, { DxItem } from "devextreme-vue/accordion";
-// import { DxButton } from "devextreme-vue";
 export default {
 	name: "datosBasicos",
 	components: {
 		DxItem,
-		// DxButton,
 		DxAccordion,
 		NuevoConocimiento: () => import("@/modules/unidad/productos/_nuevo_conocimiento"),
 		DesarrolloTecnologico: () => import("@/modules/unidad/productos/_desarrollo_tecnologico"),

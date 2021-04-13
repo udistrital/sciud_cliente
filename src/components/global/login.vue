@@ -37,13 +37,13 @@ export default {
 			let nt = this.$nextTick;
 			e.event.preventDefault();
 			root.loadingVisible = true;
-			root.loadingMessage = "Verificando credenciales";
+			root.loaderMessage = "Verificando credenciales";
 			this.AuthLogin([
 				{ email: this.username, password: this.password },
 				function(e) {
 					console.log("Received!", e);
 					if (e.is_success) {
-						// root.loadingMessage = "Hola nuevamente<br/>" + e.user.first_name + "!";
+						// root.loaderMessage = "Hola nuevamente<br/>" + e.user.first_name + "!";
 						// setTimeout(function() {
 						window.jQuery("#login").fadeOut(1000, function() {
 							router.push("/inicio");
@@ -65,7 +65,7 @@ export default {
 								],
 							});
 							result.then((dialogResult) => {
-								root.loadHide();
+								root.loaderHide();
 								console.log(dialogResult ? "Confirmed" : "Canceled");
 							});
 						});
@@ -103,7 +103,7 @@ export default {
 			// session_state=38302010296d63cdcb80b4b57fc2
 			// state=9296c56c0e97095b2845b1d2142bff21
 			// token_type=Bearer
-			this.loadShow("Verificando credenciales<br>un momento por favor", "#login");
+			this.loaderShow("Verificando credenciales<br>un momento por favor", "#login");
 			// 202103120335: Verifica que el usuario exista localmente
 			root.GetUser({
 				qs: qs,
@@ -121,8 +121,8 @@ export default {
 									console.log("OasLoginData result", loggedUser);
 									console.log(JSON.stringify(loggedUser));
 									// 202103120145: Verifica que exista como usuario del sistema
-									root.loadHide();
-									$("#login").fadeOut(window.speed, function() {
+									root.loaderHide();
+									$("#login").fadeOut(function() {
 										// setTimeout(function() {
 										window.vm.$router.push("/inicio");
 										// }, window.speed);
@@ -130,7 +130,7 @@ export default {
 								},
 							});
 						} else {
-							root.loadHide();
+							root.loaderHide();
 							window.vm.$router.push("/denied");
 						}
 					}, 1000);
@@ -138,7 +138,7 @@ export default {
 			});
 		} else {
 			// 202103120432: Esta redireccionando
-			this.loadShow("Direccionando a ingreso<br/>Universidad Distrital", "#login");
+			this.loaderShow("Direccionando a ingreso<br/>Universidad Distrital", "#login");
 			// 202010211331: Envía a login UD por defecto
 			this.loginUd();
 		}

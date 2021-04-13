@@ -28,9 +28,9 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body mh pt-3">
-						<div class="slide data" v-if="unidad">
+						<!-- <div class="slide data" v-if="unidad">
 							<Tabs ref="Tabs" :group="unidad" :parent="this" :documents="documentos" :saveFn="save" :cancelFn="cancel" :editMode="editMode" />
-						</div>
+						</div> -->
 						<div class="grid">
 							<DxDataGrid
 								class="main"
@@ -44,6 +44,8 @@
 								:row-alternation-enabled="true"
 								:show-borders="false"
 							>
+								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
+								<DxStateStoring :enabled="true" type="sessionStorage" />
 								<DxExport :enabled="false" />
 								<DxColumnChooser :enabled="true" mode="dragAndDrop" />
 								<DxSorting mode="multiple" /><!-- single, multiple, none" -->
@@ -143,10 +145,10 @@
 									data-type="int"
 									alignment="center"
 									:allow-grouping="true"
-									:allow-search="false"
+									:allow-search="true"
 									:allow-sorting="true"
 									:visible="true"
-									:width="100"
+									:width="120"
 								/>
 								<DxColumn
 									:allow-filtering="false"
@@ -189,7 +191,23 @@
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
-								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="50" alignment="center" cell-template="tplCommands" />
+								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="120" alignment="center" cell-template="tplCommands" />
+								<template #tplCommands="{ data }">
+									<span class="cmds">
+										<a title="Observar información..." href="#" @click.prevent="go(`unidad/${data.value}`)" class="cmd-item color-main-600 mr-2">
+											<i class="icon-info"></i>
+										</a>
+										<a title="Observar documentos..." href="#" @click.prevent="go(`unidad/${data.value}/documentos`)" class="cmd-item color-main-600 mr-2">
+											<i class="icon-file-pdf"></i>
+										</a>
+										<a title="Observar integrantes..." href="#" @click.prevent="go(`unidad/${data.value}/integrantes`)" class="cmd-item color-main-600 mr-2">
+											<i class="icon-users"></i>
+										</a>
+										<a title="Observar producción..." href="#" @click.prevent="go(`unidad/${data.value}/produccion`)" class="cmd-item color-main-600">
+											<i class="icon-trophy"></i>
+										</a>
+									</span>
+								</template>
 								<template #tplUrl="{ data }">
 									<a
 										v-if="data.value && data.value.trim() !== 'NULL' && data.value.trim().length > 5"
@@ -229,13 +247,6 @@
 										{{ $titleCase(data.value) }}
 									</div>
 								</template>
-								<template #tplCommands="{ data }">
-									<span class="cmds">
-										<a title="Editar..." class="cmd-item color-main-600" @click.prevent="edit(data)" href="#">
-											<i class="icon-database-edit"></i>
-										</a>
-									</span>
-								</template>
 							</DxDataGrid>
 						</div>
 					</div>
@@ -261,15 +272,18 @@
 
 <script>
 /* eslint-disable no-unused-vars */
+/* eslint-disable vue/no-unused-components */
 let root = null;
 let $ = window.jQuery;
-import Tabs from "@/modules/unidad/tabs";
+// import Tabs from "@/modules/unidad/tabs";
 import DxStore from "@/store/dx";
+import DxDropDownButton from "devextreme-vue/drop-down-button";
 // import Commands from "@/components/element/commands.vue";
 // {{url}}/research_group?page=1&per_page=5&group_type_id=1
 import {
 	DxColumn,
 	DxColumnChooser,
+	DxStateStoring,
 	DxDataGrid,
 	DxExport,
 	DxFilterRow,
@@ -290,6 +304,8 @@ import { mapActions, mapGetters } from "vuex";
 export default {
 	name: "inicio",
 	components: {
+		DxStateStoring,
+		DxDropDownButton,
 		DxColumn,
 		DxColumnChooser,
 		DxLookup,
@@ -305,7 +321,7 @@ export default {
 		DxSearchPanel,
 		DxSorting,
 		DxSummary,
-		Tabs,
+		// Tabs,
 	},
 	data: () => ({
 		items: [],
@@ -325,7 +341,7 @@ export default {
 		root = this;
 		this.loaderElement = "#panel-unidades .card-body";
 		this.loaderMessage = "Cargando unidades";
-		this.loadShow();
+		this.loaderShow();
 		this.unidad = window.vm.$clone(this.baseEntity);
 		this.getGroupRoles();
 		this.getTypes();
@@ -355,7 +371,7 @@ export default {
 				endPoint: "research_units",
 				loadBaseEntity: true,
 				onLoading: function(loadOptions) {
-					root.loadShow();
+					root.loaderShow();
 					setTimeout(function() {
 						root.scrollTop();
 					}, 300);
@@ -365,11 +381,11 @@ export default {
 					console.log("onApiLoaded => ", results);
 					return results;
 				},
-				onLoaded: function(result, baseEntity) {
+				onLoaded: function(results, baseEntity) {
 					root.isLoading = false;
 					console.log("onLoaded Added");
-					console.log("result", result);
-					root.items = result.data;
+					console.log("result", results);
+					root.items = results.data;
 					console.log("baseEntity", baseEntity);
 					if (root.baseEntity === null) {
 						root.baseEntity = baseEntity;
@@ -380,7 +396,7 @@ export default {
 						console.log("root.baseEntity", root.baseEntity);
 					}
 					$("#btn-add").fadeIn();
-					root.loadHide();
+					root.loaderHide();
 				},
 			});
 		},
@@ -394,8 +410,70 @@ export default {
 	methods: {
 		...mapActions("nuxeo", { fUpload: "upload", fCreate: "createDoc" }),
 		...mapActions("auth/usuario", ["getGroupRoles"]),
-		...mapActions("unidad", ["getTypes", "getStates", "getResearchers", "saveUnit"]),
+		...mapActions("unidad", ["getTypes", "getStates", "getResearchers", "setUnit", "saveUnit"]),
 		...mapActions("unidad/documentos", { getDocs: "get" }),
+
+		cmdClick(e, data) {
+			root.go(e.itemData.command);
+			// let root = this;
+			// let action = e.itemData.command;
+			// console.log("action", action);
+			// console.log("data", data);
+			// if (action === "edit") this.editCb(this.data);
+			// if (action === "detail") this.detailCb(this.data);
+			// if (action === "remove") this.removeCb(this.data);
+			// if (action === "enable" || action === "disable") {
+			// 	let a = action === "enable" ? "activar" : "desactivar";
+			// 	let msg = `¿Realmente desea ${a} ${this.itemText} <span class='text-sb'>"${this.data.name}"</span>?`;
+			// 	this.$confirm(msg, function(result) {
+			// 		console.log("this.enableCb", root.enableCb);
+			// 		console.log(result ? "Confirmed" : "Canceled");
+			// 		root.enableCb(result, root.data);
+			// 	});
+			// }
+		},
+		cmdGet(data) {
+			let cmds = [];
+			// <!-- <span class="cmds">
+			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}`)" href="#">
+			// 		<i class="icon-info"></i>
+			// 	</a>
+			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}/documentos`)" href="#">
+			// 		<i class="icon-file-pdf"></i>
+			// 	</a>
+			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}/integrantes`)" href="#">
+			// 		<i class="ml-1 icon-users4"></i>
+			// 	</a>
+			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}/produccion`)" href="#">
+			// 		<i class="ml-1 icon-trophy"></i>
+			// 	</a>
+			// </span> -->
+			// console.log("data", data);
+			// 	cmds.push()
+
+			return [
+				{
+					command: `/unidad/${data.value}`,
+					text: "Información",
+					icon: "icon-info",
+				},
+				{
+					command: `/unidad/${data.value}/documentos`,
+					text: "Documentos",
+					icon: "icon-file-pdf",
+				},
+				{
+					command: `/unidad/${data.value}/integrantes`,
+					text: "Integrantes",
+					icon: "icon-users4",
+				},
+				{
+					command: `/unidad/${data.value}/produccion`,
+					text: "Producción",
+					icon: "icon-trophy",
+				},
+			];
+		},
 		customizeText(cellInfo) {
 			console.log("cellInfo", cellInfo);
 			return cellInfo.value + "$";
@@ -404,8 +482,8 @@ export default {
 			root.scrollTop();
 			$("#btn-add").fadeOut();
 			let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " unidad";
-			root.loadingMessage = msg;
-			root.loadShow(msg);
+			root.loaderMessage = msg;
+			root.loaderShow(msg);
 			root.unidad.acronym = root.unidad.acronym.toUpperCase();
 			root.unidad.cidc_act_number = root.unidad.cidc_act_number.toUpperCase();
 			root.unidad.faculty_act_number = root.unidad.faculty_act_number.toUpperCase();
@@ -421,8 +499,8 @@ export default {
 					console.log("gResponse", gResponse);
 					root.grid.refresh();
 					root.cancel(validationGroup);
-					$("#panel-unidades .data").fadeOut(window.speed, function() {
-						$("#panel-unidades .grid").fadeIn(window.speed, function() {});
+					$("#panel-unidades .data").fadeOut(function() {
+						$("#panel-unidades .grid").fadeIn();
 					});
 				},
 			});
@@ -436,9 +514,9 @@ export default {
 			$("#title").html("Unidades de Investigación");
 			$("#msg").html("");
 			$("#panel-unidades-head .btn-back").fadeOut();
-			$("#panel-unidades .data").fadeOut(window.speed, function() {
+			$("#panel-unidades .data").fadeOut(function() {
 				var g = $("#panel-unidades .grid");
-				g.fadeIn(window.speed, function() {
+				g.fadeIn(function() {
 					$("#btn-add").fadeIn();
 					root.unidad = root.$clone(this.baseEntity);
 					setTimeout(function() {
@@ -456,20 +534,25 @@ export default {
 			$("#btn-add").fadeOut();
 			$("#msg").html("Nueva Tabs");
 			root.$refs.Tabs.changeTab(0);
-			$("#panel-unidades .grid").fadeOut(window.speed, function() {
+			$("#panel-unidades .grid").fadeOut(function() {
 				console.log("END #panel-unidades fadeOut!");
 				$("#panel-unidades-head .btn-back").fadeIn();
-				$("#panel-unidades .data").fadeIn(window.speed, function() {
+				$("#panel-unidades .data").fadeIn(function() {
 					root.scrollTop();
 					console.log("END #panel-unidades .data fadeIn!");
 				});
 			});
 		},
 		edit(row) {
+			console.log("row", row);
+			this.setUnit(row.data);
+			this.go(`/unidad/${row.data.id}`);
+		},
+		edit2(row) {
 			root.mode = "add";
 			// console.clear();
 			this.loaderMessage = "Cargando unidad";
-			this.loadShow();
+			this.loaderShow();
 			console.log("row", row);
 			let u = this.$clone(row.data);
 			let m = this.$titleCase(u.name);
@@ -490,7 +573,7 @@ export default {
 				// TODO: 202103170059: Implementar restricción para otros roles
 			}
 			console.log("editMode", root.editMode);
-			$("#btn-add").fadeOut(window.speed);
+			$("#btn-add").fadeOut();
 			$("#title").html(`${u.group_type_name} &raquo; `);
 			$("#msg").html(m);
 			// 202104102143: Carga documentos
@@ -501,10 +584,10 @@ export default {
 					console.log("Documentos", docs);
 					u["documents"] = docs;
 					root.unidad = u;
-					$("#panel-unidades .grid").fadeOut(window.speed, function() {
-						root.loadHide();
+					$("#panel-unidades .grid").fadeOut(function() {
+						root.loaderHide();
 						$("#panel-unidades-head .btn-back").fadeIn();
-						$("#panel-unidades .data").fadeIn(window.speed, function() {
+						$("#panel-unidades .data").fadeIn(function() {
 							// root.scrollTop();
 						});
 					});

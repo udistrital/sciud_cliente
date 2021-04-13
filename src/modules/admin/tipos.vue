@@ -383,7 +383,7 @@ export default {
 					console.log("onLoading");
 					root.loaderElement = root.panelGrid.find(".card-body");
 					root.loaderMessage = "Cargando tipos y subtipos";
-					root.loadShow();
+					root.loaderShow();
 					setTimeout(function() {
 						console.log("SCROLL!");
 						root.scrollTop();
@@ -393,7 +393,7 @@ export default {
 					console.log(root._sep);
 					console.log("results", results);
 					console.log("baseEntity", baseEntity);
-					root.loadHide();
+					root.loaderHide();
 				},
 			});
 		},
@@ -432,11 +432,11 @@ export default {
 			root.baseObj.parent_id = data == "type" ? null : 0;
 			let tit = data == "type" ? "Tipo" : "Subtipo";
 			root.panelData.find(".card-header").html(`<i class="icon-database-add"></i>&nbsp;&nbsp;Creando ${tit}`);
-			root.panelCmd.fadeOut(window.speed);
-			root.panelGrid.fadeOut(window.speed, function() {
-				root.panelData.fadeIn(window.speed, function() {
+			root.panelCmd.fadeOut();
+			root.panelGrid.fadeOut(function() {
+				root.panelData.fadeIn(function() {
 					console.log("root.panelCmd", root.panelCmd);
-					// root.panelCmd.fadeOut(window.speed);
+					// root.panelCmd.fadeOut();
 				});
 			});
 		},
@@ -467,21 +467,21 @@ export default {
 				tit = action == "parent_type" ? `Editando Subtipo Padre "${data.parent_name}"` : `Editando Subtipo "${data.name}"`;
 			}
 			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;${tit}`);
-			root.panelCmd.fadeOut(window.speed);
-			root.panelGrid.fadeOut(window.speed, function() {
-				root.panelData.fadeIn(window.speed, function() {});
+			root.panelCmd.fadeOut();
+			root.panelGrid.fadeOut(function() {
+				root.panelData.fadeIn();
 			});
 		},
 		cancel() {
 			root.mode = null;
 			console.log("CANCEL!");
-			root.panelData.fadeOut(window.speed, function() {
+			root.panelData.fadeOut(function() {
 				root.validator.reset();
 				root.baseObj.id = null;
 				root.baseObj.name = null;
 				root.baseObj.description = null;
-				root.panelCmd.fadeIn(window.speed);
-				root.panelGrid.fadeIn(window.speed);
+				root.panelCmd.fadeIn();
+				root.panelGrid.fadeIn();
 			});
 		},
 		save() {
@@ -496,7 +496,7 @@ export default {
 			if (result.isValid) {
 				if (root.baseObj.type_id == null) {
 					root.loaderMessage = "Guardando tipo";
-					root.loadShow();
+					root.loaderShow();
 					root.typeUpdate({
 						mode: root.mode,
 						typeId: root.baseObj.id,
@@ -519,7 +519,7 @@ export default {
 					});
 				} else {
 					root.loaderMessage = "Guardando subtipo";
-					root.loadShow();
+					root.loaderShow();
 					root.subtypeUpdate({
 						mode: root.mode,
 						typeId: root.baseObj.type_id,
@@ -558,7 +558,7 @@ export default {
 					let item = data;
 					item.active = state;
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} subtipo`;
-					root.loadShow();
+					root.loaderShow();
 					root.subtypeEnable({
 						typeId: data.type_id,
 						subtypeId: data.id,
@@ -581,12 +581,12 @@ export default {
 			root.grid.on({
 				contentReady: (e) => {
 					console.log("contentReady", e);
-					if (root.mode == null) root.loadHide();
+					if (root.mode == null) root.loaderHide();
 				},
 				optionChanged: (e) => {
 					if (e.fullName == "paging.pageIndex") {
 						console.log("optionChanged", e);
-						root.loadShow();
+						root.loaderShow();
 					}
 				},
 			});

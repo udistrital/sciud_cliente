@@ -1,4 +1,5 @@
 # powershell -NoProfile -ExecutionPolicy Bypass -File "D:\Web\udistrital\siciud-v2\app\front\publish.ps1"
+# powershell -NoProfile -ExecutionPolicy Bypass -File "D:\siciud-v2\publish.ps1"
 # powershell -NoProfile -ExecutionPolicy Bypass -File ./publish.ps1
 # Clear-Host
 
@@ -18,7 +19,6 @@ if (Test-Path $targetBase) {
 	$token = $json.api.oas.token_value
 	$json.api.oas.token_value = $null
 	$json.debug = $false
-	$json.impersonate = $false
 	$json | ConvertTo-Json | Set-Content $jsonPath
 	Write-Host "TOKEN: $token"
 
@@ -35,7 +35,6 @@ if (Test-Path $targetBase) {
 	# 202010290745: Devuelve al original
 	$json = Get-Content $jsonPath -raw | ConvertFrom-Json
 	$json.api.oas.token_value = "$token"
-	$json.impersonate = $true
 	$json.debug = $true
 	$json | ConvertTo-Json | Set-Content $jsonPath
 

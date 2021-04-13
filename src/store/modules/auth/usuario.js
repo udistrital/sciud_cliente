@@ -83,21 +83,7 @@ const store = {
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
 			}
 		},
-		saveOasUser({ commit, dispatch, state }, args) {
-			console.log("args", args);
-			// https://autenticacion.portaloas.udistrital.edu.co/apioas/terceros_crud/v1/tercero
-			api("oas")
-				.post("terceros_crud/v1/tercero", args.user)
-				.then((r) => {
-					// https://autenticacion.portaloas.udistrital.edu.co/apioas/terceros_crud/v1/datos_identificacion
-					args.doc.TerceroId.Id = r.data.Id;
-					api("oas")
-						.post("terceros_crud/v1/datos_identificacion", args.doc)
-						.then((r) => {
-							if (this._vm.$isFunction(args.cb)) args.cb(r.data);
-						});
-				});
-		},
+
 		getDocuments({ commit, dispatch, state }, cb) {
 			api("local")
 				.get("cedulas")
@@ -106,12 +92,36 @@ const store = {
 					if (this._vm.$isFunction(cb)) cb(r.data);
 				});
 		},
-		async saveUser({ commit, state, dispatch }, user) {
-			console.log("SEND", user);
-			return await api()
-				.post(`users`, { user: user })
+
+		saveUserOas({ commit, dispatch, state }, args) {
+			console.log("saveUserOas =>", args);
+			console.log("Tercero enviado =>", args.tercero);
+			// 202104121315: Crea tercero
+			// https://autenticacion.portaloas.udistrital.edu.co/apioas/terceros_crud/v1/tercero
+			api("oas")
+				.post("terceros_crud/v1/tercero", args.tercero)
 				.then((r) => {
-					return r.data;
+					console.log("Tercero Recibido =>", r.data);
+					// 202104121315: Crear cédula
+					// https://autenticacion.portaloas.udistrital.edu.co/apioas/terceros_crud/v1/datos_identificacion
+					args.cedula.TerceroId = r.data;
+					args.cedula.Numero = args.cedula.Numero.toString();
+					console.log("Cédula enviada =>", args.cedula);
+					api("oas")
+						.post("terceros_crud/v1/datos_identificacion", args.cedula)
+						.then((r) => {
+							console.log("Cédula Recibida =>", r.data);
+							args.cb(r.data);
+						});
+				});
+		},
+
+		saveUser({ commit, state, dispatch }, args) {
+			console.log("saveUser =>", args);
+			api()
+				.post(`users`, { user: args.user })
+				.then((r) => {
+					args.cb(r.data);
 				});
 		},
 

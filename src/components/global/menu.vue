@@ -21,18 +21,14 @@
 						Unidades de Investigación
 					</router-link>
 				</li>
-				<!-- <li class="nav-item">
+				<!--
+				<li class="nav-item">
 					<router-link to="/convocatoria" tag="a" class="navbar-nav-link legitRipple" title="Convocatorias...">
 						<i class="icon-pencil6"></i>
 						Convocatorias
 					</router-link>
-				</li> -->
-				<li class="nav-item" v-if="user_role_id === 1">
-					<router-link to="/item" tag="a" class="navbar-nav-link legitRipple" title="Item...">
-						<i class="icon-newspaper"></i>
-						Item
-					</router-link>
 				</li>
+				-->
 			</ul>
 			<ul class="navbar-nav navbar-nav-highlight ml-md-auto">
 				<li class="nav-item dropdown" v-if="user_role_id === 1">
@@ -52,7 +48,7 @@
 						</router-link>
 					</div>
 				</li>
-				<li class="nav-item" v-if="!impersonate">
+				<li class="nav-item">
 					<a href="#" class="navbar-nav-link legitRipple" @click="menuLogout($event)">
 						Cerrar sesión
 						<i class="icon-square-right"></i>
@@ -110,9 +106,6 @@ export default {
 		},
 	},
 	computed: {
-		impersonate() {
-			return window.config.impersonate;
-		},
 		isValid: function() {
 			return true;
 		},

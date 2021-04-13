@@ -270,7 +270,7 @@ export default {
 		root = this;
 		this.loaderElement = "#panel-unidades .card-body";
 		this.loaderMessage = "Cargando unidades";
-		this.loadShow();
+		this.loaderShow();
 		this.unidad = window.vm.$clone(this.baseEntity);
 		this.getGroupRoles();
 	},
@@ -292,7 +292,7 @@ export default {
 				endPoint: "research_units",
 				loadBaseEntity: true,
 				onLoading: function(loadOptions) {
-					root.loadShow();
+					root.loaderShow();
 					setTimeout(function() {
 						root.scrollTop();
 					}, 300);
@@ -312,7 +312,7 @@ export default {
 						console.log("root.baseEntity", root.baseEntity);
 					}
 					$("#btn-add").fadeIn();
-					root.loadHide();
+					root.loaderHide();
 				},
 			});
 		},
@@ -335,8 +335,8 @@ export default {
 			root.scrollTop();
 			$("#btn-add").fadeOut();
 			let msg = (this.unidad.id === 0 ? "Creando" : "Actualizando") + " unidad";
-			root.loadingMessage = msg;
-			root.loadShow(msg);
+			root.loaderMessage = msg;
+			root.loaderShow(msg);
 			// root.loadingVisible = true;
 			// setTimeout(function(){
 			root.unidad.acronym = root.unidad.acronym.toUpperCase();
@@ -353,8 +353,8 @@ export default {
 					console.log("gResponse", gResponse);
 					root.grid.refresh();
 					root.cancel(validationGroup);
-					$("#panel-unidades .data").fadeOut(window.speed, function() {
-						$("#panel-unidades .grid").fadeIn(window.speed, function() {});
+					$("#panel-unidades .data").fadeOut(function() {
+						$("#panel-unidades .grid").fadeIn();
 					});
 				},
 			});
@@ -366,9 +366,9 @@ export default {
 			$("#title").html("Unidades de Investigación");
 			$("#msg").html("");
 			root.scrollTop();
-			$("#panel-unidades .data").fadeOut(window.speed, function() {
+			$("#panel-unidades .data").fadeOut(function() {
 				var g = $("#panel-unidades .grid");
-				g.fadeIn(window.speed, function() {
+				g.fadeIn(function() {
 					$("#btn-add").fadeIn();
 					if (typeof validationGroup.reset !== "undefined") validationGroup.reset();
 					root.unidad = root.$clone(this.baseEntity);
@@ -384,9 +384,9 @@ export default {
 			$("#btn-add").fadeOut();
 			$("#msg").html("Nueva Tabs");
 			root.$refs.Tabs.changeTab(0);
-			$("#panel-unidades .grid").fadeOut(window.speed, function() {
+			$("#panel-unidades .grid").fadeOut(function() {
 				console.log("END #panel-unidades fadeOut!");
-				$("#panel-unidades .data").fadeIn(window.speed, function() {
+				$("#panel-unidades .data").fadeIn(function() {
 					root.scrollTop();
 					console.log("END #panel-unidades .data fadeIn!");
 				});
@@ -397,7 +397,7 @@ export default {
 			console.log("row", row);
 			this.unidad = this.$clone(row.data);
 			this.getResearchers(this.unidad.id);
-			$("#btn-add").fadeOut(window.speed);
+			$("#btn-add").fadeOut();
 			$("#title").html(`${this.unidad.group_type_name} &raquo; `);
 			let m = this.$titleCase(this.unidad.name);
 			root.$refs.Tabs.changeTab(0);
@@ -418,8 +418,8 @@ export default {
 			$("#msg").html(m);
 			console.log("editMode", root.editMode);
 
-			$("#panel-unidades .grid").fadeOut(window.speed, function() {
-				$("#panel-unidades .data").fadeIn(window.speed, function() {
+			$("#panel-unidades .grid").fadeOut(function() {
+				$("#panel-unidades .data").fadeIn(function() {
 					root.scrollTop();
 				});
 			});

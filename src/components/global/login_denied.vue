@@ -26,7 +26,7 @@ export default {
 		if (this.authenticated) this.$router.push("/inicio");
 	},
 	mounted() {
-		$("#error").fadeIn(window.speed);
+		$("#error").fadeIn();
 	},
 };
 </script>

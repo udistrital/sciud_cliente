@@ -131,7 +131,7 @@ export default {
 						comp.groupResearchers = [];
 						comp.loadMembers();
 					}
-					// root.loadShow("Cargando usuarios", $("#panel-unidades .card-body")[0]);
+					// root.loaderShow("Cargando usuarios", $("#panel-unidades .card-body")[0]);
 					break;
 				case 2:
 					console.log("institucional");

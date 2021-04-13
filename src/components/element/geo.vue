@@ -98,26 +98,26 @@ export default {
 		gStates(e) {
 			root.states = [];
 			root.cities = [];
-			root.loadShow("Cargando Estados", root.lockElement);
+			root.loaderShow("Cargando Estados", root.lockElement);
 			setTimeout(function() {
 				root.getStates({
 					country_id: e.value,
 					cb: function(results) {
 						root.states = results;
-						root.loadHide();
+						root.loaderHide();
 					},
 				});
 			}, 1000);
 		},
 		gCities(e) {
 			root.cities = [];
-			root.loadShow("Cargando Ciudades", root.lockElement);
+			root.loaderShow("Cargando Ciudades", root.lockElement);
 			setTimeout(function() {
 				root.getCities({
 					state_id: e.value,
 					cb: function(results) {
 						root.cities = results;
-						root.loadHide();
+						root.loaderHide();
 					},
 				});
 			}, 1000);
