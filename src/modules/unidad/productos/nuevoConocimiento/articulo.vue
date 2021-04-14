@@ -548,9 +548,9 @@ export default {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
-		root.tipos = root.subtypesByType(5);
-		root.subtipos = root.subtypesByType(12);
-		root.tiposDocumento = root.subtypesByType(23);
+		root.tipos = root.subtypesByType("articulo_tipo");
+		root.subtipos = root.subtypesByType("articulo_categoria");
+		root.tiposDocumento = root.subtypesByType("articulo_tipo_documento");
 	},
 	mounted() {
 		console.log("root.tipos", root.tipos);
@@ -709,7 +709,7 @@ export default {
 		},
 
 		active(data, state) {
-			console.clear();
+			// console.clear();
 			console.log("active", data);
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";

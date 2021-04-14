@@ -7,7 +7,7 @@ import { loadMessages, locale } from "devextreme/localization";
 // DX
 import esMessages from "devextreme/localization/messages/es.json";
 import vue from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapState } from "vuex";
 import app from "./app.vue";
 import "./assets/css/global.scss";
 import global from "./assets/js/global";
@@ -93,7 +93,7 @@ vue.mixin({
 			}, window.authCheckingTime * 60 * 1000);
 		}
 
-		this.loaderHide();
+		// this.loaderHide();
 	},
 	methods: {
 		...mapActions("auth/login", ["AuthLogout"]),
@@ -183,8 +183,8 @@ vue.mixin({
 		},
 	},
 	computed: {
-		...mapGetters("auth/usuario", ["roles"]),
-		...mapGetters("auth/login", ["authenticated", "user"]),
+		...mapState("auth/usuario", ["roles"]),
+		...mapState("auth/login", ["authenticated", "user"]),
 		_sep() {
 			return window.vm.$sep;
 		},

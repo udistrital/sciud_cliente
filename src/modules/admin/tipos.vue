@@ -414,7 +414,7 @@ export default {
 			}
 		},
 		gSubtypes(e) {
-			console.clear();
+			// console.clear();
 			if (e.value !== null) {
 				let res = root.subtypesByType(e.value);
 				console.log("e", e);
@@ -424,7 +424,7 @@ export default {
 		},
 		add(data) {
 			root.mode = "add";
-			console.clear();
+			// console.clear();
 			console.log("root.panelGrid", root.panelGrid);
 			console.log("root.panelData", root.panelData);
 			console.log("add(data)", data);
@@ -442,7 +442,7 @@ export default {
 		},
 		edit(action, data) {
 			root.mode = "edit";
-			console.clear();
+			// console.clear();
 			console.log("data", data);
 			console.log("action", action);
 			root.subtypes_filtered = root.subtypes;
@@ -485,7 +485,7 @@ export default {
 			});
 		},
 		save() {
-			console.clear();
+			// console.clear();
 			root.loaderElement = root.panelData.find(".card");
 			console.log("baseObj", root.baseObj);
 			console.log("validator", root.validator);
@@ -547,7 +547,7 @@ export default {
 			}
 		},
 		enable(state, data) {
-			console.clear();
+			// console.clear();
 			console.log("data", data);
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
@@ -596,7 +596,7 @@ export default {
 			console.log("onContentReady!", e);
 		},
 		cmdClick(e, data) {
-			console.clear();
+			// console.clear();
 			let action = e.itemData.command;
 			console.log("action", action);
 			console.log("data", data);

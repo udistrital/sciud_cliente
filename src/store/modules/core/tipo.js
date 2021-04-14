@@ -15,6 +15,7 @@ const store = {
 		loadingSubypes: false,
 		types: [],
 		subtypes: [],
+		subtype_names: [],
 	},
 	actions: {
 		getTypes({ commit, state, dispatch }, args) {
@@ -28,6 +29,24 @@ const store = {
 						if (typeof args == "undefined") args = { data: null };
 						args["data"] = r.data;
 						commit("setTypes", args);
+					});
+			}
+		},
+		typeUpdate({ commit, state, dispatch }, args) {
+			if (args.mode == "edit")
+				api()
+					.put(`types/${args.typeId}`, args.type)
+					.then((r) => {
+						// dispatch("getTypes", { reload: true });
+						return args.cb(r.data);
+					});
+			else {
+				args.type.created_by = args.type.updated_by;
+				api()
+					.post(`types`, args.type)
+					.then((r) => {
+						// dispatch("getTypes", { reload: true });
+						return args.cb(r.data);
 					});
 			}
 		},
@@ -45,27 +64,12 @@ const store = {
 					});
 			}
 		},
-		typeUpdate({ commit, state, dispatch }, args) {
-			if (args.mode == "edit")
-				api()
-					.put(`types/${args.typeId}`, args.type)
-					.then((r) => {
-						return args.cb(r.data);
-					});
-			else {
-				args.type.created_by = args.type.updated_by;
-				api()
-					.post(`types`, args.type)
-					.then((r) => {
-						return args.cb(r.data);
-					});
-			}
-		},
 		subtypeUpdate({ commit, state, dispatch }, args) {
 			if (args.mode == "edit")
 				api()
 					.put(`types/${args.typeId}/subtypes/${args.subtypeId}`, args.subtype)
 					.then((r) => {
+						// dispatch("getSubtypes", { reload: true });
 						return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
 					});
 			else {
@@ -73,6 +77,7 @@ const store = {
 				api()
 					.post(`types/${args.typeId}/subtypes`, args.subtype)
 					.then((r) => {
+						// dispatch("getSubtypes", { reload: true });
 						return args.cb(r.data);
 					});
 			}
@@ -105,7 +110,14 @@ const store = {
 			return state.subtypes;
 		},
 		subtypesByType: (state, getters) => (id) => {
-			console.log("state.subtypes", state.subtypes);
+			if (typeof id === "string")
+				id = window.config.clasifier.find(
+					(o) =>
+						o.name
+							.toString()
+							.toLowerCase()
+							.trim() === id.toLowerCase().trim()
+				).id;
 			return state.subtypes.filter((o) => o.type_id.toString() === id.toString());
 		},
 		subtypesByParent: (state, getters) => (id) => {

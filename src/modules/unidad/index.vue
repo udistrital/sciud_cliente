@@ -194,16 +194,36 @@
 								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="120" alignment="center" cell-template="tplCommands" />
 								<template #tplCommands="{ data }">
 									<span class="cmds">
-										<a title="Observar información..." href="#" @click.prevent="go(`unidad/${data.value}`)" class="cmd-item color-main-600 mr-2">
+										<a
+											title="Observar información..."
+											href="#"
+											@click.prevent="go(`unidad/${data.value}`, 'Cargando Información')"
+											class="cmd-item color-main-600 mr-2"
+										>
 											<i class="icon-info"></i>
 										</a>
-										<a title="Observar documentos..." href="#" @click.prevent="go(`unidad/${data.value}/documentos`)" class="cmd-item color-main-600 mr-2">
+										<a
+											title="Observar documentos..."
+											href="#"
+											@click.prevent="go(`unidad/${data.value}/documentos`, 'Cargando Documentos')"
+											class="cmd-item color-main-600 mr-2"
+										>
 											<i class="icon-file-pdf"></i>
 										</a>
-										<a title="Observar integrantes..." href="#" @click.prevent="go(`unidad/${data.value}/integrantes`)" class="cmd-item color-main-600 mr-2">
+										<a
+											title="Observar integrantes..."
+											href="#"
+											@click.prevent="go(`unidad/${data.value}/integrantes`, 'Cargando Integrantes')"
+											class="cmd-item color-main-600 mr-2"
+										>
 											<i class="icon-users"></i>
 										</a>
-										<a title="Observar producción..." href="#" @click.prevent="go(`unidad/${data.value}/produccion`)" class="cmd-item color-main-600">
+										<a
+											title="Observar producción..."
+											href="#"
+											@click.prevent="go(`unidad/${data.value}/produccion`, 'Cargando Producción')"
+											class="cmd-item color-main-600"
+										>
 											<i class="icon-trophy"></i>
 										</a>
 									</span>
@@ -275,7 +295,6 @@
 /* eslint-disable vue/no-unused-components */
 let root = null;
 let $ = window.jQuery;
-// import Tabs from "@/modules/unidad/tabs";
 import DxStore from "@/store/dx";
 import DxDropDownButton from "devextreme-vue/drop-down-button";
 // import Commands from "@/components/element/commands.vue";
@@ -336,32 +355,35 @@ export default {
 		firstLoad: true,
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
+	created() {
+		root = this;
+	},
 	mounted() {
 		console.log("MOUNTED");
-		root = this;
-		this.loaderElement = "#panel-unidades .card-body";
-		this.loaderMessage = "Cargando unidades";
-		this.loaderShow();
-		this.unidad = window.vm.$clone(this.baseEntity);
-		this.getGroupRoles();
-		this.getTypes();
-		this.getStates();
+		root.loaderElement = "#panel-unidades .card-body";
+		root.loaderMessage = "Cargando unidades";
+		root.loaderShow();
+		root.unidad = window.vm.$clone(root.baseEntity);
+		root.getGroupRoles();
+		root.getTypes();
+		root.getStates();
+		root.loaderHide();
 	},
 	computed: {
 		...mapGetters("unidad", ["documents", "states", "types"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		tiposUnidad() {
-			return this.subtypesByType(2);
+			return root.subtypesByType("unidad_tipo");
 		},
 		estadosUnidad() {
-			return this.subtypesByType(1);
+			return root.subtypesByType("unidad_estado");
 		},
 		dataSource: function() {
 			// 202103120855: Obtiene los grupos del usuario actual si es participante
 			var ids = [];
-			console.log("this.user_role_id", this.user_role_id);
-			if (this.user_role_id === 5) {
-				this.user.groups.forEach((group) => {
+			console.log("root.user_role_id", root.user_role_id);
+			if (root.user_role_id === 5) {
+				root.user.groups.forEach((group) => {
 					ids.push(group.research_group_id);
 				});
 			}
@@ -377,7 +399,7 @@ export default {
 					}, 300);
 				},
 				onApiLoaded: async (results) => {
-					console.log(this.$sep);
+					console.log(root.$sep);
 					console.log("onApiLoaded => ", results);
 					return results;
 				},
@@ -404,7 +426,7 @@ export default {
 	watch: {
 		items: function(val) {
 			// console.log("val", val.length);
-			// if (val.length > 0) this.loadingVisible = false;
+			// if (val.length > 0) root.loadingVisible = false;
 		},
 	},
 	methods: {
@@ -412,45 +434,11 @@ export default {
 		...mapActions("auth/usuario", ["getGroupRoles"]),
 		...mapActions("unidad", ["getTypes", "getStates", "getResearchers", "setUnit", "saveUnit"]),
 		...mapActions("unidad/documentos", { getDocs: "get" }),
-
-		cmdClick(e, data) {
-			root.go(e.itemData.command);
-			// let root = this;
-			// let action = e.itemData.command;
-			// console.log("action", action);
-			// console.log("data", data);
-			// if (action === "edit") this.editCb(this.data);
-			// if (action === "detail") this.detailCb(this.data);
-			// if (action === "remove") this.removeCb(this.data);
-			// if (action === "enable" || action === "disable") {
-			// 	let a = action === "enable" ? "activar" : "desactivar";
-			// 	let msg = `¿Realmente desea ${a} ${this.itemText} <span class='text-sb'>"${this.data.name}"</span>?`;
-			// 	this.$confirm(msg, function(result) {
-			// 		console.log("this.enableCb", root.enableCb);
-			// 		console.log(result ? "Confirmed" : "Canceled");
-			// 		root.enableCb(result, root.data);
-			// 	});
-			// }
+		cmdClick(e) {
+			console.log("e.itemData", e.itemData);
+			root.go(e.itemData.command, `Cargando ${e.itemData.text}`);
 		},
 		cmdGet(data) {
-			let cmds = [];
-			// <!-- <span class="cmds">
-			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}`)" href="#">
-			// 		<i class="icon-info"></i>
-			// 	</a>
-			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}/documentos`)" href="#">
-			// 		<i class="icon-file-pdf"></i>
-			// 	</a>
-			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}/integrantes`)" href="#">
-			// 		<i class="ml-1 icon-users4"></i>
-			// 	</a>
-			// 	<a title="Editar..." class="cmd-item color-main-600" @click.prevent="go(`/unidad/${data.value}/produccion`)" href="#">
-			// 		<i class="ml-1 icon-trophy"></i>
-			// 	</a>
-			// </span> -->
-			// console.log("data", data);
-			// 	cmds.push()
-
 			return [
 				{
 					command: `/unidad/${data.value}`,
@@ -510,7 +498,7 @@ export default {
 		},
 		cancel() {
 			// root.editMode = false;
-			console.log(this.$sep);
+			console.log(root.$sep);
 			$("#title").html("Unidades de Investigación");
 			$("#msg").html("");
 			$("#panel-unidades-head .btn-back").fadeOut();
@@ -518,7 +506,7 @@ export default {
 				var g = $("#panel-unidades .grid");
 				g.fadeIn(function() {
 					$("#btn-add").fadeIn();
-					root.unidad = root.$clone(this.baseEntity);
+					root.unidad = root.$clone(root.baseEntity);
 					setTimeout(function() {
 						root.$refs.Tabs.clearMembers();
 						root.$refs.Tabs.changeTab(0);
@@ -529,8 +517,8 @@ export default {
 		add() {
 			root.mode = "add";
 			console.log("ADD!");
-			this.unidad = this.$clone(this.baseEntity);
-			console.log("this.unidad", this.unidad);
+			root.unidad = root.$clone(root.baseEntity);
+			console.log("root.unidad", root.unidad);
 			$("#btn-add").fadeOut();
 			$("#msg").html("Nueva Tabs");
 			root.$refs.Tabs.changeTab(0);
@@ -545,18 +533,18 @@ export default {
 		},
 		edit(row) {
 			console.log("row", row);
-			this.setUnit(row.data);
-			this.go(`/unidad/${row.data.id}`);
+			root.setUnit(row.data);
+			root.go(`/unidad/${row.data.id}`);
 		},
 		edit2(row) {
 			root.mode = "add";
 			// console.clear();
-			this.loaderMessage = "Cargando unidad";
-			this.loaderShow();
+			root.loaderMessage = "Cargando unidad";
+			root.loaderShow();
 			console.log("row", row);
-			let u = this.$clone(row.data);
-			let m = this.$titleCase(u.name);
-			this.getResearchers(u.id);
+			let u = root.$clone(row.data);
+			let m = root.$titleCase(u.name);
+			root.getResearchers(u.id);
 			root.$refs.Tabs.changeTab(0);
 			// 202103170030: Determina el rol del usuario dentro del grupo si es Integrante
 			console.log("user", root.user);
@@ -577,7 +565,7 @@ export default {
 			$("#title").html(`${u.group_type_name} &raquo; `);
 			$("#msg").html(m);
 			// 202104102143: Carga documentos
-			this.getDocs({
+			root.getDocs({
 				id: u.id,
 				cb: function(docs) {
 					console.log(root.$sep);
@@ -598,15 +586,15 @@ export default {
 			console.log(`Result: ${result}, Data: ${JSON.stringify(data)}`);
 		},
 		remove() {
-			console.log("remove " + this.data.id);
+			console.log("remove " + root.data.id);
 		},
 		gridInit(e) {
-			this.grid = e.component;
-			this.grid.beginUpdate = () => {};
-			this.grid.endUpdate = () => {};
+			root.grid = e.component;
+			root.grid.beginUpdate = () => {};
+			root.grid.endUpdate = () => {};
 		},
 		onContentReady() {
-			// // this.loadingVisible = false;
+			// // root.loadingVisible = false;
 			// // console.log("onContentReady!");
 			// $(".commands a").click(function() {
 			// 	console.log("Come on lets show the dropdown!!");

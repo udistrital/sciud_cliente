@@ -342,7 +342,7 @@ export default {
 					}, 300);
 				},
 				onLoaded: function(results) {
-					console.clear();
+					// console.clear();
 					console.log("results", results);
 					$("#" + root.id + " .grid").fadeIn();
 					root.loaderHide();
@@ -402,7 +402,7 @@ export default {
 			console.log("e", e);
 			var files = e.value;
 			// 202104070926: Obtiene los tipos de documento y filtra por el id
-			var type = root.subtypesByType(22).find((o) => o.id === document_type_id);
+			var type = root.subtypesByType("unidad_tipo_documento").find((o) => o.id === document_type_id);
 			let doc = { type_id: document_type_id, type_name: type.st_name, name: e.element.id, file: e.value[0] };
 			this.setDocument(doc);
 			// console.log(e);

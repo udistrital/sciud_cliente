@@ -14,6 +14,7 @@
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
 			</span>
+			<!-- <span class="text-center"> User: {{ user }}</span> -->
 			<ul class="navbar-nav ml-lg-auto">
 				<li v-if="oasToken">
 					<span class="navbar-nav-link legitRipple color-text" @click.prevent="copyToken()">{{ oasToken }}</span>

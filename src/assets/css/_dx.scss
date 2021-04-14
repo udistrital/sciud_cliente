@@ -298,6 +298,12 @@
 			padding: 1rem 2rem 1.5rem;
 			.dx-dialog-message {
 				text-align: center;
+				.error-detail {
+					display: block;
+					font-weight: 500;
+					font-size: 1.1rem;
+					letter-spacing: -1px;
+				}
 				.msg-icon {
 					font-size: 3.5rem;
 					margin-bottom: 0.8rem;
@@ -1079,3 +1085,13 @@ $color: rgb(182, 182, 182);
 		}
 	}
 }
+
+// .dx-overlay-wrapper {
+// 	min-height: 350px;
+// 	border-radius: $radius;
+// 	.dx-overlay-content {
+// 		min-height: 350px;
+// 		height: auto !important;
+// 		top: 0 !important;
+// 	}
+// }

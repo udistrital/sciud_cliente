@@ -2,6 +2,16 @@
 	"debug": false,
 	"pageSize": 20,
 	"pageSizes": [10, 20, 50],
+	"clasifier": [
+		{ "name": "articulo_categoria", "id": 12 },
+		{ "name": "articulo_tipo_documento", "id": 23 },
+		{ "name": "articulo_tipo", "id": 5 },
+		{ "name": "unidad_estado", "id": 1 },
+		{ "name": "unidad_linea_investigacion", "id": 53 },
+		{ "name": "unidad_rol_participante", "id": 32 },
+		{ "name": "unidad_tipo_documento", "id": 22 },
+		{ "name": "unidad_tipo", "id": 2 }
+	],
 	"env": {
 		"development": {
 			"name": "dev",
@@ -23,9 +33,9 @@
 			"url2": "http://localhost:3000/api/v1"
 		},
 		"oas": {
-			"token_name": "token_oas",
-			"token_value": "e7122642-e1ef-3bc0-a828-1b59374987b8",
 			"VUE_APP_AUTH_URL": "",
+			"token_name": "token_oas",
+			"token_value": "a138f4e0-33da-3685-a82c-2db9386b9080",
 			"url": "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
 		}
 	},

@@ -525,7 +525,7 @@ export default {
 	},
 	mounted() {
 		console.log(root.$sep);
-		root.rolesParticipante = root.subtypesByType(32);
+		root.rolesParticipante = root.subtypesByType("unidad_rol_participante");
 		root.valGroupExt = root.$refs.valGroupExt.instance;
 		root.valGroupInt = root.$refs.valGroupInt.instance;
 		root.loaderElement = "#panel-unidades .card-body"; //producto-participantes-ext

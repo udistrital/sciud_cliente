@@ -9,12 +9,13 @@ import { custom } from "devextreme/ui/dialog";
 export default (source = "rest", args = {}) => {
 	// 202103101051: DxDialog: https://js.devexpress.com/Documentation/ApiReference/Common/Utils/ui/dialog
 	// 202103101046: Buttons https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxButton/Configuration
-	let show = function(msg, code) {
+	let show = function(msg, code = null) {
 		if ($(".dx-dialog").length <= 0) {
+			let err = code !== null ? `<textarea class='code' disabled>${code}</textarea>` : "";
 			let myDialog = custom({
 				showTitle: false,
 				dragEnabled: false,
-				messageHtml: `<span class='error'><h2>${msg}</h2><textarea class='code' disabled>${code}</textarea></span>`,
+				messageHtml: `<span class='error'><h2>${msg}</h2>${err}</span>`,
 				buttons: [
 					{
 						template: `<span class="cmd">ENTENDIDO <i class="icon-thumbs-up2"></i></span>`,
@@ -101,11 +102,17 @@ export default (source = "rest", args = {}) => {
 			// Do something with response data
 			return response;
 		},
-		function(error) {
+		function(error, otro, otro1) {
 			// console.log(error);
-			console.error("RESPONSE ERROR", error);
-			// if (window.config.debug)
-			show(error, JSON.stringify(error.response.config, null, "\t"));
+			console.info("RESPONSE ERROR", error);
+			console.log("error.response", error.response);
+			let msg = null;
+			if (typeof error.response !== "undefined") {
+				// msg = `<span class="error-detail">${error.response.data.exception.replace("<", "").replace(">", "")}</span>`;
+				delete error.response.data.traces;
+				msg = JSON.stringify(error.response, null, "\t");
+			}
+			show(`${error}`, msg);
 			return Promise.reject(error);
 		}
 	);

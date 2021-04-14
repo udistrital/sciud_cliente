@@ -422,7 +422,7 @@ export default {
 			return root.tercero.NombreCompleto;
 		},
 		dataSource: function() {
-			// // console.clear();
+			// console.clear();
 			return DxStore({
 				key: ["id"],
 				endPoint: "users",
@@ -501,7 +501,7 @@ export default {
 			}
 		},
 		saveOas: async () => {
-			console.clear();
+			// console.clear();
 			let valid = root.$refs.vgUserOas.instance.validate().isValid;
 			console.log("isValid", valid);
 			if (valid) {

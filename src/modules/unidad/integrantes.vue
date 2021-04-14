@@ -309,7 +309,7 @@ let hideErrors = () => {
 export default {
 	name: "datosBasicos",
 	created: function() {
-		console.clear();
+		// console.clear();
 		root = this;
 		root.getUnit({
 			id: root.$route.params.unidadId,
@@ -320,13 +320,10 @@ export default {
 			},
 		});
 	},
-	// beforeUpdate: () => {
-	// 	console.log("beforeUpdate _basicos.vue");
-	// },
+	beforeUpdate: () => {},
 	updated: () => {
 		console.log(root.$sep);
 		hideErrors();
-		console.log("updated _basicos.vue");
 	},
 	components: {
 		DxTextBox,
@@ -385,7 +382,7 @@ export default {
 		searchButton: {
 			text: "Buscar",
 			onClick: async () => {
-				console.clear();
+				// console.clear();
 				let id = root.baseObj.identification_number;
 				console.log("Documento", id);
 				if (id !== null && id.toString().length > 0) {
@@ -499,7 +496,6 @@ export default {
 	}),
 	mounted() {
 		console.log(this.$sep);
-		console.log("_basicos.vue mounted!");
 	},
 	computed: {
 		...mapGetters("auth/usuario", ["groupRoles"]),
@@ -570,7 +566,7 @@ export default {
 			});
 		},
 		userEdit(data) {
-			console.clear();
+			// console.clear();
 			root.mode == "edit";
 			console.log("data", data);
 			root.baseObj.id = data.id;
@@ -612,7 +608,7 @@ export default {
 				$("#panel-integrantes").fadeIn(function() {
 					root.$refs.vGroup.instance.reset();
 					$("#panel-integrantes-data").clear();
-					console.clear();
+					// console.clear();
 				});
 			});
 		},

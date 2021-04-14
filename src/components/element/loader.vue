@@ -26,9 +26,7 @@ export default {
 	components: {
 		DxLoadPanel,
 	},
-	mounted() {
-		// console.log("LOADER MOUNTED!!!");
-	},
+	mounted() {},
 	data: () => ({
 		visible: false,
 		message: "Cargando",
@@ -49,19 +47,15 @@ export default {
 	},
 	methods: {
 		onShown(e) {
-			// console.log(window.vm.$sep);
-			// console.log("onShown!", e);
-			// // console.clear();
-			var w = window.jQuery(".dx-loadpanel-content:first").width();
-			// console.log("w", w);
-			var lp = $(".dx-loadpanel-wrapper");
-			var nb = $(".navbar-sticky.is_stuck");
-			var lpI = parseInt(lp.css("z-index"));
-			var nbI = parseInt(nb.css("z-index"));
-			// console.log("lp zindex", lpI);
-			// console.log("nb zindex", nbI);
-			nb.css("z-index", (lpI + 1).toString());
-			// console.log(nb.css("z-index"));
+			// var w = $(".dx-loadpanel-content:first").width();
+			// var lp = $(".dx-loadpanel-wrapper");
+			// var nb = $(".navbar-sticky.is_stuck");
+			// var lpI = parseInt(lp.css("z-index"));
+			// var nbI = parseInt(nb.css("z-index"));
+			// nb.css("z-index", (lpI + 1).toString());
+			// let ovl = $(".dx-overlay-content:first");
+			// ovl.removeAttr("style").css("height", "auto !important");
+			// console.log("ovl.height", ovl.height());
 		},
 		onHidden(e) {
 			// console.log(window.vm.$sep);
@@ -69,16 +63,9 @@ export default {
 			// console.log("$loader", window.vm.$loader);
 		},
 		onShowing(e) {
-			// console.log(window.vm.$sep);
-			// console.log("onShowing!", e);
-			// // console.log("this.$loader", this.$loader);
 			let msg = this.$loader.message + "<small>Un momento por favor...</small>";
-			var tgt = window.jQuery(".dx-loadpanel-message:first");
-			// // console.log("tgt", tgt);
-			// // console.log("onShowing!", msg);
-			// setTimeout(function() {
+			var tgt = $(".dx-loadpanel-message:first");
 			tgt.html(msg);
-			// }, 20);
 		},
 	},
 };

@@ -62,9 +62,9 @@ let hideErrors = () => {
 export default {
 	name: "datosBasicos",
 	created: function() {
-		console.clear();
+		// console.clear();
 		root = this;
-		root.tiposDocumento = root.subtypesByType(22);
+		root.tiposDocumento = root.subtypesByType("unidad_tipo_documento");
 		root.getUnit({
 			id: root.$route.params.unidadId,
 			cb: function(result) {
@@ -79,7 +79,6 @@ export default {
 	updated: () => {
 		console.log(root.$sep);
 		hideErrors();
-		console.log("updated _basicos.vue");
 	},
 	components: {
 		Header: () => import("@/components/element/header"),

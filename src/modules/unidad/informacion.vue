@@ -1,5 +1,5 @@
 <template>
-	<div v-if="group">
+	<div class="mh" v-if="group">
 		<Header :group="group" />
 		<div class="row">
 			<div class="col">
@@ -92,8 +92,9 @@
 														:placeholder="placeholder"
 														:read-only="!editMode"
 														:data-source="cineEspecificos"
-														@value-changed="sbEspecificoChange"
+														@value-changed="cineChange"
 														:value.sync="group.cine_specific_area_id"
+														ref="tbCine"
 														class="form-control"
 														display-expr="name"
 														value-expr="id"
@@ -435,18 +436,19 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Area OCDE:</label>
+															<label>Área OCDE:</label>
 															<DxSelectBox
+																@value-changed="ocdeChange"
 																:data-source="ocdeEspecificos"
 																:grouped="true"
 																:search-enabled="true"
-																@value-changed="areaChange"
 																class="form-control"
 																:read-only="!editMode"
 																display-expr="name"
 																:value.sync="group.oecd_knowledge_subarea_id"
 																placeholder="Busque y/o seleccione..."
 																value-expr="id"
+																ref="sbOcdeArea"
 															>
 																<DxValidator>
 																	<DxRequiredRule />
@@ -543,18 +545,21 @@ export default {
 			cb: function(result) {
 				root.group = result;
 				console.log("group", root.group);
-				root.facultadChange({ value: root.group.faculty_ids });
-				document.title += ` ${root.$titleCase(root.group.name)}`;
+				setTimeout(function() {
+					root.ocdeChange({ value: root.group.oecd_knowledge_subarea_id });
+					root.cineChange({ value: root.group.cine_specific_area_id });
+					root.facultadChange({ value: root.group.faculty_ids });
+					document.title += ` ${root.$titleCase(root.group.name)}`;
+					root.loaderHide();
+				}, 500);
 			},
 		});
 	},
-	// beforeUpdate: () => {
-	// 	console.log("beforeUpdate _basicos.vue");
-	// },
+	mounted() {},
+	beforeUpdate: () => {},
 	updated: () => {
 		console.log(root.$sep);
 		hideErrors();
-		console.log("updated _basicos.vue");
 	},
 	components: {
 		DxDateBox,
@@ -627,10 +632,6 @@ export default {
 			{ name: "Videos", value: "video/*" },
 		],
 	}),
-	mounted() {
-		console.log(this.$sep);
-		console.log("_basicos.vue mounted!");
-	},
 	computed: {
 		...mapState("unidad", ["documents"]),
 		...mapState("unidad/oas", ["facultades"]),
@@ -655,7 +656,7 @@ export default {
 			});
 		},
 		lineasInvestigacion() {
-			return this.subtypesByType(35);
+			return this.subtypesByType("unidad_linea_investigacion");
 		},
 		cineEspecificos() {
 			console.log("this.cEspecificos", this.cEspecificos);
@@ -684,7 +685,7 @@ export default {
 			var r = /^(http|https):\/\/[^ "]+$/;
 			return r.test(e.value);
 		},
-		areaChange(e) {
+		ocdeChange(e) {
 			console.log(this.$sep);
 			console.log("e", e);
 			var items = this.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value);
@@ -717,63 +718,20 @@ export default {
 				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " unidad";
 				root.loaderMessage = msg;
 				root.loaderShow(msg);
-				root.group.name = root.$titleCase(root.name);
+				root.group.name = root.$titleCase(root.group.name);
 				root.group.acronym = root.group.acronym.toUpperCase();
 				root.group.cidc_act_number = root.group.cidc_act_number.toUpperCase();
 				root.group.faculty_act_number = root.group.faculty_act_number.toUpperCase();
 				if (root.mode == "add") root.group.created_by = root.user_id;
 				if (root.mode == "edit") root.group.updated_by = root.user_id;
-				setTimeout(function() {
-					root.saveUnit({
-						unidad: root.group,
-						callback: function(gResponse) {
-							console.log("gResponse", gResponse);
-							root.loaderHide();
-						},
-					});
-				}, 3000);
-			}
-		},
-		cancel() {
-			hideErrors();
-			if (this.$isFunction(this.cancelFn)) this.cancelFn();
-			//
-		},
-		onButtonClick() {
-			Notify("Uncomment the line to enable sending a form to the server.");
-			// const form = this.$refs[this.formRefName];
-			// form.submit();
-		},
-		fileReady(e) {
-			// console.clear();
-			// console.log(e);
-			var el = $(e.element);
-			el.find(".dx-fileuploader-upload-button,.dx-fileuploader-input-container").hide();
-			var btn = el.find(".dx-fileuploader-button.dx-button-has-text:first");
-			btn
-				.removeClass("dx-fileuploader-button dx-button dx-button-normal dx-button-mode-contained dx-widget dx-button-has-text")
-				.addClass("btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100");
-			// console.log(btn.html());
-			btn.html('<b><i class="icon-file-pdf"></i></b>' + btn.find(".dx-button-text").html());
-			// btn-labeled btn-labeled-left legitRipple
-			// el.find(".dx-fileuploader-button").hide();
-			// console.log("fileReady", e);
-		},
-		fileSelected(e, document_type_id) {
-			console.log("e", e);
-			var files = e.value;
-			// 202104070926: Obtiene los tipos de documento y filtra por el id
-			var type = root.subtypesByType(22).find((o) => o.id === document_type_id);
-			let doc = { type_id: document_type_id, type_name: type.st_name, name: e.element.id, file: e.value[0] };
-			this.setDocument(doc);
-			// console.log(e);
-			var el = $(e.element);
-			var msg = el.find(".dx-fileuploader-files-container");
-			console.log("msgs", msg);
-			if (files.length > 0) {
-				msg.show();
-			} else {
-				msg.hide();
+				root.saveUnit({
+					unidad: root.group,
+					callback: function(result) {
+						console.log("result", result);
+						root.loaderHide();
+						root.$info(`La unidad "${result.name}" se actualizó exitosamente!`);
+					},
+				});
 			}
 		},
 		facultadChange(e) {
@@ -814,7 +772,7 @@ export default {
 				}
 			}
 		},
-		sbEspecificoChange(e) {
+		cineChange(e) {
 			var items = this.cDetallados.filter((o) => o.cine_specific_area_id === e.value);
 			if (items.length > 0) {
 				console.log(this.$sep);

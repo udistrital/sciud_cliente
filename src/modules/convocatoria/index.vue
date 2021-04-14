@@ -211,7 +211,6 @@
 /* eslint-disable no-unused-vars */
 let root = null;
 let $ = window.jQuery;
-import Tabs from "@/modules/unidad/tabs";
 import DxStore from "@/store/dx";
 // import Commands from "@/components/element/commands.vue";
 // {{url}}/research_group?page=1&per_page=5&group_type_id=1
@@ -251,7 +250,6 @@ export default {
 		DxSearchPanel,
 		DxSorting,
 		DxSummary,
-		Tabs,
 	},
 	data: () => ({
 		items: [],
