@@ -1,53 +1,49 @@
 {
-    "debug":  true,
-    "pageSize":  20,
-    "pageSizes":  [
-                      10,
-                      20,
-                      50
-                  ],
-    "env":  {
-                "development":  {
-                                    "name":  "dev",
-                                    "url":  "http://localhost:4500",
-                                    "urlDocs":  "http://antares:3000"
-                                },
-                "production":  {
-                                   "name":  "prod",
-                                   "url":  "https://support.nemedi.com/udistrital/siciud-v2",
-                                   "urlDocs":  "https://siciud-v2-api.nemedi.com"
-                               }
-            },
-    "api":  {
-                "rest":  {
-                             "token_name":  "token_local",
-                             "url0":  "https://digital.nemedi.com/siciud-v2-back/api/v1",
-                             "url":  "https://siciud-v2-api.nemedi.com/api/v1",
-                             "url1":  "http://200.69.103.88:3114/api/v1",
-                             "url2":  "http://localhost:3000/api/v1"
-                         },
-                "oas":  {
-                            "token_name":  "token_oas",
-                            "token_value":  "1405759e-9f96-35dd-907f-1385e9650080",
-                            "VUE_APP_AUTH_URL":  "",
-                            "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
-                        }
-            },
-    "auth":  {
-                 "oidc":  {
-                              "AUTORIZATION_URL":  "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
-                              "URL_USER_INFO":  "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
-                              "CLIENTE_ID":  "k1wCyBLq8NYU1KOXF0ufhBmSKOEa",
-                              "RESPONSE_TYPE":  "id_token token",
-                              "SCOPE":  "openid email",
-                              "SIGN_OUT_URL":  "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
-                              "SIGN_OUT_APPEND_TOKEN":  "true",
-                              "SIGN_OUT_REDIRECT_URL":  "{baseUrl}/logout",
-                              "REDIRECT_URL":  "{baseUrl}/login"
-                          },
-                 "oidc_bk":  {
-                                 "SIGN_OUT_REDIRECT_URL":  "http://200.69.103.88:3115/",
-                                 "REDIRECT_URL":  "http://200.69.103.88:3115/"
-                             }
-             }
+	"debug": false,
+	"pageSize": 20,
+	"pageSizes": [10, 20, 50],
+	"env": {
+		"development": {
+			"name": "dev",
+			"url": "http://localhost:4500",
+			"urlDocs": "http://antares:3000"
+		},
+		"production": {
+			"name": "prod",
+			"url": "https://support.nemedi.com/udistrital/siciud-v2",
+			"urlDocs": "https://siciud-v2-api.nemedi.com"
+		}
+	},
+	"api": {
+		"rest": {
+			"token_name": "token_local",
+			"url0": "https://digital.nemedi.com/siciud-v2-back/api/v1",
+			"url": "https://siciud-v2-api.nemedi.com/api/v1",
+			"url1": "http://200.69.103.88:3114/api/v1",
+			"url2": "http://localhost:3000/api/v1"
+		},
+		"oas": {
+			"token_name": "token_oas",
+			"token_value": "e7122642-e1ef-3bc0-a828-1b59374987b8",
+			"VUE_APP_AUTH_URL": "",
+			"url": "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
+		}
+	},
+	"auth": {
+		"oidc": {
+			"AUTORIZATION_URL": "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
+			"URL_USER_INFO": "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo",
+			"CLIENTE_ID": "k1wCyBLq8NYU1KOXF0ufhBmSKOEa",
+			"RESPONSE_TYPE": "id_token token",
+			"SCOPE": "openid email",
+			"SIGN_OUT_URL": "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
+			"SIGN_OUT_APPEND_TOKEN": "true",
+			"SIGN_OUT_REDIRECT_URL": "{baseUrl}/logout",
+			"REDIRECT_URL": "{baseUrl}/login"
+		},
+		"oidc_bk": {
+			"SIGN_OUT_REDIRECT_URL": "http://200.69.103.88:3115/",
+			"REDIRECT_URL": "http://200.69.103.88:3115/"
+		}
+	}
 }

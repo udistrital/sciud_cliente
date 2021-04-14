@@ -92,12 +92,15 @@ vue.mixin({
 				if (!this.authenticated) this.logOut();
 			}, window.authCheckingTime * 60 * 1000);
 		}
+
+		this.loaderHide();
 	},
 	methods: {
 		...mapActions("auth/login", ["AuthLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
-		go(path) {
+		go(path, lockMsg = "Cargando", lockEl = ".card .card-body") {
+			this.loaderShow(lockMsg, lockEl);
 			this.$router.push({ path: path });
 		},
 		capitalize(e) {
