@@ -17,6 +17,42 @@
 									<fieldset>
 										<legend>Información Básica</legend>
 										<div class="row">
+											<div class="col-md-10">
+												<div class="form-group">
+													<label>Nombre de la unidad:</label>
+													<DxTextBox
+														:show-clear-button="true"
+														:read-only="!editMode"
+														class="form-control"
+														:value.sync="group.name"
+														placeholder="Nombre de la unidad"
+														name="name"
+														id="name"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxTextBox>
+												</div>
+											</div>
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>Acrónimo:</label>
+													<DxTextBox
+														:show-clear-button="true"
+														:read-only="!editMode"
+														class="form-control upper"
+														placeholder="Acrónimo"
+														:value.sync="group.acronym"
+														name="acronym"
+														id="acronym"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxTextBox>
+												</div>
+											</div>
 											<div class="col-md-4">
 												<div class="form-group">
 													<label>Facultad(es):</label>
@@ -144,42 +180,6 @@
 															<DxRequiredRule />
 														</DxValidator>
 													</DxSelectBox>
-												</div>
-											</div>
-											<div class="col-md-10">
-												<div class="form-group">
-													<label>Nombre de la unidad:</label>
-													<DxTextBox
-														:show-clear-button="true"
-														:read-only="!editMode"
-														class="form-control"
-														:value.sync="group.name"
-														placeholder="Nombre de la unidad"
-														name="name"
-														id="name"
-													>
-														<DxValidator>
-															<DxRequiredRule />
-														</DxValidator>
-													</DxTextBox>
-												</div>
-											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Acrónimo:</label>
-													<DxTextBox
-														:show-clear-button="true"
-														:read-only="!editMode"
-														class="form-control upper"
-														placeholder="Acrónimo"
-														:value.sync="group.acronym"
-														name="acronym"
-														id="acronym"
-													>
-														<DxValidator>
-															<DxRequiredRule />
-														</DxValidator>
-													</DxTextBox>
 												</div>
 											</div>
 											<div class="col-md-2">

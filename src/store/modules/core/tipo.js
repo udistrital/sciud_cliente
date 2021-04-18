@@ -111,7 +111,7 @@ const store = {
 		},
 		subtypesByType: (state, getters) => (id) => {
 			if (typeof id === "string")
-				id = window.config.clasifier.find(
+				id = window.clasifier.find(
 					(o) =>
 						o.name
 							.toString()

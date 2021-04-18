@@ -86,7 +86,7 @@ export default {
 	name: "globalMenu",
 	components: {},
 	methods: {
-		...mapActions("auth/login", ["AuthLogout"]),
+		...mapActions("auth/login", ["authLogout"]),
 		menuLogout(e) {
 			let root = this;
 			e.preventDefault();
@@ -95,6 +95,10 @@ export default {
 				if (ok) root.logOut();
 			});
 		},
+	},
+	created() {
+		console.log(this.$sep);
+		if (!this.authenticated) this.logOut();
 	},
 	data: () => ({
 		showLogin: true,

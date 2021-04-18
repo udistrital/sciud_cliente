@@ -52,10 +52,14 @@ vue.mixin({
 		}
 	},
 	beforeDestroy() {
-		window.removeEventListener("beforeunload", this.beforeWindowUnload);
+		window.removeEventListener("beforeunload");
 	},
 	created() {
-		window.addEventListener("beforeunload", this.beforeWindowUnload);
+		window.addEventListener("beforeunload", function(e) {
+			this.logOut();
+			e.preventDefault();
+			e.returnValue = "";
+		});
 		loadMessages(esMessages);
 		locale("es");
 	},
@@ -88,7 +92,6 @@ vue.mixin({
 		if (!window.authChecking) {
 			window.authChecking = true;
 			window.setInterval(() => {
-				// console.log("Check auth!");
 				if (!this.authenticated) this.logOut();
 			}, window.authCheckingTime * 60 * 1000);
 		}
@@ -96,7 +99,7 @@ vue.mixin({
 		// this.loaderHide();
 	},
 	methods: {
-		...mapActions("auth/login", ["AuthLogout"]),
+		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
 		go(path, lockMsg = "Cargando", lockEl = ".card .card-body") {
@@ -111,12 +114,6 @@ vue.mixin({
 		},
 		confirmStayInDirtyForm() {
 			return this.form_dirty && !this.confirmLeave();
-		},
-		beforeWindowUnload(e) {
-			if (this.confirmStayInDirtyForm()) {
-				e.preventDefault();
-				e.returnValue = "";
-			}
 		},
 		loaderShow(msg, element) {
 			let root = this;
@@ -144,7 +141,7 @@ vue.mixin({
 		},
 		logOut() {
 			let root = this;
-			root.AuthLogout(function() {
+			root.authLogout(function() {
 				window.sessionStorage.clear();
 				let cr = root.$router.currentRoute;
 				if (cr.meta.requiresAuth) root.$router.push("/inicio");
@@ -185,9 +182,6 @@ vue.mixin({
 	computed: {
 		...mapState("auth/usuario", ["roles"]),
 		...mapState("auth/login", ["authenticated", "user"]),
-		_sep() {
-			return window.vm.$sep;
-		},
 		minDate() {
 			return new Date(2000, 0, 1);
 		},
@@ -219,16 +213,26 @@ vue.mixin({
 			return process.env.BASE_URL + "assets/js";
 		},
 		user_id: function() {
-			return this.user.local.id;
+			if (this.user.local !== null && typeof this.user.local !== "undefined") {
+				return this.user.local.id;
+			} else {
+				return null;
+			}
 		},
 		user_role_id: function() {
-			return this.user.local.user_role_id;
+			if (this.user.local !== null && typeof this.user.local !== "undefined") {
+				return this.user.local.user_role_id;
+			} else {
+				return null;
+			}
 		},
 		user_complete_name() {
-			if (typeof this.user.oas_details.TerceroId !== "undefined") {
+			if (this.user !== null && typeof this.user.oas_details !== "undefined" && typeof this.user.oas_details.TerceroId !== "undefined") {
 				return this.user.oas_details.TerceroId.NombreCompleto;
-			} else {
+			} else if (this.user.oas !== null && typeof this.user.oas !== "undefined") {
 				return this.user.oas.sub;
+			} else {
+				return null;
 			}
 		},
 	},
@@ -250,8 +254,18 @@ axios
 	.get(process.env.BASE_URL + "data/config.json")
 	.then(({ data }) => {
 		window.config = data;
-		createVue();
-		console.log("window.vm.$store", window.vm.$store);
+		axios
+			.get(process.env.BASE_URL + "data/clasifier.json")
+			.then(({ data }) => {
+				window.clasifier = data;
+				createVue();
+				console.log("window.config", window.config);
+				console.log("window.clasifier", window.clasifier);
+				console.log("window.vm.$store", window.vm.$store);
+			})
+			.catch((err) => {
+				console.log("ERROR", err);
+			});
 	})
 	.catch((err) => {
 		console.log("ERROR", err);

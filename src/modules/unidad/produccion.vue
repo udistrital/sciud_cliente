@@ -3,7 +3,7 @@
 		<Header :group="group" />
 		<div class="row">
 			<div class="col">
-				<div class="card" id="panel-usuarios">
+				<div class="card" id="panel-produccion">
 					<div class="card-body group-detail">
 						<div class="row mb-3">
 							<div class="col">

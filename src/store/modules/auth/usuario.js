@@ -46,6 +46,7 @@ const store = {
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
 			}
 		},
+
 		// 202010290006: https://scotch.io/tutorials/asynchronous-javascript-using-async-await
 		async getOasUser({ commit, getters }, args) {
 			try {
@@ -71,7 +72,7 @@ const store = {
 							// 202104020819: Se almacena el documento pues será el
 							// usado para buscar si no hay respuesta de la OAS
 							user_oas_details["doc"] = args.doc;
-							commit("SetOasDetails", user_oas_details);
+							commit("setOasDetails", user_oas_details);
 							if (this._vm.$isFunction(args.cb)) {
 								return args.cb(user_oas_details);
 							} else {
@@ -82,6 +83,15 @@ const store = {
 			} catch (error) {
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
 			}
+		},
+
+		async getOasStudent({ commit, state, dispatch }, args) {
+			console.log("getOasStudent", args);
+			return await api("oas_mid", { token: args.token })
+				.post("userRol", { user: args.email.split("@")[0] })
+				.then((r) => {
+					return r.data;
+				});
 		},
 
 		getDocuments({ commit, dispatch, state }, cb) {
@@ -125,14 +135,6 @@ const store = {
 				});
 		},
 
-		async updateUser({ commit, state, dispatch }, args) {
-			console.log("SEND", args);
-			return await api()
-				.put(`users/${args.user.id}`, { user: args.user })
-				.then((r) => {
-					return args.cb(r.data);
-				});
-		},
 		async getUser({ commit, state, dispatch }, id) {
 			console.log("SEND", id);
 			return await api()
@@ -141,6 +143,7 @@ const store = {
 					return r.data;
 				});
 		},
+
 		getAllRoles({ commit, state }, args) {
 			// var cedula = args[0];
 			// 202103081901: Si los roles siguen vacios y no se está cargando ya
@@ -150,44 +153,45 @@ const store = {
 				api()
 					.get("user_roles")
 					.then((r) => {
-						commit("SetRoles", r.data);
+						commit("setRoles", r.data);
 					});
 			}
 		},
+
 		getGroupRoles({ commit, state }, args) {
 			// 202103151241: getGroupRoles
 			if (state.groupRoles.length <= 0) {
 				api()
 					.get("role")
 					.then((r) => {
-						commit("SetGroupRoles", r.data);
+						commit("setGroupRoles", r.data);
 					});
 			}
 		},
 	},
 	mutations: {
-		async SetOasDetails(state, user_oas_details) {
+		async setOasDetails(state, user_oas_details) {
 			// 202104020301: Asume que el usuario ya ha sido verificado y no existe en el state... lo agrega
 			// if (typeof user_oas_details.Numero !== "undefined") {
 			state.userOasDetails.push(user_oas_details);
-			console.log("mutation => SetOasDetails => ", user_oas_details);
+			console.log("mutation => setOasDetails => ", user_oas_details);
 			console.log("state.userOasDetails => ", state.userOasDetails);
 			// }
 		},
-		SetData(state, data) {
+		setData(state, data) {
 			// for (let x = 0; x < data.length; x++) {
 			// 	let o = data[x];
 			// 	if (o.avance !== null) o.avance = o.avance.toString().replace(".", ",") + "%";
 			// }
 			state.items = data;
 		},
-		SetRoles(state, data) {
+		setRoles(state, data) {
 			state.roles = data;
 			state.loadingRoles = false;
 			// console.log(window.vm._sep);
 			console.log("state.roles", state.roles);
 		},
-		SetGroupRoles(state, data) {
+		setGroupRoles(state, data) {
 			state.groupRoles = data;
 			// console.log(window.vm._sep);
 			console.log("state.groupRoles", state.groupRoles);

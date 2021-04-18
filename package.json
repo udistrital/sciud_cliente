@@ -7,7 +7,7 @@
 		"lint": "vue-cli-service lint",
 		"publish": "npm run build",
 		"pb0": "powershell -NoProfile -ExecutionPolicy Bypass -File publish.ps1",
-		"pb": "powershell -NoProfile -ExecutionPolicy Bypass -File \"D:\\siciud\\publish.ps1\"",
+		"pb": "powershell -NoProfile -ExecutionPolicy Bypass -File \"D:/siciud-v2/publish.ps1\"",
 		"serve": "vue-cli-service serve --port 4500 --host localhost --https false",
 		"start": "set NODE_ENV=dev && node app.js"
 	},

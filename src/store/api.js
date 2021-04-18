@@ -38,7 +38,6 @@ export default (source = "rest", args = {}) => {
 	let base = window.config.api.rest;
 	// 202011260213: https://stackoverflow.com/a/6941653
 	// let origin = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
-	let token = window.localStorage.getItem(base.token_name);
 	let axiosConfig = {
 		baseURL: base.url,
 		withCredentials: false,
@@ -61,20 +60,20 @@ export default (source = "rest", args = {}) => {
 			},
 		];
 	}
-	if (source === "oas") {
+	if (source === "oas" || source === "oas_mid") {
 		base = window.config.api.oas;
-		axiosConfig.baseURL = base.url;
+		axiosConfig.baseURL = source === "oas" ? base.url : window.config.auth.oidc.AUTENTICACION_MID;
 		// 202010211336: Usa 'token_value' si esta definido en 'config.json', de lo contrario consulta locaStorage
 		// 202104121525: Se elimina 'impersonate'
-		token = window.localStorage.getItem(base.token_name);
+		let token = window.localStorage.getItem(base.token_name);
 		// 202103120344: Si se recibe un token en args lo usa
 		if (typeof args.token !== "undefined") token = args.token;
 		// console.log("tokenOas", token);
 		axiosConfig.headers["Authorization"] = `Bearer ${token}`;
 		// axiosConfig.headers["Authorization"] = `${token}`;
 	}
-	// console.log("source", source);
-	// console.log("axiosConfig", axiosConfig);
+	console.log("source", source);
+	console.log("axiosConfig", axiosConfig);
 	const axiosInstance = axios.create(axiosConfig);
 
 	// 202009090053: https://github.com/axios/axios#interceptors

@@ -8,7 +8,7 @@
 			</div>
 			<div id="navbar-mobile" class="collapse navbar-collapse d-flex justify-content-end text-right">
 				<span class="font-weight-semibold color-main-500">
-					<span v-if="user">{{ user_complete_name }} ({{ user.local.user_role_name }})<br /></span>
+					<span v-if="user && user.local">{{ user_complete_name }} ({{ user.local.user_role_name }})<br /></span>
 					Fecha y hora: {{ date }}</span
 				>
 			</div>
@@ -28,14 +28,7 @@ export default {
 	methods: {
 		...mapActions("auth/login", ["setData"]),
 	},
-	created() {
-		console.log("user", this.user);
-		console.log("authenticated", this.authenticated);
-		// if (this.authenticated && this.user === null) {
-		// 	console.log("this.setData()!");
-		// 	this.setData();
-		// }
-	},
+	created() {},
 	computed: {
 		date() {
 			return this.$getFormattedDate();

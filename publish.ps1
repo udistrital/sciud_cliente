@@ -17,6 +17,7 @@ if (Test-Path $targetBase) {
 	# 202010290745: Modifica el config para prod
 	$json = Get-Content $jsonPath -raw | ConvertFrom-Json
 	$token = $json.api.oas.token_value
+	$debug = $json.debug
 	$json.api.oas.token_value = $null
 	$json.debug = $false
 	$json | ConvertTo-Json | Set-Content $jsonPath
@@ -35,7 +36,7 @@ if (Test-Path $targetBase) {
 	# 202010290745: Devuelve al original
 	$json = Get-Content $jsonPath -raw | ConvertFrom-Json
 	$json.api.oas.token_value = "$token"
-	$json.debug = $true
+	$json.debug = $debug
 	$json | ConvertTo-Json | Set-Content $jsonPath
 
 	# Lanza

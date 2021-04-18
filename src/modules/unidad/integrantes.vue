@@ -3,7 +3,7 @@
 		<Header :group="group" />
 		<div class="row">
 			<div class="col">
-				<div class="card" id="panel-usuarios">
+				<div class="card" id="panel-integrantes">
 					<div class="card-body group-detail">
 						<div class="row mb-3">
 							<div class="col">
@@ -512,7 +512,7 @@ export default {
 					console.log("e", e);
 					if (!root.loading) {
 						root.loading = true;
-						root.loaderShow("Cargando integrantes", $("#panel-usuarios .card-body")[0]);
+						root.loaderShow("Cargando integrantes", $("#panel-integrantes .card-body")[0]);
 						let items = [];
 						root.grid
 							.getVisibleRows()

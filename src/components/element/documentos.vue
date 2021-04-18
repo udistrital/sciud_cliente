@@ -367,17 +367,13 @@ export default {
 			type: String,
 			default: () => "research_units",
 		},
+		lockElement: {
+			type: String,
+			default: () => null,
+		},
 		id: {
 			type: String,
 			default: () => "panel-documentos",
-		},
-		saveFn: {
-			type: Function,
-			default: null,
-		},
-		cancelFn: {
-			type: Function,
-			default: null,
 		},
 	},
 	methods: {

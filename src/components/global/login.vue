@@ -24,7 +24,7 @@ export default {
 		...mapGetters("auth/login", ["authStatus", "user"]),
 	},
 	methods: {
-		...mapActions("auth/login", ["GetUser", "OasInit", "OasLogin", "OasLoginData", "AuthLogin"]),
+		...mapActions("auth/login", ["getUser", "oasInit", "oasLogin", "oasLoginData", "authLogin"]),
 		validate() {
 			var result = this.$refs.loginGroup.instance.validate();
 			this.isValid = result.isValid;
@@ -38,7 +38,7 @@ export default {
 			e.event.preventDefault();
 			root.loadingVisible = true;
 			root.loaderMessage = "Verificando credenciales";
-			this.AuthLogin([
+			this.authLogin([
 				{ email: this.username, password: this.password },
 				function(e) {
 					console.log("Received!", e);
@@ -74,13 +74,13 @@ export default {
 			]);
 		},
 		loginUd(e) {
-			this.OasInit();
+			this.oasInit();
 			if (typeof e !== "undefined") {
 				console.log("e", e);
 				e.event.preventDefault();
 			}
 			setTimeout(() => {
-				this.OasLogin();
+				this.oasLogin();
 			}, 1000);
 		},
 	},
@@ -103,37 +103,39 @@ export default {
 			// session_state=38302010296d63cdcb80b4b57fc2
 			// state=9296c56c0e97095b2845b1d2142bff21
 			// token_type=Bearer
+			// console.clear();
+			console.log(window.vm.$sep);
 			this.loaderShow("Verificando credenciales<br>un momento por favor", "#login");
+			console.log("qs", qs);
 			// 202103120335: Verifica que el usuario exista localmente
-			root.GetUser({
+			root.getUser({
 				qs: qs,
 				cb: function(result) {
-					// console.clear();
 					console.log(window.vm.$sep);
 					console.log("GETUSER RESULT", result);
-					setTimeout(function() {
-						if (result.hasAccess && result.user.local.active) {
-							root.OasLoginData({
-								qs: qs,
-								user: result.user,
-								callback: function(loggedUser) {
-									console.log(window.vm.$sep);
-									console.log("OasLoginData result", loggedUser);
-									console.log(JSON.stringify(loggedUser));
-									// 202103120145: Verifica que exista como usuario del sistema
-									root.loaderHide();
-									$("#login").fadeOut(function() {
-										// setTimeout(function() {
-										window.vm.$router.push("/inicio");
-										// }, window.speed);
-									});
-								},
-							});
-						} else {
-							root.loaderHide();
-							window.vm.$router.push("/denied");
-						}
-					}, 1000);
+					// setTimeout(function() {
+					if (result.hasAccess && result.user.local.active) {
+						root.oasLoginData({
+							qs: qs,
+							user: result.user,
+							callback: function(loggedUser) {
+								console.log(window.vm.$sep);
+								console.log("oasLoginData result", loggedUser);
+								console.log(JSON.stringify(loggedUser));
+								// 202103120145: Verifica que exista como usuario del sistema
+								root.loaderHide();
+								$("#login").fadeOut(function() {
+									// setTimeout(function() {
+									window.vm.$router.push("/inicio");
+									// }, window.speed);
+								});
+							},
+						});
+					} else {
+						root.loaderHide();
+						window.vm.$router.push("/denied");
+					}
+					// }, 1000);
 				},
 			});
 		} else {

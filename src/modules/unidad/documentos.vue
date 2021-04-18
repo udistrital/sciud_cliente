@@ -3,7 +3,7 @@
 		<Header :group="group" />
 		<div class="row">
 			<div class="col">
-				<div class="card" id="panel-usuarios">
+				<div class="card" id="panel-documentos">
 					<div class="card-body group-detail">
 						<div class="row mb-3">
 							<div class="col">
@@ -16,7 +16,14 @@
 								</div>
 							</div>
 						</div>
-						<Documentos id="panel-unidad-documentos" end-point="research_units" :main-obj="group" :parent="this" :tipos="tiposDocumento" />
+						<Documentos
+							:main-obj="group"
+							:parent="this"
+							:tipos="tiposDocumento"
+							end-point="research_units"
+							id="panel-unidad-documentos"
+							lock-element="#panel-documentos .card-body"
+						/>
 					</div>
 				</div>
 			</div>
