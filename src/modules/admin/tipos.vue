@@ -119,6 +119,7 @@
 								class="main"
 								width="100%"
 								@initialized="gridInit"
+								:column-auto-width="true"
 								:allow-column-reordering="true"
 								:data-source="dataSource"
 								:remote-operations="true"
@@ -126,26 +127,28 @@
 								:row-alternation-enabled="true"
 								:show-borders="false"
 							>
-								<DxColumnChooser :enabled="false" mode="dragAndDrop" />
-								<DxSorting mode="multiple" /><!-- single, multiple, none -->
-								<DxPaging :page-size="dgPageSize" /><!-- dgPageSize -->
-								<DxFilterRow :visible="true" />
-								<DxLoadPanel :enabled="false" />
-								<DxGroupPanel :visible="false" :allow-column-dragging="true" />
-								<DxGrouping :auto-expand-all="false" />
-								<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
 								<!-- https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/RowEditingAndEditingEvents/Vue/Light -->
 								<!-- https://js.devexpress.com/Documentation/Guide/UI_Components/DataGrid/Columns/Column_Types/Lookup_Columns -->
+								<DxColumnChooser :enabled="false" mode="dragAndDrop" />
+								<DxColumnFixing :enabled="true" />
 								<DxEditing :allow-updating="false" :allow-adding="false" :allow-deleting="false" mode="row" /><!-- row, batch, cell, form, popup -->
+								<DxFilterRow :visible="true" />
+								<DxGrouping :auto-expand-all="false" />
+								<DxGroupPanel :visible="false" :allow-column-dragging="true" />
+								<DxLoadPanel :enabled="false" />
+								<DxPaging :page-size="dgPageSize" />
+								<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
+								<DxSorting mode="multiple" /><!-- single, multiple, none -->
 								<DxSummary>
 									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
 								</DxSummary>
 								<DxPager
+									:visible="true"
 									:show-info="true"
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="Página {0} de {1} ({2} usuarios por asociar)"
+									info-text="{2} subtipos (Página {0} de {1})"
 								/>
 								<DxColumn
 									name="Tipo ID"
@@ -220,10 +223,10 @@
 									data-field="name"
 									data-type="string"
 								/>
-								<DxColumn :width="100" data-field="active" caption="Activo" alignment="center" :visible="true">
+								<DxColumn :width="100" data-field="active" caption="Activo" alignment="center" :visible="false">
 									<DxLookup :data-source="si_no" value-expr="value" display-expr="name" />
 								</DxColumn>
-								<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" />
+								<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
 								<template #tpl="{ data }">
 									<!-- @button-click="ddButtonClick"
 										@initialized="ddInit"
@@ -241,7 +244,7 @@
 									>
 										<template #item><i class="hand icon-cog"></i></template>
 										<template #list-item="{ data }">
-											<span class="cmd-item"><i :class="data.icon"></i>{{ data.text }}</span>
+											<span class="cmd-item" title="Editar tipo o subtipos..."><i :class="data.icon"></i>{{ data.text }}</span>
 										</template>
 									</DxDropDownButton>
 								</template>
@@ -271,6 +274,7 @@ import DxStore from "@/store/dx";
 import {
 	DxColumn,
 	DxColumnChooser,
+	DxColumnFixing,
 	DxDataGrid,
 	DxEditing,
 	DxFilterRow,
@@ -310,6 +314,7 @@ export default {
 		DxDropDownButton,
 		DxColumn,
 		DxColumnChooser,
+		DxColumnFixing,
 		DxDataGrid,
 		DxDateBox,
 		DxEditing,
@@ -587,6 +592,11 @@ export default {
 					if (e.fullName == "paging.pageIndex") {
 						console.log("optionChanged", e);
 						root.loaderShow();
+					}
+				},
+				editorPreparing: (e) => {
+					if (e.dataField === "LastName" && e.parentType === "dataRow") {
+						e.editorOptions.disabled = e.row.data && e.row.data.FirstName === "";
 					}
 				},
 			});

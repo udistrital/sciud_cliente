@@ -92,10 +92,6 @@
 	color: $main-color-500 !important;
 }
 
-.dx-popup-content {
-	margin: 0 !important;
-}
-
 .dx-datebox-wrapper-calendar .dx-calendar {
 	border: none;
 	margin: 0.2rem 0.4rem;
@@ -1086,12 +1082,27 @@ $color: rgb(182, 182, 182);
 	}
 }
 
-// .dx-overlay-wrapper {
-// 	min-height: 350px;
-// 	border-radius: $radius;
-// 	.dx-overlay-content {
-// 		min-height: 350px;
-// 		height: auto !important;
-// 		top: 0 !important;
-// 	}
-// }
+.dx-scrollable-scrollbar {
+	&.dx-state-hover {
+		background-color: $main-color-200 !important;
+	}
+	.dx-scrollable-scroll {
+		.dx-scrollable-scroll-content {
+			background-color: $main-color-500 !important;
+			color: $main-color-500 !important;
+		}
+	}
+}
+
+.dx-scrollable-content {
+	padding: 0 !important;
+}
+
+.dx-overlay-content {
+	min-width: 400px !important;
+	border-radius: 5px !important;
+	border-top-left-radius: 0 !important;
+	.dx-popup-content {
+		margin: 0 !important;
+	}
+}

@@ -42,6 +42,7 @@ global.check; // console();
 // https://stackoverflow.com/a/40897670
 vue.mixin({
 	beforeRouteLeave(to, from, next) {
+		// 202104180627: https://stackoverflow.com/a/56551646
 		// If the form is dirty and the user did not confirm leave,
 		// prevent losing unsaved changes by canceling navigation
 		if (this.confirmStayInDirtyForm()) {
@@ -52,14 +53,10 @@ vue.mixin({
 		}
 	},
 	beforeDestroy() {
-		window.removeEventListener("beforeunload");
+		window.removeEventListener("beforeunload", this.beforeWindowUnload);
 	},
 	created() {
-		window.addEventListener("beforeunload", function(e) {
-			this.logOut();
-			e.preventDefault();
-			e.returnValue = "";
-		});
+		window.addEventListener("beforeunload", this.beforeWindowUnload);
 		loadMessages(esMessages);
 		locale("es");
 	},
@@ -110,10 +107,18 @@ vue.mixin({
 			e.component.instance().option("value", this.$titleCase(e.value));
 		},
 		confirmLeave() {
-			return window.confirm("Do you really want to leave? you have unsaved changes!");
+			// return window.confirm("Do you really want to leave? you have unsaved changes!");
+			return true;
 		},
 		confirmStayInDirtyForm() {
 			return this.form_dirty && !this.confirmLeave();
+		},
+		beforeWindowUnload(e) {
+			if (this.confirmStayInDirtyForm()) {
+				window.sessionStorage.clear();
+				e.preventDefault();
+				e.returnValue = "";
+			}
 		},
 		loaderShow(msg, element) {
 			let root = this;
