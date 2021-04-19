@@ -97,13 +97,6 @@ export default {
 		let qs = this.$qsParams();
 		if (qs.id_token !== null && qs.id_token !== undefined) {
 			// Es respuesta de la OAS
-			// access_token=5f140179-5158-3af2-9cbd-365c22952c8e
-			// expires_in=266
-			// id_token=eyJ4NXQiOiJObUptT0dVeE16
-			// session_state=38302010296d63cdcb80b4b57fc2
-			// state=9296c56c0e97095b2845b1d2142bff21
-			// token_type=Bearer
-			// console.clear();
 			console.log(window.vm.$sep);
 			this.loaderShow("Verificando credenciales<br>un momento por favor", "#login");
 			console.log("qs", qs);
@@ -112,7 +105,7 @@ export default {
 				qs: qs,
 				cb: function(result) {
 					console.log(window.vm.$sep);
-					console.log("GETUSER RESULT", result);
+					console.log("getUser result =>", result);
 					// setTimeout(function() {
 					if (result.hasAccess && result.user.local.active) {
 						root.oasLoginData({

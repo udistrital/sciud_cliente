@@ -460,6 +460,7 @@
 														<div class="form-group">
 															<label>Discipinas OCDE:</label>
 															<DxTagBox
+																@value-changed="ocdeDiscChange"
 																:data-source="ocdeDetallado"
 																:disabled="ocdeDisabled"
 																:search-enabled="true"
@@ -697,6 +698,19 @@ export default {
 			} else {
 				this.ocdeDisabled = true;
 			}
+		},
+		ocdeDiscChange(e) {
+			console.log(this.$sep);
+			console.log("e", e);
+			// var items = this.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value);
+			// if (items.length > 0) {
+			// 	items = this.$objectSort(items, "name");
+			// 	this.ocdeDetallado = items;
+			// 	this.ocdeDisabled = false;
+			// 	console.log("ocdeDetallado", this.ocdeDetallado);
+			// } else {
+			// 	this.ocdeDisabled = true;
+			// }
 		},
 		getDocument(document_type_id) {
 			// console.log("state.documents", this.documents);

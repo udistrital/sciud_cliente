@@ -17,8 +17,8 @@
 							</div>
 						</div>
 						<Documentos
-							:main-obj="group"
 							:parent="this"
+							:main-obj="group"
 							:tipos="tiposDocumento"
 							end-point="research_units"
 							id="panel-unidad-documentos"
@@ -32,34 +32,10 @@
 </template>
 
 <script>
-/* eslint-disable no-unused-vars */
-/* eslint-disable vue/no-unused-components */
 // https://vuejs.org/v2/guide/single-file-components.html#What-About-Separation-of-Concerns
 let $ = window.jQuery,
 	root = null;
-import {
-	DxColumn,
-	DxColumnChooser,
-	DxExport,
-	DxDataGrid,
-	DxFilterRow,
-	DxGrouping,
-	DxGroupItem,
-	DxGroupPanel,
-	DxLoadPanel,
-	DxPager,
-	DxPaging,
-	DxSearchPanel,
-	DxSorting,
-	DxSummary,
-} from "devextreme-vue/data-grid";
-import { DxButton, DxSelectBox, DxSwitch, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
-import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
-import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
-import CustomStore from "devextreme/data/custom_store";
-import DataSource from "devextreme/data/data_source";
-import Notify from "devextreme/ui/notify";
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 let hideErrors = () => {
 	$("#panel-basicos .dx-fileuploader-files-container").hide();
 	$("#panel-basicos .dx-invalid-message").hide();

@@ -55,18 +55,20 @@ const store = {
 	actions: {
 		async getUser({ commit, state, dispatch }, args) {
 			// console.clear();
-			console.log(window.vm._sep);
+			console.log(window.vm.$sep);
 			console.log("Verificando usuario", args);
 			let userOas = oasDecodeUser(args.qs.id_token);
 			console.log("userOas", userOas);
 			let doc = userOas.documento;
-			// 202104142017: Si no hay documento es un estudiante, debe obtenerlo
+			// 202104142017: Si no hay documento ES RESPUESTA GOOGLE, debe obtenerlo
 			if (typeof doc === "undefined") {
-				doc = await dispatch("auth/usuario/getOasStudent", { email: userOas.email, token: args.qs.access_token }, { root: true });
-				console.log("DOC MID!", doc);
+				let externalWithRol = await dispatch("auth/usuario/getOasStudent", { email: userOas.email, token: args.qs.access_token }, { root: true });
+				console.log(window.vm.$sep);
+				console.log("externalWithRol", externalWithRol);
+				doc = externalWithRol.documento;
 			}
 			// Verifica el usuario localmente
-			let r = await dispatch("auth/usuario/getUser", userOas.documento, { root: true });
+			let r = await dispatch("auth/usuario/getUser", doc, { root: true });
 			// console.clear();
 			console.log("r", r);
 			let userLocal = r.length > 0 ? r[0] : null;
@@ -79,6 +81,7 @@ const store = {
 				local: userLocal,
 				oas: userOas,
 			};
+			// 202104191437: Si NO es integrante
 			if (userLocal.user_role_id !== 5) {
 				return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
 			} else {
@@ -116,7 +119,7 @@ const store = {
 			oidc.getAuthorizationUrl();
 		},
 		oasLoginData: async ({ commit, dispatch, state }, args) => {
-			console.log(window.vm._sep);
+			console.log(window.vm.$sep);
 			console.log("oasLoginData", args);
 			window.localStorage.setItem(OAS_TOKEN, args.qs.access_token);
 			window.localStorage.setItem(OAS_TOKEN_EXP_IN, args.qs.expires_in);
@@ -125,8 +128,9 @@ const store = {
 			state.oasTokenExp = args.qs.expires_in;
 
 			// 202103120702: Obtiene el usuario de la OAS
+			console.log(window.vm.$sep);
 			console.log("store.auth => dispatch => usuario/getOasUser");
-			let userDetails = await dispatch("auth/usuario/getOasUser", { doc: args.user.oas.documento }, { root: true });
+			let userDetails = await dispatch("auth/usuario/getOasUser", { doc: args.user.local.identification_number }, { root: true });
 			console.log("store.auth => dispatch => usuario/getOasUser => Recibido => ", userDetails);
 			args.user["oas_details"] = userDetails;
 			commit("authSuccess", args);
@@ -139,7 +143,7 @@ const store = {
 		authSuccess: (state, args) => {
 			state.status = "success";
 			state.authenticated = true;
-			// console.log(window.vm._sep);
+			// console.log(window.vm.$sep);
 			console.log("user", args.user);
 			state.user = typeof args.user === "string" ? JSON.parse(args.user) : args.user;
 			window.localStorage.setItem(APP_USER, JSON.stringify(args.user));

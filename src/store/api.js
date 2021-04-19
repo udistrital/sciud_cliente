@@ -72,8 +72,8 @@ export default (source = "rest", args = {}) => {
 		axiosConfig.headers["Authorization"] = `Bearer ${token}`;
 		// axiosConfig.headers["Authorization"] = `${token}`;
 	}
-	console.log("source", source);
-	console.log("axiosConfig", axiosConfig);
+	// console.log("source", source);
+	// console.log("axiosConfig", axiosConfig);
 	const axiosInstance = axios.create(axiosConfig);
 
 	// 202009090053: https://github.com/axios/axios#interceptors
