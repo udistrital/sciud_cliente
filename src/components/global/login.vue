@@ -126,6 +126,9 @@ export default {
 						});
 					} else {
 						root.loaderHide();
+						console.log(window.vm.$sep);
+						console.log("Respuesta de la OAS", qs);
+						console.log("Respuesta plana de la OAS", JSON.stringify(qs));
 						window.vm.$router.push("/denied");
 					}
 					// }, 1000);

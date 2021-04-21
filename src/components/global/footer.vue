@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210417 - ©{{ year }}
+				SICIUD v2.0.20210421 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -26,7 +26,7 @@
 					<a :href="linkLogin2" class="navbar-nav-link legitRipple color-text"><i class="icon-user"></i> Integrante</a>
 				</li>
 				<li class="nav-item" v-if="isDev && !authenticated">
-					<a :href="linkLogin3" class="navbar-nav-link legitRipple color-text"><i class="icon-user"></i> Externo</a>
+					<a :href="linkLogin4" class="navbar-nav-link legitRipple color-text"><i class="icon-user"></i> Estudiante</a>
 				</li>
 				<li class="nav-item">
 					<a href="http://cidc.udistrital.edu.co" class="navbar-nav-link legitRipple" target="_blank"><i class="icon-file-text2"></i> Documentación</a>
@@ -73,6 +73,9 @@ export default {
 		},
 		linkLogin3() {
 			return `/login#access_token=${this.token}&id_token=eyJ4NXQiOiJObUptT0dVeE16WmxZak0yWkRSaE5UWmxZVEExWXpkaFpUUmlPV0UwTldJMk0ySm1PVGMxWkEiLCJraWQiOiJkMGVjNTE0YTMyYjZmODhjMGFiZDEyYTI4NDA2OTliZGQzZGViYTlkIiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiV2xiZUc5VGVSTUtCdmxqc0hyMTBOZyIsInN1YiI6ImR2YXJnYXN2QHVkaXN0cml0YWwuZWR1LmNvIiwiYXVkIjpbImsxd0N5QkxxOE5ZVTFLT1hGMHVmaEJtU0tPRWEiXSwiYXpwIjoiazF3Q3lCTHE4TllVMUtPWEYwdWZoQm1TS09FYSIsImlzcyI6ImF1dGVudGljYWNpb24ucG9ydGFsb2FzLnVkaXN0cml0YWwuZWR1LmNvIiwiZXhwIjoxNjE4NDUxNjgwLCJub25jZSI6Ijc3NDQ0NDViNmEzM2JjYjk1NjQzNWQwN2VmNTFiOTBkIiwiaWF0IjoxNjE4NDQ4MDgwLCJlbWFpbCI6ImR2YXJnYXN2QHVkaXN0cml0YWwuZWR1LmNvIn0.PiQHxnAs0JtJrAjGVZ-_ZtFxBhyVlpX4MlMcOh4ZFtbX73BS7A44ymYOnCFX2iK3FmeGR9gAA_FVoHYZ52zsmKaQy89BwXm9LwMU-ZXdf390Z8fhZbwyqU8bE2_UXq63nuDaMrMdvzrH5ov2KJ5ez0_nKn6nzhAi00BSgYHT3hQ&state=3db777601d837072a41b65ea8796d0bb&token_type=Bearer&expires_in=2512&session_state=3498d77ad4d663c5a686c7fb07c2754118c08343ebc3d694c9ee6238a7f4e989.lfpcCJ6hrlptLkQaVQNP_A`;
+		},
+		linkLogin4() {
+			return `/login#access_token=${this.token}&id_token=eyJ4NXQiOiJObUptT0dVeE16WmxZak0yWkRSaE5UWmxZVEExWXpkaFpUUmlPV0UwTldJMk0ySm1PVGMxWkEiLCJraWQiOiJkMGVjNTE0YTMyYjZmODhjMGFiZDEyYTI4NDA2OTliZGQzZGViYTlkIiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoiMFNjclBsVC1ESXI0SXFwR0NOS3FzQSIsInN1YiI6ImNlcm9jaGFjQGNvcnJlby51ZGlzdHJpdGFsLmVkdS5jbyIsImF1ZCI6WyJrMXdDeUJMcThOWVUxS09YRjB1ZmhCbVNLT0VhIl0sImF6cCI6Imsxd0N5QkxxOE5ZVTFLT1hGMHVmaEJtU0tPRWEiLCJpc3MiOiJhdXRlbnRpY2FjaW9uLnBvcnRhbG9hcy51ZGlzdHJpdGFsLmVkdS5jbyIsImV4cCI6MTYxODg2NTkyMCwibm9uY2UiOiJiNWRhZDEwZDBlODA2Mjc1NjA4Y2I1ZDQ4YzE3YjcwOSIsImlhdCI6MTYxODg2MjMyMCwiZW1haWwiOiJjZXJvY2hhY0Bjb3JyZW8udWRpc3RyaXRhbC5lZHUuY28ifQ.RuKwo4MAB5ZEN4FzPFUrDC5GOdOJ5n4478pjqPsVZ38ok_B15qt7AXz7uGWTPjkU1HhOjrj42zDMb7kv7dYacPHZHDtlqVfjpGHx_z_DXG4-7aaoChHMh9DC_Pw8_KzHkyta-b6qe5Ni-dZ5D8Kqu1eHh_FS3h4CuG26MjzfGPQ&state=3db777601d837072a41b65ea8796d0bb&token_type=Bearer&expires_in=2512&session_state=3498d77ad4d663c5a686c7fb07c2754118c08343ebc3d694c9ee6238a7f4e989.lfpcCJ6hrlptLkQaVQNP_A`;
 		},
 		year: function() {
 			return new Date().getFullYear();

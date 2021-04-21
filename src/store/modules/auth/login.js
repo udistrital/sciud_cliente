@@ -67,11 +67,13 @@ const store = {
 				console.log("externalWithRol", externalWithRol);
 				doc = externalWithRol.documento;
 			}
+
 			// Verifica el usuario localmente
 			let r = await dispatch("auth/usuario/getUser", doc, { root: true });
 			// console.clear();
-			console.log("r", r);
+			console.log(window.vm.$sep);
 			let userLocal = r.length > 0 ? r[0] : null;
+			console.log("Usuario local", userLocal);
 
 			// 202103120410: NO es usuario del sistema
 			if (userLocal === null) return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: userOas }) : null;
@@ -81,15 +83,17 @@ const store = {
 				local: userLocal,
 				oas: userOas,
 			};
+			console.log("user", user);
 			// 202104191437: Si NO es integrante
 			if (userLocal.user_role_id !== 5) {
 				return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
 			} else {
 				// 202103120931: Es integrante, consulta los grupos respectivos
 				api()
-					.get(`researcher_research_units?identification_number=${userOas.documento}`)
+					.get(`researcher_research_units?identification_number=${doc}`)
 					.then((r) => {
 						let groups = r.data;
+						console.log("Grupos de integrante =>", groups);
 						// 202103120414: Si tiene acceso a algún grupo autoriza
 						if (groups.length > 0) {
 							user["groups"] = groups;
