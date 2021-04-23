@@ -10,7 +10,13 @@
 								<div class="col d-flex justify-content-between align-items-end">
 									<div class="title"><i class="icon-books"></i> {{ $titleCase(group.name) }}</div>
 									<div class="sub-title"><i class="icon-users"></i> Integrantes</div>
-									<a href="#" @click.prevent="userAdd" class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide" id="btn-add">
+									<a
+										href="#"
+										v-if="editMode"
+										@click.prevent="userAdd"
+										class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide"
+										id="btn-add"
+									>
 										ASOCIAR INTEGRANTE <b><i class="icon-user-plus"></i></b>
 									</a>
 								</div>
@@ -356,7 +362,6 @@ export default {
 		group: null,
 		mode: null,
 		isValid: false,
-		editMode: true, // Asume administrador
 		placeholder: "Busque y seleccione...",
 		formRefName: "tree-view",
 		now: new Date(),

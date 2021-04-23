@@ -15,10 +15,6 @@ export default {
 		console.log("root", root);
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
 		group: {
 			type: Object,
 			default: () => {},

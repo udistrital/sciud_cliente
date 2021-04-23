@@ -187,6 +187,9 @@ vue.mixin({
 	computed: {
 		...mapState("auth/usuario", ["roles"]),
 		...mapState("auth/login", ["authenticated", "user"]),
+		editMode() {
+			return this.user_role_id === 1;
+		},
 		minDate() {
 			return new Date(2000, 0, 1);
 		},
@@ -225,7 +228,7 @@ vue.mixin({
 			}
 		},
 		user_role_id: function() {
-			if (this.user.local !== null && typeof this.user.local !== "undefined") {
+			if (this.user !== null && this.user.local !== null && typeof this.user.local !== "undefined") {
 				return this.user.local.user_role_id;
 			} else {
 				return null;

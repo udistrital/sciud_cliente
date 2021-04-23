@@ -583,7 +583,6 @@ export default {
 		mode: "edit",
 		group: null,
 		isValid: false,
-		editMode: true, // Asume administrador
 		placeholder: "Busque y seleccione...",
 		formRefName: "tree-view",
 		now: new Date(),

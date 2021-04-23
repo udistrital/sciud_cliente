@@ -71,7 +71,6 @@ export default {
 	},
 	data: () => ({
 		group: null,
-		editMode: true,
 	}),
 	components: {
 		DxItem,

@@ -257,7 +257,6 @@ export default {
 		unidad: null,
 		documentos: [],
 		isValid: false,
-		editMode: true, // Asume administrador
 		baseEntity: null,
 		docLink: null,
 		firstLoad: true,
@@ -407,7 +406,7 @@ export default {
 					let g = gs[0];
 					console.log("group", g);
 					// Tiene que ser director del grupo
-					root.editMode = g.role_id === 1;
+					// root.editMode = g.role_id === 1;
 					m += ` (Rol: ${g.role_name})`;
 				}
 			} else {

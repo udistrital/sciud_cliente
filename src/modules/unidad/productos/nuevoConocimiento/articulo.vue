@@ -13,7 +13,7 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Articulo.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button v-if="editMode" type="button" @click.prevent="add()" title="Nuevo Articulo.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> NUEVO ARTICULO
 								</button>
 							</span>
@@ -236,7 +236,7 @@
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -407,15 +407,17 @@
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a>
-								<a title="Editar artículo..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-									<i class="icon-database-edit"></i>
-								</a>
-								<a v-if="data.data.active" title="Desactivar articulo..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
-									<i class="icon-database-remove"></i>
-								</a>
-								<a v-else title="Activar articulo..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-									<i class="icon-database-check"></i>
-								</a>
+								<span v-if="editMode">
+									<a title="Editar artículo..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-database-edit"></i>
+									</a>
+									<a v-if="data.data.active" title="Desactivar articulo..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+										<i class="icon-database-remove"></i>
+									</a>
+									<a v-else title="Activar articulo..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+										<i class="icon-database-check"></i>
+									</a>
+								</span>
 							</span>
 						</template>
 					</DxDataGrid>
@@ -489,10 +491,6 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
 		group: {
 			type: Object,
 			default: () => null,

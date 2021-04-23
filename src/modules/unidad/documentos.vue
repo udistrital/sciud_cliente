@@ -10,7 +10,13 @@
 								<div class="col d-flex justify-content-between align-items-end">
 									<div class="title"><i class="icon-books"></i> {{ $titleCase(group.name) }}</div>
 									<div class="sub-title"><i class="icon-file-pdf"></i> Documentos</div>
-									<a href="#" @click.prevent="userAdd" class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide" id="btn-add">
+									<a
+										href="#"
+										v-if="editMode"
+										@click.prevent="userAdd"
+										class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide"
+										id="btn-add"
+									>
 										AGREGAR DOCUMENTO <b><i class="icon-user-plus"></i></b>
 									</a>
 								</div>

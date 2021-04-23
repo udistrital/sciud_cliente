@@ -94,7 +94,14 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						<button type="button" @click.prevent="documentAdd()" title="Nuevo Documento.." class="btn btn-main btn-labeled btn-labeled-left" id="btn-add-doc">
+						<button
+							type="button"
+							v-if="editMode"
+							@click.prevent="documentAdd()"
+							title="Nuevo Documento.."
+							class="btn btn-main btn-labeled btn-labeled-left"
+							id="btn-add-doc"
+						>
 							<b><i class="icon-database-add"></i></b> NUEVO DOCUMENTO
 						</button>
 						<DxDataGrid
@@ -213,7 +220,6 @@
 								data-type="string"
 							/> -->
 							<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
-
 							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 							<template #tpl="{ data }">
 								<span class="cmds">
@@ -354,10 +360,6 @@ export default {
 		mainObj: {
 			type: Object,
 			default: () => null,
-		},
-		editMode: {
-			type: Boolean,
-			default: true,
 		},
 		tipos: {
 			type: Array,

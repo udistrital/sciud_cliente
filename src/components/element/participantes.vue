@@ -617,10 +617,6 @@ export default {
 		},
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
 		id: {
 			type: String,
 			default: () => "panel-participantes",
