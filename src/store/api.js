@@ -65,7 +65,7 @@ export default (source = "rest", args = {}) => {
 		axiosConfig.baseURL = source === "oas" ? base.url : window.config.auth.oidc.AUTENTICACION_MID;
 		// 202010211336: Usa 'token_value' si esta definido en 'config.json', de lo contrario consulta locaStorage
 		// 202104121525: Se elimina 'impersonate'
-		let token = window.localStorage.getItem(base.token_name);
+		let token = window.sessionStorage.getItem(base.token_name);
 		// 202103120344: Si se recibe un token en args lo usa
 		if (typeof args.token !== "undefined") token = args.token;
 		// console.log("tokenOas", token);

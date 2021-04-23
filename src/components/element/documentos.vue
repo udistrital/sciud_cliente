@@ -97,10 +97,10 @@
 						<button
 							type="button"
 							v-if="editMode"
-							@click.prevent="documentAdd()"
-							title="Nuevo Documento.."
-							class="btn btn-main btn-labeled btn-labeled-left"
 							id="btn-add-doc"
+							title="Nuevo Documento.."
+							@click.prevent="documentAdd()"
+							class="btn btn-main btn-labeled btn-labeled-left"
 						>
 							<b><i class="icon-database-add"></i></b> NUEVO DOCUMENTO
 						</button>
@@ -299,16 +299,16 @@ export default {
 	},
 	data: () => ({
 		baseEnt: null,
-		editDoc: false,
-		isValid: false,
-		btnCancel: null,
 		btnAdd: null,
+		btnCancel: null,
+		editDoc: false,
 		grid: null,
-		loading: false,
 		groupResearchers: [],
+		isValid: false,
+		loading: false,
+		panelCmds: null,
 		panelDataDoc: null,
 		panelGridDoc: null,
-		panelCmds: null,
 		baseObj: {
 			doc_name: null,
 			doc_path: "/documents/papers/artiiculo_de_pruebas_demo_2021%.pdf",
@@ -323,9 +323,10 @@ export default {
 		root.panelGridDoc = $("#" + root.id + " .grid");
 		root.baseEnt = this.$clone(root.baseObj);
 		console.log(root.$sep);
-		// }/research_units/1/documents/
 		root.loaderElement = "#" + root.id;
+		root.loaderMessage = "Cargando docymentos";
 		console.log("Documents MOUNTED!");
+		$(`#${root.id}`).fadeIn();
 	},
 	computed: {
 		...mapGetters("unidad", ["researchers"]),
@@ -481,6 +482,7 @@ export default {
 				cmds.fadeIn();
 			}
 		},
+
 		docSave() {
 			console.log("Entrando a metodo de guardado de datos");
 			// let data="int";
@@ -493,7 +495,6 @@ export default {
 				point = `${this.ep}`;
 			}
 			objectSent = root.baseObj;
-
 			result = root.$refs.vGroup.instance.validate();
 			if (result.isValid) {
 				root.loaderShow();
@@ -522,7 +523,7 @@ export default {
 		gridInit(e) {
 			console.log("e", e);
 			this.grid = e.component;
-			$(".dx-toolbar-after").append($("#btn-add-doc"));
+			$(`#${this.id} .dx-toolbar-after`).append($(`#${this.id} #btn-add-doc`));
 			this.loadEnd();
 		},
 	},

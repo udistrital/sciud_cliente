@@ -86,12 +86,12 @@ vue.mixin({
 		this.getSubtypes();
 
 		// 202010220211: Verifica autenticación con intervalo en MS
-		if (!window.authChecking) {
-			window.authChecking = true;
-			window.setInterval(() => {
-				if (!this.authenticated) this.logOut();
-			}, window.authCheckingTime * 60 * 1000);
-		}
+		// if (!window.authChecking) {
+		// 	window.authChecking = true;
+		// 	window.setInterval(() => {
+		// 		if (!this.authenticated) this.logOut();
+		// 	}, window.authCheckingTime * 60 * 1000);
+		// }
 
 		// this.loaderHide();
 	},
@@ -147,7 +147,6 @@ vue.mixin({
 		logOut() {
 			let root = this;
 			root.authLogout(function() {
-				window.sessionStorage.clear();
 				let cr = root.$router.currentRoute;
 				if (cr.meta.requiresAuth) root.$router.push("/inicio");
 			});

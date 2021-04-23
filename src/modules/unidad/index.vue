@@ -10,7 +10,7 @@
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 			<div class="header-elements" v-if="editMode">
-				<a
+				<!-- <a
 					href="#"
 					@click.prevent="add()"
 					title="Nueva Unidad de Investigación..."
@@ -20,7 +20,7 @@
 				>
 				<a href="#" @click.prevent="reload()" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left legitRipple slide btn-back ml-3"
 					><b><i class="icon-arrow-left"></i></b> Volver a Unidades</a
-				>
+				> -->
 			</div>
 		</div>
 
@@ -62,7 +62,7 @@
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="Página {0} de {1} ({2} unidades de investigación)"
+									info-text="{2} unidades de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 								<DxColumn

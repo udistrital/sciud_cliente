@@ -15,10 +15,7 @@ var params = {},
 	regex = /([^&=]+)=([^&]*)/g;
 
 export function getState() {
-	if (
-		window.localStorage.getItem("access_token") === null ||
-		window.localStorage.getItem("access_token") === undefined
-	) {
+	if (window.sessionStorage.getItem("access_token") === null || window.sessionStorage.getItem("access_token") === undefined) {
 		console.log("params", params);
 		let m;
 		while ((m = regex.exec(queryString))) {
@@ -30,10 +27,10 @@ export function getState() {
 		const query = "https://" + window.location.host + "?" + queryString;
 		req.open("GET", query, true);
 		if (params["id_token"] !== null && params["id_token"] !== undefined) {
-			window.localStorage.setItem("access_token", params["access_token"]);
-			window.localStorage.setItem("id_token", params["id_token"]);
-			window.localStorage.setItem("expires_in", params["expires_in"]);
-			window.localStorage.setItem("state", params["state"]);
+			window.sessionStorage.setItem("access_token", params["access_token"]);
+			window.sessionStorage.setItem("id_token", params["id_token"]);
+			window.sessionStorage.setItem("expires_in", params["expires_in"]);
+			window.sessionStorage.setItem("state", params["state"]);
 		} else {
 			clearStorage();
 		}
@@ -58,11 +55,12 @@ export function setGeneral(url_token) {
 
 export function logout() {
 	logout_url = GENERAL.ENTORNO.TOKEN.SIGN_OUT_URL;
-	logout_url += "?id_token_hint=" + window.localStorage.getItem("id_token");
+	logout_url += "?id_token_hint=" + window.sessionStorage.getItem("id_token");
 	logout_url += "&post_logout_redirect_uri=" + GENERAL.ENTORNO.TOKEN.SIGN_OUT_REDIRECT_URL;
-	logout_url += "&state=" + window.localStorage.getItem("state");
-	clearStorage();
-	window.location.replace(logout_url);
+	logout_url += "&state=" + window.sessionStorage.getItem("state");
+	console.log("logout_url", logout_url);
+	// clearStorage();
+	// window.location.replace(logout_url);
 }
 
 export function clearUrl() {
@@ -71,7 +69,7 @@ export function clearUrl() {
 }
 
 export function getPayload() {
-	var id_token = window.localStorage.getItem("id_token");
+	var id_token = window.sessionStorage.getItem("id_token");
 	if (typeof id_token !== undefined && id_token !== null) {
 		var arr = id_token.split(".");
 		return JSON.parse(atob(arr[1]));
@@ -88,7 +86,7 @@ export function logoutValid() {
 	while ((m = regex.exec(queryString))) {
 		state = decodeURIComponent(m[2]);
 	}
-	if (window.localStorage.getItem("state") === state) {
+	if (window.sessionStorage.getItem("state") === state) {
 		clearStorage();
 		valid = true;
 	} else {
@@ -99,11 +97,7 @@ export function logoutValid() {
 
 // el flag es un booleano que define si abra boton de login
 export function live(flag) {
-	if (
-		window.localStorage.getItem("id_token") === "undefined" ||
-		window.localStorage.getItem("id_token") === null ||
-		logoutValid()
-	) {
+	if (window.sessionStorage.getItem("id_token") === "undefined" || window.sessionStorage.getItem("id_token") === null || logoutValid()) {
 		if (!flag) {
 			getAuthorizationUrl();
 		}
@@ -118,7 +112,7 @@ export function liveToken() {
 		headers: new Headers({
 			headers: {
 				Accept: "application/json",
-				Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+				Authorization: "Bearer " + window.sessionStorage.getItem("access_token"),
 			},
 		}),
 	};
@@ -128,7 +122,7 @@ export function getHeader() {
 	setting_bearer = {
 		headers: {
 			Accept: "application/json",
-			Authorization: "Bearer " + window.localStorage.getItem("access_token"),
+			Authorization: "Bearer " + window.sessionStorage.getItem("access_token"),
 		},
 	};
 	return setting_bearer;
@@ -175,24 +169,24 @@ export function generateState() {
 
 export function setExpiresAt(expAt = "expires_at", expIn = "expires_in") {
 	if (
-		window.localStorage.getItem(expAt) === null ||
-		window.localStorage.getItem(expAt) === undefined ||
-		window.localStorage.getItem(expAt) === "Invalid Date"
+		window.sessionStorage.getItem(expAt) === null ||
+		window.sessionStorage.getItem(expAt) === undefined ||
+		window.sessionStorage.getItem(expAt) === "Invalid Date"
 	) {
 		const expires_at = new Date();
-		let secs = expires_at.getSeconds() + parseInt(window.localStorage.getItem(expIn), 10) - 60;
+		let secs = expires_at.getSeconds() + parseInt(window.sessionStorage.getItem(expIn), 10) - 60;
 		expires_at.setSeconds(secs);
-		window.localStorage.setItem(expAt, expires_at.toUTCString());
+		window.sessionStorage.setItem(expAt, expires_at.toUTCString());
 	}
 }
 
 export function expired(expAt = "expires_at") {
-	return new Date(window.localStorage.getItem(expAt)) < new Date();
+	return new Date(window.sessionStorage.getItem(expAt)) < new Date();
 }
 
 export function timer(expAt = "expires_at", expiredCallback = null) {
 	setInterval(() => {
-		if (window.localStorage.getItem(expAt) !== null) {
+		if (window.sessionStorage.getItem(expAt) !== null) {
 			if (expired()) {
 				logout();
 				clearStorage();
@@ -204,9 +198,9 @@ export function timer(expAt = "expires_at", expiredCallback = null) {
 }
 
 export function clearStorage() {
-	window.localStorage.removeItem("access_token");
-	window.localStorage.removeItem("id_token");
-	window.localStorage.removeItem("expires_in");
-	window.localStorage.removeItem("state");
-	window.localStorage.removeItem("expires_at");
+	window.sessionStorage.removeItem("access_token");
+	window.sessionStorage.removeItem("id_token");
+	window.sessionStorage.removeItem("expires_in");
+	window.sessionStorage.removeItem("state");
+	window.sessionStorage.removeItem("expires_at");
 }

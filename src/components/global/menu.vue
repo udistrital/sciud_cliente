@@ -80,25 +80,20 @@
 
 <script>
 /* eslint-disable no-unused-vars */
-import { mapActions } from "vuex";
-let $ = window.jQuery;
+let root = null;
 export default {
-	name: "globalMenu",
 	components: {},
+	created() {
+		root = this;
+	},
 	methods: {
-		...mapActions("auth/login", ["authLogout"]),
 		menuLogout(e) {
-			let root = this;
 			e.preventDefault();
 			this.$confirm("¿Realmente desea cerrar la sesión?", function(ok) {
 				// 202010220220: 'logOut' en 'main.js'
 				if (ok) root.logOut();
 			});
 		},
-	},
-	created() {
-		console.log(this.$sep);
-		if (!this.authenticated) this.logOut();
 	},
 	data: () => ({
 		showLogin: true,

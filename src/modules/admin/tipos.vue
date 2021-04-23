@@ -223,14 +223,11 @@
 									data-field="name"
 									data-type="string"
 								/>
-								<DxColumn :width="100" data-field="active" caption="Activo" alignment="center" :visible="false">
+								<DxColumn :width="100" data-field="active" caption="Activo" alignment="center" :visible="true">
 									<DxLookup :data-source="si_no" value-expr="value" display-expr="name" />
 								</DxColumn>
 								<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
 								<template #tpl="{ data }">
-									<!-- @button-click="ddButtonClick"
-										@initialized="ddInit"
-										@content-ready="ddReady" -->
 									<DxDropDownButton
 										:drop-down-options="{ width: '400' }"
 										:items="cmdGet(data)"

@@ -15,13 +15,11 @@ import * as oidc from "@/assets/js/oidc";
 
 //#region Constantes
 let APP_USER = "app_user";
-let APP_USER_DETAILS = "app_user_details";
-let LOCAL_TOKEN = "token_local";
-let LOCAL_TOKEN_EXP = "token_local_exp";
-let OAS_TOKEN = "token_oas";
-let OAS_TOKEN_ID = "token_oas_id";
-let OAS_TOKEN_EXP_IN = "token_oas_exp_in";
-let OAS_TOKEN_EXP_AT = "token_oas_exp_at";
+let OAS_SESSION = "oas_session";
+let OAS_STATE = "oas_state";
+let OAS_TOKEN_EXP_AT = "oas_token_exp_at";
+let OAS_TOKEN_EXP_IN = "oas_token_exp_in";
+let OAS_TOKEN_ID = "oas_token_id";
 //#endregion
 
 //#region Funciones
@@ -46,11 +44,9 @@ const store = {
 	state: {
 		status: "none",
 		authenticated: false,
-		localToken: window.localStorage.getItem(LOCAL_TOKEN) || null,
-		localTokenExp: window.localStorage.getItem(LOCAL_TOKEN_EXP) || null,
-		oasToken: window.localStorage.getItem(OAS_TOKEN) || null,
-		oasTokenExp: window.localStorage.getItem(OAS_TOKEN_EXP_IN) || null,
-		user: window.localStorage.getItem(APP_USER) || null,
+		oasToken: typeof window.config !== "undefined" ? window.sessionStorage.getItem(window.config.api.oas.token_name) || null : null,
+		oasTokenExp: window.sessionStorage.getItem(OAS_TOKEN_EXP_IN) || null,
+		user: window.sessionStorage.getItem(APP_USER) || null,
 	},
 	actions: {
 		async getUser({ commit, state, dispatch }, args) {
@@ -116,7 +112,7 @@ const store = {
 			cfg["REDIRECT_URL"] = cfg["REDIRECT_URL"].replace("{baseUrl}", url);
 			cfg["SIGN_OUT_REDIRECT_URL"] = cfg["SIGN_OUT_REDIRECT_URL"].replace("{baseUrl}", url);
 			oidc.setGeneral(cfg);
-			commit("authLogout");
+			// commit("authLogout");
 			if (isFunction(callback)) callback(false);
 		},
 		oasLogin: ({ commit, state }) => {
@@ -125,8 +121,11 @@ const store = {
 		oasLoginData: async ({ commit, dispatch, state }, args) => {
 			console.log(window.vm.$sep);
 			console.log("oasLoginData", args);
-			window.localStorage.setItem(OAS_TOKEN, args.qs.access_token);
-			window.localStorage.setItem(OAS_TOKEN_EXP_IN, args.qs.expires_in);
+			window.sessionStorage.setItem(OAS_TOKEN_ID, args.qs.id_token);
+			window.sessionStorage.setItem(OAS_SESSION, args.qs.session_state);
+			window.sessionStorage.setItem(OAS_STATE, args.qs.state);
+			window.sessionStorage.setItem(window.config.api.oas.token_name, args.qs.access_token);
+			window.sessionStorage.setItem(OAS_TOKEN_EXP_IN, args.qs.expires_in);
 			oidc.setExpiresAt(OAS_TOKEN_EXP_AT, OAS_TOKEN_EXP_IN);
 			state.oasToken = args.qs.access_token;
 			state.oasTokenExp = args.qs.expires_in;
@@ -147,16 +146,33 @@ const store = {
 		authSuccess: (state, args) => {
 			state.status = "success";
 			state.authenticated = true;
-			// console.log(window.vm.$sep);
+			console.log(window.vm.$sep);
 			console.log("user", args.user);
 			state.user = typeof args.user === "string" ? JSON.parse(args.user) : args.user;
-			window.localStorage.setItem(APP_USER, JSON.stringify(args.user));
+			window.sessionStorage.setItem(APP_USER, JSON.stringify(args.user));
 			if (isFunction(args.callback)) args.callback({ is_success: true, user: args.user });
 		},
 		authLogout: (state) => {
-			window.localStorage.clear();
-			for (const item in state) state[item] = null;
-			state.authenticated = false;
+			console.log("authLogout");
+			console.log("window.location.host", window.location.host);
+			console.log("window.location.hostname", window.location.hostname);
+			console.log("window.location.port", window.location.port);
+			console.log("process.env.BASE_URL", process.env.BASE_URL);
+			console.log("process.env", process.env);
+			let red_url = window.location.protocol + "//" + window.location.host + process.env.BASE_URL;
+			let cfg = window.config.auth.oidc;
+			let url = cfg.SIGN_OUT_URL;
+			let token_id = window.sessionStorage.getItem(OAS_TOKEN_ID);
+			if (token_id !== null) {
+				url += "?id_token_hint=" + token_id;
+				url += "&state=" + window.sessionStorage.getItem(OAS_STATE);
+				url += "&post_logout_redirect_uri=" + cfg.SIGN_OUT_REDIRECT_URL.replace("{baseUrl}", red_url);
+				window.sessionStorage.clear();
+				for (const item in state) state[item] = null;
+				state.authenticated = false;
+				console.log("logout url =>", url);
+				if (process.env.NODE_ENV.toString().toLowerCase() === "production") window.location.replace(url);
+			}
 		},
 	},
 	getters: {

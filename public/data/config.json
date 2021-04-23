@@ -1,5 +1,5 @@
 {
-    "debug":  true,
+    "debug":  false,
     "pageSize":  20,
     "pageSizes":  [
                       10,
@@ -20,7 +20,7 @@
             },
     "api":  {
                 "rest":  {
-                             "token_name":  "token_local",
+                             "token_name":  "siciud_token",
                              "url0":  "https://digital.nemedi.com/siciud-v2-back/api/v1",
                              "url":  "https://siciud-v2-api.nemedi.com/api/v1",
                              "url1":  "http://200.69.103.88:3114/api/v1",
@@ -28,8 +28,8 @@
                          },
                 "oas":  {
                             "VUE_APP_AUTH_URL":  "",
-                            "token_name":  "token_oas",
-                            "token_value":  "572f13f9-b53e-3fd0-89cd-45b803eae8f3",
+                            "token_name":  "oas_token",
+                            "token_value":  "92692f8d-9f8e-334c-b178-a909daa78da4",
                             "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
                         }
             },
@@ -43,7 +43,7 @@
                               "SCOPE":  "openid email",
                               "SIGN_OUT_URL":  "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
                               "SIGN_OUT_APPEND_TOKEN":  "true",
-                              "SIGN_OUT_REDIRECT_URL":  "{baseUrl}/logout",
+                              "SIGN_OUT_REDIRECT_URL":  "{baseUrl}",
                               "REDIRECT_URL":  "{baseUrl}/login"
                           },
                  "oidc_bk":  {

@@ -10,24 +10,15 @@
 								<div class="col d-flex justify-content-between align-items-end">
 									<div class="title"><i class="icon-books"></i> {{ $titleCase(group.name) }}</div>
 									<div class="sub-title"><i class="icon-file-pdf"></i> Documentos</div>
-									<a
-										href="#"
-										v-if="editMode"
-										@click.prevent="userAdd"
-										class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide"
-										id="btn-add"
-									>
-										AGREGAR DOCUMENTO <b><i class="icon-user-plus"></i></b>
-									</a>
 								</div>
 							</div>
 						</div>
 						<Documentos
+							:id="id"
 							:parent="this"
 							:main-obj="group"
 							:tipos="tiposDocumento"
 							end-point="research_units"
-							id="panel-unidad-documentos"
 							lock-element="#panel-documentos .card-body"
 						/>
 					</div>
@@ -50,8 +41,15 @@ let hideErrors = () => {
 
 export default {
 	name: "datosBasicos",
+	components: {
+		Header: () => import("@/components/element/header"),
+		Documentos: () => import("@/components/element/documentos"),
+	},
+	data: () => ({
+		group: null,
+		id: "panel-unidad-documentos",
+	}),
 	created: function() {
-		// console.clear();
 		root = this;
 		root.tiposDocumento = root.subtypesByType("unidad_tipo_documento");
 		root.getUnit({
@@ -62,27 +60,23 @@ export default {
 			},
 		});
 	},
+	methods: {
+		...mapActions("unidad", ["getUnit"]),
+	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 	},
 	updated: () => {
 		console.log(root.$sep);
+		console.log("documentos Updated");
 		hideErrors();
 	},
-	components: {
-		Header: () => import("@/components/element/header"),
-		Documentos: () => import("@/components/element/documentos"),
-	},
 	mounted() {
-		setTimeout(function() {
-			$("#panel-unidad-documentos").fadeIn();
-		}, 500);
-	},
-	data: () => ({
-		group: null,
-	}),
-	methods: {
-		...mapActions("unidad", ["getUnit"]),
+		// setTimeout(function() {
+		// 	let id = `#${root.id}`;
+		// 	console.log("id", id);
+		// 	$(id).fadeIn();
+		// }, 700);
 	},
 };
 </script>
