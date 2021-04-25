@@ -239,7 +239,6 @@
 									:allow-filtering="false"
 									:allow-search="false"
 									:allow-sorting="true"
-									sort-order="asc"
 									:width="120"
 									alignment="center"
 									caption="ID"
@@ -365,7 +364,6 @@
 									:allow-sorting="true"
 									:width="120"
 									alignment="center"
-									sort-order="asc"
 									caption="ID"
 									data-field="id"
 									data-type="string"
@@ -530,25 +528,20 @@ export default {
 		root.rolesParticipante = root.subtypesByType("unidad_rol_participante");
 		root.valGroupExt = root.$refs.valGroupExt.instance;
 		root.valGroupInt = root.$refs.valGroupInt.instance;
-		root.loaderElement = "#" + root.id + " .card-body"; //producto-participantes-ext
+		root.loaderElement = "#panel-unidades .card-body"; //producto-participantes-ext
 		root.baseEnt = this.$clone(this.baseObj);
+		root.panelInt = $("#" + root.id + " .data.internos");
+		root.panelExt = $("#" + root.id + " .data.externos");
+		root.panelGrid = $("#" + root.id + " .grid");
 		console.log("root.id", root.id);
 		console.log("root.panelGrid", root.panelGrid);
 		console.log("participantes MOUNTED!");
-		setTimeout(function() {
-			root.panelInt = $("#" + root.id + " .data.internos");
-			root.panelExt = $("#" + root.id + " .data.externos");
-			root.panelGrid = $("#" + root.id + " .grid");
-			if ($("#panel-produccion").length > 0) {
-				root.loaderElement = $("#panel-produccion .card-body");
-			}
-		}, 500);
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 
 		dataSourceExt: function() {
-			if (typeof root.product.id === "undefined" || root.product.id === null) return null;
+			if (this.product.id === null) return null;
 			console.log("root.baseObj", this.baseObj);
 			return DxStore({
 				key: ["id"],
@@ -566,7 +559,7 @@ export default {
 		},
 
 		dataSourceInt: function() {
-			if (typeof root.product.id === "undefined" || root.product.id === null) return null;
+			if (this.product.id === null) return null;
 			console.log("root.baseObj", this.baseObj);
 			return DxStore({
 				key: ["id"],
@@ -624,6 +617,10 @@ export default {
 		},
 	},
 	props: {
+		editMode: {
+			type: Boolean,
+			default: true,
+		},
 		id: {
 			type: String,
 			default: () => "panel-participantes",

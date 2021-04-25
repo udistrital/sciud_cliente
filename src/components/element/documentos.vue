@@ -84,6 +84,7 @@
 							width="100%"
 							:dataSource="dataSource"
 							@initialized="gridInit"
+							no-data-text="No hay documentos registrados"
 							:allow-column-reordering="false"
 							:remote-operations="true"
 							:hover-state-enabled="true"
@@ -240,8 +241,8 @@ export default {
 		actionTitle: null,
 		baseEnt: null,
 		btnCancel: null,
-		btnDocLink: null,
 		btnDocAdd: null,
+		btnDocLink: null,
 		btnDocSelect: null,
 		current: null,
 		docLink: null,
@@ -279,18 +280,21 @@ export default {
 		console.log("Documents MOUNTED!");
 		root.baseEnt = this.$clone(root.baseObj);
 		root.panelMain = "#" + root.id;
-		$(root.panelMain).fadeIn();
 		root.loaderElement = root.panelMain;
 		root.loaderMessage = "Cargando Documentos";
 		root.panelDataDoc = root.panelMain + " .data";
 		root.panelGridDoc = root.panelMain + " .grid";
 		root.btnDocAdd = root.panelMain + " #btn-doc-add";
+		if (root.showOnLoad) $(root.panelMain).fadeIn();
 		setTimeout(function() {
 			root.fileError = $(root.panelDataDoc + " #file-error");
 			root.btnDocLink = $(root.panelDataDoc + " #a-doc-link");
 			root.actionTitle = $(root.panelDataDoc + " .card-header");
 			// 202104230923: https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxFileUploader/
 			root.uploader = root.$refs.uploader.instance;
+			if ($("#panel-produccion").length > 0) {
+				root.loaderElement = $("#panel-produccion .card-body");
+			}
 			root.uploader.option({
 				labelText: "",
 				width: "100%",
@@ -340,9 +344,10 @@ export default {
 			return `${root.endPoint}/${root.mainObj.id}/documents`;
 		},
 		dataSource: function() {
-			root = this;
+			// console.clear();
+			console.log("root.ep", root.ep);
 			console.log("root.mainObj", root.mainObj);
-			if (root.mainObj.id === null) return null;
+			if (typeof root.mainObj.id === "undefined" || root.mainObj.id === null) return null;
 			return DxStore({
 				key: ["id"],
 				endPoint: root.ep,
@@ -367,6 +372,10 @@ export default {
 		},
 	},
 	props: {
+		showOnLoad: {
+			type: Boolean,
+			default: false,
+		},
 		mainObj: {
 			type: Object,
 			default: () => null,
@@ -377,7 +386,7 @@ export default {
 		},
 		endPoint: {
 			type: String,
-			default: () => "research_units",
+			default: () => null,
 		},
 		lockElement: {
 			type: String,
@@ -385,7 +394,7 @@ export default {
 		},
 		id: {
 			type: String,
-			default: () => "panel-documentos",
+			default: () => null,
 		},
 	},
 	methods: {

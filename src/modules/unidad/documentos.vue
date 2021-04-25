@@ -17,6 +17,7 @@
 							:id="id"
 							:parent="this"
 							:main-obj="group"
+							:show-on-load="true"
 							:tipos="tiposDocumento"
 							end-point="research_units"
 							lock-element="#panel-documentos .card-body"

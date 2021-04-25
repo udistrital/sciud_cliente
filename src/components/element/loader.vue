@@ -47,7 +47,12 @@ export default {
 	},
 	methods: {
 		onShown(e) {
-			// var w = $(".dx-loadpanel-content:first").width();
+			// var h = $(".dx-overlay-wrapper:first").height();
+			// let ow = $(".dx-overlay-content:first");
+			// var h1 = parseInt(ow.height());
+			// var top = parseInt((h - h1) / 2);
+			// ow.css("margin-top", top + "px !important");
+			// console.log("top", top);
 			// var lp = $(".dx-loadpanel-wrapper");
 			// var nb = $(".navbar-sticky.is_stuck");
 			// var lpI = parseInt(lp.css("z-index"));
@@ -55,14 +60,15 @@ export default {
 			// nb.css("z-index", (lpI + 1).toString());
 			// let ovl = $(".dx-overlay-content:first");
 			// ovl.removeAttr("style").css("height", "auto !important");
-			// console.log("ovl.height", ovl.height());
+			// console.log("shown");
 		},
 		onHidden(e) {
 			// console.log(window.vm.$sep);
 			// console.log("onHidden!", e);
-			// console.log("$loader", window.vm.$loader);
+			console.log("$loader", window.vm.$loader);
 		},
 		onShowing(e) {
+			// console.log("showing");
 			let msg = this.$loader.message + "<small>Un momento por favor...</small>";
 			var tgt = $(".dx-loadpanel-message:first");
 			tgt.html(msg);

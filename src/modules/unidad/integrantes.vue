@@ -3,22 +3,13 @@
 		<Header :group="group" />
 		<div class="row">
 			<div class="col">
-				<div class="card" id="panel-integrantes">
+				<div class="card slide" id="panel-integrantes">
 					<div class="card-body group-detail">
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
 									<div class="title"><i class="icon-books"></i> {{ $titleCase(group.name) }}</div>
 									<div class="sub-title"><i class="icon-users"></i> Integrantes</div>
-									<a
-										href="#"
-										v-if="editMode"
-										@click.prevent="userAdd"
-										class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide"
-										id="btn-add"
-									>
-										ASOCIAR INTEGRANTE <b><i class="icon-user-plus"></i></b>
-									</a>
 								</div>
 							</div>
 						</div>
@@ -33,6 +24,7 @@
 													<div class="form-group">
 														<label>Documento de identidad:</label>
 														<DxNumberBox
+															ref="nbIdNum"
 															:show-clear-button="true"
 															class="form-control"
 															:value.sync="baseObj.identification_number"
@@ -64,7 +56,7 @@
 														</DxSelectBox>
 													</div>
 												</div>
-												<div class="col-md-5">
+												<div class="col-md-4">
 													<div class="form-group">
 														<label>Nombre:</label>
 														<DxTextBox :value.sync="baseObj.name" placeholder="Nombre" class="form-control" :read-only="true" mode="text">
@@ -74,22 +66,27 @@
 														</DxTextBox>
 													</div>
 												</div>
-												<div class="col-md-1">
-													<div class="form-group">
-														<label>OAS ID:</label>
-														<DxTextBox :value.sync="baseObj.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
-															<DxValidator>
-																<DxRequiredRule />
-															</DxValidator>
-														</DxTextBox>
+												<div class="col-md-3">
+													<div class="row">
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>OAS ID:</label>
+																<DxTextBox :value.sync="baseObj.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
+																	<DxValidator>
+																		<DxRequiredRule />
+																	</DxValidator>
+																</DxTextBox>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label>Activo:</label>
+																<DxSwitch :value.sync="baseObj.active" :read-only="!editMode" switched-on-text="SI" switched-off-text="NO" />
+															</div>
+														</div>
 													</div>
 												</div>
-												<div class="col-md-1">
-													<div class="form-group">
-														<label>Activo:</label>
-														<DxSwitch :value.sync="baseObj.active" switched-on-text="SI" switched-off-text="NO" />
-													</div>
-												</div>
+
 												<div class="col-md-3">
 													<div class="form-group">
 														<label>ORCID ID:</label>
@@ -148,10 +145,19 @@
 								</div>
 							</div>
 						</div>
-						<div class="row" id="panel-integrantes">
+						<div class="row" id="panel-integrantes-grid">
 							<div class="col">
 								<div class="row">
 									<div class="col">
+										<a
+											href="#"
+											v-if="editMode"
+											@click.prevent="userAdd"
+											class="btn btn-sm btn-main btn-labeled btn-labeled-right btn-sm legitRipple ml-3 slide"
+											id="btn-add"
+										>
+											ASOCIAR INTEGRANTE <b><i class="icon-user-plus"></i></b>
+										</a>
 										<DxDataGrid
 											class="main"
 											width="100%"
@@ -175,11 +181,12 @@
 												<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
 											</DxSummary>
 											<DxPager
+												:visible="true"
 												:show-info="true"
 												:show-page-size-selector="true"
 												:show-navigation-buttons="true"
 												:allowed-page-sizes="dgPageSizes"
-												info-text="Página {0} de {1} ({2} integrantes en el grupo)"
+												info-text="{2} integrantes (página {0} de {1})"
 											/>
 											<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
 											<DxColumn
@@ -237,30 +244,29 @@
 											/>
 											<DxColumn
 												:width="100"
-												data-field="researcher.active"
 												caption="Activo"
-												data-type="date"
+												data-type="int"
 												alignment="center"
 												:visible="true"
-												:customize-text="yesNo"
+												data-field="gm_state_id"
+												:customize-text="gmState"
 											/>
-
 											<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 											<template #tpl="{ data }">
-												<span class="cmds">
+												<span class="cmds" v-if="cmdVisible(data.data)">
 													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="userEdit(data.data)" href="#">
 														<i class="icon-database-edit"></i>
 													</a>
 													<a
-														v-if="data.data.active"
+														v-if="data.data.gm_state_id === 1"
 														title="Desactivar usuario..."
 														class="cmd-item color-main-600 mr-2"
-														@click.prevent="active(data, false)"
+														@click.prevent="userActive(data.data, false)"
 														href="#"
 													>
 														<i class="icon-database-remove"></i>
 													</a>
-													<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+													<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="userActive(data.data, true)" href="#">
 														<i class="icon-database-check"></i>
 													</a>
 												</span>
@@ -270,6 +276,18 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" v-if="isDev && debug">
+			<div class="col">
+				<div class="card">
+					<div class="card-body code">
+						{{ JSON.stringify(baseObj, null, 3) }}
+					</div>
+					<div class="card-footer">
+						<a @click.prevent="scrollTop()" class="font-weight-semibold" href="#">SCROLL!!!</a>
 					</div>
 				</div>
 			</div>
@@ -315,8 +333,12 @@ let hideErrors = () => {
 export default {
 	name: "datosBasicos",
 	created: function() {
-		// console.clear();
 		root = this;
+		root.panelMain = "#panel-integrantes";
+		root.panelData = root.panelMain + "-data";
+		root.panelGrid = root.panelMain + "-grid";
+		root.loaderElement = root.panelMain;
+		root.loaderMessage = "Cargando Información<br>de Integrantes";
 		root.getUnit({
 			id: root.$route.params.unidadId,
 			cb: function(result) {
@@ -326,20 +348,26 @@ export default {
 			},
 		});
 	},
+	mounted() {
+		console.log(this.$sep);
+		setTimeout(function() {
+			root.nbId = root.$refs.nbIdNum.instance;
+			root.nbIdBtn = root.nbId.getButton("search");
+			console.log("root.nbIdBtn", root.nbIdBtn);
+		}, 1000);
+	},
 	beforeUpdate: () => {},
 	updated: () => {
 		console.log(root.$sep);
 		hideErrors();
 	},
 	components: {
-		DxTextBox,
 		DxButton,
 		DxColumn,
 		DxColumnChooser,
 		DxDataGrid,
 		DxExport,
 		DxFilterRow,
-		DxValidationGroup,
 		DxGrouping,
 		DxGroupItem,
 		DxGroupPanel,
@@ -354,22 +382,37 @@ export default {
 		DxSorting,
 		DxSummary,
 		DxSwitch,
+		DxTextBox,
+		DxValidationGroup,
 		DxValidator,
 		Header: () => import("@/components/element/header"),
 	},
 	data: () => ({
-		files: [],
-		group: null,
-		mode: null,
-		isValid: false,
-		placeholder: "Busque y seleccione...",
-		formRefName: "tree-view",
-		now: new Date(),
+		accept: "*.",
 		cineDetallados: {},
+		files: [],
+		nbId: null,
+		nbIdBtn: null,
+		formRefName: "tree-view",
+		group: null,
+		isValid: false,
+		loading: true,
+		min: new Date(2000, 0, 1),
+		mode: null,
+		multiple: false,
+		now: new Date(),
 		ocdeDetallado: {},
 		ocdeDisabled: true,
-		urlPattern: /^(http|https):\/\/[^ "]+$/,
+		panelData: null,
+		panelGrid: null,
+		panelMain: null,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
+		placeholder: "Busque y seleccione...",
+		proyectos: {},
+		tbEspecificoDisabled: true,
+		tbProyectoDisabled: true,
+		uploadMode: "instantly",
+		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		dsMembers: new DataSource({
 			store: new CustomStore({
 				key: "id",
@@ -379,8 +422,8 @@ export default {
 					return root.groupResearchers;
 				},
 				onLoaded: function(result) {
-					console.log("onLoaded", result);
-					$("#panel-integrantes .card-body").show();
+					// root.loading = false;
+					console.log("onLoaded");
 				},
 			}),
 		}),
@@ -449,6 +492,7 @@ export default {
 			id: null,
 			active: true,
 			address: null,
+			gm_state_id: null,
 			created_by: null,
 			identification_number: null,
 			mobile_number: null,
@@ -470,13 +514,6 @@ export default {
 				},
 			},
 		},
-		proyectos: {},
-		min: new Date(2000, 0, 1),
-		tbProyectoDisabled: true,
-		tbEspecificoDisabled: true,
-		accept: "*.",
-		multiple: false,
-		uploadMode: "instantly",
 		group_member: {
 			role_id: 2,
 			researcherId: 1,
@@ -499,9 +536,6 @@ export default {
 			{ name: "Videos", value: "video/*" },
 		],
 	}),
-	mounted() {
-		console.log(this.$sep);
-	},
 	computed: {
 		...mapGetters("auth/usuario", ["groupRoles"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -509,15 +543,29 @@ export default {
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
 		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
+		cmdVisible(data) {
+			// console.log("cmdVisible", e);
+			return typeof data.oas_details !== "undefined" && typeof data.oas_details.Id !== "undefined";
+		},
 		gridInit(e) {
 			console.log("e", e);
 			root.grid = e.component;
+			setTimeout(function() {
+				let tb = $(root.panelGrid + " .dx-toolbar-after");
+				let btn = $(root.panelGrid + " #btn-add");
+				console.log("tb", tb);
+				console.log("btn", btn);
+				tb.append(btn);
+				btn.fadeIn();
+			}, 1000);
 			root.grid.on({
 				contentReady: (e) => {
 					console.log("e", e);
+					console.log("contentReady loading?", root.loading);
 					if (!root.loading) {
 						root.loading = true;
-						root.loaderShow("Cargando integrantes", $("#panel-integrantes .card-body")[0]);
+						root.loaderShow();
+						// root.loaderShow("Cargando integrantes", $("#panel-integrantes .card-body")[0]);
 						let items = [];
 						root.grid
 							.getVisibleRows()
@@ -542,10 +590,14 @@ export default {
 											}
 										}
 									});
+									root.loading = false;
+									root.loaderHide();
 									root.loadEnd();
 								},
 							});
 						} else {
+							root.loading = false;
+							root.loaderHide();
 							root.loadEnd();
 						}
 					}
@@ -553,6 +605,7 @@ export default {
 			});
 		},
 		loadMembers() {
+			// root.loaderShow("Cargando Integrantes", root.panelMain);
 			if (root.grid !== null && typeof root.grid !== "undefined") {
 				root.grid.clearFilter();
 				root.grid.collapseAll(0);
@@ -562,11 +615,14 @@ export default {
 				id: root.group.id,
 				cb: function(result) {
 					// console.clear();
+					root.loading = false;
 					console.log(root.$sep);
 					console.log("getResearchers", result);
 					root.groupResearchers = result.researchers;
 					console.log("root.groupResearchers", root.groupResearchers);
 					root.dsMembers.reload();
+					root.loading = false;
+					root.loaderHide();
 				},
 			});
 		},
@@ -574,22 +630,27 @@ export default {
 			// console.clear();
 			root.mode == "edit";
 			console.log("data", data);
+			root.nbIdBtn = root.nbId.getButton("search");
+			console.log("root.nbIdBtn", root.nbIdBtn);
+			root.nbId.option("readOnly", true);
 			root.baseObj.id = data.id;
+			root.baseObj.active = data.gm_state_id === 1;
 			root.baseObj.oas_researcher_id = data.oas_details.TerceroId.Id.toString();
 			root.baseObj.name = data.oas_details.TerceroId.NombreCompleto;
 			root.baseObj.identification_number = parseInt(data.oas_details.Numero);
 			root.baseObj.role_id = parseInt(data.role_id);
 			console.log("root.baseObj", root.baseObj);
-			$(".card-header.main").html("Editando integrante");
-			$("#panel-integrantes").fadeOut(function() {
-				$("#panel-integrantes-data").fadeIn();
+			$(root.panelData + " .card-header.main").html("Editando integrante");
+			$(root.panelGrid).fadeOut(function() {
+				$(root.panelData).fadeIn();
 			});
 		},
 		userAdd() {
 			root.mode == "add";
-			$(".card-header.main").html("Nuevo integrante");
-			$("#panel-integrantes").fadeOut(function() {
-				$("#panel-integrantes-data").fadeIn();
+			root.nbId.option("readOnly", false);
+			$(root.panelData + " .card-header.main").html("Nuevo integrante");
+			$(root.panelGrid).fadeOut(function() {
+				$(root.panelData).fadeIn();
 			});
 		},
 		async userSave() {
@@ -609,19 +670,43 @@ export default {
 			}
 		},
 		userCancel() {
-			$("#panel-integrantes-data").fadeOut(function() {
-				$("#panel-integrantes").fadeIn(function() {
+			$(root.panelData).fadeOut(function() {
+				$(root.panelGrid).fadeIn(function() {
 					root.$refs.vGroup.instance.reset();
-					$("#panel-integrantes-data").clear();
+					$(root.panelData).clear();
 					// console.clear();
 				});
 			});
 		},
+		userActive(data, state) {
+			// console.clear();
+			console.log("data", data);
+			console.log("state", state);
+			let a = state ? "activar" : "desactivar";
+			let ti = data.oas_details.TerceroId;
+			let mn = typeof ti !== "undefined" ? `<br>"${ti.NombreCompleto}"` : `con<br>el documento "${root.$formatDocument(data.identification_number)}"`;
+			let msg = `¿Realmente desea ${a} al usuario ${mn}?`;
+			this.$confirm(msg, function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					let usr = data;
+					usr.active = state;
+					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
+					root.loaderShow();
+					root.updateUser({
+						user: usr,
+						cb: function(result) {
+							console.log("Result", result);
+							root.grid.refresh();
+							root.loaderHide();
+						},
+					});
+				}
+			});
+		},
 		loadEnd() {
-			this.loaderHide();
-			this.loading = false;
-			$(".dx-toolbar-after").append($("#btn-add"));
-			$("#btn-add").fadeIn();
+			$(root.panelMain).fadeIn();
+			console.log("loadEnd loading?", root.loading);
 		},
 		validateUrl(e) {
 			console.log("e.value", e);

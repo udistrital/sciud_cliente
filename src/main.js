@@ -73,6 +73,16 @@ vue.mixin({
 				value: false,
 			},
 		],
+		gmStates: [
+			{
+				id: 1,
+				name: "SI",
+			},
+			{
+				id: 2,
+				name: "NO",
+			},
+		],
 	}),
 	mounted() {
 		// 202011142222:
@@ -99,7 +109,7 @@ vue.mixin({
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
-		go(path, lockMsg = "Cargando", lockEl = ".card .card-body") {
+		go(path, lockMsg = "Cargando", lockEl = ".page-content") {
 			this.loaderShow(lockMsg, lockEl);
 			this.$router.push({ path: path });
 		},
@@ -122,7 +132,8 @@ vue.mixin({
 		},
 		loaderShow(msg, element) {
 			let root = this;
-			if (!root.$loader.visible) {
+			console.log("LENGTH", window.jQuery(".dx-overlay-wrapper").length);
+			if (window.jQuery(".dx-overlay-wrapper").length <= 0) {
 				// console.log(window.vm.$sep);
 				// console.log("MASK!");
 				// console.log("root.loaderMessage", root.loaderMessage);
@@ -159,6 +170,10 @@ vue.mixin({
 					if (window.vm.$isFunction(cb)) cb();
 				},
 			});
+		},
+		gmState(cellInfo) {
+			console.log("gmState", cellInfo.value);
+			return cellInfo.value === 1 ? "SI" : "NO";
 		},
 		yesNo(cellInfo) {
 			return cellInfo.value ? "SI" : "NO";
