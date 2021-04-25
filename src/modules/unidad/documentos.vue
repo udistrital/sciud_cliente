@@ -49,9 +49,17 @@ export default {
 		group: null,
 		id: "panel-unidad-documentos",
 	}),
+	methods: {
+		...mapActions("unidad", ["getUnit"]),
+	},
+	computed: {
+		...mapGetters("core/tipo", ["subtypesByType"]),
+	},
 	created: function() {
 		root = this;
+		console.log(root.$sep);
 		root.tiposDocumento = root.subtypesByType("unidad_tipo_documento");
+		console.log("root.tiposDocumento", root.tiposDocumento);
 		root.getUnit({
 			id: root.$route.params.unidadId,
 			cb: function(result) {
@@ -59,12 +67,6 @@ export default {
 				document.title += ` ${root.$titleCase(root.group.name)}`;
 			},
 		});
-	},
-	methods: {
-		...mapActions("unidad", ["getUnit"]),
-	},
-	computed: {
-		...mapGetters("core/tipo", ["subtypesByType"]),
 	},
 	updated: () => {
 		console.log(root.$sep);

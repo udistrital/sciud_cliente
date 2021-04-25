@@ -458,7 +458,7 @@ h1.tit {
 	&.disabled,
 	&.dx-state-disabled,
 	&:disabled {
-		opacity: 0.4;
+		opacity: 0.8;
 		background-color: #ccc;
 		// -webkit-filter: grayscale;
 		// -webkit-filter: brightness(40%);
@@ -613,5 +613,47 @@ span.cmds {
 		margin-bottom: 1rem;
 		padding-bottom: 1rem;
 		border-bottom: 1px solid red;
+	}
+}
+
+.file-container {
+	.dx-fileuploader-button {
+		margin-top: 0.4rem;
+		// width: 100%;
+		// .dx-button-content {
+		// 	&::before {
+		// 		content: "<b><i class='icon-link'></i></b>";
+		// 	}
+		// }
+	}
+}
+
+label.error {
+	$label-error-size: 1rem;
+	$label-icon-size: 18px;
+	margin: 0;
+	font-size: $label-error-size;
+	line-height: $label-error-size;
+	font-weight: 600;
+	// text-align: center;
+	color: #d9534f !important;
+	margin-top: 5px !important;
+	display: block;
+
+	&::before {
+		display: inline-block;
+		pointer-events: none;
+		font-weight: 700;
+		width: $label-icon-size;
+		height: $label-icon-size;
+		text-align: center;
+		line-height: $label-icon-size;
+		font-size: $label-icon-size -2px;
+		background-color: #d9534f;
+		color: #fff;
+		content: "!";
+		border-radius: 50%;
+
+		margin-right: 3px;
 	}
 }
