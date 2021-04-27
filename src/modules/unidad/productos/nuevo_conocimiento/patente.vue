@@ -315,7 +315,7 @@
 			</div>
 		</div>
 
-		<div class="card mt-3" v-if="true">
+		<div class="card mt-3" v-if="debug">
 			<div class="card-body">
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>

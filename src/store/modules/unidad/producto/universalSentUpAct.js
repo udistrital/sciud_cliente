@@ -42,16 +42,6 @@ const store = {
 					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
 				});
 		},
-		/*
-		participants({ commit, state, dispatch }, args) {
-			api()
-				.get(`papers/${args.id}/${args.type}_participants`)
-				.then((r) => {
-					console.log("Guardado", r.data);
-					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
-				});
-		},
-		*/
 	},
 	mutations: {
 		SetData(state, data) {

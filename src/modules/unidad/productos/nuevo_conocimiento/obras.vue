@@ -135,9 +135,9 @@ especifico research_creation_works = rutas generales *\
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>URL: </label>
-										<DxTextBox placeholder="Web Libro" class="form-control" :value.sync="baseObj.url">
+										<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
 											<DxValidator>
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
@@ -325,16 +325,22 @@ especifico research_creation_works = rutas generales *\
 						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="observation" caption="Observacion" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
-						<DxColumn data-field="url" caption="Url" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
+						<!-- data-type="string" alignment="center" :visible="false" :allow-grouping="false" /> -->
 						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="150" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<!-- <a title="Premios..." class="cmd-item color-main-600 mr-2" @click.prevent="premios(data)" href="#">
-									<i class="dx-icon-favorites"></i>
-								</a> -->
+
+								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+									<i class="icon-link"></i>
+								</a>
+								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+								
+								<a title="Premios..." class="cmd-item color-main-600 mr-2" @click.prevent="premios(data)" href="#">
+									<i class="icon-medal-first"></i>
+								</a>
 
 								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
@@ -361,7 +367,7 @@ especifico research_creation_works = rutas generales *\
 			</div>
 		</div>
 
-		<div class="card mt-3" v-if="true">
+		<div class="card mt-3" v-if="debug">
 			<div class="card-body">
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>

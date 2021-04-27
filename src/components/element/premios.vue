@@ -5,16 +5,16 @@
 				<div class="col">
 					<div class="card">
 						
-						<div class="card-header main">Agregar Reconocimiento</div>
+						<div class="card-header main">{{editPremio===false? "Anexar":"Editar"}} Reconocimiento o Premio</div>
 
 						<div class="card-body mb-0 pb-0 pt-3">
 							<DxValidationGroup ref="vGroup">
 								<div class="row">
 
-									<div class="col-md-9">
+									<div class="col-md-7">
 										<div class="form-group">
 										<label>Nombre del Premio o Reconocimiento: </label>
-										<DxTextBox placeholder="Nombre" class="form-control" :value.sync="baseObj.name">
+										<DxTextBox placeholder="Nombre" class="form-control" :value.sync="baseObjA.name">
 										<DxValidator>
 										</DxValidator>
 										</DxTextBox>
@@ -24,16 +24,16 @@
 									<div class="col-md-3">
 										<div class="form-group">
 										<label>Obtención: </label>
-										<DxSwitch :value.sync="baseObj.is_national" switched-on-text="Nacional" switched-off-text="Internacional" />
+										<DxSwitch :value.sync="baseObjA.is_national" switched-on-text="Nacional" switched-off-text="Internacional" />
 										</div>
 									</div>
 
-									<!-- <div class="col-md-3">
+									<div class="col-md-2">
 										<div class="form-group">
 										<label>Activo: </label>
-										<DxSwitch :value.sync="baseObj.active" switched-on-text="SI" switched-off-text="NO" />
+										<DxSwitch :value.sync="baseObjA.active" switched-on-text="SI" switched-off-text="NO" />
 										</div>
-									</div> -->
+									</div>
 
 								</div>
 							</DxValidationGroup>
@@ -106,7 +106,7 @@
 							<DxColumn data-field='name'  caption='Nombre Reconocimiento' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
 							<DxColumn data-field="is_national" caption="Participacion" data-type="date" alignment="center" :visible="true" :customize-text="parNal" />
 							
-							<!-- <DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" /> -->
+							<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 
 							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 							<template #tpl="{ data }">
@@ -119,7 +119,7 @@
 									</a>
 									<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 										<i class="icon-database-check"></i>
-									</a> -->
+									</a>  -->
 								</span>
 							</template>
 						</DxDataGrid>
@@ -127,6 +127,15 @@
 				</div>
 			</div>
 		</div>
+
+
+		<div class="card mt-3" v-if="debug">
+			<div class="card-body">
+				{{ JSON.stringify(baseObjA, null, "\t") }}
+			</div>
+		</div>
+
+
 	</div>
 </template>
 <script>
@@ -196,10 +205,10 @@ export default {
 		panelDataDoc: null,
 		panelGridDoc: null,
 		panelCmds: null,
-		baseObj: {
+		baseObjA: {
 			name: null,
 			is_national: true,
-			active: true,
+			active: null,
 			created_by: null, 
 			updated_by: null,
 		},
@@ -208,7 +217,7 @@ export default {
 		root = this;
 		root.panelDataDoc = $("#" + root.id + " .data");
 		root.panelGridDoc = $("#" + root.id + " .grid");
-		root.baseEnt = this.$clone(root.baseObj);
+		root.baseEnt = this.$clone(root.baseObjA);
 		console.log(root.$sep);
 		// }/research_units/1/awards/
 		root.loaderElement = "#" + root.id;
@@ -281,16 +290,16 @@ export default {
 		awardEdit(data) {
 			//console.clear();
 			console.log("data", data);
-			root.baseObj=root.baseEnt;
+			//root.baseObjA=root.baseEnt;
 			root.editPremio = true;
-			//root.baseObj = data;
+			root.baseObjA = data;
 			root.panelGridDoc.fadeOut(function(params) {
 				root.panelDataDoc.fadeIn(function(params) {});
 			});
 		},
 		premioAdd() {
 			root.editPremio = false;
-			root.baseObj = root.baseEnt;
+			root.baseObjA = root.baseEnt;
 			//this.awardCancel();
 			root.panelGridDoc.fadeOut(function(params) {
 				root.panelDataDoc.fadeIn();
@@ -299,23 +308,12 @@ export default {
 		parNal(cellInfo) {
 			return cellInfo.value ? "Nacional" : "Internacional";
 		},
-		// siNo() {
-		// 	return [
-		// 		{
-		// 			id: 1,
-		// 			name: "SI",
-		// 		},
-		// 		{
-		// 			id: 0,
-		// 			name: "NO",
-		// 		},
-		// 	];
-		// },
+
 		awardCancel() {
 			
 			this.loaderHide();
 			root.editPremio = false;
-			root.baseObj = root.baseEnt;
+			root.baseObjA = root.baseEnt;
 			root.panelDataDoc.fadeOut(function(params) {
 				root.panelGridDoc.fadeIn();
 			});
@@ -331,15 +329,11 @@ export default {
 			console.log("result", result);
 			if (result.isValid) {
 				console.log("VALID!");
-				///root.loaderShow();
-				//root.scrollTop();
-				// root.panelCmds.fadeOut();
-				// root.loaderElement = ;
-				//let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Premio o Reconocimiento";
-				//root.loaderShow(msg, root.panelData);
-				if (root.editPremio === false) root.baseObj.created_by = root.user_id;
-				if (root.editPremio === true) root.baseObj.updated_by = root.user_id;
-                let obj=root.baseObj;
+				if (root.editPremio === false) root.baseObjA.created_by = root.user_id;
+				if (root.editPremio === true) root.baseObjA.updated_by = root.user_id;
+
+                let obj=root.baseObjA;
+				//alert("nueva data "+obj.id);
 				let dto = {
 					unidadId: root.mainObj.id,
 					rute:"research_creation_works",

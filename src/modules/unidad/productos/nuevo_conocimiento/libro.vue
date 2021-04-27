@@ -1,3 +1,13 @@
+\*
+data.row.data.title = titulo de participantes 
+data.data.title = titulo para activar o desactivar
+Ingresar Libro = Titulo botones
+Libro = Titulo principal
+Libro = titulo abreviado
+panelLibro = nombredepaneles
+book = endpoindt especifico
+books = rutas generales
+*\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelLibro">
 		<div class="row">
@@ -7,14 +17,14 @@
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Libros Resultados de Investigación</span>
+								<span class="font-weight-semibold">Libros Resultados de Investigacion</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title=" Ingresar Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Ingresar Libro
+								<button v-if="editMode" type="button" @click.prevent="add()" title=" Ingresar Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b>  Ingresar Libro
 								</button>
 							</span>
 							<span class="cmds-back slide">
@@ -39,128 +49,129 @@
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
-								<!-- formulatio -->
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Título:</label>
-										<DxTextBox placeholder="Título" class="form-control" name="title" :value.sync="baseObj.title">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
-									</div>
+                                <!-- formulatio -->
+							
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Título:</label>
+									<DxTextBox placeholder="Título" class="form-control" name="title" :value.sync="baseObj.title">
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+									</DxTextBox>
 								</div>
+							</div>
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Fecha de Publicación:</label>
-										<DxDateBox
-											class="form-control"
-											name="cidcRegistrationDate"
-											:value.sync="baseObj.publication_date"
-											id="cidcRegistrationDate"
-											placeholder="dd/mm/yyyy"
-											display-format="dd/MM/yyyy"
-											:min="min"
-											:max="now"
-											type="date"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxDateBox>
-									</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Fecha de Publicación:</label>
+									<DxDateBox
+										class="form-control"
+										name="cidcRegistrationDate"
+										:value.sync="baseObj.publication_date"
+										id="cidcRegistrationDate"
+										placeholder="dd/mm/yyyy"
+										display-format="dd/MM/yyyy"
+										:min="min"
+										:max="now"
+										type="date"
+									>
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+									</DxDateBox>
 								</div>
+							</div>							
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Editorial:</label>
-										<DxTextBox placeholder="ID de Proyecto" class="form-control" :value.sync="baseObj.editorial_name">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
-									</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Editorial:</label>
+									<DxTextBox placeholder="ID de Proyecto" class="form-control" :value.sync="baseObj.editorial_name">
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+									</DxTextBox>
 								</div>
+							</div>
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>ISBN:</label>
-										<DxTextBox placeholder="ISBN" class="form-control" :value.sync="baseObj.isbn">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
-									</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>ISBN:</label>
+									<DxTextBox placeholder="ISBN" class="form-control" :value.sync="baseObj.isbn">
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+									</DxTextBox>
 								</div>
-								<!-- -->
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Categoria:</label>
-										<DxSelectBox
-											:grouped="false"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											:value.sync="baseObj.category_id"
-											class="form-control"
-											:data-source="subtipos"
-											display-expr="st_name"
-											value-expr="id"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxSelectBox>
-									</div>
+							</div>
+<!-- -->
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Categoria:</label>
+									<DxSelectBox
+										:grouped="false"
+										:search-enabled="false"
+										placeholder="Seleccione..."
+										:value.sync="baseObj.category_id"
+										class="form-control"
+										:data-source="subtipos"
+										display-expr="st_name"
+										value-expr="id"
+									>
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+									</DxSelectBox>
 								</div>
+							</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Convocatoria Minciencias:</label>
-										<DxSelectBox
-											:grouped="false"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											:value.sync="baseObj.colciencias_call_id"
-											class="form-control"
-											:data-source="convocatorias"
-											display-expr="name"
-											value-expr="id"
-											item-template="item"
-										>
-											<template #item="{ data }">
-												<div>{{ data.name }} de {{ data.year }}</div>
-											</template>
-										</DxSelectBox>
-									</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Convocatoria Minciencias:</label>
+									<DxSelectBox
+										:grouped="false"
+										:search-enabled="false"
+										placeholder="Seleccione..."
+										:value.sync="baseObj.colciencias_call_id"
+										class="form-control"
+										:data-source="convocatorias"
+										display-expr="name"
+										value-expr="id"
+										item-template="item"
+									>
+										<template #item="{ data }">
+											<div>{{ data.name }} de {{ data.year }}</div>
+										</template>
+									</DxSelectBox>
 								</div>
+							</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Web Libro:</label>
-										<DxTextBox placeholder="Web Libro" class="form-control" :value.sync="baseObj.url">
-											<DxValidator>
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
-											</DxValidator>
-										</DxTextBox>
-									</div>
+
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Web o Url:</label>
+									<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
+										<DxValidator>
+											<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+										</DxValidator>
+									</DxTextBox>
 								</div>
+							</div>
 
-								<div class="col-md-12"><label>Lugar de publicacion:</label><Geo :lockElement="loaderElement" :syncObject="baseObj" /></div>
+							<div class="col-md-12"><label>Lugar de publicacion:</label><Geo :lockElement="loaderElement" :syncObject="baseObj" /></div>
 
-								<div class="col-md-12">
-									<div class="form-group">
-										<label>Observaciones:</label>
-										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextArea>
-									</div>
+						
+
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Observaciones:</label>
+									<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
+									</DxTextArea>
 								</div>
+							</div>
 
-								<!-- fin formulario -->
+                                <!-- fin formulario -->
 							</div>
 						</div>
 						<div class="card-footer">
@@ -175,9 +186,9 @@
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
-											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+											<span  class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
 											</span>
 										</template>
@@ -224,8 +235,8 @@
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-						<DxColumn data-field="id" caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						
+						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
 						<DxColumn data-field="title" caption="Título" data-type="string" alignment="left" :visible="true" width="25%" :allow-grouping="false" />
 						<DxColumn data-field="editorial_name" caption="Editorial" data-type="string" alignment="left" :visible="true" />
 						<DxColumn data-field="category_name" caption="Categoría" data-type="string" alignment="center" :visible="true" />
@@ -236,24 +247,35 @@
 						<DxColumn data-field="publication_date" caption="Fecha publicación" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
+								
+								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+									<i class="icon-link"></i>
+								</a>
+								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+								
 								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a>
-								<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-									<i class="icon-database-edit"></i>
-								</a>
-								<a v-if="data.data.active" title="Desactivar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
-									<i class="icon-database-remove"></i>
-								</a>
-								<a v-else title="Activar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-									<i class="icon-database-check"></i>
-								</a>
+
+								
+
+								<span v-if="editMode">
+									<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-database-edit"></i>
+									</a>
+									<a v-if="data.data.active" title="Desactivar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+										<i class="icon-database-remove"></i>
+									</a>
+									<a v-else title="Activar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+										<i class="icon-database-check"></i>
+									</a>
+								</span>
 							</span>
 						</template>
 					</DxDataGrid>
@@ -358,7 +380,7 @@ export default {
 		docLink: null,
 		firstLoad: true,
 		now: new Date(),
-		min: new Date(1950, 1, 1),
+		min: new Date(1950,1,1),
 		baseEnt: null,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
@@ -378,7 +400,6 @@ export default {
 		// console.clear();
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-		root.getConvocatorias();
 		root.getConvocatorias();
 		root.subtipos = root.subtypesByType("libro_categoria");
 		root.tiposDocumento = root.subtypesByType("libro_documento");
@@ -401,9 +422,9 @@ export default {
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${root.group.id}/books`,
+				endPoint: `research_units/${this.group.id}/books`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
+					root.loaderShow("Cargando elementos", root.panelGrid);
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -418,7 +439,7 @@ export default {
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+        ...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive:"active" }),
 
 		participantes(data) {
 			// console.clear();
@@ -438,8 +459,8 @@ export default {
 			$("#panelLibro-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelLibro-participantes .grid").show();
-				root.panelParticipantes.fadeIn();
+				$("#panelLibro-participantes .grid").fadeIn();
+				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
 
@@ -457,8 +478,7 @@ export default {
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelLibro-documentos .grid").show();
-				$("#panelLibro-documentos").fadeIn();
+				$("#panelLibro-documentos").fadeIn(function(params) {});
 			});
 		},
 
@@ -496,12 +516,12 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-				let obj = root.baseObj;
+                let obj=root.baseObj;
 				let dto = {
 					unidadId: root.group.id,
-					stringEP: "books",
+					stringEP:"books",
 					mod: obj.id,
-					objectSend: { book: obj },
+					objectSend:{ book : obj },
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -512,9 +532,10 @@ export default {
 				console.log("root.mode", root.mode);
 				if (root.mode == "edit") root.objUpdate(dto);
 				else root.objSave(dto);
-				root.cancel();
+                root.cancel();
 			}
 		},
+
 
 		edit(data) {
 			root.mode = "edit";

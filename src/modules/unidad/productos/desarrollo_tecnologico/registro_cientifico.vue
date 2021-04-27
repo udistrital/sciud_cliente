@@ -97,7 +97,7 @@
 										<DxTextBox placeholder="Direccion Web" class="form-control" :value.sync="baseObj.nsr_database_url">
 											<DxValidator>
 												<DxRequiredRule />
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
@@ -301,9 +301,15 @@
 						<DxColumn data-field="observation" caption="Observaciones" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
+								
+								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+									<i class="icon-link"></i>
+								</a>
+								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+
 								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>

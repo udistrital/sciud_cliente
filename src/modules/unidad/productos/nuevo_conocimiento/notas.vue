@@ -126,31 +126,32 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									</div>
 								</div>
 
-								<div class="col-md-4">
+								
+								<div class="col-md-2">
 									<div class="form-group">
-										<label>Fecha Aprobacion: </label>
-										<DxDateBox
-											class="form-control"
-											name="approval_date"
-											:value.sync="baseObj.approval_date"
-											id="approval_date"
-											placeholder="DD/MM/YYYY"
-											display-format="dd/MM/yyyy"
-											:min="minDate"
-											:max="actualDate"
-											type="date"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxDateBox>
+										<label>Numero de paginas: </label>
+										<DxTextBox placeholder="numero de paginas" class="form-control" :value.sync="baseObj.number_of_pages">
+											<!-- <DxValidator>
+		<DxRequiredRule />
+	</DxValidator> -->
+										</DxTextBox>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>Volumen: </label>
+										<DxTextBox placeholder="Volumen" class="form-control" :value.sync="baseObj.volume">
+											<!-- <DxValidator>
+		<DxRequiredRule />
+	</DxValidator> -->
+										</DxTextBox>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>numero de paginas: </label>
-										<DxTextBox placeholder="numero de paginas" class="form-control" :value.sync="baseObj.number_of_pages">
+										<label>Pagina Inicial: </label>
+										<DxTextBox placeholder="pagina Inicial" class="form-control" :value.sync="baseObj.initial_page">
 											<!-- <DxValidator>
 		<DxRequiredRule />
 	</DxValidator> -->
@@ -191,34 +192,35 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									</div>
 								</div>
 
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="form-group">
-										<label>Volumen: </label>
-										<DxTextBox placeholder="Volumen" class="form-control" :value.sync="baseObj.volume">
-											<!-- <DxValidator>
-		<DxRequiredRule />
-	</DxValidator> -->
-										</DxTextBox>
+										<label>Fecha Aprobacion: </label>
+										<DxDateBox
+											class="form-control"
+											name="approval_date"
+											:value.sync="baseObj.approval_date"
+											id="approval_date"
+											placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy"
+											:min="minDate"
+											:max="actualDate"
+											type="date"
+										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxDateBox>
 									</div>
 								</div>
 
-								<div class="col-md-2">
-									<div class="form-group">
-										<label>pagina Inicial: </label>
-										<DxTextBox placeholder="pagina Inicial" class="form-control" :value.sync="baseObj.initial_page">
-											<!-- <DxValidator>
-		<DxRequiredRule />
-	</DxValidator> -->
-										</DxTextBox>
-									</div>
-								</div>
+								
 
 								<div class="col-md-5">
 									<div class="form-group">
 										<label>Web:</label>
-										<DxTextBox placeholder="Web Libro" class="form-control" :value.sync="baseObj.url">
+										<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
 											<DxValidator>
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
@@ -325,9 +327,15 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 						<DxColumn data-field="url" caption="WEB" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
+
+								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+									<i class="icon-link"></i>
+								</a>
+								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+
 								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>
