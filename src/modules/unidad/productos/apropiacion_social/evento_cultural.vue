@@ -59,7 +59,7 @@ de diseño=Titulo principal Registro=titulo abreviado panelRegistro=nombredepane
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>fecha de inicio: </label>
+										<label>Fecha de inicio: </label>
 										<DxDateBox
 											class="form-control"
 											name="eve_start_date"
@@ -111,7 +111,7 @@ de diseño=Titulo principal Registro=titulo abreviado panelRegistro=nombredepane
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>entidades gestionadoras o patrocinadoras: </label>
+										<label>Entidades Gestoras o Patrocinadoras: </label>
 										<DxTextBox placeholder="Entidades Evento" class="form-control" :value.sync="baseObj.eve_entities">
 											<DxValidator> </DxValidator>
 										</DxTextBox>
@@ -175,7 +175,7 @@ de diseño=Titulo principal Registro=titulo abreviado panelRegistro=nombredepane
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>lugar o País de obtención: </label>
+										<label>Lugar Obtención:  </label>
 										<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 									</div>
 								</div>

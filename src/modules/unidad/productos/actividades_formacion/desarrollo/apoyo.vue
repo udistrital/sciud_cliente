@@ -124,7 +124,7 @@ research_units= ruta principal del modulo en el endPoint research_training = obj
 
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>Categoria: </label>
+									<label>Categoría: </label>
 									<DxSelectBox
 										:grouped="false"
 										:search-enabled="false"

@@ -99,7 +99,7 @@
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Categoria:</label>
+										<label>Categoría:</label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"
@@ -116,7 +116,7 @@
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Fecha de Obtencion: </label>
+										<label>Fecha de Obtención: </label>
 										<DxDateBox
 											class="form-control"
 											name="date_of_obtaining"
@@ -284,7 +284,7 @@
 							:visible="true"
 							:allow-grouping="false"
 						/>
-						<DxColumn data-field="date_of_obtaining" caption="Fecha de Obtencion" data-type="date" alignment="center" :visible="true" :allow-grouping="true" />
+						<DxColumn data-field="date_of_obtaining" caption="Fecha de Obtención" data-type="date" alignment="center" :visible="true" :allow-grouping="true" />
 						<DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn data-field="patent_state_name" caption="Registro Patente" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="colciencias_call_name" caption="Convocatoria" data-type="string" alignment="center" :visible="true" :allow-grouping="true" />

@@ -1,4 +1,4 @@
-\* data.data.journal_name=titulo para activar o desactivar Evento Cientifico= Titulo botones Evento Cientifico=Titulo principal Registro=titulo abreviado
+\* data.data.journal_name=titulo para activar o desactivar Evento Científico= Titulo botones Evento Científico=Titulo principal Registro=titulo abreviado
 panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas generales *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelartisticoCultural">
@@ -9,19 +9,19 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Evento Cientifico</span>
+								<span class="font-weight-semibold">Evento Científico</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Evento Cientifico.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nuevo Evento Cientifico
+								<button type="button" @click.prevent="add()" title="Nuevo Evento Científico.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> Nuevo Evento Científico
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al Evento Cientifico.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A Evento Cientifico
+								<button type="button" @click.prevent="retorno()" title="Volver al Evento Científico.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A Evento Científico
 								</button>
 							</span>
 						</div>
@@ -37,7 +37,7 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Evento Cientifico</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Evento Científico</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
@@ -54,7 +54,7 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>fecha de inicio: </label>
+										<label>Fecha de inicio: </label>
 										<DxDateBox
 											class="form-control"
 											name="eve_start_date"
@@ -106,7 +106,7 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>entidades gestionadoras o patrocinadoras: </label>
+										<label>Entidades Gestoras o Patrocinadoras: </label>
 										<DxTextBox placeholder="Entidades Evento" class="form-control" :value.sync="baseObj.eve_entities">
 											<DxValidator> </DxValidator>
 										</DxTextBox>
@@ -170,7 +170,7 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>lugar o País de obtención: </label>
+										<label>Lugar Obtención:  </label>
 										<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 									</div>
 								</div>

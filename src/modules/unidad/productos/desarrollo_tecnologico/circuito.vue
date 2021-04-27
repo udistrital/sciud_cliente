@@ -210,7 +210,7 @@
 						<DxColumn data-field="id" caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn
 							data-field="icd_registration_number"
-							caption="Numero de registro"
+							caption="Número de Registro "
 							data-type="string"
 							alignment="center"
 							:visible="true"

@@ -54,8 +54,8 @@
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Numero de Registro ({{ title }}): </label>
-										<DxTextBox placeholder="Numero de Registro" class="form-control" :value.sync="baseObj.plt_registration_number">
+										<label>Número de Registro  ({{ title }}): </label>
+										<DxTextBox placeholder="Número de Registro " class="form-control" :value.sync="baseObj.plt_registration_number">
 											<DxValidator>
 												<DxRequiredRule />
 											</DxValidator>
@@ -133,7 +133,7 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>lugar o País de obtención: </label>
+										<label>Lugar Obtención:  </label>
 										<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 									</div>
 								</div>
@@ -226,7 +226,7 @@
 						<DxColumn data-field="plt_name" caption="Nombre" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn
 							data-field="plt_registration_number"
-							caption="Numero de Registro"
+							caption="Número de Registro "
 							data-type="text"
 							alignment="center"
 							:visible="true"

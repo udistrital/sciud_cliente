@@ -102,7 +102,7 @@ del modulo en el endPoint doctorate = objeto json al cual se enviaran los datos 
 
 							<div class="col-md-2">
 								<div class="form-group">
-									<label>Categoria: </label>
+									<label>Categoría: </label>
 									<DxSelectBox
 										:grouped="false"
 										:search-enabled="false"

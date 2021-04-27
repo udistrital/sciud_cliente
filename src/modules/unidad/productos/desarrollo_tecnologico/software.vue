@@ -119,9 +119,9 @@
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Número del registro ( Dirección Nacional de Derechos de Autor): </label>
+										<label>Número del registro (Dirección Nacional de Derechos de Autor): </label>
 										<DxTextBox
-											placeholder="Número del registro ( Dirección Nacional de Derechos de Autor)"
+											placeholder="Número del registro (Dirección Nacional de Derechos de Autor)"
 											class="form-control"
 											:value.sync="baseObj.sof_registration_number"
 										>
@@ -130,7 +130,7 @@
 								</div>
 
 								<div class="col-md-6">
-									<label>lugar o País de obtención: </label>
+									<label>Lugar Obtención: </label>
 									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 								</div>
 

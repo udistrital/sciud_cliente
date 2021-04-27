@@ -1,4 +1,4 @@
-\* data.row.data.title = titulo de participantes data.data.title = titulo para activar o desactivar Ingresar Capitulo de Libro = Titulo botones Capitulo de
+\* data.row.data.title = titulo de participantes data.data.title = titulo para activar o desactivar Ingresar Capítulo de Libro = Titulo botones Capitulo de
 Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepaneles book_chapter = endpoindt especifico book_chapters = rutas generales *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelCapitulo">
@@ -9,19 +9,19 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Capitulo de Libro</span>
+								<span class="font-weight-semibold">Capítulo de Libro</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Ingresar Capitulo de Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Ingresar Capitulo de Libro
+								<button type="button" @click.prevent="add()" title="Ingresar Capítulo de Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> Ingresar Capítulo de Libro
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver Capitulo de Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A Capitulo de Libro
+								<button type="button" @click.prevent="retorno()" title="Volver Capítulo de Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A Capítulo de Libro
 								</button>
 							</span>
 						</div>
@@ -37,7 +37,7 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Capitulo de Libro</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Capítulo de Libro</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
@@ -127,7 +127,7 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Categoria:</label>
+										<label>Categoría:</label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"
@@ -158,7 +158,7 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 										<label>Web del Capitulo:</label>
 										<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
 											<DxValidator>
-												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+												<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>

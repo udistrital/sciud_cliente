@@ -77,7 +77,7 @@ principal del modulo en el endPoint ondas_program = objeto json al cual se envia
 
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>Categoria: </label>
+									<label>Categoría: </label>
 									<DxSelectBox
 										:grouped="false"
 										:search-enabled="false"

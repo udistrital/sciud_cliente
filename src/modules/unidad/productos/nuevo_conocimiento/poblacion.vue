@@ -1,4 +1,4 @@
-\* data.row.data.name= titulo de participantes data.data.name= titulo para activar o desactivar Poblacion Mejorada de Razas Pecuarias = Titulo botones Poblacion
+\* data.row.data.name= titulo de participantes data.data.name= titulo para activar o desactivar Población Mejorada de Razas Pecuarias = Titulo botones Población
 Mejorada de Razas Pecuarias = Titulo principal Raza = titulo abreviado panelNuevaPecuaria = nombredepaneles ip_livestock_breed = endpoindt especifico
 ip_livestock_breeds = rutas generales *\
 <template>
@@ -10,7 +10,7 @@ ip_livestock_breeds = rutas generales *\
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Poblacion Mejorada de Razas Pecuarias</span>
+								<span class="font-weight-semibold">Población Mejorada de Razas Pecuarias</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
@@ -19,20 +19,20 @@ ip_livestock_breeds = rutas generales *\
 								<button
 									type="button"
 									@click.prevent="add()"
-									title="Ingresar Poblacion Mejorada de Razas Pecuarias.."
+									title="Ingresar Población Mejorada de Razas Pecuarias.."
 									class="btn btn-main btn-labeled btn-labeled-left "
 								>
-									<b><i class="icon-database-add"></i></b> Ingresar Poblacion de Razas
+									<b><i class="icon-database-add"></i></b> Ingresar Población de Razas
 								</button>
 							</span>
 							<span class="cmds-back slide">
 								<button
 									type="button"
 									@click.prevent="retorno()"
-									title="Volver al Poblacion Mejorada de Razas Pecuarias.."
+									title="Volver al Población Mejorada de Razas Pecuarias.."
 									class="btn btn-main btn-labeled btn-labeled-left "
 								>
-									<b><i class="icon-arrow-left"></i></b> Volver A Poblacion de Razas
+									<b><i class="icon-arrow-left"></i></b> Volver A Población de Razas
 								</button>
 							</span>
 						</div>
@@ -48,7 +48,7 @@ ip_livestock_breeds = rutas generales *\
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Poblacion Mejorada de Razas Pecuarias</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Población Mejorada de Razas Pecuarias</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">

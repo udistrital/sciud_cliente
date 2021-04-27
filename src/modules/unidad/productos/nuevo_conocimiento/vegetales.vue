@@ -56,7 +56,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Categoria:</label>
+										<label>Categoría:</label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"
@@ -132,7 +132,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 
 								<!-- <div class="col-md-2">
 	<div class="form-group">
-		<label>Categoria:</label>
+		<label>Categoría:</label>
 		<DxSelectBox
 			:grouped="false"
 			:search-enabled="false"

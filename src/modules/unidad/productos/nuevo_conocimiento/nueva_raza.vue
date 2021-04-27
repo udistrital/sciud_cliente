@@ -53,7 +53,7 @@ Titulo principal Raza = titulo abreviado panelrazaanimal = nombredepaneles new_a
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Categoria:</label>
+										<label>Categoría:</label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"

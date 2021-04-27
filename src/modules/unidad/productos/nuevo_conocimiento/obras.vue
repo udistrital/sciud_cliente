@@ -77,7 +77,7 @@ especifico research_creation_works = rutas generales *\
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Fecha Creacion: </label>
+										<label>Fecha Creación: </label>
 										<DxDateBox
 											class="form-control"
 											name="creation_and_selection_date"
@@ -96,7 +96,7 @@ especifico research_creation_works = rutas generales *\
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Categoria: </label>
+										<label>Categoría: </label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"
@@ -137,7 +137,7 @@ especifico research_creation_works = rutas generales *\
 										<label>URL: </label>
 										<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
 											<DxValidator>
-												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+												<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
@@ -175,7 +175,7 @@ especifico research_creation_works = rutas generales *\
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label>Area del Conocimiento: </label>
+										<label>Área del Conocimiento: </label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"
@@ -221,7 +221,7 @@ especifico research_creation_works = rutas generales *\
 
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Observacion: </label>
+										<label>Observación: </label>
 										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observacion" class="form-control">
 											<DxValidator> </DxValidator>
 										</DxTextArea>

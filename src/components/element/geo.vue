@@ -99,6 +99,7 @@ export default {
 			root.states = [];
 			root.cities = [];
 			root.loaderShow("Cargando Estados", root.lockElement);
+			if(e.value===null) return null;
 			setTimeout(function() {
 				root.getStates({
 					country_id: e.value,
@@ -112,6 +113,7 @@ export default {
 		gCities(e) {
 			root.cities = [];
 			root.loaderShow("Cargando Ciudades", root.lockElement);
+			if(e.value===null) return null;
 			setTimeout(function() {
 				root.getCities({
 					state_id: e.value,

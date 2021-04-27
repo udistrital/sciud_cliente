@@ -83,7 +83,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 
 								<div class="col-md-3">
 									<div class="form-group">
-										<label>Gaceta industrial de publicación.: </label>
+										<label>Gaceta industrial de publicación: </label>
 										<DxTextBox
 											placeholder="Gaceta industrial de publicación."
 											class="form-control"

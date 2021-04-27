@@ -67,7 +67,7 @@
 						<ContenidoAudio :group="group" :editMode="editMode" title="Contenidos De Audio"/> 
 					</template>
 				</DxItem> -->
-				<DxItem title="Evento Cientifico">
+				<DxItem title="Evento Científico">
 					<template #default>
 						<EventoCientifico :group="group" :editMode="editMode" />
 					</template>

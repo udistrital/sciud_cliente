@@ -146,7 +146,7 @@
 										<label>Web Articulo:</label>
 										<DxTextBox placeholder="Web Articulo" class="form-control" :value.sync="baseObj.url">
 											<DxValidator>
-												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+												<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>

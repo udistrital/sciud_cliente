@@ -93,11 +93,11 @@
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Direccion Web: </label>
-										<DxTextBox placeholder="Direccion Web" class="form-control" :value.sync="baseObj.nsr_database_url">
+										<label>Dirección Web: </label>
+										<DxTextBox placeholder="Dirección Web" class="form-control" :value.sync="baseObj.nsr_database_url">
 											<DxValidator>
 												<DxRequiredRule />
-												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+												<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
@@ -260,7 +260,7 @@
 							:visible="true"
 							:allow-grouping="false"
 						/>
-						<DxColumn data-field="nsr_database_url" caption="Direccion Web" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
+						<DxColumn data-field="nsr_database_url" caption="Dirección Web" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
 
 						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />

@@ -81,7 +81,7 @@ del modulo en el endPoint master = objeto json al cual se enviaran los datos de 
 
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>Categoria: </label>
+									<label>Categoría: </label>
 									<DxSelectBox
 										:grouped="false"
 										:search-enabled="false"

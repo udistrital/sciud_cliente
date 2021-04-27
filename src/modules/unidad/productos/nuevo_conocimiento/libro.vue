@@ -17,7 +17,7 @@ books = rutas generales
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Libros Resultados de Investigacion</span>
+								<span class="font-weight-semibold">Libros Resultados de Investigación</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
@@ -107,7 +107,7 @@ books = rutas generales
 <!-- -->
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Categoria:</label>
+									<label>Categoría:</label>
 									<DxSelectBox
 										:grouped="false"
 										:search-enabled="false"
@@ -152,13 +152,13 @@ books = rutas generales
 									<label>Web o Url:</label>
 									<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
 										<DxValidator>
-											<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+											<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
 										</DxValidator>
 									</DxTextBox>
 								</div>
 							</div>
 
-							<div class="col-md-12"><label>Lugar de publicacion:</label><Geo :lockElement="loaderElement" :syncObject="baseObj" /></div>
+							<div class="col-md-12"><label>Lugar de publicación:</label><Geo :lockElement="loaderElement" :syncObject="baseObj" /></div>
 
 						
 
@@ -237,7 +237,7 @@ books = rutas generales
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 						
 						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field="title" caption="Título" data-type="string" alignment="left" :visible="true" width="25%" :allow-grouping="false" />
+						<DxColumn data-field="title" caption="Título" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="editorial_name" caption="Editorial" data-type="string" alignment="left" :visible="true" />
 						<DxColumn data-field="category_name" caption="Categoría" data-type="string" alignment="center" :visible="true" />
 						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="true" />

@@ -9,19 +9,19 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Nota Cientifica</span>
+								<span class="font-weight-semibold">Nota Científica</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
 								<button type="button" @click.prevent="add()" title="Nueva Nota Cientifica.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nueva Nota Cientifica
+									<b><i class="icon-database-add"></i></b> Nueva Nota Científica
 								</button>
 							</span>
 							<span class="cmds-back slide">
 								<button type="button" @click.prevent="retorno()" title="Volver al Nota Cientifica.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A Nota Cientifica
+									<b><i class="icon-arrow-left"></i></b> Volver A Nota Científica
 								</button>
 							</span>
 						</div>
@@ -37,7 +37,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Nota Cientifica</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Nota Científica</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
@@ -45,7 +45,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Titulo de Nota: </label>
+										<label>Título de Nota: </label>
 										<DxTextBox placeholder="Titulo de Nota" class="form-control" :value.sync="baseObj.title">
 											<DxValidator>
 												<DxRequiredRule />
@@ -58,16 +58,13 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									<div class="form-group">
 										<label>Nombre de la Revista: </label>
 										<DxTextBox placeholder="Nombre de la Revista" class="form-control" :value.sync="baseObj.journal_name">
-											<!-- <DxValidator>
-		<DxRequiredRule />
-	</DxValidator> -->
 										</DxTextBox>
 									</div>
 								</div>
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Categoria:</label>
+										<label>Categoría:</label>
 										<DxSelectBox
 											:grouped="false"
 											:search-enabled="false"
@@ -107,7 +104,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Fecha Publicacion: </label>
+										<label>Fecha Publicación: </label>
 										<DxDateBox
 											class="form-control"
 											name="publication_date"
@@ -129,7 +126,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 								
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Numero de paginas: </label>
+										<label>Número de páginas: </label>
 										<DxTextBox placeholder="numero de paginas" class="form-control" :value.sync="baseObj.number_of_pages">
 											<!-- <DxValidator>
 		<DxRequiredRule />
@@ -150,7 +147,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Pagina Inicial: </label>
+										<label>Página Inicial: </label>
 										<DxTextBox placeholder="pagina Inicial" class="form-control" :value.sync="baseObj.initial_page">
 											<!-- <DxValidator>
 		<DxRequiredRule />
@@ -161,7 +158,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 
 								<div class="col-md-2">
 									<div class="form-group">
-										<label>Pagina Final: </label>
+										<label>Página Final: </label>
 										<DxTextBox placeholder="Pagina Final" class="form-control" :value.sync="baseObj.final_page">
 											<!-- <DxValidator>
 		<DxRequiredRule />
@@ -194,7 +191,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Fecha Aprobacion: </label>
+										<label>Fecha Aprobación: </label>
 										<DxDateBox
 											class="form-control"
 											name="approval_date"
@@ -220,7 +217,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 										<label>Web:</label>
 										<DxTextBox placeholder="Web o Url" class="form-control" :value.sync="baseObj.url">
 											<DxValidator>
-												<DxPatternRule message="Por favor: Al comienzo de la url, indicar si es HTTP:// o HTTPS://" :pattern="urlPattern" />
+												<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
@@ -230,7 +227,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 
 								<div class="col-md-12">
 									<div class="form-group">
-										<label>Observacion: </label>
+										<label>Observación: </label>
 										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observacion" class="form-control"> </DxTextArea>
 									</div>
 								</div>
