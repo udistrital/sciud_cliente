@@ -234,7 +234,7 @@
 												data-type="string"
 											/>
 											<DxColumn
-												:group-index="0"
+												:group-index="1"
 												:allow-filtering="false"
 												:allow-sorting="true"
 												:customize-text="nullText"
@@ -245,6 +245,7 @@
 											/>
 											<DxColumn
 												:width="100"
+												:group-index="0"
 												caption="Activo"
 												data-type="int"
 												alignment="center"
