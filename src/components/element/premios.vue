@@ -258,10 +258,6 @@ export default {
 			type: Object,
 			default: () => null,
 		},
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
 		tipos: {
 			type: Array,
 			default: () => [],
