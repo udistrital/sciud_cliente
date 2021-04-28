@@ -13,7 +13,7 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Articulo.." class="btn btn-main btn-labeled btn-labeled-left " id="btn-add">
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Articulo.." class="btn btn-main btn-labeled btn-labeled-left " id="btn-add">
 									<b><i class="icon-database-add"></i></b> NUEVO ARTICULO
 								</button>
 							</span>
@@ -238,7 +238,7 @@
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -483,10 +483,7 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => null,
@@ -571,7 +568,7 @@ export default {
 				onLoaded: function(results, baseEntity) {
 					console.log("results", results);
 					art_root.totaCount = results.totalCount;
-					art_root.loadHide();
+					art_root.loaderHide();
 				},
 			});
 		},
@@ -648,7 +645,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						art_root.grid.refresh();
-						art_root.loadHide();
+						art_root.loaderHide();
 						art_root.cancel();
 					},
 				};
@@ -750,7 +747,7 @@ export default {
 						cb: function(result) {
 							console.log("Result", result);
 							art_root.grid.refresh();
-							art_root.loadHide();
+							art_root.loaderHide();
 							// art_root.cancel(validationGroup);
 							// $("#data").fadeOut(window.speed, function () {
 							// $("#grid").fadeIn(window.speed, function () {});
@@ -759,7 +756,7 @@ export default {
 					};
 					console.log("dto", dto);
 					art_root.elementoActive(dto);
-					art_root.loadHide();
+					art_root.loaderHide();
 				}
 			});
 		},

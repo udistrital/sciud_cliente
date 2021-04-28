@@ -7,13 +7,13 @@
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">{{ title }}.{{ tipo }}</span>
+								<span class="font-weight-semibold">{{ title }}.</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="nueva Planta.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="nueva Planta.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> nueva Planta
 								</button>
 							</span>
@@ -174,7 +174,7 @@
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -359,10 +359,7 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => null,
@@ -476,7 +473,7 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelPlantaind .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
+			$("#panelPlantaind .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.plt_name}`);
 			root.panelParticipantes = $("#panelPlantaind-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
 			$("#panelPlantaind-documentos").hide();
@@ -497,7 +494,7 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelPlantaind .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.title}`);
+			$("#panelPlantaind .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.plt_name}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
@@ -549,7 +546,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 						root.cancel();
 					},
 				};

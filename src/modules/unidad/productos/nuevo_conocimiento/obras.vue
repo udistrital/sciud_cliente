@@ -19,6 +19,7 @@ especifico research_creation_works = rutas generales *\
 								<button
 									type="button"
 									@click.prevent="add()"
+									v-if="editMode"
 									title="Nuevo resultados creación o investigación-creación.."
 									class="btn btn-main btn-labeled btn-labeled-left "
 								>
@@ -247,7 +248,7 @@ especifico research_creation_works = rutas generales *\
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -332,15 +333,19 @@ especifico research_creation_works = rutas generales *\
 						<!-- data-type="string" alignment="center" :visible="false" :allow-grouping="false" /> -->
 						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 
+						<DxColumn data-field="webpage" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="150" alignment="center" cell-template="tpl" caption="" />
+						
+						<template #tplWeb="{ data }">
+							<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+								<i class="icon-link"></i> Visitar
+							</a>
+							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
+						
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
-									<i class="icon-link"></i>
-								</a>
-								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
-
 								<a title="Premios..." class="cmd-item color-main-600 mr-2" @click.prevent="premios(data)" href="#">
 									<i class="icon-medal-first"></i>
 								</a>
@@ -438,10 +443,7 @@ export default {
 		Premios: () => import("@/components/element/premios"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => null,
@@ -649,7 +651,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 						root.cancel();
 					},
 				};

@@ -15,7 +15,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Diseño Industrial.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Diseño Industrial.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nuevo Diseño Industrial
 								</button>
 							</span>
@@ -163,7 +163,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -339,10 +339,7 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => null,
@@ -374,23 +371,14 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			approval_date: null,
-			category_id: null,
-			colciencias_call_id: null,
-			doi: null,
-			final_page: null,
-			geo_city_id: null,
-			id: null,
-			initial_page: null,
-			issn: null,
-			journal_name: null,
-			number_of_pages: null,
+			category_id: 0,
+			colciencias_call_id: 0,
+			ind_dsg_registration_number: null,
+			ind_dsg_registration_title: null,
+			ind_dsg_date_of_obtaining: null,
+			geo_country_id: 0,
+			ind_dsg_industrial_publication_gazette: null,
 			observation: null,
-			industrial_design_type_id: 0,
-			publication_date: null,
-			title: null,
-			url: null,
-			volume: null,
 		},
 	}),
 	created() {
@@ -454,7 +442,7 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#paneldiseno .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
+			$("#paneldiseno .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.ind_dsg_registration_title}`);
 			root.panelParticipantes = $("#paneldiseno-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
 			$("#paneldiseno-documentos").hide();
@@ -475,7 +463,7 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#paneldiseno .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; dada ${data.row.data.ritle}`);
+			$("#paneldiseno .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.ind_dsg_registration_title}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
@@ -526,7 +514,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 						root.cancel();
 					},
 				};

@@ -15,7 +15,7 @@ paneltrabajos=nombredepaneles degree_work=endpoindt especifico degree_works ruta
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nuevo {{ title }}
 								</button>
 							</span>
@@ -156,7 +156,7 @@ paneltrabajos=nombredepaneles degree_work=endpoindt especifico degree_works ruta
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -315,10 +315,7 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => null,
@@ -507,7 +504,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 						root.cancel();
 					},
 				};

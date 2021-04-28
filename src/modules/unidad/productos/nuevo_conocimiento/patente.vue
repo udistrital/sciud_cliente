@@ -15,7 +15,7 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nueva Patente.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nueva Patente.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nueva Patente
 								</button>
 							</span>
@@ -226,7 +226,7 @@
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -574,7 +574,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 						root.cancel();
 					},
 				};

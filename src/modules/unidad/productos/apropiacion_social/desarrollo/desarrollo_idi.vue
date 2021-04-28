@@ -209,7 +209,7 @@ axios research_units= ruta principal del modulo en el endPoint development_innov
 								</DxButton>
 							</div>
 							<div class="col text-right">
-								<DxButton @click="save" class="nb">
+								<DxButton @click="save" class="nb" v-if="editMode">
 									<template #default>
 										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 											GUARDAR <b><i class="icon-database-add"></i></b>
@@ -364,10 +364,7 @@ export default {
 		// Geo: () => import("@/components/element/geo"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => {},
@@ -460,7 +457,7 @@ export default {
 					}, 300);
 				},
 				onLoaded: function(result, baseEntity) {
-					root.loadHide();
+					root.loaderHide();
 				},
 			});
 		},
@@ -580,7 +577,7 @@ export default {
 						cb: function(result) {
 							console.log("Result", result);
 							root.grid.refresh();
-							root.loadHide();
+							root.loaderHide();
 						},
 					};
 					console.log("dto", dto);

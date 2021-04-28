@@ -1,4 +1,4 @@
-\* data.row.data.title = titulo de participantes data.data.title = titulo para activar o desactivar Variedad Vegetal = Titulo botones Variedad Vegetal = Titulo
+\* data.row.data.name = titulo de participantes data.data.name = titulo para activar o desactivar Variedad Vegetal = Titulo botones Variedad Vegetal = Titulo
 principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable_variety = endpoindt especifico vegetable_varieties = rutas generales *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelvegvariet">
@@ -15,7 +15,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" title="Nuevo Variedad Vegetal.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Variedad Vegetal.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nueva Variedad Vegetal
 								</button>
 							</span>
@@ -178,7 +178,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb">
+									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 												GUARDAR <b><i class="icon-database-add"></i></b>
@@ -235,7 +235,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 						<DxColumn data-field="date" caption="Fecha" data-type="date" alignment="center" :visible="true" :allow-grouping="true" />
 						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="fase" />
+						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn data-field="observation" caption="Observacion" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn
 							data-field="petition_status_name"
@@ -338,10 +338,7 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => null,
@@ -447,7 +444,7 @@ export default {
 			// console.log("rd", rd);
 			// root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelvegvariet .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
+			$("#panelvegvariet .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.name}`);
 			root.panelParticipantes = $("#panelvegvariet-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
 			$("#panelvegvariet-documentos").hide();
@@ -468,7 +465,7 @@ export default {
 			// if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelvegvariet .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.title}`);
+			$("#panelvegvariet .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.name}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
@@ -519,7 +516,7 @@ export default {
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
-						root.loadHide();
+						root.loaderHide();
 						root.cancel();
 					},
 				};
@@ -565,7 +562,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.title}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.name}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

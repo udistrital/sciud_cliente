@@ -85,10 +85,7 @@ export default {
 		});
 	},
 	props: {
-		editMode: {
-			type: Boolean,
-			default: true,
-		},
+		
 		group: {
 			type: Object,
 			default: () => {},
