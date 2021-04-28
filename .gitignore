@@ -12,6 +12,7 @@ config/database.yml
 /dist/
 /_bk/
 /diagram/
+/public/data/config.json
 
 # local env files
 .env.local

@@ -25,14 +25,14 @@
 					<div class="card-body pb-0 pt-2">
 						<DxValidationGroup ref="basicGroup">
 							<div class="row">
-								<div class="col" v-if="baseObj.type_id != null">
+								<div class="col subtype">
 									<div class="form-group">
 										<label>Tipo:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:data-source="types"
 											:grouped="false"
 											:value.sync="baseObj.type_id"
-											@value-changed="gSubtypes"
 											:search-enabled="true"
 											placeholder="Busque y seleccione un tipo..."
 											class="form-control"
@@ -40,16 +40,17 @@
 											value-expr="id"
 										>
 											<DxValidator>
-												<DxRequiredRule />
+												<DxCustomRule message="Requerido" :validation-callback="validarTipo" :reevaluate="true" />
 											</DxValidator>
 										</DxSelectBox>
 									</div>
 								</div>
-								<div class="col" v-if="baseObj.parent_id != null">
+								<div class="col subtype">
 									<div class="form-group">
 										<label>Subtipo Padre:</label>
 										<DxSelectBox
-											:data-source="subtypes_filtered"
+											:show-clear-button="true"
+											:data-source="subtypes"
 											:grouped="false"
 											:value.sync="baseObj.parent_id"
 											:search-enabled="true"
@@ -57,11 +58,7 @@
 											class="form-control"
 											display-expr="st_name"
 											value-expr="id"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxSelectBox>
+										/>
 									</div>
 								</div>
 								<div class="col">
@@ -72,6 +69,12 @@
 												<DxRequiredRule />
 											</DxValidator>
 										</DxTextBox>
+									</div>
+								</div>
+								<div class="col-md-1">
+									<div class="form-group">
+										<label>Activo: </label>
+										<DxSwitch :value.sync="baseObj.active" switched-on-text="SI" switched-off-text="NO" />
 									</div>
 								</div>
 							</div>
@@ -300,7 +303,7 @@ import {
 	DxValidationGroup,
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
-import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
+import DxValidator, { DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { mapActions, mapGetters, mapState } from "vuex";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
@@ -310,6 +313,7 @@ export default {
 		DxLookup,
 		DxDropDownButton,
 		DxColumn,
+		DxCustomRule,
 		DxColumnChooser,
 		DxColumnFixing,
 		DxDataGrid,
@@ -340,7 +344,6 @@ export default {
 	},
 	data: () => ({
 		validator: null,
-		subtypes_filtered: [],
 		grid: null,
 		mode: null,
 		grupo: null,
@@ -348,16 +351,18 @@ export default {
 		panelCmd: null,
 		panelGrid: null,
 		panelData: null,
+		validateType: false,
 		testId: "1032479929",
 		isValid: false,
 		baseObj: {
+			id: null,
 			type_id: null,
 			parent_id: null,
-			id: null,
 			name: null,
 			description: null,
-			created_by: 0,
-			updated_by: 0,
+			created_by: null,
+			updated_by: null,
+			active: null,
 		},
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
@@ -395,16 +400,26 @@ export default {
 					console.log(root._sep);
 					console.log("results", results);
 					console.log("baseEntity", baseEntity);
-					root.loaderHide();
+					// root.loaderHide();
 				},
 			});
 		},
 	},
 	methods: {
 		...mapActions("core/tipo", ["subtypeEnable", "subtypeUpdate", "typeUpdate", "getTypes", "getSubtypes"]),
+		validarTipo(e) {
+			// 202104272101: Disable_Validation_Dynamically
+			// https://js.devexpress.com/Documentation/Guide/UI_Components/Common/UI_Widgets/Data_Validation/#Disable_Validation_Dynamically
+			console.log("validarTipo", root.validateType);
+			console.log("e", e);
+			if (root.validateType) {
+				console.log("e", e);
+				return e.value !== null;
+			} else return true;
+		},
 		ddOptionChanged(e) {
 			if (e.name == "opened") {
-				console.log("ddOptionChanged", e);
+				// dx-datagrid-table dx-datagrid-table-fixed
 				if (e.previousValue) {
 					$(".dx-datagrid-table tr.hovered").removeClass("hovered");
 				} else {
@@ -415,24 +430,23 @@ export default {
 				}
 			}
 		},
-		gSubtypes(e) {
-			// console.clear();
-			if (e.value !== null) {
-				let res = root.subtypesByType(e.value);
-				console.log("e", e);
-				console.log("res", res);
-				root.subtypes_filtered = res;
-			}
-		},
-		add(data) {
+		add(what) {
 			root.mode = "add";
 			// console.clear();
 			console.log("root.panelGrid", root.panelGrid);
 			console.log("root.panelData", root.panelData);
-			console.log("add(data)", data);
-			root.baseObj.type_id = data == "type" ? null : 0;
-			root.baseObj.parent_id = data == "type" ? null : 0;
-			let tit = data == "type" ? "Tipo" : "Subtipo";
+			console.log("add(data)", what);
+			root.baseObj.active = true;
+			root.baseObj.type_id = null;
+			root.baseObj.parent_id = null;
+			let tit = what == "type" ? "Tipo" : "Subtipo";
+			if (what === "type") {
+				root.validateType = false;
+				$(".col.subtype").hide();
+			} else {
+				root.validateType = true;
+				$(".col.subtype").show();
+			}
 			root.panelData.find(".card-header").html(`<i class="icon-database-add"></i>&nbsp;&nbsp;Creando ${tit}`);
 			root.panelCmd.fadeOut();
 			root.panelGrid.fadeOut(function() {
@@ -442,14 +456,15 @@ export default {
 				});
 			});
 		},
-		edit(action, data) {
+		edit(what, data) {
 			root.mode = "edit";
-			// console.clear();
+			console.clear();
 			console.log("data", data);
-			console.log("action", action);
-			root.subtypes_filtered = root.subtypes;
+			console.log("what", what);
 			let tit = `Editando Subtipo "${data.name}"`;
-			if (action == "type") {
+			if (what == "type") {
+				$(".col.subtype").hide();
+				root.validateType = false;
 				let item = root.types.find((o) => o.id == data.type_id);
 				console.log("item", item);
 				root.baseObj.id = item.id;
@@ -457,16 +472,20 @@ export default {
 				root.baseObj.description = item.t_description;
 				root.baseObj.type_id = null;
 				root.baseObj.parent_id = null;
+				root.baseObj.active = item.active;
 				tit = `Editando Tipo "${item.t_name}"`;
 			} else {
-				let item = root.subtypes.find((o) => o.id == data[action == "parent_type" ? "parent_id" : "id"]);
+				$(".col.subtype").show();
+				root.validateType = true;
+				let item = root.subtypes.find((o) => o.id == data[what == "parent_type" ? "parent_id" : "id"]);
 				console.log("item", item);
 				root.baseObj.id = item.id;
 				root.baseObj.name = item.st_name;
 				root.baseObj.description = item.st_description;
 				root.baseObj.type_id = item.type_id;
-				root.baseObj.parent_id = item.parent_id == null ? 0 : item.parent_id;
-				tit = action == "parent_type" ? `Editando Subtipo Padre "${data.parent_name}"` : `Editando Subtipo "${data.name}"`;
+				root.baseObj.parent_id = item.parent_id == null ? null : item.parent_id;
+				root.baseObj.active = item.active;
+				tit = what == "parent_type" ? `Editando Subtipo Padre "${data.parent_name}"` : `Editando Subtipo "${data.name}"`;
 			}
 			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;${tit}`);
 			root.panelCmd.fadeOut();
@@ -478,6 +497,7 @@ export default {
 			root.mode = null;
 			console.log("CANCEL!");
 			root.panelData.fadeOut(function() {
+				console.clear();
 				root.validator.reset();
 				root.baseObj.id = null;
 				root.baseObj.name = null;
@@ -493,7 +513,7 @@ export default {
 			console.log("validator", root.validator);
 			var result = root.validator.validate();
 			var t_id = root.baseObj.type_id;
-			if (t_id == 0) root.baseObj.type_id = null;
+			// if (t_id == 0) root.baseObj.type_id = null;
 			console.log("result", result);
 			if (result.isValid) {
 				if (root.baseObj.type_id == null) {
@@ -503,9 +523,10 @@ export default {
 						mode: root.mode,
 						typeId: root.baseObj.id,
 						type: {
-							t_name: root.baseObj.name,
-							t_description: root.baseObj.description,
+							t_name: root.$clean(root.baseObj.name),
+							t_description: root.$clean(root.baseObj.description),
 							updated_by: root.user_id,
+							active: root.baseObj.active,
 						},
 						cb: function(result) {
 							root.loaderMessage = "Cargando tipos";
@@ -524,13 +545,14 @@ export default {
 					root.loaderShow();
 					root.subtypeUpdate({
 						mode: root.mode,
-						typeId: root.baseObj.type_id,
 						subtypeId: root.baseObj.id,
 						subtype: {
-							st_name: root.baseObj.name,
-							st_description: root.baseObj.description,
+							type_id: root.baseObj.type_id,
 							parent_id: root.baseObj.parent_id == 0 ? null : root.baseObj.parent_id,
+							st_name: root.$clean(root.baseObj.name),
+							st_description: root.$clean(root.baseObj.description),
 							updated_by: root.user_id,
+							active: root.baseObj.active,
 						},
 						cb: function(result) {
 							root.getSubtypes({

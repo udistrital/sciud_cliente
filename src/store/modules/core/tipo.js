@@ -67,7 +67,7 @@ const store = {
 		subtypeUpdate({ commit, state, dispatch }, args) {
 			if (args.mode == "edit")
 				api()
-					.put(`types/${args.typeId}/subtypes/${args.subtypeId}`, args.subtype)
+					.put(`subtypes/${args.subtypeId}`, args.subtype)
 					.then((r) => {
 						// dispatch("getSubtypes", { reload: true });
 						return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
@@ -75,7 +75,7 @@ const store = {
 			else {
 				args.subtype.created_by = args.subtype.updated_by;
 				api()
-					.post(`types/${args.typeId}/subtypes`, args.subtype)
+					.post(`subtypes`, args.subtype)
 					.then((r) => {
 						// dispatch("getSubtypes", { reload: true });
 						return args.cb(r.data);

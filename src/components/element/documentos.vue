@@ -12,6 +12,7 @@
 										<div class="form-group">
 											<label>Tipo:</label>
 											<DxSelectBox
+												:show-clear-button="true"
 												:grouped="false"
 												:data-source="documentTypes"
 												:value.sync="baseObj.document_type_id"
@@ -44,7 +45,13 @@
 											<!-- <a href="#" id="a-doc-link" @click.prevent="documentShow()" class="btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100">
 												<b><i class="icon-link"></i></b> OBSERVAR DOCUMENTO
 											</a> -->
-											<a :href="docLink" id="a-doc-link" target="_blank" class="btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100">
+											<a
+												href="#"
+												@click.prevent="documentShow"
+												id="a-doc-link"
+												target="_blank"
+												class="btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100"
+											>
 												<b><i class="icon-link"></i></b> OBSERVAR DOCUMENTO
 											</a>
 											<DxFileUploader id="document" ref="uploader" />
@@ -406,22 +413,23 @@ export default {
 			return `<a href="${dl}" target="_blank" class="color-main-600 font-weight-semibold"><i class="icon-link"></i> OBSERVAR</a>`;
 		},
 		documentShow: async () => {
-			let d = root.current;
-			console.log("root.current", d);
-			root.docLink = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${d.uid}/file:content/${d.fileName}`;
-			root.popupVisible = true;
+			console.log("root.current", root.current);
+			let doc = JSON.parse(root.current.doc_path);
+			console.log("doc", doc);
+			let blob = await root.get(doc);
+			console.log("blob", blob);
+			// root.docLink = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${root.current.nuxeo_id}`;
+			// root.docLink = `https://autenticacion.portaloas.udistrital.edu.co/apioas/nuxeo_api/v1/path/desarrollo/workspaces/siciud/${d.fileName}/@blob/file:content`;
+			// root.docLink = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${d.uid}/file:content/${d.fileName}`;
+			// root.popupVisible = true;
 		},
 		documentEdit: async (data) => {
 			root.editing = true;
 			root.baseObj = data;
+			root.documentTypes = root.tipos;
 			console.log("data", data);
 			root.current = data;
 			root.fileError.hide();
-			console.log("root.current", root.current);
-			root.documentTypes = root.tipos;
-			// let blob = await root.get(doc);
-			// let d = JSON.parse(root.current.doc_path);
-			root.docLink = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${root.current.nuxeo_id}`;
 			root.btnDocLink.show();
 			console.log("root.btnDocSelect", root.btnDocSelect);
 			root.actionTitle.html("Editar Documento");

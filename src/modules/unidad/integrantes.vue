@@ -41,6 +41,7 @@
 													<div class="form-group">
 														<label>Rol:</label>
 														<DxSelectBox
+															:show-clear-button="true"
 															:grouped="false"
 															:data-source="groupRoles"
 															:value.sync="baseObj.role_id"

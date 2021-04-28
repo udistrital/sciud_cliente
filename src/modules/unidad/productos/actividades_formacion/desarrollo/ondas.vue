@@ -28,6 +28,7 @@ principal del modulo en el endPoint ondas_program = objeto json al cual se envia
 								<div class="form-group">
 									<label>Convocatoria: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."
@@ -48,6 +49,7 @@ principal del modulo en el endPoint ondas_program = objeto json al cual se envia
 								<div class="form-group">
 									<label>Registro Proyectos aprobados: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."
@@ -79,6 +81,7 @@ principal del modulo en el endPoint ondas_program = objeto json al cual se envia
 								<div class="form-group">
 									<label>Categoría: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."

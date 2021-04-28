@@ -98,6 +98,7 @@ especifico research_creation_works = rutas generales *\
 									<div class="form-group">
 										<label>Categoría: </label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -115,6 +116,7 @@ especifico research_creation_works = rutas generales *\
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -157,6 +159,7 @@ especifico research_creation_works = rutas generales *\
 									<div class="form-group">
 										<label>Naturaleza de la Obra: </label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -177,6 +180,7 @@ especifico research_creation_works = rutas generales *\
 									<div class="form-group">
 										<label>Área del Conocimiento: </label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -332,12 +336,11 @@ especifico research_creation_works = rutas generales *\
 						<DxColumn :width="150" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
-
-								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+								<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
 									<i class="icon-link"></i>
 								</a>
 								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
-								
+
 								<a title="Premios..." class="cmd-item color-main-600 mr-2" @click.prevent="premios(data)" href="#">
 									<i class="icon-medal-first"></i>
 								</a>

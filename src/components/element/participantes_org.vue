@@ -11,6 +11,7 @@
 									<div class="form-group">
 										<label>Documento de Integrante:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:data-source="groupResearchers"
 											:value.sync="baseObj.researcher_id"
@@ -32,6 +33,7 @@
 									<div class="form-group">
 										<label>Tipo de Participante:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:data-source="rolesParticipante"
 											:value.sync="baseObj.participant_type_id"
@@ -106,6 +108,7 @@
 									<div class="form-group">
 										<label>Tipo de Participante:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:data-source="rolesParticipante"
 											:value.sync="baseObj.participant_type_id"

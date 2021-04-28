@@ -98,6 +98,7 @@ paneltrabajos=nombredepaneles degree_work=endpoindt especifico degree_works ruta
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -118,7 +119,7 @@ paneltrabajos=nombredepaneles degree_work=endpoindt especifico degree_works ruta
 								<!-- <div class="col-md-2">
 									<div class="form-group">
 									<label>Categoría: </label>
-									<DxSelectBox
+									<DxSelectBox :show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."

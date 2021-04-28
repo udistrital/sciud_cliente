@@ -54,7 +54,7 @@
 
 								<div class="col-md-4">
 									<div class="form-group">
-										<label>Número de Registro  ({{ title }}): </label>
+										<label>Número de Registro ({{ title }}): </label>
 										<DxTextBox placeholder="Número de Registro " class="form-control" :value.sync="baseObj.plt_registration_number">
 											<DxValidator>
 												<DxRequiredRule />
@@ -88,6 +88,7 @@
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -109,6 +110,7 @@
 									<div class="form-group">
 										<label>Categoría: </label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -133,7 +135,7 @@
 
 								<div class="col-md-6">
 									<div class="form-group">
-										<label>Lugar Obtención:  </label>
+										<label>Lugar Obtención: </label>
 										<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 									</div>
 								</div>

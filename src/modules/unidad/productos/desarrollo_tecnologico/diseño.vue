@@ -98,6 +98,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 									<div class="form-group">
 										<label>Categoría:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -115,6 +116,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."

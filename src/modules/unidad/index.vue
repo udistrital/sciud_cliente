@@ -364,13 +364,11 @@ export default {
 		root.loaderShow();
 		root.unidad = window.vm.$clone(root.baseEntity);
 		root.getGroupRoles();
-		root.getTypes();
-		root.getStates();
 		root.loaderHide();
 	},
 	computed: {
-		...mapGetters("unidad", ["documents", "states", "types"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
+		...mapGetters("unidad", ["documents", "states", "types"]),
 		tiposUnidad() {
 			return root.subtypesByType("unidad_tipo");
 		},
@@ -431,7 +429,7 @@ export default {
 	methods: {
 		...mapActions("nuxeo", { fUpload: "upload", fCreate: "createDoc" }),
 		...mapActions("auth/usuario", ["getGroupRoles"]),
-		...mapActions("unidad", ["getTypes", "getStates", "getResearchers", "setUnit", "saveUnit"]),
+		...mapActions("unidad", ["getResearchers", "setUnit", "saveUnit"]),
 		...mapActions("unidad/documentos", { getDocs: "get" }),
 		cmdClick(e) {
 			console.log("e.itemData", e.itemData);

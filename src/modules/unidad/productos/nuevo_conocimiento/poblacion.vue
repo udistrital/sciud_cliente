@@ -89,6 +89,7 @@ ip_livestock_breeds = rutas generales *\
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -110,6 +111,7 @@ ip_livestock_breeds = rutas generales *\
 									<div class="form-group">
 										<label>Categoría: </label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."

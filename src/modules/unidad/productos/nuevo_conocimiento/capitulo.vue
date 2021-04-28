@@ -108,6 +108,7 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -129,6 +130,7 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 									<div class="form-group">
 										<label>Categoría:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -263,7 +265,7 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+								<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
 									<i class="icon-link"></i>
 								</a>
 								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>

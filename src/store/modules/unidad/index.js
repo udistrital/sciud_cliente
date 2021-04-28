@@ -52,26 +52,26 @@ const store = {
 					return args.cb(r.data);
 				});
 		},
-		// 202103291114: Carga los estados de las unidades
-		async getStates({ commit, dispatch, state }, unidadId) {
-			state.loading = true;
-			if (state.types.length <= 0)
-				api()
-					.get(`types/1/subtypes`)
-					.then((r) => {
-						commit("setStates", r.data);
-					});
-		},
-		// 202103291107: Carga los tipos de unidades
-		async getTypes({ commit, dispatch, state }, unidadId) {
-			state.loading = true;
-			if (state.types.length <= 0)
-				api()
-					.get(`types/2/subtypes`)
-					.then((r) => {
-						commit("setTypes", r.data);
-					});
-		},
+		// // 202103291114: Carga los estados de las unidades
+		// async getStates({ commit, dispatch, state }, unidadId) {
+		// 	state.loading = true;
+		// 	if (state.types.length <= 0)
+		// 		api()
+		// 			.get(`types/1/subtypes`)
+		// 			.then((r) => {
+		// 				commit("setStates", r.data);
+		// 			});
+		// },
+		// // 202103291107: Carga los tipos de unidades
+		// async getTypes({ commit, dispatch, state }, unidadId) {
+		// 	state.loading = true;
+		// 	if (state.types.length <= 0)
+		// 		api()
+		// 			.get(`types/2/subtypes`)
+		// 			.then((r) => {
+		// 				commit("setTypes", r.data);
+		// 			});
+		// },
 		getResearchers({ commit, dispatch, state }, args) {
 			// let o = state.researchGroups.find((o) => o.id === args.id);
 			// if (typeof o !== "undefined") {

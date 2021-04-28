@@ -57,8 +57,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 								<div class="col-md-4">
 									<div class="form-group">
 										<label>Nombre de la Revista: </label>
-										<DxTextBox placeholder="Nombre de la Revista" class="form-control" :value.sync="baseObj.journal_name">
-										</DxTextBox>
+										<DxTextBox placeholder="Nombre de la Revista" class="form-control" :value.sync="baseObj.journal_name"> </DxTextBox>
 									</div>
 								</div>
 
@@ -66,6 +65,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									<div class="form-group">
 										<label>Categoría:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -83,6 +83,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -123,7 +124,6 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									</div>
 								</div>
 
-								
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>Número de páginas: </label>
@@ -209,8 +209,6 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 										</DxDateBox>
 									</div>
 								</div>
-
-								
 
 								<div class="col-md-5">
 									<div class="form-group">
@@ -327,8 +325,7 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						<template #tpl="{ data }">
 							<span class="cmds">
-
-								<a v-if="data.data.url!=''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+								<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
 									<i class="icon-link"></i>
 								</a>
 								<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>

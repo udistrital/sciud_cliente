@@ -123,6 +123,7 @@
 												<div class="form-group">
 													<label>CINE Amplio y Específico:</label>
 													<DxSelectBox
+														:show-clear-button="true"
 														:grouped="true"
 														:search-enabled="true"
 														:placeholder="placeholder"
@@ -166,6 +167,7 @@
 												<div class="form-group">
 													<label>Tipo de unidad:</label>
 													<DxSelectBox
+														:show-clear-button="true"
 														:data-source="unidadTipos"
 														:grouped="false"
 														:value.sync="group.group_type_id"
@@ -192,6 +194,7 @@
 												<div class="form-group">
 													<label>Estado:</label>
 													<DxSelectBox
+														:show-clear-button="true"
 														:read-only="!editMode"
 														:data-source="unidadEstados"
 														:value.sync="group.group_state_id"
@@ -438,6 +441,7 @@
 														<div class="form-group">
 															<label>Área OCDE:</label>
 															<DxSelectBox
+																:show-clear-button="true"
 																@value-changed="ocdeChange"
 																:data-source="ocdeEspecificos"
 																:grouped="true"
@@ -636,7 +640,6 @@ export default {
 		...mapState("unidad", ["documents"]),
 		...mapState("unidad/oas", ["facultades"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
-		...mapGetters("unidad", { unidadEstados: "states", unidadTipos: "types" }),
 		...mapGetters("unidad/cine", { cEspecificos: "specific", cDetallados: "detailed" }),
 		...mapState("unidad/ocde", { oEspecificos: "subareas", oDetallados: "disciplines" }),
 		ocdeEspecificos() {
@@ -657,6 +660,12 @@ export default {
 		},
 		lineasInvestigacion() {
 			return this.subtypesByType("unidad_linea_investigacion");
+		},
+		unidadTipos() {
+			return this.subtypesByType("unidad_tipo");
+		},
+		unidadEstados() {
+			return this.subtypesByType("unidad_estado");
 		},
 		cineEspecificos() {
 			console.log("this.cEspecificos", this.cEspecificos);

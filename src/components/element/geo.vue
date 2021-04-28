@@ -4,6 +4,7 @@
 			<div class="form-group">
 				<label>País:</label>
 				<DxSelectBox
+					:show-clear-button="true"
 					:value.sync="syncObject.geo_country_id"
 					:search-enabled="true"
 					placeholder="Seleccione..."
@@ -23,6 +24,7 @@
 			<div class="form-group">
 				<label>Estado:</label>
 				<DxSelectBox
+					:show-clear-button="true"
 					:value.sync="syncObject.geo_state_id"
 					:disabled="states <= 0"
 					:search-enabled="true"
@@ -43,6 +45,7 @@
 			<div class="form-group">
 				<label>Ciudad:</label>
 				<DxSelectBox
+					:show-clear-button="true"
 					:disabled="cities <= 0"
 					:search-enabled="true"
 					placeholder="Seleccione..."
@@ -99,7 +102,7 @@ export default {
 			root.states = [];
 			root.cities = [];
 			root.loaderShow("Cargando Estados", root.lockElement);
-			if(e.value===null) return null;
+			if (e.value === null) return null;
 			setTimeout(function() {
 				root.getStates({
 					country_id: e.value,
@@ -113,7 +116,7 @@ export default {
 		gCities(e) {
 			root.cities = [];
 			root.loaderShow("Cargando Ciudades", root.lockElement);
-			if(e.value===null) return null;
+			if (e.value === null) return null;
 			setTimeout(function() {
 				root.getCities({
 					state_id: e.value,

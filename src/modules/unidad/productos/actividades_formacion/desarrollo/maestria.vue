@@ -83,6 +83,7 @@ del modulo en el endPoint master = objeto json al cual se enviaran los datos de 
 								<div class="form-group">
 									<label>Categoría: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."
@@ -103,6 +104,7 @@ del modulo en el endPoint master = objeto json al cual se enviaran los datos de 
 								<div class="form-group">
 									<label>Convocatoria: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."

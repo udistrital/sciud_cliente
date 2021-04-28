@@ -58,6 +58,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 									<div class="form-group">
 										<label>Categoría:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -75,6 +76,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 									<div class="form-group">
 										<label>Convocatoria Minciencias:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -117,6 +119,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 									<div class="form-group">
 										<label>Estado de Petición:</label>
 										<DxSelectBox
+											:show-clear-button="true"
 											:grouped="false"
 											:search-enabled="false"
 											placeholder="Seleccione..."
@@ -133,7 +136,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 								<!-- <div class="col-md-2">
 	<div class="form-group">
 		<label>Categoría:</label>
-		<DxSelectBox
+		<DxSelectBox :show-clear-button="true"
 			:grouped="false"
 			:search-enabled="false"
 			placeholder="Seleccione..."

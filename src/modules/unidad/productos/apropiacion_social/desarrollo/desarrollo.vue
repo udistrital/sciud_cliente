@@ -72,6 +72,7 @@ axios research_units= ruta principal del modulo en el endPoint development_resea
 								<div class="form-group">
 									<label>Categoría: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."
@@ -92,6 +93,7 @@ axios research_units= ruta principal del modulo en el endPoint development_resea
 								<div class="form-group">
 									<label>Convocatoria: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."

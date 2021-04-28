@@ -171,6 +171,7 @@ research_units= ruta principal del modulo en el endPoint extension_accountabilit
 								<div class="form-group">
 									<label>Categoría: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."
@@ -191,6 +192,7 @@ research_units= ruta principal del modulo en el endPoint extension_accountabilit
 								<div class="form-group">
 									<label>Convocatoria: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."

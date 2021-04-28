@@ -88,14 +88,26 @@ const store = {
 		},
 		async get({ commit, dispatch, state }, doc) {
 			console.log(this._vm.$sep);
-			console.log("get =>", doc);
-			let u = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${doc.uid}/file:content/${doc.fileName}`;
-			axios
+			console.log("get doc=>", doc);
+			let c = window.config.api.oas;
+			let t = window.sessionStorage.getItem(c.token_name);
+			let u = `https://autenticacion.portaloas.udistrital.edu.co/apioas/nuxeo_api/v1/path/desarrollo/workspaces/siciud/${doc.title}/@blob/file:content`;
+			await axios
 				.get(u, {
 					responseType: "blob" /* or responseType: 'arraybuffer'  */,
+					withCredentials: false,
+					headers: {
+						"Access-Control-Allow-Origin": "*",
+						"Content-Type": "application/json",
+						Accept: "application/json",
+						Authorization: `Bearer ${t}`,
+					},
 				})
-				.then((r) => r.blob())
-				.then((blobFile) => new File([blobFile], doc.fileName, { type: blobFile.type }));
+				.then(function(r) {
+					console.log("response", r);
+				});
+			// .then((r) => r.blob())
+			// .then((blobFile) => new File([blobFile], doc.fileName, { type: blobFile.type }));
 			// return await api("oas")
 			// 	.get(`${nuxeo_api}/id/${doc.uid}`)
 			// 	.then(async (r) => {

@@ -49,6 +49,7 @@ del modulo en el endPoint undergraduate = objeto json al cual se enviaran los da
 								<div class="form-group">
 									<label>Listado: </label>
 									<DxSelectBox
+										:show-clear-button="true"
 										:grouped="false"
 										:search-enabled="false"
 										placeholder="Seleccione..."
