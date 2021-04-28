@@ -141,7 +141,7 @@
 								<DxColumn
 									:allow-filtering="false"
 									data-field="member_count"
-									caption="Miembros"
+									caption="Integrantes"
 									data-type="int"
 									alignment="center"
 									:allow-grouping="true"
