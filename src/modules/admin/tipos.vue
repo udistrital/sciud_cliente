@@ -40,7 +40,7 @@
 											value-expr="id"
 										>
 											<DxValidator>
-												<DxCustomRule message="Requerido" :validation-callback="validarTipo" :reevaluate="true" />
+												<DxCustomRule message="Obligatorio" :validation-callback="validarTipo" :reevaluate="true" />
 											</DxValidator>
 										</DxSelectBox>
 									</div>
