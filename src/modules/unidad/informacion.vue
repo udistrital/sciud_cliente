@@ -142,7 +142,7 @@
 													</DxSelectBox>
 												</div>
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-4">
 												<div class="form-group">
 													<label>CINE Detallado:</label>
 													<DxTagBox
@@ -163,7 +163,7 @@
 													</DxTagBox>
 												</div>
 											</div>
-											<div class="col-md-2">
+											<div class="col-md-3">
 												<div class="form-group">
 													<label>Tipo de unidad:</label>
 													<DxSelectBox
