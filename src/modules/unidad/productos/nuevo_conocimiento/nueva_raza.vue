@@ -47,7 +47,9 @@ Titulo principal Raza = titulo abreviado panelrazaanimal = nombredepaneles new_a
 									<div class="form-group">
 										<label>Nombre: </label>
 										<DxTextBox placeholder="Nombre:" class="form-control" :value.sync="baseObj.name">
-											<DxValidator> </DxValidator>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxTextBox>
 									</div>
 								</div>
@@ -65,6 +67,7 @@ Titulo principal Raza = titulo abreviado panelrazaanimal = nombredepaneles new_a
 											display-expr="st_name"
 											value-expr="id"
 										>
+										
 										</DxSelectBox>
 									</div>
 								</div>
@@ -105,7 +108,9 @@ Titulo principal Raza = titulo abreviado panelrazaanimal = nombredepaneles new_a
 											:max="now"
 											type="date"
 										>
-											<DxValidator> </DxValidator>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxDateBox>
 									</div>
 								</div>
@@ -141,6 +146,9 @@ Titulo principal Raza = titulo abreviado panelrazaanimal = nombredepaneles new_a
 											display-expr="st_name"
 											value-expr="id"
 										>
+										<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxSelectBox>
 									</div>
 								</div>
@@ -148,6 +156,9 @@ Titulo principal Raza = titulo abreviado panelrazaanimal = nombredepaneles new_a
 								<div class="col-md-6">
 									<label>Lugar: </label>
 									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+									<DxValidator>
+										<DxRequiredRule />
+									</DxValidator>
 								</div>
 
 								<div class="col-md-12">
