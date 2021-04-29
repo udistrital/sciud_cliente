@@ -79,7 +79,7 @@ export default {
 		NuevoConocimiento: () => import("@/modules/unidad/productos/nuevo_conocimiento"),
 		DesarrolloTecnologico: () => import("@/modules/unidad/productos/desarrollo_tecnologico"),
 		ApropiacionSocial: () => import("@/modules/unidad/productos/apropiacion_social"),
-		ActividadesFormacion: () => import("@/modules/unidad/productos/actividades_formacion"),
+		ActividadesFormacion: () => import("@/modules/unidad/productos/actividad_formacion"),
 	},
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
