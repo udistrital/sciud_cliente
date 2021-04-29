@@ -52,7 +52,9 @@ de diseño=Titulo principal Registro=titulo abreviado panelRegistro=nombredepane
 									<div class="form-group">
 										<label>Nombre evento: </label>
 										<DxTextBox placeholder="Nombre evento" class="form-control" :value.sync="baseObj.eve_name">
-											<DxValidator> </DxValidator>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxTextBox>
 									</div>
 								</div>

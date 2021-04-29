@@ -77,7 +77,9 @@
 											:max="now"
 											type="date"
 										>
-											<DxValidator> </DxValidator>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxDateBox>
 									</div>
 								</div>

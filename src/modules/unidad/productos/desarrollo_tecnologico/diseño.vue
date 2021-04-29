@@ -68,6 +68,9 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 											:max="actualDate"
 											type="date"
 										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxDateBox>
 									</div>
 								</div>
@@ -76,7 +79,9 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 									<div class="form-group">
 										<label>Número de registro (diseño industrial): </label>
 										<DxTextBox placeholder="Número de registro (diseño industrial)" class="form-control" :value.sync="baseObj.ind_dsg_registration_number">
-											<DxValidator> </DxValidator>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
 										</DxTextBox>
 									</div>
 								</div>
@@ -108,6 +113,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 											display-expr="st_name"
 											value-expr="id"
 										>
+										
 										</DxSelectBox>
 									</div>
 								</div>
