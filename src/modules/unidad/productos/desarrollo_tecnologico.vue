@@ -44,10 +44,10 @@ export default {
 	components: {
 		DxItem,
 		DxTabPanel,
-		Planta: () => import("@/modules/unidad/productos/desarrollo_tecnologico/formPlanta"),
-		Plantab: () => import("@/modules/unidad/productos/desarrollo_tecnologico/plantaind"),
+		Planta: () => import("@/modules/unidad/productos/desarrollo_tecnologico/planta_piloto"),
+		Plantab: () => import("@/modules/unidad/productos/desarrollo_tecnologico/planta_ind"),
 		Circuito: () => import("@/modules/unidad/productos/desarrollo_tecnologico/circuito"),
-		Diseno: () => import("@/modules/unidad/productos/desarrollo_tecnologico/diseño"),
+		Diseno: () => import("@/modules/unidad/productos/desarrollo_tecnologico/disenio"),
 		Software: () => import("@/modules/unidad/productos/desarrollo_tecnologico/software"),
 		Registro: () => import("@/modules/unidad/productos/desarrollo_tecnologico/registro_cientifico"),
 	},

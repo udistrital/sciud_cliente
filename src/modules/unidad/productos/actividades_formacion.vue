@@ -75,9 +75,9 @@ export default {
 	components: {
 		DxItem,
 		DxTabPanel,
-		Trabajos: () => import("@/modules/unidad/productos/actividades_formacion/trabajosGradoP"),
-		Trabajos2: () => import("@/modules/unidad/productos/actividades_formacion/trabajosGradoM"),
-		Trabajos3: () => import("@/modules/unidad/productos/actividades_formacion/trabajosGradoD"),
+		Trabajos: () => import("@/modules/unidad/productos/actividades_formacion/trabajos_grado_p"),
+		Trabajos2: () => import("@/modules/unidad/productos/actividades_formacion/trabajos_grado_m"),
+		Trabajos3: () => import("@/modules/unidad/productos/actividades_formacion/trabajos_grado_d"),
 		// Doctorado: () => import("@/modules/unidad/productos/actividades_formacion/doctorado"),
 		// Maestria: () => import("@/modules/unidad/productos/actividades_formacion/maestria"),
 		// Pregrado: () => import("@/modules/unidad/productos/actividades_formacion/pregrado"),
