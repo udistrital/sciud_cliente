@@ -86,7 +86,7 @@ export default {
 			type: Object,
 			default: () => {
 				return {
-					geo_city_id: 0,
+					geo_city_id: null,
 				};
 			},
 		},

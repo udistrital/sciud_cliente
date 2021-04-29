@@ -378,7 +378,7 @@ export default {
 			publication_date: null,
 			isbn: null,
 			editorial_name: null,
-			geo_city_id: 0,
+			geo_city_id: null,
 			url: null,
 			observation: null,
 			updated_by: 0,
@@ -493,7 +493,9 @@ export default {
 
 		save() {
 			console.log(this.$sep);
+			
 			var result = root.$refs.basicGroup.instance.validate();
+		
 			console.log("result", result);
 			if (result.isValid) {
 				console.log("VALID!");
