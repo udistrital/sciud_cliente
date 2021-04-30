@@ -6,6 +6,8 @@
 	{ "name": "capitulo_libro_documento", "id": 24 },
 	{ "name": "circuito_categoria", "id": 33 },
 	{ "name": "circuito_documento", "id": 43 },
+	{ "name": "concepto_tecnico_categoria", "id": 96 },
+	{ "name": "concepto_tecnico_documento", "id": 97 },
 	{ "name": "diseno_industrial_categoria", "id": 32 },
 	{ "name": "diseno_industrial_documento", "id": 42 },
 	{ "name": "evento_cientifico_categoria", "id": 108 },

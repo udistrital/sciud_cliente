@@ -32,6 +32,11 @@
 						<Registro :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
+				<DxItem title="Conseptos Tecnicos">
+					<template #default>
+						<TechnicalConcept :group="group" :editMode="editMode" title="Conseptos Tecnicos"/>
+					</template>
+				</DxItem>
 			</DxTabPanel>
 		</div>
 	</div>
@@ -50,6 +55,7 @@ export default {
 		Diseno: () => import("@/modules/unidad/productos/desarrollo_tecnologico/disenio"),
 		Software: () => import("@/modules/unidad/productos/desarrollo_tecnologico/software"),
 		Registro: () => import("@/modules/unidad/productos/desarrollo_tecnologico/registro_cientifico"),
+		TechnicalConcept: () => import("@/modules/unidad/productos/desarrollo_tecnologico/technical_Concepts"),
 	},
 	mounted() {
 		root = this;
