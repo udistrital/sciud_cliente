@@ -12,7 +12,7 @@ config/database.yml
 /dist/
 /_bk/
 /diagram/
-config.json
+clsconfig.json
 public/data/config.json
 /public/data/config.json
 
