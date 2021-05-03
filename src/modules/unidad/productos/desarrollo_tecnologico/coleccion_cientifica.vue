@@ -4,8 +4,8 @@ Colección Científica = Titulo botones
 Colección Científicas = Titulo principal 
 Coleccion=titulo abreviado
 panelColeccionCientifica=nombredepaneles
-nutraceutical_products = endpoint enlace
-nutraceutical_product=endpoindt especifico endpoinds tutas generales update
+end_points = endpoint enlace
+endpoint=endpoindt especifico endpoinds tutas generales update
 *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelColeccionCientifica">
@@ -36,8 +36,8 @@ nutraceutical_product=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</div>
-        <Documentos id="panelColeccionCientifica-documentos" end-point="nutraceutical_products" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelColeccionCientifica-participantes" end-point="nutraceutical_products" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+        <Documentos id="panelColeccionCientifica-documentos" end-point="end_points" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes id="panelColeccionCientifica-participantes" end-point="end_points" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -403,7 +403,7 @@ export default {
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${root.group.id}/nutraceutical_products`,
+				endPoint: `research_units/${root.group.id}/end_points`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
@@ -516,9 +516,9 @@ export default {
 				let dto = {
 					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "nutraceutical_products",
+					stringEP: "end_points",
 					mod: obj.id,
-					objectSend: { nutraceutical_product: obj },
+					objectSend: { endpoint: obj },
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -575,11 +575,11 @@ export default {
 					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
                         //updated_by: 1,
-						//url: `research_units/${root.group.id}/nutraceutical_products/${data.data.id}/active`,
+						//url: `research_units/${root.group.id}/end_points/${data.data.id}/active`,
                         newFormat:true,
-                        url: `nutraceutical_products/${data.data.id}`,
+                        url: `end_points/${data.data.id}`,
 						data: {
-							nutraceutical_product: {
+							endpoint: {
 								active: state,
                                 updated_by: root.user_id
 							},
