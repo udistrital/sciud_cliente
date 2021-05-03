@@ -4,8 +4,8 @@ Colección Científica = Titulo botones
 Colección Científicas = Titulo principal 
 Coleccion=titulo abreviado
 panelColeccionCientifica=nombredepaneles
-end_points = endpoint enlace
-endpoint=endpoindt especifico endpoinds tutas generales update
+scientific_collections = scientific_collection enlace
+scientific_collection=endpoindt especifico endpoinds tutas generales update
 *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelColeccionCientifica">
@@ -36,8 +36,8 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</div>
-        <Documentos id="panelColeccionCientifica-documentos" end-point="end_points" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelColeccionCientifica-participantes" end-point="end_points" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+        <Documentos id="panelColeccionCientifica-documentos" end-point="scientific_collections" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes id="panelColeccionCientifica-participantes" end-point="scientific_collections" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -50,10 +50,11 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 							<div class="row">
 								<!-- formulatio -->
 
-<div class="col-md-4">
+
+<div class="col-md-3">
 	<div class="form-group">
-	<label>Nombre : </label>
-	<DxTextBox placeholder="Nombre " class="form-control" :value.sync="baseObj.name">
+	<label>Nombre de Colección: </label>
+	<DxTextBox placeholder="Nombre de Colección" class="form-control" :value.sync="baseObj.name">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -61,7 +62,7 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
 	<label>Categoría: </label>
 	<DxSelectBox
@@ -80,7 +81,7 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
 		<label>Convocatoria Minciencias:</label>
 			<DxSelectBox
@@ -101,10 +102,10 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 		</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
-	<label>Registro Invima: </label>
-	<DxTextBox placeholder="Registro Invima" class="form-control" :value.sync="baseObj.consecutive_registration_invima">
+	<label>Nombre del Curador: </label>
+	<DxTextBox placeholder="Nombre del Curador" class="form-control" :value.sync="baseObj.curator_name">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -112,9 +113,9 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="form-group">
-<label>Fecha de Obtencion: </label>
+<label>Fecha de Obtención: </label>
 	<DxDateBox 
 		class="form-control" 
 		name="date_of_obtaining" 
@@ -132,24 +133,65 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
-	<label>Titulo del Proyecto: </label>
-	<DxTextBox placeholder="Titulo del Proyecto" class="form-control" :value.sync="baseObj.research_project_title">
+	<label>Validez y Uso: </label>
+	<DxTextBox placeholder="Validez y Uso" class="form-control" :value.sync="baseObj.validity_and_use">
 	<DxValidator>
 	</DxValidator>
 	</DxTextBox>
 	</div>
 </div>
 
+<div class="col-md-3">
+<div class="form-group">
+<label>Ultima Fecha Curaduría: </label>
+	<DxDateBox 
+		class="form-control" 
+		name="last_conservatorship_date" 
+		:value.sync="baseObj.last_conservatorship_date" 
+		id="last_conservatorship_date" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
+	<DxValidator> 
+	</DxValidator> 
+	</DxDateBox>
+	</div>
+</div>
+
+<div class="col-md-3">
+	<div class="form-group">
+	<label>Nombre Institución Gestora: </label>
+	<DxTextBox placeholder="Nombre Institución Gestora" class="form-control" :value.sync="baseObj.managing_institution_name">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
+
+
 <div class="col-md-12">
-	<label>Lugar de Obtencion: </label>
+	<label>Lugar de Obtención: </label>
 <Geo :lockElement="loaderElement" :syncObject="baseObj" />
 </div>
 <div class="col-md-12">
 	<div class="form-group">
-	<label>Observacion: </label>
-	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observacion" class="form-control">
+	<label>Información Incluida: </label>
+	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.information_included" placeholder="Información Incluida" class="form-control">
+	<DxValidator>
+	</DxValidator>
+	</DxTextArea>
+	</div>
+</div>
+
+<div class="col-md-12">
+	<div class="form-group">
+	<label>Observación: </label>
+	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observación" class="form-control">
 	<DxValidator>
 	</DxValidator>
 	</DxTextArea>
@@ -158,12 +200,11 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 
 
 
+
 <div class="col-md-12" v-if="tiposDocumento.length>0">
 	<div class="card-body" v-html="requisitoArchivo()"></div>
 </div>
-								<div class="col-md-12" v-if="tiposDocumento.length>0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
+
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -229,18 +270,23 @@ endpoint=endpoindt especifico endpoinds tutas generales update
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-                        <DxColumn data-field='id'  caption='Id' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='consecutive_registration_invima'  caption='Registro Invima' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='research_project_title'  caption='Titulo de Proyecto' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='name'  caption='Nombre del Registro' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='date_of_obtaining'  caption='Fecha de Obtención' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='name'  caption='Nombre' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='curator_name'  caption='Nombre de Curador' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='date_of_obtaining'  caption='Fecha de Obtención' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='last_conservatorship_date'  caption='Fecha Ultima Curaduría' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='managing_institution_name'  caption='Institución Gestora' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='information_included'  caption='Información Incluida' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='validity_and_use'  caption='Valides y Uso' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+
+
 
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
@@ -367,13 +413,20 @@ export default {
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
             name: null,
-            category_id: null,
-            colciencias_call_id: null,
-            consecutive_registration_invima: null,
-            date_of_obtaining: null,
-            research_project_title: null,
-            geo_city_id: null,
-            observation: null,
+			category_id: null,
+			colciencias_call_id: null,
+			curator_name: null,
+			date_of_obtaining: null,
+			geo_state_id: null,
+			geo_country_id: null,
+			geo_city_id: null,
+			information_included: null,
+			last_conservatorship_date: null,
+			managing_institution_name: null,
+			research_group_id: null,
+			validity_and_use: null,
+			observation: null,
+			active: true,
 		},
 	}),
 	created() {
@@ -382,8 +435,8 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		//root.tipos = root.subtypesByType(5);
-		root.subtipos = root.subtypesByType("producto_nutraceutico_categoria");
-		root.tiposDocumento = root.subtypesByType("producto_nutraceutico_documento");
+		root.subtipos = root.subtypesByType("coleccion_cientiica_categoria");
+		root.tiposDocumento = root.subtypesByType("coleccion_cientiica_documento");
 	},
 	mounted() {
 		console.log("root.tipos", root.tipos);
@@ -403,7 +456,7 @@ export default {
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${root.group.id}/end_points`,
+				endPoint: `research_units/${root.group.id}/scientific_collections`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
@@ -516,9 +569,9 @@ export default {
 				let dto = {
 					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "end_points",
+					stringEP: "scientific_collections",
 					mod: obj.id,
-					objectSend: { endpoint: obj },
+					objectSend: { scientific_collection: obj },
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -575,11 +628,11 @@ export default {
 					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
                         //updated_by: 1,
-						//url: `research_units/${root.group.id}/end_points/${data.data.id}/active`,
+						//url: `research_units/${root.group.id}/scientific_collections/${data.data.id}/active`,
                         newFormat:true,
-                        url: `end_points/${data.data.id}`,
+                        url: `scientific_collections/${data.data.id}`,
 						data: {
-							endpoint: {
+							scientific_collection: {
 								active: state,
                                 updated_by: root.user_id
 							},

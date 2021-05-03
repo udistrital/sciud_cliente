@@ -8,6 +8,8 @@
 	{ "name": "circuito_documento", "id": 43 },
 	{ "name": "concepto_tecnico_categoria", "id": 96 },
 	{ "name": "concepto_tecnico_documento", "id": 97 },
+	{ "name": "coleccion_cientiica_categoria", "id": 39 },
+	{ "name": "coleccion_cientiica_documento", "id": 49 },
 	{ "name": "diseno_industrial_categoria", "id": 32 },
 	{ "name": "diseno_industrial_documento", "id": 42 },
 	{ "name": "evento_cientifico_categoria", "id": 108 },

@@ -49,8 +49,7 @@
 				</DxItem>
 				<DxItem title="Colección Científica">
 					<template #default>
-						
-						<!-- <ColeccionCientifica :group="group" :editMode="editMode" title="Colección Científica"/> -->
+						<ColeccionCientifica :group="group" :editMode="editMode" title="Colección Científica"/>
 					</template>
 				</DxItem>
 			</DxTabPanel>
@@ -74,7 +73,7 @@ export default {
 		TechnicalConcept: () => import("@/modules/unidad/productos/desarrollo_tecnologico/conceptos_tecnicos"),
 		SignosDistintivos: () => import("@/modules/unidad/productos/desarrollo_tecnologico/signos_distintivos"),
 		ProductosNutraceuticos: () => import("@/modules/unidad/productos/desarrollo_tecnologico/productos_nutraceuticos"),
-		//ColeccionCientifica: () => import("@/modules/unidad/productos/desarrollo_tecnologico/coleccion_cientifica"),
+		ColeccionCientifica: () => import("@/modules/unidad/productos/desarrollo_tecnologico/coleccion_cientifica"),
 	},
 	mounted() {
 		root = this;
