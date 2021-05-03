@@ -1,7 +1,7 @@
 <template>
 	<div class="row divider">
 		<div class="col subtab pb-1">
-			<DxTabPanel :animation-enabled="true" :multiple="true">
+			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				<DxItem title="Dirección de Trabajos Pregrado">
 					<template #default>
 						<Trabajos :group="group" :editMode="editMode" title="Trabajo de Grado Pregrado" id_trabajo="1" />

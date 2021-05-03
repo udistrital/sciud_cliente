@@ -12,57 +12,46 @@ const store = {
 	},
 	actions: {
 		save({ commit, state, dispatch }, args) {
+			let ruta = null;
 			if (args.rute === null) args.rute = "research_units";
-			if (typeof args.rute == "undefined") args.rute = "research_units";
+			if (typeof args.rute == "undefined") args.rute = "research_units"; 
+
 			console.log("CREATE!");
 			api()
 				.post(`${args.rute}/${args.unidadId}/${args.stringEP}`, args.objectSend)
-				.then((r) => {
-					args.cb(r.data);
-				});
-		},
-		update({ commit, state, dispatch }, args) {
-			if (args.rute === null) args.rute = "research_units";
-			if (typeof args.rute == "undefined") args.rute = "research_units";
-			console.log("UPDATE!");
-			api()
-				.put(`${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`, args.objectSend)
 				.then((r) => {
 					args.cb(r.data);
 				});
 		},
 
-		saveNewFormat({ commit, state, dispatch }, args) {
+		update({ commit, state, dispatch }, args) {
+			let ruta=null;
+
 			if (args.rute === null) args.rute = "research_units";
 			if (typeof args.rute == "undefined") args.rute = "research_units";
-			console.log("CREATE!");
-			api()
-				.post(`${args.rute}/${args.unidadId}/${args.stringEP}`, args.objectSend)
-				.then((r) => {
-					args.cb(r.data);
-				});
-		},
-		updateNewFormat({ commit, state, dispatch }, args) {
-			if (args.rute === null) args.rute = "research_units";
-			if (typeof args.rute == "undefined") args.rute = "research_units";
+			
+			if(typeof args.newFormat !== 'undefined' && args.newFormat===true)
+				ruta=`/${args.stringEP}/${args.mod}`;
+			else 
+				ruta=`${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`;
+
 			console.log("UPDATE!");
 			api()
-				//.put(`${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`, args.objectSend)
-				.put(`/${args.stringEP}/${args.mod}`, args.objectSend)
+				.put(ruta, args.objectSend)
 				.then((r) => {
 					args.cb(r.data);
 				});
 		},
+
 		active({ commit, state, dispatch }, args) {
 			console.log("Activa o desactiva elemento", args);
-			//console.log("args", args, null, "\t") );
 			console.log("args.paper", args.data);
-			if(typeof args.newFormat !== 'undefined' && args.newFormat==="patch"){
-				console.warn("Actualizado mediante patch");
+			if(typeof args.newFormat !== 'undefined' && args.newFormat===true){
+				console.info("Actualizado mediante patch");
 				api()
 				.patch(args.url, args.data)
 				.then((r) => {
-					console.log("Actualizado mediante patch", r.data);
+					console.info("Actualizado mediante patch", r.data);
 					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
 				});
 			}else{
@@ -74,7 +63,11 @@ const store = {
 				});
 			}			
 		},
+	
+	
 	},
+
+
 	mutations: {
 		SetData(state, data) {
 			// for (let x = 0; x < data.length; x++) {

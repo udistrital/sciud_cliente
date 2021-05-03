@@ -1,5 +1,14 @@
+\* 
+title=titulo para activar o desactivar 
+Concepto Tecnico = Titulo botones 
+Concepto Tecnico = Titulo principal 
+Tecnico=titulo abreviado
+pabelConcepTecnico=nombredepaneles
+technical_concepts = endpoint enlace
+technical_concept=endpoindt especifico endpoinds tutas generales update
+*\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panelSoftware">
+	<div class="col mt-3 pl-1 pr-1" id="pabelConcepTecnico">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -7,19 +16,19 @@
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Software</span>
+								<span class="font-weight-semibold">Concepto Tecnico</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo software.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nuevo software
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Concepto Tecnico.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> Nuevo Concepto Tecnico
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al software.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A software
+								<button type="button" @click.prevent="retorno()" title="Volver al Concepto Tecnico.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A Concepto Tecnico
 								</button>
 							</span>
 						</div>
@@ -27,130 +36,151 @@
 				</div>
 			</div>
 		</div>
-		<Documentos id="panelSoftware-documentos" end-point="software" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelSoftware-participantes" end-point="software" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+        <Documentos id="pabelConcepTecnico-documentos" end-point="technical_concepts" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes id="pabelConcepTecnico-participantes" end-point="technical_concepts" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Software</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Concepto Tecnico</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Título del producto o proceso: </label>
-										<DxTextBox placeholder="Título del producto o proceso" class="form-control" :value.sync="baseObj.sof_product_title">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
-									</div>
-								</div>
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Titulo: </label>
+	<DxTextBox placeholder="Titulo" class="form-control" :value.sync="baseObj.title">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Fecha de obtención: </label>
-										<DxDateBox
-											class="form-control"
-											name="sof_date_of_obtaining"
-											:value.sync="baseObj.sof_date_of_obtaining"
-											id="sof_date_of_obtaining"
-											placeholder="DD/MM/YYYY"
-											display-format="dd/MM/yyyy"
-											:max="now"
-											type="date"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxDateBox>
-									</div>
-								</div>
+<div class="col-md-4">
+<div class="form-group">
+<label>Fecha de solicitud: </label>
+	<DxDateBox 
+		class="form-control" 
+		name="request_date" 
+		:value.sync="baseObj.request_date" 
+		id="request_date" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
+	<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator> 
+	</DxDateBox>
+	</div>
+</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Título de registro: </label>
-										<DxTextBox placeholder="Título de registro" class="form-control" :value.sync="baseObj.sof_description"> </DxTextBox>
-									</div>
-								</div>
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Nombre de Institución Solicitante: </label>
+	<DxTextBox placeholder="Nombre de Institución Solicitante" class="form-control" :value.sync="baseObj.requesting_institution_name">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
 
-								<div class="col-md-2">
-									<div class="form-group">
-										<label>Convocatoria Minciencias:</label>
-										<DxSelectBox
-											:show-clear-button="true"
-											:grouped="false"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											:value.sync="baseObj.colciencias_call_id"
-											class="form-control"
-											:data-source="convocatorias"
-											display-expr="name"
-											value-expr="id"
-											item-template="item"
-										>
-											<template #item="{ data }">
-												<div>{{ data.name }} de {{ data.year }}</div>
-											</template>
-										</DxSelectBox>
-									</div>
-								</div>
 
-								<div class="col-md-2">
-									<div class="form-group">
-										<label>Categoría: </label>
-										<DxSelectBox
-											:show-clear-button="true"
-											:grouped="false"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											:value.sync="baseObj.category_id"
-											class="form-control"
-											:data-source="subtipos"
-											display-expr="st_name"
-											value-expr="id"
-										>
-										</DxSelectBox>
-									</div>
-								</div>
+<div class="col-md-3">
+<div class="form-group">
+<label>Fecha de envió: </label>
+	<DxDateBox 
+		class="form-control" 
+		name="send_date" 
+		:value.sync="baseObj.send_date" 
+		id="send_date" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate"
+		type="date"> 
+	<DxValidator> 
+	</DxValidator> 
+	</DxDateBox>
+	</div>
+</div>
 
-								<div class="col-md-2">
-									<div class="form-group">
-										<label>Número del registro (Dirección Nacional de Derechos de Autor): </label>
-										<DxTextBox
-											placeholder="Número del registro (Dirección Nacional de Derechos de Autor)"
-											class="form-control"
-											:value.sync="baseObj.sof_registration_number"
-										>
-										</DxTextBox>
-									</div>
-								</div>
+<div class="col-md-3">
+	<div class="form-group">
+	<label>Categoría: </label>
+	<DxSelectBox
+		:grouped="false"
+		:search-enabled="false"
+		placeholder="Seleccione..."
+		:value.sync="baseObj.category_id" 
+		class="form-control"
+		:data-source="subtipos" 
+		display-expr="st_name"
+		value-expr="id">
+	</DxSelectBox>
+	</div>
+</div>
 
-								<div class="col-md-6">
-									<label>Lugar Obtención: </label>
-									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-								</div>
+<div class="col-md-3">
+	<div class="form-group">
+		<label>Convocatoria Minciencias:</label>
+			<DxSelectBox
+				:grouped="false"
+				:search-enabled="false"
+				placeholder="Seleccione..."
+				:value.sync="baseObj.colciencias_call_id"
+				class="form-control"
+				:data-source="convocatorias"
+				display-expr="name"
+				value-expr="id"
+				item-template="item"
+			>
+				<template #item="{ data }">
+					<div>{{ data.name }} de {{ data.year }}</div>
+				</template>
+			</DxSelectBox>
+		</div>
+</div>
 
-								<div class="col-md-12">
-									<div class="form-group">
-										<label>Descripción del Análisis, Diseño, Implementación y Validación: </label>
-										<DxTextArea
-											:height="100"
-											:max-length="400"
-											:value.sync="baseObj.observation"
-											placeholder="Descripción del Análisis, Diseño, Implementación y Validación"
-											class="form-control"
-										>
-										</DxTextArea>
-									</div>
-								</div>
+<div class="col-md-3">
+	<div class="form-group">
+	<label>Numero Consecutivo: </label>
+	<DxTextBox placeholder="Numero Consecutivo" class="form-control" :value.sync="baseObj.consecutive_number">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
 
-								<div class="col-md-12" v-if="tiposDocumento.length>0">
+<div class="col-md-12">
+	<label>Lugar: </label>
+    <Geo :lockElement="loaderElement" :syncObject="baseObj" />
+</div>
+<div class="col-md-12">
+	<div class="form-group">
+	<label>Observaciones: </label>
+	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
+	<DxValidator>
+	</DxValidator>
+	</DxTextArea>
+	</div>
+</div>
+
+<!-- <div class="card mt-3">
+	<div class="card-body">
+		{{ JSON.stringify(tiposDocumento[0], null, "\t") }}
+	</div>
+</div> -->
+
+<div class="col-md-12" v-if="tiposDocumento.length>0">
 	<div class="card-body" v-html="requisitoArchivo()"></div>
 </div>
 								<!-- fin formulario -->
@@ -191,7 +221,7 @@
 						@initialized="gridInit"
 						@content-ready="onContentReady"
 						:allow-column-reordering="true"
-						no-data-text="No hay Sofware registrados"
+						no-data-text="No hay Elementos registrados"
 						:data-source="dataSource"
 						:remote-operations="true"
 						:hover-state-enabled="true"
@@ -206,63 +236,33 @@
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
 						<DxGrouping :auto-expand-all="false" />
 						<DxSummary>
-							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} Sofware" />
+							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} Elementos" />
 						</DxSummary>
 						<DxPager
 							:show-info="true"
 							:show-page-size-selector="true"
 							:show-navigation-buttons="true"
 							:allowed-page-sizes="dgPageSizes"
-							info-text="Página {0} de {1} ({2} Sofware)"
+							info-text="Página {0} de {1} ({2} Elementos)"
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-						<DxColumn
-							data-field="sof_product_title"
-							caption="Título del producto o proceso (*)"
-							data-type="text"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="false"
-						/>
-						<DxColumn
-							data-field="sof_date_of_obtaining"
-							caption="Fecha de obtención"
-							data-type="text"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="false"
-						/>
-						<DxColumn data-field="sof_description" caption="Título de registro" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn
-							data-field="colciencias_call_name"
-							caption="Categoría Minciencias"
-							data-type="text"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="false"
-						/>
-						<DxColumn data-field="category_name" caption="Categoría" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn
-							data-field="sof_registration_number"
-							caption="Número del registro ( Dirección Nacional de Derechos de Autor)"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="false"
-						/>
-						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
-						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn
-							data-field="observation"
-							caption="Descripción del Análisis"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="false"
-						/>
+
+                        <DxColumn data-field='id'  caption='id' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='title'  caption='Titulo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='request_date'  caption='Fecha de solicitud' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='consecutive_number'  caption='Numero Consecutivo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='send_date'  caption='Fecha de envió' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+                        <DxColumn data-field='requesting_institution_name'  caption='Nombre de Institución Solicitante' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='colciencias_call_year'  caption='Año Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
@@ -277,10 +277,10 @@
 								<a title="Editar Elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 									<i class="icon-database-edit"></i>
 								</a>
-								<a v-if="data.data.active" title="Desactivar Software..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+								<a v-if="data.data.active" title="Desactivar Tecnico..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 									<i class="icon-database-remove"></i>
 								</a>
-								<a v-else title="Activar Software..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+								<a v-else title="Activar Tecnico..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
 								</a>
 							</span>
@@ -325,7 +325,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "Software",
+	name: "Tecnico",
 	components: {
 		// Commands,
 		DxButton,
@@ -356,7 +356,6 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		
 		group: {
 			type: Object,
 			default: () => null,
@@ -384,23 +383,21 @@ export default {
 		docLink: null,
 		firstLoad: true,
 		now: new Date(),
-		min: new Date(1950, 1, 1),
 		baseEnt: null,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			sof_product_title: null,
-			sof_date_of_obtaining: null,
-			sof_description: null,
-			colciencias_call_id: null,
-			category_id: null,
-			sof_registration_number: null,
-			geo_city_id: null,
-			geo_state_id: null,
-			geo_country_id: null,
-			observation: null,
-			updated_by: 1,
-			create_by: 1,
+			title: null,
+            request_date: null,
+            requesting_institution_name: null,
+            send_date: null,
+            category_id: null,
+            colciencias_call_id: null,
+            consecutive_number: null,
+            geo_city_id: null,
+            observation: null,
+            research_group_id: null,
+            active: null,
 		},
 	}),
 	created() {
@@ -408,23 +405,19 @@ export default {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
-
-		//root.tipos = root.subtypesByType("articulo_tipo");
-		root.subtipos = root.subtypesByType("sof_categoria");
-		root.tiposDocumento = root.subtypesByType("sof_documento");
+		//root.tipos = root.subtypesByType(5);
+		root.subtipos = root.subtypesByType("concepto_tecnico_categoria");
+		root.tiposDocumento = root.subtypesByType("concepto_tecnico_documento");
 	},
 	mounted() {
-		// root.getConvocatorias();
-		// root.tipos = root.subtypesByType(12);
-		// root.subtipos = root.subtypesByType(34);
 		console.log("root.tipos", root.tipos);
-		root.panelData = $("#panelSoftware .data");
-		root.panelGrid = $("#panelSoftware .grid");
-		root.panelCmds = $("#panelSoftware .cmds");
-		root.panelCmdBack = $("#panelSoftware .cmds-back");
-		root.panelDocs = $("#panelSoftware-documentos");
-		root.loaderMessage = "Cargando Sofware";
-		root.loaderElement = "#panelSoftware .grid";
+		root.panelData = $("#pabelConcepTecnico .data");
+		root.panelGrid = $("#pabelConcepTecnico .grid");
+		root.panelCmds = $("#pabelConcepTecnico .cmds");
+		root.panelCmdBack = $("#pabelConcepTecnico .cmds-back");
+		root.panelDocs = $("#pabelConcepTecnico-documentos");
+		root.loaderMessage = "Cargando Elementos";
+		root.loaderElement = "#pabelConcepTecnico .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -434,9 +427,9 @@ export default {
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${root.group.id}/software`,
+				endPoint: `research_units/${root.group.id}/technical_concepts`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando Sofware", root.panelGrid);
+					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -450,7 +443,6 @@ export default {
 	watch: {},
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		
 		requisitoArchivo(){
@@ -468,9 +460,7 @@ export default {
 			return print;
 		},
 
-
 		participantes(data) {
-			// console.clear();
 			root.section = "participantes";
 			console.log("participantes", data.row.data);
 			root.baseObj = data.row.data;
@@ -481,13 +471,13 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelSoftware .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.sof_product_title}`);
-			root.panelParticipantes = $("#panelSoftware-participantes");
+			$("#pabelConcepTecnico .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
+			root.panelParticipantes = $("#pabelConcepTecnico-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#panelSoftware-documentos").hide();
+			$("#pabelConcepTecnico-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelSoftware-participantes .grid").fadeIn();
+				$("#pabelConcepTecnico-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -502,11 +492,11 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelSoftware .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.sof_product_title}`);
+			$("#pabelConcepTecnico .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.title}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelSoftware-documentos").fadeIn(function(params) {});
+				$("#pabelConcepTecnico-documentos").fadeIn(function(params) {});
 			});
 		},
 
@@ -521,12 +511,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#panelSoftware-documentos").fadeOut(function(params) {
+				$("#pabelConcepTecnico-documentos").fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#panelSoftware .item-title").html("");
+			$("#pabelConcepTecnico .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
@@ -544,12 +534,14 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
+                root.baseObj.research_group_id=root.group.id;
 				let obj = root.baseObj;
 				let dto = {
+					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "software",
+					stringEP: "technical_concepts",
 					mod: obj.id,
-					objectSend: { software: obj },
+					objectSend: { technical_concept: obj },
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -599,17 +591,20 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.sof_product_title}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.title}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
-						url: `research_units/${root.group.id}/software/${data.data.id}/active`,
+                        //updated_by: 1,
+						//url: `research_units/${root.group.id}/technical_concepts/${data.data.id}/active`,
+                        newFormat:true,
+                        url: `technical_concepts/${data.data.id}`,
 						data: {
-							software: {
+							technical_concept: {
 								active: state,
-								updated_by: 1,
+                                updated_by: root.user_id
 							},
 						},
 						cb: function(result) {

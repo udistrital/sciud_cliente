@@ -1,14 +1,14 @@
 \* 
-title=titulo para activar o desactivar 
-Concepto Tecnico = Titulo botones 
-Concepto Tecnico = Titulo principal 
-Tecnico=titulo abreviado
-pabelConcepTecnico=nombredepaneles
-technical_concepts = endpoint enlace
-technical_concept=endpoindt especifico endpoinds tutas generales update
+data.name=titulo para activar o desactivar 
+Colección Científica = Titulo botones 
+Colección Científicas = Titulo principal 
+Coleccion=titulo abreviado
+panelColeccionCientifica=nombredepaneles
+nutraceutical_products = endpoint enlace
+nutraceutical_product=endpoindt especifico endpoinds tutas generales update
 *\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="pabelConcepTecnico">
+	<div class="col mt-3 pl-1 pr-1" id="panelColeccionCientifica">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -16,19 +16,19 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Concepto Tecnico</span>
+								<span class="font-weight-semibold">Colección Científica (debo rectificar no esta lista) </span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Concepto Tecnico.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nuevo Concepto Tecnico
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nueva Coleccion Cientifica.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> Nueva Coleccion Cientifica
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al Concepto Tecnico.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A Concepto Tecnico
+								<button type="button" @click.prevent="retorno()" title="Volver al Colección Científicas.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A Colección Científicas
 								</button>
 							</span>
 						</div>
@@ -36,15 +36,15 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</div>
-        <Documentos id="pabelConcepTecnico-documentos" end-point="technical_concepts" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="pabelConcepTecnico-participantes" end-point="technical_concepts" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+        <Documentos id="panelColeccionCientifica-documentos" end-point="nutraceutical_products" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes id="panelColeccionCientifica-participantes" end-point="nutraceutical_products" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Concepto Tecnico</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Colección Científicas</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
@@ -52,8 +52,8 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 
 <div class="col-md-4">
 	<div class="form-group">
-	<label>Titulo: </label>
-	<DxTextBox placeholder="Titulo" class="form-control" :value.sync="baseObj.title">
+	<label>Nombre : </label>
+	<DxTextBox placeholder="Nombre " class="form-control" :value.sync="baseObj.name">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -62,57 +62,6 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 </div>
 
 <div class="col-md-4">
-<div class="form-group">
-<label>Fecha de solicitud: </label>
-	<DxDateBox 
-		class="form-control" 
-		name="request_date" 
-		:value.sync="baseObj.request_date" 
-		id="request_date" 
-		placeholder="DD/MM/YYYY" 
-		display-format="dd/MM/yyyy" 
-		:min="minDate" 
-		:max="actualDate" 
-		type="date"> 
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</DxDateBox>
-	</div>
-</div>
-
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Nombre de Institución Solicitante: </label>
-	<DxTextBox placeholder="Nombre de Institución Solicitante" class="form-control" :value.sync="baseObj.requesting_institution_name">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-
-<div class="col-md-3">
-<div class="form-group">
-<label>Fecha de envió: </label>
-	<DxDateBox 
-		class="form-control" 
-		name="send_date" 
-		:value.sync="baseObj.send_date" 
-		id="send_date" 
-		placeholder="DD/MM/YYYY" 
-		display-format="dd/MM/yyyy" 
-		:min="minDate" 
-		:max="actualDate"
-		type="date"> 
-	<DxValidator> 
-	</DxValidator> 
-	</DxDateBox>
-	</div>
-</div>
-
-<div class="col-md-3">
 	<div class="form-group">
 	<label>Categoría: </label>
 	<DxSelectBox
@@ -124,11 +73,14 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 		:data-source="subtipos" 
 		display-expr="st_name"
 		value-expr="id">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
 	</DxSelectBox>
 	</div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="form-group">
 		<label>Convocatoria Minciencias:</label>
 			<DxSelectBox
@@ -149,10 +101,10 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 		</div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="form-group">
-	<label>Numero Consecutivo: </label>
-	<DxTextBox placeholder="Numero Consecutivo" class="form-control" :value.sync="baseObj.consecutive_number">
+	<label>Registro Invima: </label>
+	<DxTextBox placeholder="Registro Invima" class="form-control" :value.sync="baseObj.consecutive_registration_invima">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -160,14 +112,44 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
+<div class="col-md-4">
+<div class="form-group">
+<label>Fecha de Obtencion: </label>
+	<DxDateBox 
+		class="form-control" 
+		name="date_of_obtaining" 
+		:value.sync="baseObj.date_of_obtaining" 
+		id="date_of_obtaining" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
+	<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator> 
+	</DxDateBox>
+	</div>
+</div>
+
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Titulo del Proyecto: </label>
+	<DxTextBox placeholder="Titulo del Proyecto" class="form-control" :value.sync="baseObj.research_project_title">
+	<DxValidator>
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
+
 <div class="col-md-12">
-	<label>Lugar: </label>
-    <Geo :lockElement="loaderElement" :syncObject="baseObj" />
+	<label>Lugar de Obtencion: </label>
+<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 </div>
 <div class="col-md-12">
 	<div class="form-group">
-	<label>Observaciones: </label>
-	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
+	<label>Observacion: </label>
+	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observacion" class="form-control">
 	<DxValidator>
 	</DxValidator>
 	</DxTextArea>
@@ -176,6 +158,12 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 
 
 
+<div class="col-md-12" v-if="tiposDocumento.length>0">
+	<div class="card-body" v-html="requisitoArchivo()"></div>
+</div>
+								<div class="col-md-12" v-if="tiposDocumento.length>0">
+	<div class="card-body" v-html="requisitoArchivo()"></div>
+</div>
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -241,19 +229,17 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-
-                        <DxColumn data-field='id'  caption='id' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='title'  caption='Titulo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='request_date'  caption='Fecha de solicitud' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='consecutive_number'  caption='Numero Consecutivo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='send_date'  caption='Fecha de envió' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='requesting_institution_name'  caption='Nombre de Institución Solicitante' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='id'  caption='Id' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='consecutive_registration_invima'  caption='Registro Invima' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='research_project_title'  caption='Titulo de Proyecto' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='name'  caption='Nombre del Registro' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='date_of_obtaining'  caption='Fecha de Obtención' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
                         <DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='colciencias_call_year'  caption='Año Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
                         <DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
                         <DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
                         <DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
 
 
@@ -270,10 +256,10 @@ technical_concept=endpoindt especifico endpoinds tutas generales update
 								<a title="Editar Elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 									<i class="icon-database-edit"></i>
 								</a>
-								<a v-if="data.data.active" title="Desactivar Tecnico..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+								<a v-if="data.data.active" title="Desactivar Coleccion..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 									<i class="icon-database-remove"></i>
 								</a>
-								<a v-else title="Activar Tecnico..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+								<a v-else title="Activar Coleccion..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
 								</a>
 							</span>
@@ -318,7 +304,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "Tecnico",
+	name: "Coleccion",
 	components: {
 		// Commands,
 		DxButton,
@@ -380,17 +366,14 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			title: null,
-            request_date: null,
-            requesting_institution_name: null,
-            send_date: null,
+            name: null,
             category_id: null,
             colciencias_call_id: null,
-            consecutive_number: null,
+            consecutive_registration_invima: null,
+            date_of_obtaining: null,
+            research_project_title: null,
             geo_city_id: null,
             observation: null,
-            research_group_id: null,
-            active: null,
 		},
 	}),
 	created() {
@@ -399,18 +382,18 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		//root.tipos = root.subtypesByType(5);
-		root.subtipos = root.subtypesByType("concepto_tecnico_categoria");
-		root.tiposDocumento = root.subtypesByType("concepto_tecnico_documento");
+		root.subtipos = root.subtypesByType("producto_nutraceutico_categoria");
+		root.tiposDocumento = root.subtypesByType("producto_nutraceutico_documento");
 	},
 	mounted() {
 		console.log("root.tipos", root.tipos);
-		root.panelData = $("#pabelConcepTecnico .data");
-		root.panelGrid = $("#pabelConcepTecnico .grid");
-		root.panelCmds = $("#pabelConcepTecnico .cmds");
-		root.panelCmdBack = $("#pabelConcepTecnico .cmds-back");
-		root.panelDocs = $("#pabelConcepTecnico-documentos");
+		root.panelData = $("#panelColeccionCientifica .data");
+		root.panelGrid = $("#panelColeccionCientifica .grid");
+		root.panelCmds = $("#panelColeccionCientifica .cmds");
+		root.panelCmdBack = $("#panelColeccionCientifica .cmds-back");
+		root.panelDocs = $("#panelColeccionCientifica-documentos");
 		root.loaderMessage = "Cargando Elementos";
-		root.loaderElement = "#pabelConcepTecnico .grid";
+		root.loaderElement = "#panelColeccionCientifica .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -420,7 +403,7 @@ export default {
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${root.group.id}/technical_concepts`,
+				endPoint: `research_units/${root.group.id}/nutraceutical_products`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
@@ -436,7 +419,23 @@ export default {
 	watch: {},
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "updateNewFormat", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		
+		
+		requisitoArchivo(){
+			let tipos=root.tiposDocumento;
+			let i=0, print="";
+			if(Array.isArray(tipos) && tipos.length != 0 && root.editMode){
+				print="<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print=print + "<ul>";
+				for(i=0; i<tipos.length; i++){
+					let text = tipos[i].st_description==null ? "": "<br>"+tipos[i].st_description ;
+					if(tipos[i].active) print=print + "<li>" + "<b>"+tipos[i].st_name+ "</b>"+text+"</li>";
+				}
+				print=print + "</ul>";
+			}
+			return print;
+		},
 
 		participantes(data) {
 			root.section = "participantes";
@@ -449,13 +448,13 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#pabelConcepTecnico .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
-			root.panelParticipantes = $("#pabelConcepTecnico-participantes");
+			$("#panelColeccionCientifica .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.name}`);
+			root.panelParticipantes = $("#panelColeccionCientifica-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#pabelConcepTecnico-documentos").hide();
+			$("#panelColeccionCientifica-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#pabelConcepTecnico-participantes .grid").fadeIn();
+				$("#panelColeccionCientifica-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -470,11 +469,11 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#pabelConcepTecnico .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.title}`);
+			$("#panelColeccionCientifica .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.name}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#pabelConcepTecnico-documentos").fadeIn(function(params) {});
+				$("#panelColeccionCientifica-documentos").fadeIn(function(params) {});
 			});
 		},
 
@@ -489,12 +488,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#pabelConcepTecnico-documentos").fadeOut(function(params) {
+				$("#panelColeccionCientifica-documentos").fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#pabelConcepTecnico .item-title").html("");
+			$("#panelColeccionCientifica .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
@@ -515,10 +514,11 @@ export default {
                 root.baseObj.research_group_id=root.group.id;
 				let obj = root.baseObj;
 				let dto = {
+					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "technical_concepts",
+					stringEP: "nutraceutical_products",
 					mod: obj.id,
-					objectSend: { technical_concept: obj },
+					objectSend: { nutraceutical_product: obj },
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -568,18 +568,18 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.title}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.name}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
                         //updated_by: 1,
-						//url: `research_units/${root.group.id}/technical_concepts/${data.data.id}/active`,
-                        newFormat:"patch",
-                        url: `technical_concepts/${data.data.id}`,
+						//url: `research_units/${root.group.id}/nutraceutical_products/${data.data.id}/active`,
+                        newFormat:true,
+                        url: `nutraceutical_products/${data.data.id}`,
 						data: {
-							technical_concept: {
+							nutraceutical_product: {
 								active: state,
                                 updated_by: root.user_id
 							},

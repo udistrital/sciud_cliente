@@ -1,7 +1,7 @@
 <template>
 	<div class="row divider">
 		<div class="col subtab pb-1">
-			<DxTabPanel :animation-enabled="true" :multiple="true">
+			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				<!-- <DxItem title="Proyectos CTI">
 					<template #default>
 						<ProtectoCTI :group="group" :editMode="editMode" title="Participación Ciudadana En Proyectos De CTI"/> 

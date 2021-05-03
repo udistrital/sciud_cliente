@@ -1,7 +1,7 @@
 <template>
 	<div class="row divider">
 		<div class="col subtab pb-1">
-			<DxTabPanel :animation-enabled="true" :multiple="true" ref="tabPanel">
+			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true" ref="tabPanel">
 				<DxItem title="Libros Resultados de Investigación">
 					<template #default>
 						<Libro :group="group" :editMode="editMode" />

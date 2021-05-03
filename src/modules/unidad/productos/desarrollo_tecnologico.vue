@@ -1,7 +1,7 @@
 <template>
 	<div class="row divider">
 		<div class="col subtab pb-1">
-			<DxTabPanel :animation-enabled="true" :multiple="true">
+			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				<DxItem title="Diseño Industrial">
 					<template #default>
 						<Diseno :group="group" :editMode="editMode" />
@@ -32,9 +32,25 @@
 						<Registro :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				<DxItem title="Conseptos Tecnicos">
+				<DxItem title="Conceptos Tecnicos">
 					<template #default>
 						<TechnicalConcept :group="group" :editMode="editMode" title="Conseptos Tecnicos"/>
+					</template>
+				</DxItem>
+				<DxItem title="Signos Distintivos">
+					<template #default>
+						<SignosDistintivos :group="group" :editMode="editMode" title="Signos Distintivos"/>
+					</template>
+				</DxItem>
+				<DxItem title="Productos Nautraceúticos">
+					<template #default>
+						<ProductosNutraceuticos :group="group" :editMode="editMode" title="Productos Nautraceúticos"/>
+					</template>
+				</DxItem>
+				<DxItem title="Colección Científica">
+					<template #default>
+						
+						<!-- <ColeccionCientifica :group="group" :editMode="editMode" title="Colección Científica"/> -->
 					</template>
 				</DxItem>
 			</DxTabPanel>
@@ -55,7 +71,10 @@ export default {
 		Diseno: () => import("@/modules/unidad/productos/desarrollo_tecnologico/disenio"),
 		Software: () => import("@/modules/unidad/productos/desarrollo_tecnologico/software"),
 		Registro: () => import("@/modules/unidad/productos/desarrollo_tecnologico/registro_cientifico"),
-		TechnicalConcept: () => import("@/modules/unidad/productos/desarrollo_tecnologico/technical_Concepts"),
+		TechnicalConcept: () => import("@/modules/unidad/productos/desarrollo_tecnologico/conceptos_tecnicos"),
+		SignosDistintivos: () => import("@/modules/unidad/productos/desarrollo_tecnologico/signos_distintivos"),
+		ProductosNutraceuticos: () => import("@/modules/unidad/productos/desarrollo_tecnologico/productos_nutraceuticos"),
+		//ColeccionCientifica: () => import("@/modules/unidad/productos/desarrollo_tecnologico/coleccion_cientifica"),
 	},
 	mounted() {
 		root = this;

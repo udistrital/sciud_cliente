@@ -60,6 +60,11 @@
 									</div>
 								</div>
 							</DxValidationGroup>
+
+<div class="col-md-12" v-if="documentTypes.length>0">
+	<div class="card-body" v-html="seleccionTipoDoc()"></div>
+</div>
+
 						</div>
 						<div class="card-footer">
 							<div class="row">
@@ -412,6 +417,21 @@ export default {
 			let dl = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${d.uid}/file:content/${d.fileName}`;
 			return `<a href="${dl}" target="_blank" class="color-main-600 font-weight-semibold"><i class="icon-link"></i> OBSERVAR</a>`;
 		},
+
+		seleccionTipoDoc: () => {
+			let arreglotipos=root.documentTypes;
+			let id_data=root.baseObj.document_type_id;
+			let resultado="";
+			let stringData="<b><i class='icon-info'></i> Nota:</b><br>";
+			arreglotipos.find(function(value, index){
+				if(value!=null){
+					if(value.id===id_data) resultado=value.st_description;
+				}
+			});
+
+			return resultado!=null && id_data!=null ? stringData+resultado : "";
+		},
+
 		documentShow: async () => {
 			console.log("root.current", root.current);
 			let doc = JSON.parse(root.current.doc_path);
