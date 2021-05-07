@@ -84,6 +84,7 @@
 														:search-enabled="true"
 														:placeholder="placeholder"
 														:read-only="!editMode"
+														:disabled="tbDisabled"
 														:show-selection-controls="true"
 														:data-source="proyectosCurriculares"
 														:value.sync="group.curricular_project_ids"
@@ -101,17 +102,17 @@
 												<div class="form-group">
 													<label>Línea(s) de investigación:</label>
 													<DxTagBox
-														name="faculty_ids"
-														id="faculty_ids"
-														value-expr="id"
-														display-expr="st_name"
-														:read-only="!editMode"
-														class="form-control"
+														:grouped="true"
 														:search-enabled="true"
-														:show-selection-controls="true"
-														:value.sync="group.research_focus_ids"
-														:data-source="lineasInvestigacion"
 														:placeholder="placeholder"
+														:read-only="!editMode"
+														:disabled="tbDisabled"
+														:show-selection-controls="true"
+														:data-source="lineasInvestigacion"
+														:value.sync="group.research_focus_ids"
+														class="form-control"
+														display-expr="Nombre"
+														value-expr="Id"
 													>
 														<DxValidator>
 															<DxRequiredRule />
@@ -560,7 +561,9 @@ export default {
 			},
 		});
 	},
-	mounted() {},
+	mounted() {
+		root.lineas = root.subtypesByType("unidad_linea_investigacion");
+	},
 	beforeUpdate: () => {},
 	updated: () => {
 		console.log(root.$sep);
@@ -607,9 +610,11 @@ export default {
 				},
 			},
 		},
+		lineas: null,
+		lineasInvestigacion: null,
 		proyectosCurriculares: null,
 		min: new Date(2000, 0, 1),
-		tbProyectoDisabled: true,
+		tbDisabled: true,
 		tbEspecificoDisabled: true,
 		accept: "*.",
 		multiple: false,
@@ -643,7 +648,7 @@ export default {
 		...mapGetters("unidad/cine", { cEspecificos: "specific", cDetallados: "detailed" }),
 		...mapState("unidad/ocde", { oEspecificos: "subareas", oDetallados: "disciplines" }),
 		ocdeEspecificos() {
-			var sorted = this.$objectSort(this.oEspecificos, "name");
+			var sorted = root.$objectSort(root.oEspecificos, "name");
 			return new DataSource({
 				group: "oecd_knowledge_area_name",
 				store: {
@@ -658,22 +663,19 @@ export default {
 				},
 			});
 		},
-		lineasInvestigacion() {
-			return this.subtypesByType("unidad_linea_investigacion");
-		},
 		unidadTipos() {
-			return this.subtypesByType("unidad_tipo");
+			return root.subtypesByType("unidad_tipo");
 		},
 		unidadEstados() {
-			return this.subtypesByType("unidad_estado");
+			return root.subtypesByType("unidad_estado");
 		},
 		cineEspecificos() {
-			console.log("this.cEspecificos", this.cEspecificos);
-			console.log("this.cDetallados", this.cDetallados);
+			console.log("root.cEspecificos", root.cEspecificos);
+			console.log("root.cDetallados", root.cDetallados);
 			return new DataSource({
 				group: "cine_broad_area_name",
 				store: {
-					data: this.cEspecificos,
+					data: root.cEspecificos,
 					key: "id",
 					type: "array",
 				},
@@ -695,35 +697,35 @@ export default {
 			return r.test(e.value);
 		},
 		ocdeChange(e) {
-			console.log(this.$sep);
+			console.log(root.$sep);
 			console.log("e", e);
-			var items = this.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value);
+			var items = root.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value);
 			if (items.length > 0) {
-				items = this.$objectSort(items, "name");
-				this.ocdeDetallado = items;
-				this.ocdeDisabled = false;
-				console.log("ocdeDetallado", this.ocdeDetallado);
+				items = root.$objectSort(items, "name");
+				root.ocdeDetallado = items;
+				root.ocdeDisabled = false;
+				console.log("ocdeDetallado", root.ocdeDetallado);
 			} else {
-				this.ocdeDisabled = true;
+				root.ocdeDisabled = true;
 			}
 		},
 		ocdeDiscChange(e) {
-			console.log(this.$sep);
+			console.log(root.$sep);
 			console.log("e", e);
-			// var items = this.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value);
+			// var items = root.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value);
 			// if (items.length > 0) {
-			// 	items = this.$objectSort(items, "name");
-			// 	this.ocdeDetallado = items;
-			// 	this.ocdeDisabled = false;
-			// 	console.log("ocdeDetallado", this.ocdeDetallado);
+			// 	items = root.$objectSort(items, "name");
+			// 	root.ocdeDetallado = items;
+			// 	root.ocdeDisabled = false;
+			// 	console.log("ocdeDetallado", root.ocdeDetallado);
 			// } else {
-			// 	this.ocdeDisabled = true;
+			// 	root.ocdeDisabled = true;
 			// }
 		},
 		getDocument(document_type_id) {
-			// console.log("state.documents", this.documents);
-			// console.log(`getDocument(${document_type_id}) => group: `, this.group);
-			return typeof this.group.documents !== "undefined" ? root.group.documents.find((o) => o.document_type_id == document_type_id) : null;
+			// console.log("state.documents", root.documents);
+			// console.log(`getDocument(${document_type_id}) => group: `, root.group);
+			return typeof root.group.documents !== "undefined" ? root.group.documents.find((o) => o.document_type_id == document_type_id) : null;
 		},
 		getLink(document_type_id) {
 			var doc = root.getDocument(document_type_id);
@@ -731,7 +733,7 @@ export default {
 			return doc !== null ? `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${doc.id}/file:content/${doc.path}` : null;
 		},
 		save() {
-			console.log(this.$sep);
+			console.log(root.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
 			if (result.isValid) {
@@ -759,12 +761,12 @@ export default {
 		facultadChange(e) {
 			// console.clear();
 			console.log("value", e.value);
-			console.log("facultades", this.facultades);
+			console.log("facultades", root.facultades);
 			if (typeof e.value !== "undefined") {
-				var items = this.facultades.filter((o) => e.value.includes(o.Id));
+				var items = root.facultades.filter((o) => e.value.includes(o.Id));
 				console.log("items", items);
 				if (items.length > 0) {
-					this.tbProyectoDisabled = false;
+					root.tbDisabled = false;
 					let opts = [];
 					items.forEach((padre) => {
 						padre.Opciones.forEach((opt) => {
@@ -773,41 +775,70 @@ export default {
 						console.log(padre.Nombre + ": " + padre.Opciones.length);
 						console.log("Total", opts.length);
 					});
-					this.tbProyectoDisabled = false;
-					let sorted = this.$objectSort(opts, "Nombre");
-					console.log("items", sorted);
-					this.proyectosCurriculares = new DataSource({
+					let hijos = root.$objectSort(opts, "Nombre");
+					console.log("hijos", hijos);
+					root.proyectosCurriculares = new DataSource({
 						group: "PadreNombre",
 						store: {
 							key: "Id",
 							type: "array",
-							data: sorted,
+							data: hijos,
 						},
 						map: function(groupedItem) {
 							console.log(groupedItem);
 							return groupedItem;
 						},
 					});
-					// console.log("proyectos", this.proyectos);
+					// 202105071020: Filtra Lineas de Investigación por Facultad
+					console.clear();
+					let final = [];
+					console.log("items", items);
+					console.log("root.lineas", root.lineas);
+					console.log("clasificador.facultad", window.clasificador.facultad);
+					items.forEach((facultad_oas) => {
+						let facultad_local = window.clasificador.facultad.find((o) => o.id_oas === facultad_oas.Id);
+						if (typeof facultad_local !== "undefined") {
+							// 202105071039: Se encontró el Id local
+							root.lineas.forEach((linea) => {
+								if (linea.parent_id === facultad_local.id) {
+									final.push({ PadreId: linea.parent_id, PadreNombre: linea.parent_name, Id: linea.id, Nombre: linea.st_name });
+								}
+							});
+						}
+					});
+					final = root.$objectSort(final, "Nombre");
+					console.log("final", final);
+					root.lineasInvestigacion = new DataSource({
+						group: "PadreNombre",
+						store: {
+							key: "Id",
+							type: "array",
+							data: final,
+						},
+						map: function(groupedItem) {
+							// console.log(groupedItem);
+							return groupedItem;
+						},
+					});
 				} else {
-					this.tbProyectoDisabled = true;
+					root.tbDisabled = true;
 				}
 			}
 		},
 		cineChange(e) {
-			var items = this.cDetallados.filter((o) => o.cine_specific_area_id === e.value);
+			var items = root.cDetallados.filter((o) => o.cine_specific_area_id === e.value);
 			if (items.length > 0) {
-				console.log(this.$sep);
-				console.log(this.cEspecificos);
-				var item = this.cEspecificos.filter((o) => o.id === e.value)[0];
+				console.log(root.$sep);
+				console.log(root.cEspecificos);
+				var item = root.cEspecificos.filter((o) => o.id === e.value)[0];
 				root.group.cine_broad_area_id = item.cine_broad_area_id;
-				// this.group.cine_detailed_area_ids = [];
-				items = this.$objectSort(items, "name");
-				this.cineDetallados = items;
-				this.tbEspecificoDisabled = false;
-				// console.log("cineDetallados", this.cineDetallados);
+				// root.group.cine_detailed_area_ids = [];
+				items = root.$objectSort(items, "name");
+				root.cineDetallados = items;
+				root.tbEspecificoDisabled = false;
+				// console.log("cineDetallados", root.cineDetallados);
 			} else {
-				this.tbEspecificoDisabled = true;
+				root.tbEspecificoDisabled = true;
 			}
 		},
 	},

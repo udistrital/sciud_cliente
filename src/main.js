@@ -277,12 +277,12 @@ axios
 	.then(({ data }) => {
 		window.config = data;
 		axios
-			.get(process.env.BASE_URL + "data/clasifier.json")
+			.get(process.env.BASE_URL + "data/clasificador.json")
 			.then(({ data }) => {
-				window.clasifier = data;
+				window.clasificador = data;
 				createVue();
 				console.log("window.config", window.config);
-				console.log("window.clasifier", window.clasifier);
+				console.log("window.clasificador", window.clasificador);
 				console.log("window.vm.$store", window.vm.$store);
 			})
 			.catch((err) => {

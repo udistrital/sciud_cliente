@@ -110,8 +110,9 @@ const store = {
 			return state.subtypes;
 		},
 		subtypesByType: (state, getters) => (id) => {
+			console.log("window.clasificador", window.clasificador);
 			if (typeof id === "string")
-				id = window.clasifier.find(
+				id = window.clasificador.subtipo.find(
 					(o) =>
 						o.name
 							.toString()
