@@ -3,12 +3,12 @@ data.name=titulo para activar o desactivar
 Colección Científica = Titulo botones 
 Colección Científicas = Titulo principal 
 Coleccion=titulo abreviado
-panelColeccionCientifica=nombredepaneles
+panelCC=nombredepaneles
 scientific_collections = scientific_collection enlace
 scientific_collection=endpoindt especifico endpoinds tutas generales update
 *\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panelColeccionCientifica">
+	<div class="col mt-3 pl-1 pr-1" id="panelCC">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -36,8 +36,8 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</div>
-        <Documentos id="panelColeccionCientifica-documentos" end-point="scientific_collections" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelColeccionCientifica-participantes" end-point="scientific_collections" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+        <Documentos id="panelCC-documentos" end-point="scientific_collections" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes id="panelCC-participantes" end-point="scientific_collections" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -459,13 +459,13 @@ export default {
 	},
 	mounted() {
 		console.log("root.tipos", root.tipos);
-		root.panelData = $("#panelColeccionCientifica .data");
-		root.panelGrid = $("#panelColeccionCientifica .grid");
-		root.panelCmds = $("#panelColeccionCientifica .cmds");
-		root.panelCmdBack = $("#panelColeccionCientifica .cmds-back");
-		root.panelDocs = $("#panelColeccionCientifica-documentos");
+		root.panelData = $("#panelCC .data");
+		root.panelGrid = $("#panelCC .grid");
+		root.panelCmds = $("#panelCC .cmds");
+		root.panelCmdBack = $("#panelCC .cmds-back");
+		root.panelDocs = $("#panelCC-documentos");
 		root.loaderMessage = "Cargando Elementos";
-		root.loaderElement = "#panelColeccionCientifica .grid";
+		root.loaderElement = "#panelCC .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -520,13 +520,13 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelColeccionCientifica .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.name}`);
-			root.panelParticipantes = $("#panelColeccionCientifica-participantes");
+			$("#panelCC .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.name}`);
+			root.panelParticipantes = $("#panelCC-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#panelColeccionCientifica-documentos").hide();
+			$("#panelCC-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelColeccionCientifica-participantes .grid").fadeIn();
+				$("#panelCC-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -541,11 +541,11 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelColeccionCientifica .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.name}`);
+			$("#panelCC .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.name}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelColeccionCientifica-documentos").fadeIn(function(params) {});
+				$("#panelCC-documentos").fadeIn(function(params) {});
 			});
 		},
 
@@ -560,12 +560,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#panelColeccionCientifica-documentos").fadeOut(function(params) {
+				$("#panelCC-documentos").fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#panelColeccionCientifica .item-title").html("");
+			$("#panelCC .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},

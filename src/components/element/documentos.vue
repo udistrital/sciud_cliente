@@ -426,6 +426,7 @@ export default {
 			arreglotipos.find(function(value, index){
 				if(value!=null){
 					if(value.id===id_data) resultado=value.st_description;
+					if(!resultado.trim().length>0)  resultado=null;
 				}
 			});
 
