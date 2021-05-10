@@ -551,7 +551,7 @@ export default {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 
 		dataSourceExt: function() {
-			if (typeof root.product.id === "undefined" || root.product.id === null || typeof this.product.id=="undefined") return null;
+			if (typeof root.product.id === "undefined" || root.product.id === null || typeof this.product.id=="undefined"|| this.product.id === null) return null;
 			console.log("root.baseObj", this.baseObj);
 			return DxStore({
 				key: ["id"],
@@ -569,7 +569,7 @@ export default {
 		},
 
 		dataSourceInt: function() {
-			if (typeof root.product.id === "undefined" || root.product.id === null) return null;
+			if (typeof root.product.id === "undefined" || root.product.id === null || typeof this.product.id=="undefined"|| this.product.id === null) return null;
 			console.log("root.baseObj", this.baseObj);
 			return DxStore({
 				key: ["id"],

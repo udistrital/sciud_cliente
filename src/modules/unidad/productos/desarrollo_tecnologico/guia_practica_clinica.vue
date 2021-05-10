@@ -228,6 +228,7 @@ clinical_practice_guideline=endpoindt especifico endpoinds tutas generales updat
 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+
 						<template #tpl="{ data }">
 							<span class="cmds">
 								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
