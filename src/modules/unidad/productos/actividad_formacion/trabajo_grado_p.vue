@@ -374,8 +374,8 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		//root.tipos = root.subtypesByType("articulo_tipo");
-		root.subtipos = root.subtypesByType("trabajogradoP_categoria");
-		root.tiposDocumento = root.subtypesByType("trabajogradoP_documento");
+		root.subtipos = root.subtypesByType("trabajo_grado_p_categoria");
+		root.tiposDocumento = root.subtypesByType("trabajo_grado_p_documento");
 	},
 	mounted() {
 		// root.getConvocatorias();

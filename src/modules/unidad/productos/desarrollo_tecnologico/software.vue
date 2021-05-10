@@ -410,8 +410,8 @@ export default {
 		root.getConvocatorias();
 
 		//root.tipos = root.subtypesByType("articulo_tipo");
-		root.subtipos = root.subtypesByType("sof_categoria");
-		root.tiposDocumento = root.subtypesByType("sof_documento");
+		root.subtipos = root.subtypesByType("software_categoria");
+		root.tiposDocumento = root.subtypesByType("software_documento");
 	},
 	mounted() {
 		// root.getConvocatorias();

@@ -16,7 +16,7 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Colección Científica (debo rectificar no esta lista) </span>
+								<span class="font-weight-semibold">Colección Científica</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
@@ -28,7 +28,7 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 							</span>
 							<span class="cmds-back slide">
 								<button type="button" @click.prevent="retorno()" title="Volver al Colección Científicas.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A Colección Científicas
+									<b><i class="icon-arrow-left"></i></b> Volver A Colección Científica
 								</button>
 							</span>
 						</div>
@@ -133,7 +133,7 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-3">
+<!-- <div class="col-md-3">
 	<div class="form-group">
 	<label>Validez y Uso: </label>
 	<DxTextBox placeholder="Validez y Uso" class="form-control" :value.sync="baseObj.validity_and_use">
@@ -141,6 +141,25 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 	</DxValidator>
 	</DxTextBox>
 	</div>
+</div> -->
+
+<div class="col-md-3">
+<div class="form-group">
+<label>Fecha de Validez y Uso:</label>
+	<DxDateBox 
+		class="form-control" 
+		name="validity_and_use" 
+		:value.sync="baseObj.validity_and_use" 
+		id="validity_and_use" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
+	<DxValidator> 
+	</DxValidator> 
+	</DxDateBox>
+</div>
 </div>
 
 <div class="col-md-3">
@@ -159,7 +178,7 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 	<DxValidator> 
 	</DxValidator> 
 	</DxDateBox>
-	</div>
+</div>
 </div>
 
 <div class="col-md-3">
