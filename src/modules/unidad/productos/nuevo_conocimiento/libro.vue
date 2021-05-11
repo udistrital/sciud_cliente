@@ -1,7 +1,7 @@
 \* data.row.data.title = titulo de participantes data.data.title = titulo para activar o desactivar Ingresar Libro = Titulo botones Libro = Titulo principal
-Libro = titulo abreviado panelLibro = nombredepaneles book = endpoindt especifico books = rutas generales *\
+Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifico books = rutas generales *\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panelLibro">
+	<div class="col mt-3 pl-1 pr-1" id="panel-libro">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -29,8 +29,8 @@ Libro = titulo abreviado panelLibro = nombredepaneles book = endpoindt especific
 				</div>
 			</div>
 		</div>
-		<Documentos id="panelLibro-documentos" end-point="books" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelLibro-participantes" end-point="books" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+		<Documentos id="panel-libro-documentos" end-point="books" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes id="panel-libro-participantes" end-point="books" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -160,6 +160,11 @@ Libro = titulo abreviado panelLibro = nombredepaneles book = endpoindt especific
 										</DxTextArea>
 									</div>
 								</div>
+
+								
+<div class="col-md-12" v-if="tiposDocumento.length>0">
+	<div class="card-body" v-html="requisitoArchivo()"></div>
+</div>
 
 								<!-- fin formulario -->
 							</div>
@@ -394,13 +399,13 @@ export default {
 	},
 	mounted() {
 		console.log("root.tipos", root.tipos);
-		root.panelData = $("#panelLibro .data");
-		root.panelGrid = $("#panelLibro .grid");
-		root.panelCmds = $("#panelLibro .cmds");
-		root.panelCmdBack = $("#panelLibro .cmds-back");
-		root.panelDocs = $("#panelLibro-documentos");
+		root.panelData = $("#panel-libro .data");
+		root.panelGrid = $("#panel-libro .grid");
+		root.panelCmds = $("#panel-libro .cmds");
+		root.panelCmdBack = $("#panel-libro .cmds-back");
+		root.panelDocs = $("#panel-libro-documentos");
 		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#panelLibro .grid";
+		root.loaderElement = "#panel-libro .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -428,6 +433,22 @@ export default {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		
+		
+		requisitoArchivo(){
+			let tipos=root.tiposDocumento;
+			let i=0, print="";
+			if(Array.isArray(tipos) && tipos.length != 0 && root.editMode){
+				print="<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print=print + "<ul>";
+				for(i=0; i<tipos.length; i++){
+					let text = tipos[i].st_description==null ? "": "<br>"+tipos[i].st_description ;
+					if(tipos[i].active) print=print + "<li>" + "<b>"+tipos[i].st_name+ "</b>"+text+"</li>";
+				}
+				print=print + "</ul>";
+			}
+			return print;
+		},
 
 		participantes(data) {
 			// console.clear();
@@ -441,13 +462,13 @@ export default {
 			// console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelLibro .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
-			root.panelParticipantes = $("#panelLibro-participantes");
+			$("#panel-libro .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
+			root.panelParticipantes = $("#panel-libro-participantes");
 			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#panelLibro-documentos").hide();
+			$("#panel-libro-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelLibro-participantes .grid").fadeIn();
+				$("#panel-libro-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -462,11 +483,11 @@ export default {
 			// if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			// console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelLibro .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.title}`);
+			$("#panel-libro .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.title}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelLibro-documentos").fadeIn(function(params) {});
+				$("#panel-libro-documentos").fadeIn(function(params) {});
 			});
 		},
 
@@ -481,12 +502,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#panelLibro-documentos").fadeOut(function(params) {
+				$("#panel-libro-documentos").fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#panelLibro .item-title").html("");
+			$("#panel-libro .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},

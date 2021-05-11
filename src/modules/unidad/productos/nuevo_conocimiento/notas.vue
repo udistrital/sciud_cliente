@@ -230,6 +230,11 @@ principal Nota = titulo abreviado panelNota = nombredepaneles scientific_note = 
 									</div>
 								</div>
 
+								
+<div class="col-md-12" v-if="tiposDocumento.length>0">
+	<div class="card-body" v-html="requisitoArchivo()"></div>
+</div>
+
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -521,6 +526,22 @@ export default {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		
+		
+		requisitoArchivo(){
+			let tipos=root.tiposDocumento;
+			let i=0, print="";
+			if(Array.isArray(tipos) && tipos.length != 0 && root.editMode){
+				print="<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print=print + "<ul>";
+				for(i=0; i<tipos.length; i++){
+					let text = tipos[i].st_description==null ? "": "<br>"+tipos[i].st_description ;
+					if(tipos[i].active) print=print + "<li>" + "<b>"+tipos[i].st_name+ "</b>"+text+"</li>";
+				}
+				print=print + "</ul>";
+			}
+			return print;
+		},
 
 		participantes(data) {
 			// console.clear();
