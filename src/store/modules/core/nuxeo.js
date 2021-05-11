@@ -4,7 +4,8 @@ import vuex from "vuex";
 import axios from "axios";
 import api from "@/store/api";
 // 202104231325: https://nuxeo.github.io/nuxeo-js-client/latest/
-import nux from "nuxeo";
+import nuxeo from "nuxeo";
+
 vue.use(vuex);
 
 // 202011252239: Variables
@@ -86,6 +87,56 @@ const store = {
 				return resDoc;
 			} else return false;
 		},
+		async getDoc({ commit, dispatch, state }, doc) {
+			let nx = new nuxeo(window.config.nuxeo);
+			nx.schemas("*");
+			// nx.header("Access-Control-Allow-Origin", "*");
+			// nx.header("Authorization", `Bearer ${t}`);
+			nx.header("X-NXDocumentProperties", "*");
+			return await nx
+				.request(`id/${doc.uid}`)
+				.get()
+				.then(async function(response) {
+					var aux = response.get("file:content");
+					console.log("aux", aux);
+					console.log("response", response);
+					// let doc = response;
+					// let b = await doc.fetchBlob();
+					// let blob = b.blob();
+					// console.log("blob", blob);
+					// return response;
+					return await response
+						.fetchBlob()
+						.then(async function(blob) {
+							return await blob.blob().then(function(responseblob) {
+								return responseblob;
+								// console.log("responseblob", responseblob);
+								// const url = URL.createObjectURL(responseblob);
+								// window.open(url);
+								// console.log("url", url);
+								// nx.blobDocument[file.key] = url;
+								// nx.blobDocument$.next(nx.blobDocument);
+							});
+						})
+						.catch(function(response2) {});
+				})
+				.catch(function(error) {
+					console.log("error", error);
+				});
+			// return defered.promise;
+			// return await api("oas")
+			// 	.get(`${nuxeo_api}/id/${doc.uid}`, {
+			// headers: {
+			// 	"X-NXDocumentProperties": "*",
+			// },
+			// })
+			// .get(`${nuxeo_api}/id/${doc.uid}/@blob/blobholder%3A0`)
+			// .get(`${nuxeo_api}/id/${doc.uid}/@blob/file:content`)
+			// .then((r) => {
+			// 	let doc = new nx.doc();
+			// 	return r;
+			// });
+		},
 		async get({ commit, dispatch, state }, doc) {
 			console.log(this._vm.$sep);
 			console.log("get doc=>", doc);
@@ -108,6 +159,7 @@ const store = {
 				});
 			// .then((r) => r.blob())
 			// .then((blobFile) => new File([blobFile], doc.fileName, { type: blobFile.type }));
+
 			// return await api("oas")
 			// 	.get(`${nuxeo_api}/id/${doc.uid}`)
 			// 	.then(async (r) => {
@@ -148,7 +200,7 @@ const store = {
 			// console.log("t", t);
 			// // https://documental.portaloas.udistrital.edu.co/nuxeo/api/v1/path/desarrollo/workspaces/siciud/dummy.pdf.1619198515933
 			// // 202104231345: https://nuxeo.github.io/nuxeo-js-client/latest/
-			// let nuxeo = new nux({
+			// let nuxeo = new nx({
 			// 	baseURL: "https://documental.portaloas.udistrital.edu.co/nuxeo",
 			// 	apiPath: `${nuxeo_api}`,
 			// 	auth: {

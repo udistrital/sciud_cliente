@@ -25,8 +25,19 @@
 		"oas": {
 			"VUE_APP_AUTH_URL": "",
 			"token_name": "oas_token",
-			"token_value": "dffc4e34-27b2-3c7c-91d0-eb9ce22a0233",
+			"token_value": "439776f5-7328-31ac-8102-2488fba10f6d",
 			"url": "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
+		}
+	},
+	"nuxeo": {
+		"baseURL": "https://documental.portaloas.udistrital.edu.co/nuxeo/",
+		"_apiPath": "nuxeo_api/v1",
+		"auth": {
+			"_method": "bearerToken",
+			"_token": "token",
+			"method": "basic",
+			"password": "desarrollooas2019",
+			"username": "desarrollooas"
 		}
 	},
 	"auth": {

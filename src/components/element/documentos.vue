@@ -47,9 +47,9 @@
 											</a> -->
 											<a
 												href="#"
-												@click.prevent="documentShow"
 												id="a-doc-link"
 												target="_blank"
+												@click.prevent="documentShow"
 												class="btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100"
 											>
 												<b><i class="icon-link"></i></b> OBSERVAR DOCUMENTO
@@ -61,10 +61,9 @@
 								</div>
 							</DxValidationGroup>
 
-<div class="col-md-12" v-if="documentTypes.length>0">
-	<div class="card-body" v-html="seleccionTipoDoc()"></div>
-</div>
-
+							<div class="col-md-12" v-if="documentTypes.length > 0">
+								<div class="card-body" v-html="seleccionTipoDoc()"></div>
+							</div>
 						</div>
 						<div class="card-footer">
 							<div class="row">
@@ -165,8 +164,17 @@
 								data-field="doc_path"
 								data-type="string"
 								:encode-html="false"
-								:calculate-cell-value="documentLink"
+								cell-template="tplLink"
 							/>
+							<template #tplLink="{ data }">
+								<a
+									href="#"
+									@click.prevent="documentShow(data.data)"
+									:title="`Observar '${data.data.document_type_name}'...`"
+									class="color-main-600 font-weight-semibold"
+									><i class="icon-file-pdf"></i> Observar</a
+								>
+							</template>
 							<DxColumn
 								:allow-filtering="true"
 								:allow-sorting="true"
@@ -191,7 +199,16 @@
 				</div>
 			</div>
 		</div>
-		<DxPopup :visible="popupVisible" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="90%" height="90%" title="Documento">
+		<DxPopup
+			:on-hidden="popupHidden"
+			:visible="popupVisible"
+			:drag-enabled="false"
+			:close-on-outside-click="false"
+			:show-title="true"
+			width="90%"
+			height="90%"
+			:title="tituloDocumento"
+		>
 			<iframe :src="docLink" title="Documento"></iframe>
 		</DxPopup>
 	</div>
@@ -258,6 +275,7 @@ export default {
 		btnDocSelect: null,
 		current: null,
 		docLink: null,
+		tituloDocumento: null,
 		documentTypes: [],
 		documentTypesCurrent: [],
 		editing: false,
@@ -285,6 +303,7 @@ export default {
 	}),
 	created() {
 		root = this;
+		root.docLink = root.baseUrl + "view/";
 		console.log("root.tipos", root.tipos);
 	},
 	mounted() {
@@ -410,38 +429,57 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("core/nuxeo", ["upload", "get"]),
+		...mapActions("core/nuxeo", ["upload", "get", "getDoc"]),
 		...mapActions("unidad/documentos", ["save", "update", "documents"]),
+		seleccionTipoDoc: () => {
+			let arreglotipos = root.documentTypes;
+			let id_data = root.baseObj.document_type_id;
+			let resultado = "";
+			let stringData = "<b><i class='icon-info'></i> Nota:</b><br>";
+			if (typeof arreglotipos !== "undefined" && arreglotipos !== null)
+				arreglotipos.find(function(value, index) {
+					if (value != null) {
+						if (value.id === id_data) resultado = value.st_description;
+						if (resultado !== null && !resultado.trim().length > 0) resultado = null;
+					}
+				});
+
+			return resultado != null && id_data != null ? stringData + resultado : "";
+		},
+		popupHidden: (e) => {
+			console.clear();
+			console.log("e", e);
+			root.popupVisible = false;
+		},
 		documentLink: (data) => {
 			let d = JSON.parse(data.doc_path);
 			let dl = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${d.uid}/file:content/${d.fileName}`;
-			return `<a href="${dl}" target="_blank" class="color-main-600 font-weight-semibold"><i class="icon-link"></i> OBSERVAR</a>`;
+			// return `<a href="${dl}" target="_blank" class="color-main-600 font-weight-semibold"><i class="icon-link"></i> OBSERVAR</a>`;
+			let btn = $(`<a href="${dl}" target="_blank" class="color-main-600 font-weight-semibold"><i class="icon-link"></i> OBSERVAR</a>`);
 		},
-
-		seleccionTipoDoc: () => {
-			let arreglotipos=root.documentTypes;
-			let id_data=root.baseObj.document_type_id;
-			let resultado="";
-			let stringData="<b><i class='icon-info'></i> Nota:</b><br>";
-			arreglotipos.find(function(value, index){
-				if(value!=null){
-					if(value.id===id_data) resultado=value.st_description;
+		documentShow: async (data) => {
+			console.clear();
+			root.loaderShow("Cargando Documento", "#" + root.id);
+			setTimeout(async function() {
+				console.log("data", data);
+				console.log("root.current", root.current);
+				try {
+					let doc = JSON.parse(typeof data !== "undefined" ? data.doc_path : root.current.doc_path);
+					console.log("doc", doc);
+					let blob = await root.getDoc(doc);
+					root.tituloDocumento = `Documento SICIUD v2.0: ${data.doc_name} - ${data.document_type_name} (${doc.fileSize.formatSize()})`;
+					console.log("blob", blob);
+					// 202105101656: https://stackoverflow.com/a/24548869
+					var url = URL.createObjectURL(blob);
+					root.docLink = root.baseUrl + "view/?file=" + encodeURIComponent(url);
+					root.popupVisible = true;
+					root.loaderHide();
+				} catch (error) {
+					root.loaderHide();
+					root.popupVisible = false;
+					root.$error(error, function(params) {});
 				}
-			});
-
-			return resultado!=null && id_data!=null ? stringData+resultado : "";
-		},
-
-		documentShow: async () => {
-			console.log("root.current", root.current);
-			let doc = JSON.parse(root.current.doc_path);
-			console.log("doc", doc);
-			let blob = await root.get(doc);
-			console.log("blob", blob);
-			// root.docLink = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${root.current.nuxeo_id}`;
-			// root.docLink = `https://autenticacion.portaloas.udistrital.edu.co/apioas/nuxeo_api/v1/path/desarrollo/workspaces/siciud/${d.fileName}/@blob/file:content`;
-			// root.docLink = `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${d.uid}/file:content/${d.fileName}`;
-			// root.popupVisible = true;
+			}, 1000);
 		},
 		documentEdit: async (data) => {
 			root.editing = true;
