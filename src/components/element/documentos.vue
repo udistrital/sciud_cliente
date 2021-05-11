@@ -61,9 +61,9 @@
 								</div>
 							</DxValidationGroup>
 
-							<div class="col-md-12" v-if="documentTypes.length>0">
-								<div class="card-body" v-html="seleccionTipoDoc()"></div>
-							</div>
+<div class="col-md-12" v-if="documentTypes.length>0">
+	<div class="card-body" v-html="seleccionTipoDoc()"></div>
+</div>
 
 						</div>
 						<div class="card-footer">
@@ -88,7 +88,7 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						<a href="#" :id="id_btn" @click.prevent="documentAdd" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple slide">
+						<a href="#" id="btn-doc-add" @click.prevent="documentAdd" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple slide">
 							<b><i class="icon-database-add"></i></b> NUEVO DOCUMENTO
 						</a>
 						<DxDataGrid
@@ -273,7 +273,6 @@ export default {
 		panelMain: null,
 		popupVisible: false,
 		uploader: null,
-		id_btn:"btn-doc-add",
 		baseObj: {
 			created_by: null,
 			doc_name: null,
@@ -286,8 +285,6 @@ export default {
 	}),
 	created() {
 		root = this;
-		root.id_btn="btn-doc-add"+root.id;
-		console.warn("boton de nuevo dicumento: "+root.id_btn)
 		console.log("root.tipos", root.tipos);
 	},
 	mounted() {
@@ -299,8 +296,7 @@ export default {
 		root.loaderMessage = "Cargando Documentos";
 		root.panelDataDoc = root.panelMain + " .data";
 		root.panelGridDoc = root.panelMain + " .grid";
-		root.btnDocAdd = root.panelMain + " #" + root.id_btn;
-		console.warn("boton de nuevo dicumento: "+root.btnDocAdd)
+		root.btnDocAdd = root.panelMain + " #btn-doc-add";
 		if (root.showOnLoad) $(root.panelMain).fadeIn();
 		setTimeout(function() {
 			root.fileError = $(root.panelDataDoc + " #file-error");
@@ -430,7 +426,6 @@ export default {
 			arreglotipos.find(function(value, index){
 				if(value!=null){
 					if(value.id===id_data) resultado=value.st_description;
-					if(!resultado.trim().length>0)  resultado=null;
 				}
 			});
 
