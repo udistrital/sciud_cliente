@@ -209,7 +209,7 @@
 			height="90%"
 			:title="tituloDocumento"
 		>
-			<iframe :src="docLink" title="Documento"></iframe>
+			<iframe :src="docLink" target="_parent" title="Documento"></iframe>
 		</DxPopup>
 	</div>
 </template>
