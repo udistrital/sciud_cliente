@@ -378,7 +378,7 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			category_id: 0,
+			category_id: null,
 			title: null,
 			publication_date: null,
 			isbn: null,
