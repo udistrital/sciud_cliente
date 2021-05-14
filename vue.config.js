@@ -1,9 +1,10 @@
 /* eslint-disable no-unused-vars */
 var webpack = require("webpack");
+var bUrl = window.location.href.indexOf("nemedi") > -1 ? "/udistrital/siciud-v2/" : "/";
 module.exports = {
 	productionSourceMap: process.env.NODE_ENV !== "production",
 	// publicPath: process.env.BASE_URL,
-	publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
+	publicPath: process.env.NODE_ENV === "production" ? bUrl : "/",
 	// publicPath: process.env.NODE_ENV === "production" ? "/siciud-v2/" : "/",
 	// https://stackoverflow.com/a/60402866
 	// https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
