@@ -171,7 +171,7 @@ const store = {
 				for (const item in state) state[item] = null;
 				state.authenticated = false;
 				console.log("logout url =>", url);
-				if (process.env.NODE_ENV.toString().toLowerCase() === "production") window.location.replace(url);
+				// if (process.env.NODE_ENV.toString().toLowerCase() === "production") window.location.replace(url);
 			}
 		},
 	},
