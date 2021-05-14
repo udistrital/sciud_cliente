@@ -439,10 +439,10 @@ export default {
 			summary_extension_program_ctei: null,
 			active: false,
 			document: null,
-			category_id: 2,
-			colciencias_call_id: 2,
+			category_id: null,
+			colciencias_call_id: null,
 			observation: null,
-			created_by: 2,
+			created_by: null,
 		},
 	}),
 
