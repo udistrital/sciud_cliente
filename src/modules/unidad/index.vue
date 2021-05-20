@@ -9,8 +9,8 @@
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			<div class="header-elements" v-if="editMode">
-				<!-- <a
+			<!-- <div class="header-elements" v-if="editMode">
+				<a
 					href="#"
 					@click.prevent="add()"
 					title="Nueva Unidad de Investigación..."
@@ -20,8 +20,8 @@
 				>
 				<a href="#" @click.prevent="reload()" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left legitRipple slide btn-back ml-3"
 					><b><i class="icon-arrow-left"></i></b> Volver a Unidades</a
-				> -->
-			</div>
+				>
+			</div> -->
 		</div>
 
 		<div class="row" id="panel-unidades">
@@ -89,7 +89,7 @@
 									cell-template="titleCase"
 								/>
 								<DxColumn
-									:allow-filtering="false"
+									:allow-filtering="true"
 									:visible="false"
 									data-field="acronym"
 									caption="Acrónimo"

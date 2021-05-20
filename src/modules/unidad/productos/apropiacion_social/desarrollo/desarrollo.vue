@@ -315,6 +315,14 @@ axios research_units= ruta principal del modulo en el endPoint development_resea
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 
 						<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" />
+
+						<template #tplObs="{ data }">
+							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+								<i class="icon-info mr-1"></i> Ver
+							</a>
+							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
+
 						<template #tpl="{ data }">
 							<span class="cmds">
 								<a title="Editar Desarrollo..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
@@ -341,6 +349,29 @@ axios research_units= ruta principal del modulo en el endPoint development_resea
 				{{ JSON.stringify(development_research, null, "\t") }}
 			</div>
 		</div>
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+            <div class="row" style="overflow-y: scroll; height:148px">
+				<div class="col">
+                    <h3>
+						<i class="icon-info mr-1 color-main-600"></i>
+						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
+					</h3>
+					<div style="overflow-y: scroll; height:120px" v-html="observarData"></div>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col"><hr>
+					<DxButton @click="popupObs=false" class="nb">
+						<template #default>
+							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+								<b><i class="icon-database-remove"></i></b> Salir
+							</span>
+						</template>
+					</DxButton>
+				</div>
+			</div>
+		</DxPopup>
+
 	</div>
 </template>
 
@@ -445,8 +476,8 @@ export default {
 			tutor: null,
 			codirectors: null,
 			date: null,
-			category_id: null,
-			colciencias_call_id: null,
+			category_id: 2,
+			colciencias_call_id: 2,
 			recognition: null,
 			active: null,
 			document: null,

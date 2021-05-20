@@ -64,6 +64,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	<div class="form-group">
 	<label>Categoría: </label>
 	<DxSelectBox
+		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."
@@ -124,6 +125,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	<div class="form-group">
 	<label>Tipo de Regulación: </label>
 	<DxSelectBox
+		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."
@@ -251,8 +253,17 @@ regulation=endpoindt especifico endpoinds tutas generales update
 
 
 
+						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+
+						<template #tplObs="{ data }">
+							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+								<i class="icon-info mr-1"></i> Ver
+							</a>
+							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
+
 						<template #tpl="{ data }">
 							<span class="cmds">
 								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
@@ -282,6 +293,29 @@ regulation=endpoindt especifico endpoinds tutas generales update
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+            <div class="row" style="overflow-y: scroll; height:148px">
+				<div class="col">
+                    <h3>
+						<i class="icon-info mr-1 color-main-600"></i>
+						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
+					</h3>
+					<div style="overflow-y: scroll; height:120px" v-html="observarData"></div>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col"><hr>
+					<DxButton @click="popupObs=false" class="nb">
+						<template #default>
+							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+								<b><i class="icon-database-remove"></i></b> Salir
+							</span>
+						</template>
+					</DxButton>
+				</div>
+			</div>
+		</DxPopup>
+
 	</div>
 </template>
 
@@ -307,7 +341,7 @@ import {
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
-import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup } from "devextreme-vue";
+import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
@@ -315,6 +349,7 @@ export default {
 	name: "Legislaciones",
 	components: {
 		// Commands,
+        DxPopup,
 		DxButton,
 		DxColumn,
 		DxPatternRule,
@@ -339,16 +374,22 @@ export default {
 		DxValidator,
 		DxValidationGroup,
 		Geo: () => import("@/components/element/geo"),
+		Observaciones: () => import("@/components/element/html_editor"),
 		Documentos: () => import("@/components/element/documentos"),
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		group: {
+		titlecolum:{
+			type: String,
+			default: () => 'ind_dsg_registration_title',
+		},group: {
 			type: Object,
 			default: () => null,
 		},
 	},
 	data: () => ({
+		popupObs: false,
+		observarData: null,
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -379,7 +420,9 @@ export default {
             category_id: null,
             colciencias_call_id: null,
             date_of_publication: null,
-            geo_city_id: null,
+                        geo_city_id: null,
+			geo_state_id: null,
+			geo_country_id: null,
             issuing_entity: null,
             product_type_id: null,
             regulation_type_id: null,
@@ -434,6 +477,11 @@ export default {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		
+        verObservar(data){
+            root.observarData=data.observation;
+            root.baseObj[root.titlecolum]=data[root.titlecolum];
+            root.popupObs= !root.popupObs ? true : false ;
+        },		
 		
 		requisitoArchivo(){
 			let tipos=root.tiposDocumento;

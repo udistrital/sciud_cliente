@@ -15,8 +15,8 @@
 		{ "name": "capitulo_libro_documento", "id": 24 },
 		{ "name": "circuito_categoria", "id": 33 },
 		{ "name": "circuito_documento", "id": 43 },
-		{ "name": "coleccion_cientifica_categoria", "id": 39 },
-		{ "name": "coleccion_cientifica_documento", "id": 49 },
+		{ "name": "coleccion_cientiica_categoria", "id": 39 },
+		{ "name": "coleccion_cientiica_documento", "id": 49 },
 		{ "name": "concepto_tecnico_categoria", "id": 96 },
 		{ "name": "concepto_tecnico_documento", "id": 97 },
 		{ "name": "diseno_industrial_categoria", "id": 32 },
@@ -91,10 +91,26 @@
 		{ "name": "unidad_estado", "id": 1 },
 		{ "name": "unidad_linea_investigacion", "id": 53 },
 		{ "name": "unidad_rol_participante", "id": 31 },
-		{ "name": "unidad_tipo_documento", "id": 22 },
+		{ "name": "unidad_tipo_documento", "id": 21 },
 		{ "name": "unidad_tipo", "id": 2 },
 		{ "name": "variedad_vegetal_categoria", "id": 16 },
 		{ "name": "variedad_vegetal_documento", "id": 26 },
-		{ "name": "variedad_vegetal_estado_peticion", "id": 64 }
+		
+		{ "name": "variedad_vegetal_estado_peticion", "id": 64 },
+		{ "name": "acto_legislativo_categoria", "id": 92 },
+		{ "name": "acto_legislativo_documento", "id": 93 },
+		{ "name": "guia_forence_categoria", "id": 84 },
+		{ "name": "guia_forence_documento", "id": 85 },
+		{ "name": "manuales_modelos_categoria", "id": 86 },
+		{ "name": "manuales_modelos_documento", "id": 87 },
+		{ "name": "protocolo_vigilancia_categoria", "id": 90 },
+		{ "name": "protocolo_vigilancia_documento", "id": 91 },
+		{ "name": "protocolos_atencion_categoria", "id": 88 },
+		{ "name": "protocolos_atencion_documento", "id": 89 },
+		{ "name": "proyecto_ley_categoria", "id": 94 },
+		{ "name": "proyecto_ley_documento", "id": 95 },
+		{ "name": "registro_licencia_obra_categoria", "id": 98 },
+		{ "name": "registro_licencia_obra_documento", "id": 99 }
+
 	]
 }

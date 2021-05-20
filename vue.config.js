@@ -3,8 +3,7 @@ var webpack = require("webpack");
 module.exports = {
 	productionSourceMap: process.env.NODE_ENV !== "production",
 	// publicPath: process.env.BASE_URL,
-	// publicPath: process.env.NODE_ENV === "production" ? (window.location.href.indexOf("nemedi") > -1 ? "/udistrital/siciud-v2/" : "/") : "/",
-	publicPath: "/",
+	publicPath: process.env.NODE_ENV === "production" ? "/udistrital/siciud-v2/" : "/",
 	// publicPath: process.env.NODE_ENV === "production" ? "/siciud-v2/" : "/",
 	// https://stackoverflow.com/a/60402866
 	// https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
