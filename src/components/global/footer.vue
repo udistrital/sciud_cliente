@@ -49,7 +49,7 @@ export default {
 	}),
 	watch: {
 		$route(to) {
-			this.showDev = to.name !== "login" && !this.authenticated && this.env.name === "Development";
+			this.showDev = to.name !== "login" && !this.authenticated && this.isDev;
 		},
 	},
 	methods: {

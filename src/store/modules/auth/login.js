@@ -107,16 +107,21 @@ const store = {
 		},
 		oasInit: ({ commit, state }, callback) => {
 			// Construye el objeto OAS
-			let url = window.vm.env.url;
 			let cfg = window.config.auth.oidc;
-			cfg["REDIRECT_URL"] = cfg["REDIRECT_URL"].replace("{baseUrl}", url);
+			let url = "https://support.nemedi.com/udistrital/siciud-v2";
+			let cUrl = window.location.href.toLowerCase();
+			if (cUrl.indexOf("pruebassiciud.") > -1) {
+				url = "https://pruebassiciud.portaloas.udistrital.edu.co";
+			} else if (cUrl.indexOf("siciud.") > -1) {
+				url = "https://siciud.portaloas.udistrital.edu.co";
+			}
+			cfg["REDIRECT_URL"] = url;
 			cfg["SIGN_OUT_REDIRECT_URL"] = cfg["SIGN_OUT_REDIRECT_URL"].replace("{baseUrl}", url);
 			oidc.setGeneral(cfg);
-			// commit("authLogout");
 			if (isFunction(callback)) callback(false);
 		},
 		oasLogin: ({ commit, state }) => {
-			oidc.getAuthorizationUrl(true);
+			oidc.getAuthorizationUrl();
 		},
 		oasLoginData: async ({ commit, dispatch, state }, args) => {
 			console.log(window.vm.$sep);

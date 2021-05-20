@@ -222,9 +222,6 @@ vue.mixin({
 		isDev() {
 			return process.env.NODE_ENV.toString().toLowerCase() === "development";
 		},
-		env() {
-			return window.config.env[process.env.NODE_ENV.toString().toLowerCase()];
-		},
 		baseUrl() {
 			return process.env.BASE_URL;
 		},

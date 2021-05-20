@@ -2,18 +2,6 @@
 	"debug": false,
 	"pageSize": 20,
 	"pageSizes": [10, 20, 50],
-	"env": {
-		"development": {
-			"name": "dev",
-			"url": "http://localhost:4500",
-			"urlDocs": "http://antares:3000"
-		},
-		"production": {
-			"name": "prod",
-			"url": "https://support.nemedi.com/udistrital/siciud-v2",
-			"urlDocs": "https://siciud-v2-api.nemedi.com"
-		}
-	},
 	"api": {
 		"rest": {
 			"token_name": "siciud_token",
