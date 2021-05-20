@@ -115,14 +115,14 @@ const store = {
 			} else if (cUrl.indexOf("siciud.") > -1) {
 				url = "https://siciud.portaloas.udistrital.edu.co";
 			}
-			cfg["REDIRECT_URL"] = url;
+			cfg["REDIRECT_URL"] = url + "/login";
 			cfg["SIGN_OUT_REDIRECT_URL"] = cfg["SIGN_OUT_REDIRECT_URL"].replace("{baseUrl}", url);
 			oidc.setGeneral(cfg);
 			console.log("cfg =>", cfg);
 			if (isFunction(callback)) callback(false);
 		},
 		oasLogin: ({ commit, state }) => {
-			oidc.getAuthorizationUrl(true);
+			oidc.getAuthorizationUrl();
 		},
 		oasLoginData: async ({ commit, dispatch, state }, args) => {
 			console.log(window.vm.$sep);
