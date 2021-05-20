@@ -116,7 +116,7 @@ const store = {
 			if (isFunction(callback)) callback(false);
 		},
 		oasLogin: ({ commit, state }) => {
-			oidc.getAuthorizationUrl();
+			oidc.getAuthorizationUrl(true);
 		},
 		oasLoginData: async ({ commit, dispatch, state }, args) => {
 			console.log(window.vm.$sep);
