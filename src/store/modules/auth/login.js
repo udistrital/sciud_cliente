@@ -118,10 +118,11 @@ const store = {
 			cfg["REDIRECT_URL"] = url;
 			cfg["SIGN_OUT_REDIRECT_URL"] = cfg["SIGN_OUT_REDIRECT_URL"].replace("{baseUrl}", url);
 			oidc.setGeneral(cfg);
+			console.log("cfg =>", cfg);
 			if (isFunction(callback)) callback(false);
 		},
 		oasLogin: ({ commit, state }) => {
-			oidc.getAuthorizationUrl();
+			oidc.getAuthorizationUrl(true);
 		},
 		oasLoginData: async ({ commit, dispatch, state }, args) => {
 			console.log(window.vm.$sep);
