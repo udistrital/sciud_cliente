@@ -80,8 +80,9 @@ export default {
 	// 202009240640: Disable console
 	// https://stackoverflow.com/a/1216743
 	checkConsole: function() {
-		let env = process.env.NODE_ENV.toString().toLowerCase();
-		if (env === "production") {
+		// 202105201242: Desabilita la consola solo para el entorno productivo
+		let cUrl = window.location.href.toLowerCase();
+		if (cUrl.indexOf("siciud.") > -1) {
 			if (!window.console) window.console = {};
 			var methods = ["log", "debug", "warn", "info", "dir", "dirxml", "trace", "profile"];
 			for (var i = 0; i < methods.length; i++) {

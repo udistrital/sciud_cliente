@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210514 - ©{{ year }}
+				SICIUD v2.0.20210520 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -49,7 +49,7 @@ export default {
 	}),
 	watch: {
 		$route(to) {
-			this.showDev = to.name !== "login" && !this.authenticated && this.env.name === "Development";
+			this.showDev = to.name !== "login" && !this.authenticated && this.isDev;
 		},
 	},
 	methods: {

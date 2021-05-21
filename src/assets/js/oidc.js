@@ -130,6 +130,14 @@ export function getHeader() {
 
 export function getAuthorizationUrl(newWindow = false) {
 	params = GENERAL.ENTORNO.TOKEN;
+	// 202105201048: Cliente ID por entorno
+	let clientId = params.CLIENTE_ID_DEV;
+	let cUrl = window.location.href.toLowerCase();
+	if (cUrl.indexOf("pruebassiciud.") > -1) {
+		clientId = params.CLIENTE_ID_TEST;
+	} else if (cUrl.indexOf("siciud.") > -1) {
+		clientId = params.CLIENTE_ID_PROD;
+	}
 	if (!params.nonce) {
 		params.nonce = generateState();
 	}
@@ -140,7 +148,7 @@ export function getAuthorizationUrl(newWindow = false) {
 		params.AUTORIZATION_URL +
 		"?" +
 		"client_id=" +
-		encodeURIComponent(params.CLIENTE_ID) +
+		encodeURIComponent(clientId) +
 		"&" +
 		"redirect_uri=" +
 		encodeURIComponent(params.REDIRECT_URL) +
@@ -157,9 +165,10 @@ export function getAuthorizationUrl(newWindow = false) {
 		url += "&nonce=" + encodeURIComponent(params.nonce);
 	}
 	url += "&state=" + encodeURIComponent(params.state);
+	console.log("params", params);
+	console.log("url", url);
 	if (newWindow) window.open(url);
 	else window.location = url;
-	return url;
 }
 
 export function generateState() {
