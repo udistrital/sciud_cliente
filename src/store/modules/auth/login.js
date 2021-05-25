@@ -56,6 +56,10 @@ const store = {
 			let userOas = oasDecodeUser(args.qs.id_token);
 			console.log("userOas", userOas);
 			let doc = userOas.documento;
+
+			// 202105242205: Guarda el token para las consultas posteriores
+			window.sessionStorage.setItem(window.config.api.oas.token_name, args.qs.access_token);
+
 			// 202104142017: Si no hay documento ES RESPUESTA GOOGLE, debe obtenerlo
 			if (typeof doc === "undefined") {
 				let externalWithRol = await dispatch("auth/usuario/getOasStudent", { email: userOas.email, token: args.qs.access_token }, { root: true });
