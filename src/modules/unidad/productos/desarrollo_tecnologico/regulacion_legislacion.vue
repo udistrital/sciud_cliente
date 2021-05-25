@@ -73,9 +73,6 @@ regulation=endpoindt especifico endpoinds tutas generales update
 		:data-source="subtipos" 
 		display-expr="st_name"
 		value-expr="id">
-    <DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
 	</DxSelectBox>
 	</div>
 </div>
@@ -95,7 +92,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 				item-template="item"
 			>
 				<template #item="{ data }">
-					<div>{{ data.title }} de {{ data.year }}</div>
+					<div>{{ data.name }} de {{ data.year }}</div>
 				</template>
 			</DxSelectBox>
 		</div>
@@ -154,8 +151,9 @@ regulation=endpoindt especifico endpoinds tutas generales update
 
 <div class="col-md-12">
 	<label>Lugar de Obtención: </label>
-<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+	<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 </div>
+
 <div class="col-md-12">
 	<div class="form-group">
 	<label>Observación: </label>
@@ -165,8 +163,6 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	</DxTextArea>
 	</div>
 </div>
-
-
 
 <div class="col-md-12" v-if="tiposDocumento.length>0">
 	<div class="card-body" v-html="requisitoArchivo()"></div>
@@ -293,14 +289,15 @@ regulation=endpoindt especifico endpoinds tutas generales update
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+        
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>
 						<i class="icon-info mr-1 color-main-600"></i>
 						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
 					</h3>
-					<div style="overflow-y: scroll; height:120px" v-html="observarData"></div>
+					<div v-html="observarData"></div>
 				</div>
 			</div>
             <div class="row">

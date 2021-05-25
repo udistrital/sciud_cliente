@@ -66,6 +66,8 @@ export default (source = "rest", args = {}) => {
 
 	// 202105201104: Se envía
 	// 202105201115: Ajustado para entornos UD
+	console.log("isDev =>", isDev);
+	isDev = true;
 	if (source === "oas" || source === "oas_mid" || isDev) {
 		base = window.config.api.oas;
 		if (source === "oas") axiosConfig.baseURL = base.url;
@@ -75,7 +77,7 @@ export default (source = "rest", args = {}) => {
 		let token = window.sessionStorage.getItem(base.token_name);
 		// 202103120344: Si se recibe un token en args lo usa
 		if (typeof args.token !== "undefined") token = args.token;
-		// console.log("tokenOas", token);
+		console.log("tokenOas", token);
 		axiosConfig.headers["Authorization"] = `Bearer ${token}`;
 		// axiosConfig.headers["Authorization"] = `${token}`;
 	}

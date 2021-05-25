@@ -303,7 +303,7 @@ export default {
 	}),
 	created() {
 		root = this;
-		root.docLink = root.baseUrl + "view/";
+		root.docLink = root.baseUrl + "view/index.html";
 		console.log("root.tipos", root.tipos);
 	},
 	mounted() {
@@ -471,7 +471,7 @@ export default {
 					console.log("blob", blob);
 					// 202105101656: https://stackoverflow.com/a/24548869
 					var url = URL.createObjectURL(blob);
-					root.docLink = root.baseUrl + "view/?file=" + encodeURIComponent(url);
+					root.docLink = root.baseUrl + "view/index.html?file=" + encodeURIComponent(url);
 					root.popupVisible = true;
 					root.loaderHide();
 				} catch (error) {

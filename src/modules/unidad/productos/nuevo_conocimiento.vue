@@ -2,37 +2,30 @@
 	<div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true" ref="tabPanel">
-				<DxItem title="Libros Resultados de Investigación">
-					<template #default>
-						<Libro :group="group" :editMode="editMode" />
-					</template>
-				</DxItem>
 				<DxItem title="Artículos">
 					<template #default>
 						<Articulo :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-
-				<DxItem title="Notas Científicas">
-					<template #default>
-						<Nota :group="group" :editMode="editMode" />
-					</template>
-				</DxItem>
+				
 				<DxItem title="Capítulos de Libro">
 					<template #default>
 						<Capitulo :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				<DxItem title="Patentes">
+
+				<DxItem title="Libros Resultados de Investigación">
 					<template #default>
-						<Patente :group="group" :editMode="editMode" />
+						<Libro :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				<DxItem title="Nuevas Variedades Vegetales">
+				
+				<DxItem title="Notas Científicas">
 					<template #default>
-						<Vegetales :group="group" :editMode="editMode" />
+						<Nota :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
+				
 				<DxItem title="Nuevas Razas Animales">
 					<template #default>
 						<NuevaRaza :group="group" :editMode="editMode" />
@@ -43,11 +36,26 @@
 						<Poblacion :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
+
+				<DxItem title="Nuevas Variedades Vegetales">
+					<template #default>
+						<Vegetales :group="group" :editMode="editMode" />
+					</template>
+				</DxItem>		
+				
 				<DxItem title="Obras de Investigación o Creación">
 					<template #default>
 						<Obra :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
+
+				<DxItem title="Patentes">
+					<template #default>
+						<Patente :group="group" :editMode="editMode" />
+					</template>
+				</DxItem>
+
+				
 			</DxTabPanel>
 		</div>
 	</div>
