@@ -303,7 +303,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 						<i class="icon-info mr-1 color-main-600"></i>
 						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
 					</h3>
-					<div style="overflow-y: scroll; height:120px" v-html="observarData"></div>
+					<div v-html="observarData"></div>
 				</div>
 			</div>
             <div class="row">

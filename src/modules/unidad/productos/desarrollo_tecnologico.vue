@@ -2,108 +2,53 @@
 	<div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
-				<DxItem title="Diseño Industrial">
+				<DxItem title="Acto Legislativo">
 					<template #default>
-						<Diseno :group="group" :editMode="editMode" />
+						<ActoLegislativo 
+							:group="group" 
+							:editMode="editMode" 
+							title="Actos Legislativos"
+							endPointRute="protocol_acts"
+							objEpdata="protocol_act"
+							titleBtn="Nuevo Acto Legislativo"	
+							titlecolum="title"
+						/>
 					</template>
 				</DxItem>
-				<DxItem title="Esquema de Circuíto">
-					<template #default>
-						<Circuito :group="group" :editMode="editMode" />
-					</template>
-				</DxItem>
-				<DxItem title="Software">
-					<template #default>
-						<Software :group="group" :editMode="editMode" />
-					</template>
-				</DxItem>
-				<DxItem title="Planta Piloto">
-					<template #default>
-						<Planta :group="group" :editMode="editMode" title="Planta Piloto" />
-					</template>
-				</DxItem>
-				<DxItem title="Planta Industrial">
-					<template #default>
-						<Plantab :group="group" :editMode="editMode" title="Planta Industrial" />
-					</template>
-				</DxItem>
-				<DxItem title="Registro Científico">
-					<template #default>
-						<Registro :group="group" :editMode="editMode" />
-					</template>
-				</DxItem>
-				<DxItem title="Conceptos Tecnicos">
-					<template #default>
-						<TechnicalConcept :group="group" :editMode="editMode" title="Conseptos Tecnicos"/>
-					</template>
-				</DxItem>
-				<DxItem title="Signos Distintivos">
-					<template #default>
-						<SignosDistintivos :group="group" :editMode="editMode" title="Signos Distintivos"/>
-					</template>
-				</DxItem>
-				<DxItem title="Productos Nautraceúticos">
-					<template #default>
-						<ProductosNutraceuticos :group="group" :editMode="editMode" title="Productos Nautraceúticos"/>
-					</template>
-				</DxItem>
+
 				<DxItem title="Colección Científica">
 					<template #default>
 						<ColeccionCientifica :group="group" :editMode="editMode" title="Colección Científica"/>
 					</template>
 				</DxItem>
-				<DxItem title="Secreto Empresarial">
+
+				<DxItem title="Conceptos Tecnicos">
 					<template #default>
-						<SecretoEmpresarial :group="group" :editMode="editMode" title="Secreto Empresarial"/>
+						<TechnicalConcept :group="group" :editMode="editMode" title="Conseptos Tecnicos"/>
 					</template>
 				</DxItem>
-				<DxItem title="Innovación Generada">
+
+				<DxItem title="Diseño Industrial">
 					<template #default>
-						<InnovacionGenerada :group="group" :editMode="editMode" title="Secreto Empresarial"/>
+						<Diseno :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				<DxItem title="Innovación Procedimiento">
-					<template #default>
-						<InnovacionProcedimiento :group="group" :editMode="editMode" title="Secreto Empresarial"/>
-					</template>
-				</DxItem>
-				<DxItem title="Empresas de Bases Tecnológicas">
-					<template #default>
-						<EmpresaBase :group="group" :editMode="editMode" title="Empresarial"/>
-					</template>
-				</DxItem>
+
 				<DxItem title="Empresas Creativas y Culturales">
 					<template #default>
 						<EmpresaCreativa :group="group" :editMode="editMode" title="Empresarial"/>
 					</template>
 				</DxItem>
 
-				<DxItem title="Normas">
+				<DxItem title="Empresas de Bases Tecnológicas">
 					<template #default>
-						<RegulacionNorma :group="group" :editMode="editMode" title="Empresarial"/>
+						<EmpresaBase :group="group" :editMode="editMode" title="Empresarial"/>
 					</template>
 				</DxItem>
 
-				<DxItem title="Regulaciones">
+				<DxItem title="Esquema de Circuíto">
 					<template #default>
-						<Regulacion :group="group" :editMode="editMode" title="Empresarial"/>
-					</template>
-				</DxItem>
-
-				<DxItem title="Reglamentos">
-					<template #default>
-						<RegulacionReglamento :group="group" :editMode="editMode" title="Empresarial"/>
-					</template>
-				</DxItem>
-				<DxItem title="Legislaciones">
-					<template #default>
-						<RegulacionLegislacion :group="group" :editMode="editMode" title="Empresarial"/>
-					</template>
-				</DxItem>
-
-				<DxItem title="Guias Practicas Clinica">
-					<template #default>
-						<GuiaPracticaClinica :group="group" :editMode="editMode" title="Empresarial"/>
+						<Circuito :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
 
@@ -125,7 +70,30 @@
 					</template>
 				</DxItem>
 
+				<DxItem title="Guias Practicas Clinica">
+					<template #default>
+						<GuiaPracticaClinica :group="group" :editMode="editMode" title="Empresarial"/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Innovación Generada">
+					<template #default>
+						<InnovacionGenerada :group="group" :editMode="editMode" title="Secreto Empresarial"/>
+					</template>
+				</DxItem>
+
+
+				<DxItem title="Innovación Procedimiento">
+					<template #default>
+						<InnovacionProcedimiento :group="group" :editMode="editMode" title="Secreto Empresarial"/>
+					</template>
+				</DxItem>
 				
+				<DxItem title="Legislaciones">
+					<template #default>
+						<RegulacionLegislacion :group="group" :editMode="editMode" title="Empresarial"/>
+					</template>
+				</DxItem>
 
 				<DxItem title="Manuales y Modelos de Atención">
 					<template #default>
@@ -139,6 +107,12 @@
 						titleBtn="Nuevo Manuales o Modelo"	
 						titlecolum="title"
 						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Normas">
+					<template #default>
+						<RegulacionNorma :group="group" :editMode="editMode" title="Empresarial"/>
 					</template>
 				</DxItem>
 
@@ -157,8 +131,23 @@
 					</template>
 				</DxItem>
 
+				<DxItem title="Productos Nautraceúticos">
+					<template #default>
+						<ProductosNutraceuticos :group="group" :editMode="editMode" title="Productos Nautraceúticos"/>
+					</template>
+				</DxItem>
 
+				<DxItem title="Planta Industrial">
+					<template #default>
+						<Plantab :group="group" :editMode="editMode" title="Planta Industrial" />
+					</template>
+				</DxItem>
 
+				<DxItem title="Planta Piloto">
+					<template #default>
+						<Planta :group="group" :editMode="editMode" title="Planta Piloto" />
+					</template>
+				</DxItem>
 
 				<DxItem title="Protocolos Epidemiológicos">
 					<template #default>
@@ -173,22 +162,7 @@
 						/>
 					</template>
 				</DxItem>
-
-
-				<DxItem title="Acto Legislativo">
-					<template #default>
-						<ActoLegislativo 
-							:group="group" 
-							:editMode="editMode" 
-							title="Actos Legislativos"
-							endPointRute="protocol_acts"
-							objEpdata="protocol_act"
-							titleBtn="Nuevo Acto Legislativo"	
-							titlecolum="title"
-						/>
-					</template>
-				</DxItem>
-
+				
 				<DxItem title="Proyecto de Ley">
 					<template #default>
 						<ProyectoLey 
@@ -202,7 +176,12 @@
 						/>
 					</template>
 				</DxItem>
-				<!-- LicenciasObras -->
+				
+				<DxItem title="Registro Científico">
+					<template #default>
+						<Registro :group="group" :editMode="editMode" />
+					</template>
+				</DxItem>
 				<DxItem title="Registros de Acuerdos de Licencia">
 					<template #default>
 						<LicenciasObras 
@@ -216,7 +195,38 @@
 						/>
 					</template>
 				</DxItem>
-			
+
+				<DxItem title="Reglamentos">
+					<template #default>
+						<RegulacionReglamento :group="group" :editMode="editMode" title="Empresarial"/>
+					</template>
+				</DxItem>
+				
+				<DxItem title="Regulaciones">
+					<template #default>
+						<Regulacion :group="group" :editMode="editMode" title="Empresarial"/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Secreto Empresarial">
+					<template #default>
+						<SecretoEmpresarial :group="group" :editMode="editMode" title="Secreto Empresarial"/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Signos Distintivos">
+					<template #default>
+						<SignosDistintivos :group="group" :editMode="editMode" title="Signos Distintivos"/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Software">
+					<template #default>
+						<Software :group="group" :editMode="editMode" />
+					</template>
+				</DxItem>
+				
+				
 			</DxTabPanel>
 		</div>
 	</div>
