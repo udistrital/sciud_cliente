@@ -1,41 +1,45 @@
 {
-	"debug": false,
-	"pageSize": 20,
-	"pageSizes": [10, 20, 50],
-	"api": {
-		"rest": {
-			"token_name": "siciud_token",
-			"url_dev": "https://siciud-v2-api.nemedi.com/api/v1",
-			"url_prod": "https://autenticacion.portaloas.udistrital.edu.co/apioas/siciud_crud/v1"
-		},
-		"oas": {
-			"token_name": "oas_token",
-			"token_value": "11f37a52-ad0e-3cd1-9f6c-42e3d2fef56f",
-			"url": "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
-		}
-	},
-	"nuxeo": {
-		"baseURL": "https://documental.portaloas.udistrital.edu.co/nuxeo/",
-		"auth": {
-			"method": "basic",
-			"username": "desarrollooas",
-			"password": "desarrollooas2019"
-		}
-	},
-	"auth": {
-		"oidc": {
-			"AUTENTICACION_MID": "https://autenticacion.portaloas.udistrital.edu.co/apioas/autenticacion_mid/v1/token/",
-			"AUTORIZATION_URL": "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
-			"CLIENTE_ID_DEV": "k1wCyBLq8NYU1KOXF0ufhBmSKOEa",
-			"CLIENTE_ID_PROD": "ZSQlaLMp0LBjSZO8VkHu1m_Nb8ca",
-			"CLIENTE_ID_TEST": "C9f5WUJjiq4Cd3_1KvGg0u8M06ca",
-			"REDIRECT_URL": "{baseUrl}/login",
-			"RESPONSE_TYPE": "id_token token",
-			"SCOPE": "openid email",
-			"SIGN_OUT_APPEND_TOKEN": "true",
-			"SIGN_OUT_REDIRECT_URL": "{baseUrl}",
-			"SIGN_OUT_URL": "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
-			"URL_USER_INFO": "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo"
-		}
-	}
+    "debug":  false,
+    "pageSize":  20,
+    "pageSizes":  [
+                      10,
+                      20,
+                      50
+                  ],
+    "api":  {
+                "rest":  {
+                             "token_name":  "siciud_token",
+                             "url_dev":  "https://siciud-v2-api.nemedi.com/api/v1",
+                             "url_prod":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/siciud_crud/v1"
+                         },
+                "oas":  {
+                            "token_name":  "oas_token",
+                            "token_value":  "11f37a52-ad0e-3cd1-9f6c-42e3d2fef56f",
+                            "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
+                        }
+            },
+    "nuxeo":  {
+                  "baseURL":  "https://documental.portaloas.udistrital.edu.co/nuxeo/",
+                  "auth":  {
+                               "method":  "basic",
+                               "username":  "desarrollooas",
+                               "password":  "desarrollooas2019"
+                           }
+              },
+    "auth":  {
+                 "oidc":  {
+                              "AUTENTICACION_MID":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/autenticacion_mid/v1/token/",
+                              "AUTORIZATION_URL":  "https://autenticacion.portaloas.udistrital.edu.co/oauth2/authorize",
+                              "CLIENTE_ID_DEV":  "k1wCyBLq8NYU1KOXF0ufhBmSKOEa",
+                              "CLIENTE_ID_PROD":  "ZSQlaLMp0LBjSZO8VkHu1m_Nb8ca",
+                              "CLIENTE_ID_TEST":  "C9f5WUJjiq4Cd3_1KvGg0u8M06ca",
+                              "REDIRECT_URL":  "{baseUrl}/login",
+                              "RESPONSE_TYPE":  "id_token token",
+                              "SCOPE":  "openid email",
+                              "SIGN_OUT_APPEND_TOKEN":  "true",
+                              "SIGN_OUT_REDIRECT_URL":  "{baseUrl}",
+                              "SIGN_OUT_URL":  "https://autenticacion.portaloas.udistrital.edu.co/oidc/logout",
+                              "URL_USER_INFO":  "https://autenticacion.portaloas.udistrital.edu.co/oauth2/userinfo"
+                          }
+             }
 }

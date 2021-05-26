@@ -87,8 +87,10 @@ const store = {
 
 		async getOasStudent({ commit, state, dispatch }, args) {
 			console.log("getOasStudent", args);
+			let usr = args.email;
+			// let usr = args.email.split("@")[0];
 			return await api("oas_mid", { token: args.token })
-				.post("userRol", { user: args.email.split("@")[0] })
+				.post("userRol", { user: usr })
 				.then((r) => {
 					return r.data;
 				});
