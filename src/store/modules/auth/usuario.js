@@ -137,6 +137,22 @@ const store = {
 				});
 		},
 
+		updateUser({ commit, state, dispatch }, args) {
+			console.log("updateUser =>", args);
+			let u = args.user;
+			let o = {
+				identification_number: u.identification_number,
+				oas_user_id: u.oas_user_id,
+				user_role_id: u.user_role_id,
+				updated_by: u.updated_by,
+			};
+			api()
+				.put(`users/${u.id}`, { user: o })
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+
 		async getUser({ commit, state, dispatch }, id) {
 			console.log("SEND", id);
 			return await api()
