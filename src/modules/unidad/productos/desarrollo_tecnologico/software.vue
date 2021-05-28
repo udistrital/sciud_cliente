@@ -136,7 +136,7 @@
 									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
 								</div>
 
-								<div class="col-md-12">
+								<!-- <div class="col-md-12">
 									<div class="form-group">
 										<label>Descripción del Análisis, Diseño, Implementación y Validación: </label>
 										<DxTextArea
@@ -148,11 +148,19 @@
 										>
 										</DxTextArea>
 									</div>
+								</div> -->
+
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Descripción del Análisis, Diseño, Implementación y Validación: </label>
+										<Observaciones :syncValue.sync="baseObj" placeholder="Descripción del Análisis, Diseño, Implementación y Validación"/>
+									</div>
 								</div>
 
+
 								<div class="col-md-12" v-if="tiposDocumento.length>0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div>
 								<!-- fin formulario -->
 							</div>
 						</div>

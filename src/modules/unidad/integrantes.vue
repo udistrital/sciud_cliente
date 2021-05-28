@@ -455,7 +455,7 @@ export default {
 					}
 
 					// 202103171645: Verifica que el usuario exista en la OAS
-					let u = await root.getOasUser(id);
+					let u = await root.getOasUser({ doc: id });
 					if (!("TerceroId" in u)) {
 						let m = `El documento "${id}" no se encuentra registrado<br>en el `;
 						m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
@@ -543,7 +543,7 @@ export default {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 	},
 	methods: {
-		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
+		...mapActions("unidad", ["getUnit", "getResearcher", "getResearchers", "saveResearcher", "updateResearcher"]),
 		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
 		cmdVisible(data) {
 			// console.log("cmdVisible", e);

@@ -134,15 +134,20 @@
 									</div>
 								</div>
 
-								<div class="col-md-12">
+								<!-- <div class="col-md-12">
 									<div class="form-group">
 										<label>Anotaciones: </label>
 										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.dw_observation" placeholder="Anotaciones" class="form-control">
 											<DxValidator> </DxValidator>
 										</DxTextArea>
 									</div>
-								</div>
-
+								</div> -->
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Anotaciones: </label>
+										<Observaciones :syncValue.sync="baseObj"/>
+									</div>
+								</div>	
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -398,6 +403,7 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
+			observation:null,
 			category_id: null,
 			colciencias_call_id: null,
 			dw_title: null,
@@ -528,6 +534,7 @@ export default {
 
 		save() {
 			console.log(this.$sep);
+			root.baseObj.dw_observation=root.baseObj.observation;
 			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
 			if (result.isValid) {
@@ -564,7 +571,7 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
-
+			root.baseObj.observation=root.baseObj.dw_observation;
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});

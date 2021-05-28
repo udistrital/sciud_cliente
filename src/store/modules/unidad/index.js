@@ -98,10 +98,10 @@ const store = {
 					dispatch("getMembersOas", args);
 				});
 		},
-		// 202103171451: Guarda un investigador
+		// 202105280535: Obtiene un investigador
 		async getResearcher({ commit, state, dispatch }, id) {
 			return await api()
-				.get(`researcher?identification_number=${id}`)
+				.get(`researchers?identification_number=${id}`)
 				.then((r) => {
 					return r.data;
 				});

@@ -470,7 +470,7 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("auth/usuario", ["getUser", "saveUser", "saveUserOas", "updateUser", "getOasUsers", "getOasUser"]),
+		...mapActions("auth/usuario", ["getUser", "saveUser", "saveUserOas", "updateUser", "activeUser", "getOasUsers", "getOasUser"]),
 		search() {
 			console.log("DOC", this.baseObj.identification_number);
 		},
@@ -590,7 +590,7 @@ export default {
 					usr.active = state;
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
 					root.loaderShow();
-					root.updateUser({
+					root.activeUser({
 						user: usr,
 						cb: function(result) {
 							console.log("Result", result);

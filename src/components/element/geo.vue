@@ -35,9 +35,9 @@
 					value-expr="id"
 					@value-changed="gCities"
 				>
-					<DxValidator>
+					<!-- <DxValidator>
 						<DxRequiredRule />
-					</DxValidator>
+					</DxValidator> -->
 				</DxSelectBox>
 			</div>
 		</div>
@@ -55,9 +55,9 @@
 					display-expr="name"
 					value-expr="id"
 				>
-					<DxValidator>
+					<!-- <DxValidator>
 						<DxRequiredRule />
-					</DxValidator>
+					</DxValidator> -->
 				</DxSelectBox>
 			</div>
 		</div>
