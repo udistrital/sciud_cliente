@@ -87,8 +87,10 @@ const store = {
 
 		async getOasStudent({ commit, state, dispatch }, args) {
 			console.log("getOasStudent", args);
+			let usr = args.email;
+			// let usr = args.email.split("@")[0];
 			return await api("oas_mid", { token: args.token })
-				.post("userRol", { user: args.email.split("@")[0] })
+				.post("userRol", { user: usr })
 				.then((r) => {
 					return r.data;
 				});
@@ -130,6 +132,22 @@ const store = {
 			console.log("saveUser =>", args);
 			api()
 				.post(`users`, { user: args.user })
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+
+		updateUser({ commit, state, dispatch }, args) {
+			console.log("updateUser =>", args);
+			let u = args.user;
+			let o = {
+				identification_number: u.identification_number,
+				oas_user_id: u.oas_user_id,
+				user_role_id: u.user_role_id,
+				updated_by: u.updated_by,
+			};
+			api()
+				.put(`users/${u.id}`, { user: o })
 				.then((r) => {
 					args.cb(r.data);
 				});

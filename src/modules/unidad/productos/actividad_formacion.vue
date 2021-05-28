@@ -64,6 +64,7 @@
 				</DxItem> -->
 			</DxTabPanel>
 		</div>
+
 	</div>
 </template>
 

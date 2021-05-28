@@ -88,12 +88,14 @@ vue.mixin({
 		// 202011142222:
 		this.$global();
 
-		// 202103081850: Carga los roles de usuario globalmente
-		this.getAllRoles();
-
-		// 202103311032: Carga tipos y subtipos
-		this.getTypes();
-		this.getSubtypes();
+		// 202105242012: Se
+		if (this.user !== null && this.user.local !== null && typeof this.user.local !== "undefined") {
+			// 202103081850: Carga los roles de usuario globalmente
+			this.getAllRoles();
+			// 202103311032: Carga tipos y subtipos
+			this.getTypes();
+			this.getSubtypes();
+		}
 
 		// 202010220211: Verifica autenticación con intervalo en MS
 		// if (!window.authChecking) {
@@ -221,9 +223,6 @@ vue.mixin({
 		},
 		isDev() {
 			return process.env.NODE_ENV.toString().toLowerCase() === "development";
-		},
-		env() {
-			return window.config.env[process.env.NODE_ENV.toString().toLowerCase()];
 		},
 		baseUrl() {
 			return process.env.BASE_URL;

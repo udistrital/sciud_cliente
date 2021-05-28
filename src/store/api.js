@@ -36,10 +36,16 @@ export default (source = "rest", args = {}) => {
 
 	// TODO: 202009241630: Generar el token local cuando es usuario OAS
 	let base = window.config.api.rest;
+
+	// 202105201059: Url dependiendo el entorno
+	let url = base.url_dev;
+	let cUrl = window.location.href.toLowerCase();
+	let isDev = cUrl.indexOf("pruebassiciud.") > -1 || cUrl.indexOf("siciud.") > -1;
+	if (isDev) url = base.url_prod;
+
 	// 202011260213: https://stackoverflow.com/a/6941653
-	// let origin = location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
 	let axiosConfig = {
-		baseURL: base.url,
+		baseURL: url,
 		withCredentials: false,
 		headers: {
 			Accept: "application/json",
@@ -47,9 +53,6 @@ export default (source = "rest", args = {}) => {
 			"Content-Type": "application/json",
 		},
 	};
-	// if (source === "rest") {
-	// 	axiosConfig.headers["Authorization"] = `Bearer ${token}`;
-	// }
 	if (source === "local") {
 		axiosConfig.baseURL = `${process.env.BASE_URL}data/`;
 		axiosConfig.transformRequest = [
@@ -60,15 +63,21 @@ export default (source = "rest", args = {}) => {
 			},
 		];
 	}
-	if (source === "oas" || source === "oas_mid") {
+
+	// 202105201104: Se envía
+	// 202105201115: Ajustado para entornos UD
+	console.log("isDev =>", isDev);
+	isDev = true;
+	if (source === "oas" || source === "oas_mid" || isDev) {
 		base = window.config.api.oas;
-		axiosConfig.baseURL = source === "oas" ? base.url : window.config.auth.oidc.AUTENTICACION_MID;
+		if (source === "oas") axiosConfig.baseURL = base.url;
+		else if (source === "oas_mid") axiosConfig.baseURL = window.config.auth.oidc.AUTENTICACION_MID;
 		// 202010211336: Usa 'token_value' si esta definido en 'config.json', de lo contrario consulta locaStorage
 		// 202104121525: Se elimina 'impersonate'
 		let token = window.sessionStorage.getItem(base.token_name);
 		// 202103120344: Si se recibe un token en args lo usa
 		if (typeof args.token !== "undefined") token = args.token;
-		// console.log("tokenOas", token);
+		console.log("tokenOas", token);
 		axiosConfig.headers["Authorization"] = `Bearer ${token}`;
 		// axiosConfig.headers["Authorization"] = `${token}`;
 	}

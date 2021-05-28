@@ -1,14 +1,15 @@
 \* 
-data.name=titulo para activar o desactivar 
-Empresa de base tecnológica (Spin- off y Start-up)   = Titulo botones 
-Empresa de base tecnológica (Spin- off y Start-up)   = Titulo principal 
-Innovacion_generada=titulo abreviado
-panelEmpresabase=nombredepaneles
-enterprises = enterprise enlace
-enterprise=endpoindt especifico endpoinds tutas generales update
+data.title=titulo para activar o desactiva
+{{titleBtn}}  = Titulo botones 
+{{title}}  = Titulo principal 
+{{titleBtn}} =titulo abreviado
+namePanel=nombredepaneles
+root.endPointRute = regulation enlace
+regulation=endpoindt especifico endpoinds tutas generales update
 *\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panelEmpresabase">
+	<div class="col mt-3 pl-1 pr-1" :id="namePanel">
+		
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -16,19 +17,19 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Empresa de base tecnológica (Spin- off y Start-up)   </span>
+								<span class="font-weight-semibold">{{title}}</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nueva Empresa de base tecnológica (Spin- off y Start-up)  .." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nueva Empresa
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Agregar Nuevo Elemento .." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> {{titleBtn}}
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al Empresa de base tecnológica (Spin- off y Start-up)  .." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A Empresa
+								<button type="button" @click.prevent="retorno()" title="Volver al panel principal.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A {{title}}
 								</button>
 							</span>
 						</div>
@@ -36,24 +37,26 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</div>
-        <Documentos id="panelEmpresabase-documentos" end-point="enterprises" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelEmpresabase-participantes" end-point="enterprises" :product="baseObj" :group="group" ref="participantes" :parent="this" />
-		<DxValidationGroup ref="basicGroup">
+
+
+        <Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes :id="id_panel_participantes" :end-point="endPointRute" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+		
+        <DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Empresa de base tecnológica (Spin- off y Start-up)  </span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{titleBtn}} </span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
-
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
-	<label>Nombre: </label>
-	<DxTextBox placeholder="Nombre" class="form-control" :value.sync="baseObj.name">
+	<label>Nombre de la Obra: </label>
+	<DxTextBox placeholder="Nombre de la Obra" class="form-control" :value.sync="baseObj.work_name">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -61,18 +64,7 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>NIT: </label>
-	<DxTextBox placeholder="NIT" class="form-control" :value.sync="baseObj.nit">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
 	<label>Categoría: </label>
 	<DxSelectBox
@@ -89,7 +81,7 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 	<div class="form-group">
 		<label>Convocatoria Minciencias:</label>
 			<DxSelectBox
@@ -110,24 +102,14 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 		</div>
 </div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Nombre Comercial: </label>
-	<DxTextBox placeholder="Nombre Comercial" class="form-control" :value.sync="baseObj.comercial_name">
-	<DxValidator>
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="form-group">
-<label>Fecha de Obtención: </label>
+<label>Fecha Contratacion: </label>
 	<DxDateBox 
 		class="form-control" 
-		name="date_of_obtaining" 
-		:value.sync="baseObj.date_of_obtaining" 
-		id="date_of_obtaining" 
+		name="contract_date" 
+		:value.sync="baseObj.contract_date" 
+		id="contract_date" 
 		placeholder="DD/MM/YYYY" 
 		display-format="dd/MM/yyyy" 
 		:min="minDate" 
@@ -140,22 +122,68 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-12">
-	<label>Lugar de Obtención: </label>
-<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+
+
+<div class="col-md-4">
+<div class="form-group">
+<label>Fecha Licenciamiento: </label>
+	<DxDateBox 
+		class="form-control" 
+		name="license_grant_date" 
+		:value.sync="baseObj.license_grant_date" 
+		id="license_grant_date" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
+	<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator> 
+	</DxDateBox>
+	</div>
 </div>
-<div class="col-md-12">
+
+<div class="col-md-4">
 	<div class="form-group">
-	<label>Observación: </label>
-	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observación" class="form-control">
+	<label>Institución u Organo con licencia: </label>
+	<DxTextBox placeholder="Institución u Organo con licencia" class="form-control" :value.sync="baseObj.license_owner_institution">
 	<DxValidator>
 	</DxValidator>
-	</DxTextArea>
+	</DxTextBox>
+	</div>
+</div>
+
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Numero de Registro (D.N.D.A): </label>
+	<DxNumberBox placeholder="Numero de Registro (D.N.D.A)" class="form-control" :value.sync="baseObj.ncd_registry_number" />
+	<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator> 
 	</div>
 </div>
 
 
 
+<div class="col-md-12">
+	<label>Lugar del Acontecimiento: </label>
+    <Geo :lockElement="loaderElement" :syncObject="baseObj" />
+</div>
+
+<div class="col-md-12">
+	<label>Lugar de Contratacion: </label>
+    <Geo2 :lockElement="loaderElement" :syncObject="baseObj2" formName="form-group2" formNameControl="form-control2" />
+</div>
+
+
+
+<div class="col-md-12">
+	<div class="form-group">
+		<label>Observaciones: </label>
+		<Observaciones :syncValue.sync="baseObj"/>
+	</div>
+</div>
 
 <div class="col-md-12" v-if="tiposDocumento.length>0">
 	<div class="card-body" v-html="requisitoArchivo()"></div>
@@ -193,13 +221,14 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 		<div class="row grid">
 			<div class="col">
 				<div class="p-0">
+                    <p><b>Registros de acuerdos de licencia para explotación de obras de Investigación: </b> Creación en Artes, Arquitectura y Diseño protegidas por derechos de autor</p>
 					<DxDataGrid
 						class="main"
 						width="100%"
 						@initialized="gridInit"
 						@content-ready="onContentReady"
 						:allow-column-reordering="true"
-						no-data-text="No hay Elementos registrados"
+						no-data-text="No hay elementos registrados"
 						:data-source="dataSource"
 						:remote-operations="true"
 						:hover-state-enabled="true"
@@ -214,37 +243,46 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
 						<DxGrouping :auto-expand-all="false" />
 						<DxSummary>
-							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} Elementos" />
+							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
 						</DxSummary>
 						<DxPager
 							:show-info="true"
 							:show-page-size-selector="true"
 							:show-navigation-buttons="true"
 							:allowed-page-sizes="dgPageSizes"
-							info-text="Página {0} de {1} ({2} Elementos)"
+							info-text="Página {0} de {1} ({2} elementos)"
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='name'  caption='Nombre' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='nit'  caption='NIT' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='comercial_name'  caption='Nombre Comercial' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='date_of_obtaining'  caption='Fecha de Obtención' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-						<DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-						<DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<!-- <DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' />  -->
-						<DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-
+                        <DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='work_name'  caption='Nombre Obra' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='ncd_registry_number'  caption='Numero Registro' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='license_owner_institution'  caption='Institucion con Licencia' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='license_grant_date'  caption='Fecha de Licenciamiento' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='contract_date'  caption='Fecha Contratacion' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+                        <DxColumn data-field='category_name'  caption='Categoria' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='contract_geo_city_name'  caption='Ciudad de Contratacion' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='contract_geo_state_name'  caption='Estado de Contratacion' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='colciencias_call_year'  caption='Minciencias año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='geo_country_name'  caption='Pais' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+                        <DxColumn data-field='contract_geo_country_name'  caption='Pais de Contratacion' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
 
 						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
+						<!-- <DxColumn data-field="url" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
+<!-- 						
+						<template #tplWeb="{ data }">
+							<a v-if="data.data.url != '' && data.data.url != null" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+								<i class="icon-link"></i> Visitar
+							</a>
+							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template> -->
 
-						<template #tplObs="{ data }">
+                        <template #tplObs="{ data }">
 							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
 								<i class="icon-info mr-1"></i> Ver
 							</a>
@@ -259,27 +297,38 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a>
-								<a title="Editar Elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-									<i class="icon-database-edit"></i>
-								</a>
-								<a v-if="data.data.active" title="Desactivar Innovacion_generada..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
-									<i class="icon-database-remove"></i>
-								</a>
-								<a v-else title="Activar Innovacion_generada..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-									<i class="icon-database-check"></i>
-								</a>
+
+								<span v-if="editMode">
+									<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-database-edit"></i>
+									</a>
+									<a v-if="data.data.active" title="Desactivar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+										<i class="icon-database-remove"></i>
+									</a>
+									<a v-else title="Activar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+										<i class="icon-database-check"></i>
+									</a>
+								</span>
 							</span>
 						</template>
 					</DxDataGrid>
+
 				</div>
 			</div>
 		</div>
 
-		<div class="card mt-3" v-if="debug">
+		<div class="card mt-3" v-if="false">
 			<div class="card-body">
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
+
+		<div class="card mt-3" v-if="false">
+			<div class="card-body">
+				{{ JSON.stringify(baseObj2, null, "\t") }}
+			</div>
+		</div>
+
         <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
@@ -330,10 +379,10 @@ import {
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+//import { DxStateStoring } from 'node_modules/devextreme-vue/pivot-grid';
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "Innovacion_generada",
 	components: {
 		// Commands,
         DxPopup,
@@ -361,22 +410,46 @@ export default {
 		DxValidator,
 		DxValidationGroup,
 		Geo: () => import("@/components/element/geo"),
+		Geo2: () => import("@/components/element/geo2"),
 		Observaciones: () => import("@/components/element/html_editor"),
 		Documentos: () => import("@/components/element/documentos"),
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		titlecolum:{
-			type: String,
-			default: () => 'ind_dsg_registration_title',
-		},group: {
+		group: {
 			type: Object,
 			default: () => null,
 		},
+        // namePanel:{
+        //     type: String,
+        //     default: () => "panelPrincipal",
+        // },
+        endPointRute:{
+            type: String,
+            default: () => null,
+        },
+        objEpdata:{
+            type: String,
+            default: () => null,
+        },
+        title:{
+            type: String,
+            default: () => null,
+        },
+        titleBtn:{
+            type: String,
+            default: () => null,
+        },
+        titlecolum:{
+            type: String,
+            default: () => null,
+        },
 	},
 	data: () => ({
-		popupObs: false,
-		observarData: null,
+		namePanel:"licenciasObras",
+		codEP:null,
+        popupObs: false,
+        observarData:"",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -384,7 +457,8 @@ export default {
 		mode: null,
 		unidad: null,
 		section: null,
-		tipos: 581, //583-179
+		//tipos: 587, //584-179
+        tipox:[],
 		totalCount: 0,
 		tiposDocumento: [],
 		subtipos: [],
@@ -399,53 +473,71 @@ export default {
 		firstLoad: true,
 		now: new Date(),
 		baseEnt: null,
+		baseEnt2: null,
+        id_panel_documentos: "documentos",
+        id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			name: null,
-			category_id: null,
-			colciencias_call_id: null,
-			comercial_name: null,
-			date_of_obtaining: null,
+            work_name: null,
+            category_id: null,
+            colciencias_call_id: null,
+            contract_date: null,
+            contract_geo_city_id: null,
+			contract_geo_state_id: null,
+			contract_geo_country_id: null,
 			geo_city_id: null,
 			geo_state_id: null,
 			geo_country_id: null,
-			nit: null,
-			product_type_id: null,
-			research_group_id: null,
-			observation: null,
-			active: true,
+            license_grant_date: null,
+            license_owner_institution: null,
+            ncd_registry_number: null,
+            research_group_id: null,
+            observation: null,
+		},
+		baseObj2: {
+            geo_city_id: null,
+			geo_state_id: null,
+			geo_country_id: null,
 		},
 	}),
 	created() {
 		// console.clear();
 		root = this;
+        root.baseEnt2 = this.$clone(this.baseObj);
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
-		//root.tipos = root.subtypesByType(5);
-		root.subtipos = root.subtypesByType("empresa_base_categoria");
-		root.tiposDocumento = root.subtypesByType("empresa_base_documento");
+		// root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
+		root.subtipos = root.subtypesByType("registro_licencia_obra_categoria");
+		root.tiposDocumento = root.subtypesByType("registro_licencia_obra_documento");
 	},
 	mounted() {
-		console.log("root.tipos", root.tipos);
-		root.panelData = $("#panelEmpresabase .data");
-		root.panelGrid = $("#panelEmpresabase .grid");
-		root.panelCmds = $("#panelEmpresabase .cmds");
-		root.panelCmdBack = $("#panelEmpresabase .cmds-back");
-		root.panelDocs = $("#panelEmpresabase-documentos");
-		root.loaderMessage = "Cargando Elementos";
-		root.loaderElement = "#panelEmpresabase .grid";
+		console.log("root.tipos", this.tipos);
+        root.id_panel_documentos= this.namePanel + "documentos"
+        root.id_panel_participantes= this.namePanel + "participantes"
+		root.panelData = $("#" + this.namePanel + " .data");
+        root.panelGrid = $("#" + this.namePanel + " .grid");
+        root.panelCmds = $("#" + this.namePanel + " .cmds");
+        root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
+        root.panelDocs = $("#" + this.namePanel + "-documentos");
+        root.loaderMessage = "Cargando Elementos";
+        root.loaderElement = "#" + this.namePanel + " .grid";
+
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
+            let data = root.codEP;
+            data = (data != null) ? "product_type_id=" + data : null,
+            console.warn("codEP: ",root.codEP);
+            console.warn("valor de data: ",root.codEP);
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				stringParam: "product_type_id=" + root.tipos,
-				endPoint: `research_units/${root.group.id}/enterprises`,
+				stringParam: data,
+				endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
@@ -465,9 +557,9 @@ export default {
 		
         verObservar(data){
             root.observarData=data.observation;
-            root.baseObj[root.titlecolum]=data[root.titlecolum];
+            root.baseObj[root.titlecolum]=data[root.titlecolum].cadena.substring(0, 120);
             root.popupObs= !root.popupObs ? true : false ;
-        },		
+        },
 		
 		requisitoArchivo(){
 			let tipos=root.tiposDocumento;
@@ -482,7 +574,7 @@ export default {
 				print=print + "</ul>";
 			}
 			return print;
-		},
+		}, 
 
 		participantes(data) {
 			root.section = "participantes";
@@ -495,13 +587,13 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelEmpresabase .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.name}`);
-			root.panelParticipantes = $("#panelEmpresabase-participantes");
-			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#panelEmpresabase-documentos").hide();
+			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data[root.titlecolum]}`);
+			root.panelParticipantes = $("#" + root.id_panel_participantes);
+			console.log("root.panelParticipantes", root.id_panel_participantes.length);
+			$("#" + root.namePanel + "-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelEmpresabase-participantes .grid").fadeIn();
+				$("#" + root.namePanel + "-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -516,11 +608,11 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelEmpresabase .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.name}`);
+			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data[root.titlecolum]}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelEmpresabase-documentos").fadeIn(function(params) {});
+				$("#" + root.id_panel_documentos).fadeIn(function(params) {});
 			});
 		},
 
@@ -535,12 +627,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#panelEmpresabase-documentos").fadeOut(function(params) {
+				$("#" + root.id_panel_documentos).fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#panelEmpresabase .item-title").html("");
+			$("#" + root.namePanel + " .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
@@ -558,15 +650,24 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-				root.baseObj.product_type_id = root.tipos;
+
+                root.baseObj.contract_geo_city_id = root.baseObj2.geo_city_id;
+				root.baseObj.contract_geo_state_id  = root.baseObj2.geo_state_id;
+				root.baseObj.contract_geo_country_id = root.baseObj2.geo_country_id;
+				
+				root.baseObj.product_type_id = root.codEP;
                 root.baseObj.research_group_id=root.group.id;
 				let obj = root.baseObj;
+                //let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
+
+				alert(JSON.stringify(root.baseObj, null, "\t"));
 				let dto = {
 					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "enterprises",
+					stringEP: root.endPointRute,
 					mod: obj.id,
-					objectSend: { enterprise: obj },
+					//objectSend: { regulation : obj },
+                    objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -585,7 +686,10 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
-
+			root.baseObj2.geo_city_id = data.contract_geo_city_id;
+			root.baseObj2.geo_state_id = data.contract_geo_state_id;
+			root.baseObj2.geo_country_id = data.contract_geo_country_id;
+            //root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
@@ -596,7 +700,11 @@ export default {
 			console.log("ADD");
 			root.mode = "add";
 			root.baseObj = this.$clone(this.baseEnt);
+			root.baseObj2 = this.$clone(this.baseEnt2);
+            //root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
+            console.warn("clase padre: ", this.padre);
+            console.warn("name panel: ", root.namePanel);
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
 			});
@@ -616,30 +724,21 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.name}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
+                    let active=JSON.stringify({active: state,  updated_by: root.user_id});
+
 					var dto = {
-                        //updated_by: 1,
-						//url: `research_units/${root.group.id}/enterprises/${data.data.id}/active`,
                         newFormat:true,
-                        url: `enterprises/${data.data.id}`,
-						data: {
-							enterprise: {
-								active: state,
-                                updated_by: root.user_id
-							},
-						},
+                        url: `${root.endPointRute}/${data.data.id}`,
+                        data:  JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
 						cb: function(result) {
 							console.log("Result", result);
 							root.grid.refresh();
 							root.loaderHide();
-							// root.cancel(validationGroup);
-							// $("#data").fadeOut(function () {
-							// $("#grid").fadeIn(function () {});
-							// });
 						},
 					};
 					console.log("dto", dto);
@@ -653,15 +752,7 @@ export default {
 			this.grid = e.component;
 		},
 
-		onContentReady() {
-			// $(".commands a").click(function() {
-			// 	console.log("Come on lets show the dropdown!!");
-			// });
-			// var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
-			// var b = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(b);
-		},
+		onContentReady() {},
 	},
 };
 </script>

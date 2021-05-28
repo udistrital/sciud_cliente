@@ -1,5 +1,15 @@
+\* 
+data.title=titulo para activar o desactiva
+{{titleBtn}}  = Titulo botones 
+{{title}}  = Titulo principal 
+{{titleBtn}} =titulo abreviado
+namePanel=nombredepaneles
+root.endPointRute = regulation enlace
+regulation=endpoindt especifico endpoinds tutas generales update
+*\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panelCientífico">
+	<div class="col mt-3 pl-1 pr-1" :id="namePanel">
+		
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -7,24 +17,19 @@
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Registro Científico</span>
+								<span class="font-weight-semibold">{{title}}</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Nuevo Registro Cientifico.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nuevo Registro Cientifico
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Agregar Nuevo Elemento .." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> {{titleBtn}}
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button
-									type="button"
-									@click.prevent="retorno()"
-									title="Volver al Nuevo Registro Cientifico.."
-									class="btn btn-main btn-labeled btn-labeled-left "
-								>
-									<b><i class="icon-arrow-left"></i></b> Volver A Nuevo Registro Cientifico
+								<button type="button" @click.prevent="retorno()" title="Volver al panel principal.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A {{title}}
 								</button>
 							</span>
 						</div>
@@ -32,159 +37,129 @@
 				</div>
 			</div>
 		</div>
-		<Documentos id="panelCientífico-documentos" end-point="new_scientific_records" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panelCientífico-participantes" end-point="new_scientific_records" :product="baseObj" :group="group" ref="participantes" :parent="this" />
-		<DxValidationGroup ref="basicGroup">
+
+
+        <Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes :id="id_panel_participantes" :end-point="endPointRute" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+		
+        <DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Registro Científico</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{titleBtn}} </span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Titulo: </label>
+	<DxTextBox placeholder="Titulo" class="form-control" :value.sync="baseObj.title">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Nombre Registro: </label>
-										<DxTextBox placeholder="Nombre Registro" class="form-control" :value.sync="baseObj.nsr_name">
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
-									</div>
-								</div>
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Categoría: </label>
+	<DxSelectBox
+		:show-clear-button="true"
+		:grouped="false"
+		:search-enabled="false"
+		placeholder="Seleccione..."
+		:value.sync="baseObj.category_id" 
+		class="form-control"
+		:data-source="subtipos" 
+		display-expr="st_name"
+		value-expr="id">
+	</DxSelectBox>
+	</div>
+</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Nombre /base de datos científica: </label>
-										<DxTextBox
-											placeholder="Nombre /base de datos 
-									científica"
-											class="form-control"
-											:value.sync="baseObj.nsr_database_name"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxTextBox>
-									</div>
-								</div>
+<div class="col-md-4">
+	<div class="form-group">
+		<label>Convocatoria Minciencias:</label>
+			<DxSelectBox
+				:grouped="false"
+				:search-enabled="false"
+				placeholder="Seleccione..."
+				:value.sync="baseObj.colciencias_call_id"
+				class="form-control"
+				:data-source="convocatorias"
+				display-expr="name"
+				value-expr="id"
+				item-template="item"
+			>
+				<template #item="{ data }">
+					<div>{{ data.name }} de {{ data.year }}</div>
+				</template>
+			</DxSelectBox>
+		</div>
+</div>
 
-								<div class="col-md-2">
-									<div class="form-group">
-										<label>Fecha Obtención:</label>
-										<DxDateBox
-											class="form-control"
-											name="approval_date"
-											:value.sync="baseObj.nsr_date_of_obtaining"
-											id="nsr_date_of_obtaining"
-											placeholder="DD/MM/YYYY"
-											display-format="dd/MM/yyyy"
-											:min="minDate"
-											:max="actualDate"
-											type="date"
-										>
-											<DxValidator>
-												<DxRequiredRule />
-											</DxValidator>
-										</DxDateBox>
-									</div>
-								</div>
+<div class="col-md-4">
+<div class="form-group">
+<label>Fecha de Publicación: </label>
+	<DxDateBox 
+		class="form-control" 
+		name="date_of_publication" 
+		:value.sync="baseObj.date_of_publication" 
+		id="date_of_publication" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
+	<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator> 
+	</DxDateBox>
+	</div>
+</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Dirección Web: </label>
-										<DxTextBox placeholder="Dirección Web" class="form-control" :value.sync="baseObj.nsr_database_url">
-											<DxValidator>
-												<DxRequiredRule />
-												<DxPatternRule message="Recuerde que todas las paginas web deben comenzar por: HTTP:// o HTTPS://." :pattern="urlPattern" />
-											</DxValidator>
-										</DxTextBox>
-									</div>
-								</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Institución certificadora del Nuevo registro científico: </label>
-										<DxTextBox
-											placeholder="Institución certificadora del Nuevo registro científico"
-											class="form-control"
-											:value.sync="baseObj.nsr_issuing_institution"
-										>
-											<DxValidator> </DxValidator>
-										</DxTextBox>
-									</div>
-								</div>
+<div class="col-md-8">
+	<div class="form-group">
+	<label>Url: </label>
+	<DxTextBox placeholder="Url" class="form-control" :value.sync="baseObj.url">
+	<DxValidator>
+		<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+	</DxValidator>
+	</DxTextBox>
+	</div>
+</div>
 
-								<div class="col-md-4">
-									<div class="form-group">
-										<label>Describa si Anexa Soporte de Certificación: </label>
-										<DxTextBox placeholder="Describa si Anexa Soporte de Certificación" class="form-control" :value.sync="baseObj.nsr_certifying_institution">
-											<DxValidator> </DxValidator>
-										</DxTextBox>
-									</div>
-								</div>
+<div class="col-md-12">
+	<label>Lugar de Publicación: </label>
+<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+</div>
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Categoría (NRC_A/NRC_B): </label>
-										<DxSelectBox
-											:show-clear-button="true"
-											:grouped="false"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											:value.sync="baseObj.category_id"
-											class="form-control"
-											:data-source="subtipos"
-											display-expr="st_name"
-											value-expr="id"
-										>
-										</DxSelectBox>
-									</div>
-								</div>
+<!-- <div class="col-md-12">
+	<div class="form-group">
+	<label>Observaciones: </label>
+	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
+	<DxValidator>
+	</DxValidator>
+	</DxTextArea>
+	</div>
+</div> -->
 
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Convocatoria Minciencias:</label>
-										<DxSelectBox
-											:show-clear-button="true"
-											:grouped="false"
-											:search-enabled="false"
-											placeholder="Seleccione..."
-											:value.sync="baseObj.colciencias_call_id"
-											class="form-control"
-											:data-source="convocatorias"
-											display-expr="name"
-											value-expr="id"
-											item-template="item"
-										>
-											<template #item="{ data }">
-												<div>{{ data.name }} de {{ data.year }}</div>
-											</template>
-										</DxSelectBox>
-									</div>
-								</div>
+<div class="col-md-12">
+	<div class="form-group">
+		<label>Observaciones: </label>
+		<Observaciones :syncValue.sync="baseObj"/>
+	</div>
+</div>
 
-								<div class="col-md-6">
-									<label>Lugar de obtención: </label>
-									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-								</div>
-
-								<div class="col-md-12">
-									<div class="form-group">
-										<label>Observaciones: </label>
-										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
-											<DxValidator> </DxValidator>
-										</DxTextArea>
-									</div>
-								</div>
-
-								<div class="col-md-12" v-if="tiposDocumento.length>0">
+<div class="col-md-12" v-if="tiposDocumento.length>0">
 	<div class="card-body" v-html="requisitoArchivo()"></div>
 </div>
+
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -223,7 +198,7 @@
 						@initialized="gridInit"
 						@content-ready="onContentReady"
 						:allow-column-reordering="true"
-						no-data-text="No hay artículos registrados"
+						no-data-text="No hay elementos registrados"
 						:data-source="dataSource"
 						:remote-operations="true"
 						:hover-state-enabled="true"
@@ -238,90 +213,45 @@
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
 						<DxGrouping :auto-expand-all="false" />
 						<DxSummary>
-							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} artículos" />
+							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
 						</DxSummary>
 						<DxPager
 							:show-info="true"
 							:show-page-size-selector="true"
 							:show-navigation-buttons="true"
 							:allowed-page-sizes="dgPageSizes"
-							info-text="Página {0} de {1} ({2} artículos)"
+							info-text="Página {0} de {1} ({2} elementos)"
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-						<DxColumn data-field="id" caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn data-field="nsr_name" caption="Nombre Registro" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn
-							data-field="nsr_database_name"
-							caption="Nombre /base de datos científica"
-							data-type="text"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="false"
-						/>
-						<DxColumn
-							data-field="nsr_date_of_obtaining"
-							caption="Fecha de obtención"
-							data-type="text"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="false"
-						/>
-						<DxColumn data-field="nsr_database_url" caption="Dirección Web" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
-
-						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
-						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
-
-						<DxColumn
-							data-field="nsr_issuing_institution"
-							caption="Institución certificadora del Nuevo registro científico"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="false"
-						/>
-						<DxColumn
-							data-field="nsr_certifying_institution"
-							caption="Describa si Anexa Soporte de Certificación"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="false"
-						/>
-						<DxColumn
-							data-field="category_name"
-							caption="Categoría (NRC_A/NRC_B)"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="false"
-						/>
-						<DxColumn
-							data-field="colciencias_call_name"
-							caption="Categoría Minciencias"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="false"
-						/>
-											<!-- <DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' />  -->
-
-						<DxColumn data-field="webpage" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='title'  caption='Titulo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='date_of_publication'  caption='Fecha de Publicación' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+						<DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
+						<DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<!-- <DxColumn data-field='url'  caption='URL' data-type='string' alignment='center' :visible='true' :allow-grouping='false' />  -->
+						<!-- <DxColumn data-field="url" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" /> -->
+						
+						
+						<DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						
 						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
+						<DxColumn data-field="url" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						
 						<template #tplWeb="{ data }">
-							<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+							<a v-if="data.data.url != '' && data.data.url != null" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
 								<i class="icon-link"></i> Visitar
 							</a>
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
 						</template>
-						
 
-						<template #tplObs="{ data }">
+                        <template #tplObs="{ data }">
 							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
 								<i class="icon-info mr-1"></i> Ver
 							</a>
@@ -336,24 +266,22 @@
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a>
-								<a title="Editar artículo..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-									<i class="icon-database-edit"></i>
-								</a>
-								<a
-									v-if="data.data.active"
-									title="Desactivar Reg_Científico..."
-									class="cmd-item color-main-600 mr-2"
-									@click.prevent="active(data, false)"
-									href="#"
-								>
-									<i class="icon-database-remove"></i>
-								</a>
-								<a v-else title="Activar Reg_Científico..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-									<i class="icon-database-check"></i>
-								</a>
+
+								<span v-if="editMode">
+									<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-database-edit"></i>
+									</a>
+									<a v-if="data.data.active" title="Desactivar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+										<i class="icon-database-remove"></i>
+									</a>
+									<a v-else title="Activar Libro..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+										<i class="icon-database-check"></i>
+									</a>
+								</span>
 							</span>
 						</template>
 					</DxDataGrid>
+
 				</div>
 			</div>
 		</div>
@@ -363,6 +291,7 @@
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
+
         <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
@@ -413,10 +342,10 @@ import {
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+//import { DxStateStoring } from 'node_modules/devextreme-vue/pivot-grid';
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "Reg_Científico",
 	components: {
 		// Commands,
         DxPopup,
@@ -449,18 +378,40 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		titlecolum:{
-			type: String,
-			default: () => 'ind_dsg_registration_title',
-		},
 		group: {
 			type: Object,
 			default: () => null,
 		},
+        // namePanel:{
+        //     type: String,
+        //     default: () => "panelPrincipal",
+        // },
+        endPointRute:{
+            type: String,
+            default: () => null,
+        },
+        objEpdata:{
+            type: String,
+            default: () => null,
+        },
+        title:{
+            type: String,
+            default: () => null,
+        },
+        titleBtn:{
+            type: String,
+            default: () => null,
+        },
+        titlecolum:{
+            type: String,
+            default: () => null,
+        },
 	},
 	data: () => ({
-		popupObs: false,
-		observarData: null,
+		namePanel:"manualmod590",
+		codEP:590,
+        popupObs: false,
+        observarData:"",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -468,7 +419,8 @@ export default {
 		mode: null,
 		unidad: null,
 		section: null,
-		tipos: [],
+		//tipos: 587, //584-179
+        tipox:[],
 		totalCount: 0,
 		tiposDocumento: [],
 		subtipos: [],
@@ -482,60 +434,64 @@ export default {
 		docLink: null,
 		firstLoad: true,
 		now: new Date(),
-		min: new Date(1950, 1, 1),
 		baseEnt: null,
+        id_panel_documentos: "documentos",
+        id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			id: null,
-			category_id: null,
-			colciencias_call_id: null,
-			nsr_name: null,
-			nsr_date_of_obtaining: null,
-			nsr_database_name: null,
-			nsr_database_url: null,
-			geo_country_id: null,
-			nsr_certifying_institution: null,
-			sr_issuing_institution: null,
-			observation: null,
-			created_by: 1,
-			geo_city_id: null,
-			geo_state_id: null,
-			//geo_country_id: null,
+            title: null,
+            category_id: null,
+            colciencias_call_id: null,
+            date_of_publication: null,
+            geo_city_id: null,
+            geo_state_id: null,
+            geo_country_id: null,
+            research_group_id: null,
+            observation: null,
+            product_type_id: null,
+            url: null,
+            active: true,
 		},
 	}),
 	created() {
 		// console.clear();
 		root = this;
+        
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
-		root.subtipos = root.subtypesByType("registro_cientifico_categoria");
-		root.tiposDocumento = root.subtypesByType("registro_cientifico_documento");
+		root.subtipos = root.subtypesByType("manuales_modelos_categoria");
+		root.tiposDocumento = root.subtypesByType("manuales_modelos_documento");
 	},
 	mounted() {
-		// root.getConvocatorias();
-		// root.tipos = root.subtypesByType(12);
-		// root.subtipos = root.subtypesByType(40); // root.subtypesByType(35);
-		console.log("root.tipos", root.tipos);
-		root.panelData = $("#panelCientífico .data");
-		root.panelGrid = $("#panelCientífico .grid");
-		root.panelCmds = $("#panelCientífico .cmds");
-		root.panelCmdBack = $("#panelCientífico .cmds-back");
-		root.panelDocs = $("#panelCientífico-documentos");
-		root.loaderMessage = "Cargando Artículos";
-		root.loaderElement = "#panelCientífico .grid";
+		console.log("root.tipos", this.tipos);
+        root.id_panel_documentos= this.namePanel + "documentos"
+        root.id_panel_participantes= this.namePanel + "participantes"
+		root.panelData = $("#" + this.namePanel + " .data");
+        root.panelGrid = $("#" + this.namePanel + " .grid");
+        root.panelCmds = $("#" + this.namePanel + " .cmds");
+        root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
+        root.panelDocs = $("#" + this.namePanel + "-documentos");
+        root.loaderMessage = "Cargando Elementos";
+        root.loaderElement = "#" + this.namePanel + " .grid";
+
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
+            let data = root.codEP;
+            data = (data != null) ? "product_type_id=" + data : null,
+            console.warn("codEP: ",root.codEP);
+            console.warn("valor de data: ",root.codEP);
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${root.group.id}/new_scientific_records`,
+				stringParam: data,
+				endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando Artículos", root.panelGrid);
+					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -549,14 +505,14 @@ export default {
 	watch: {},
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		
         verObservar(data){
             root.observarData=data.observation;
             root.baseObj[root.titlecolum]=data[root.titlecolum];
             root.popupObs= !root.popupObs ? true : false ;
-        },		
+        },
+		
 		requisitoArchivo(){
 			let tipos=root.tiposDocumento;
 			let i=0, print="";
@@ -572,9 +528,7 @@ export default {
 			return print;
 		},
 
-
 		participantes(data) {
-			// console.clear();
 			root.section = "participantes";
 			console.log("participantes", data.row.data);
 			root.baseObj = data.row.data;
@@ -585,13 +539,13 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panelCientífico .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.nsr_database_name}`);
-			root.panelParticipantes = $("#panelCientífico-participantes");
-			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#panelCientífico-documentos").hide();
+			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data[root.titlecolum]}`);
+			root.panelParticipantes = $("#" + root.id_panel_participantes);
+			console.log("root.panelParticipantes", root.id_panel_participantes.length);
+			$("#" + root.namePanel + "-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelCientífico-participantes .grid").fadeIn();
+				$("#" + root.namePanel + "-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -606,11 +560,11 @@ export default {
 			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
 			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panelCientífico .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.nsr_database_name}`);
+			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data[root.titlecolum]}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panelCientífico-documentos").fadeIn(function(params) {});
+				$("#" + root.id_panel_documentos).fadeIn(function(params) {});
 			});
 		},
 
@@ -625,12 +579,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#panelCientífico-documentos").fadeOut(function(params) {
+				$("#" + root.id_panel_documentos).fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#panelCientífico .item-title").html("");
+			$("#" + root.namePanel + " .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
@@ -644,16 +598,22 @@ export default {
 				root.scrollTop();
 				root.panelCmds.fadeOut();
 				// root.loaderElement = ;
-				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Artículo";
+				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Elemento";
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
+                
+				root.baseObj.product_type_id = root.codEP;
+                root.baseObj.research_group_id=root.group.id;
 				let obj = root.baseObj;
+                //let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
 				let dto = {
+					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "new_scientific_records",
+					stringEP: root.endPointRute,
 					mod: obj.id,
-					objectSend: { new_scientific_record: obj },
+					//objectSend: { regulation : obj },
+                    objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -672,7 +632,7 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
-
+            //root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
@@ -683,7 +643,10 @@ export default {
 			console.log("ADD");
 			root.mode = "add";
 			root.baseObj = this.$clone(this.baseEnt);
+            //root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
+            console.warn("clase padre: ", this.padre);
+            console.warn("name panel: ", root.namePanel);
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
 			});
@@ -703,27 +666,21 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.nsr_name}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
+                    let active=JSON.stringify({active: state,  updated_by: root.user_id});
+
 					var dto = {
-						url: `research_units/${root.group.id}/new_scientific_records/${data.data.id}/active`,
-						data: {
-							new_scientific_record: {
-								active: state,
-								updated_by: 1,
-							},
-						},
+                        newFormat:true,
+                        url: `${root.endPointRute}/${data.data.id}`,
+                        data:  JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
 						cb: function(result) {
 							console.log("Result", result);
 							root.grid.refresh();
 							root.loaderHide();
-							// root.cancel(validationGroup);
-							// $("#data").fadeOut(function () {
-							// $("#grid").fadeIn(function () {});
-							// });
 						},
 					};
 					console.log("dto", dto);
@@ -737,15 +694,7 @@ export default {
 			this.grid = e.component;
 		},
 
-		onContentReady() {
-			// $(".commands a").click(function() {
-			// 	console.log("Come on lets show the dropdown!!");
-			// });
-			// var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
-			// var b = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(b);
-		},
+		onContentReady() {},
 	},
 };
 </script>

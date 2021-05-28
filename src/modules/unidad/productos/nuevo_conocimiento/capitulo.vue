@@ -257,16 +257,17 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 						<DxColumn data-field="title" width="10%" caption="Titulo Capitulo" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="category_name" caption="Categoría" data-type="string" alignment="center" :visible="true" :allow-grouping="true" />
 						<DxColumn data-field="doi" caption="DOI" data-type="string" alignment="center" :visible="true" :allow-grouping="true" />
-						<DxColumn data-field="colciencias_call_name" caption="Convocatoria" data-type="string" alignment="center" :visible="true" :allow-grouping="true" />
+						<DxColumn data-field="colciencias_call_name" caption="Convocatoria" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="editorial_name" caption="Nombre Editorial" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="geo_country_name" caption="País" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
-						<DxColumn data-field="observation" caption="Observación" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
+						
 						<DxColumn data-field="publication_date" caption="Fecha Publicación" data-type="date" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn data-field="url" caption="Web" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
 
 						<DxColumn data-field="webpage" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
@@ -276,6 +277,14 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 								<i class="icon-link"></i> Visitar
 							</a>
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
+
+
+						<template #tplObs="{ data }">
+							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+								<i class="icon-info mr-1"></i> Ver
+							</a>
+							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
 						</template>
 
 						<template #tpl="{ data }">
@@ -307,6 +316,29 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+            <div class="row" style="overflow-y: scroll; height:148px">
+				<div class="col">
+                    <h3>
+						<i class="icon-info mr-1 color-main-600"></i>
+						<span class="font-weight-semibold">{{baseObj[title]}}</span>
+					</h3>
+					<div v-html="observarData"></div>
+				</div>
+			</div>
+            <div class="row">
+				<div class="col"><hr>
+					<DxButton @click="popupObs=false" class="nb">
+						<template #default>
+							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+								<b><i class="icon-database-remove"></i></b> Salir
+							</span>
+						</template>
+					</DxButton>
+				</div>
+			</div>
+		</DxPopup>
+
 	</div>
 </template>
 
@@ -332,7 +364,7 @@ import {
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
-import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup } from "devextreme-vue";
+import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
@@ -340,6 +372,7 @@ export default {
 	name: "Capitulo",
 	components: {
 		// Commands,
+		DxPopup,
 		DxButton,
 		DxColumn,
 		DxPatternRule,
@@ -364,10 +397,15 @@ export default {
 		DxValidator,
 		DxValidationGroup,
 		Geo: () => import("@/components/element/geo"),
+		Observaciones: () => import("@/components/element/html_editor"),
 		Documentos: () => import("@/components/element/documentos"),
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
+		title:{
+			type: String,
+			default: () => 'title',
+		},
 		
 		group: {
 			type: Object,
@@ -375,6 +413,8 @@ export default {
 		},
 	},
 	data: () => ({
+		popupObs: false,
+		observarData: null,
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -408,6 +448,8 @@ export default {
 			doi: null,
 			editorial_name: null,
 			geo_city_id: null,
+			geo_state_id: null,
+			geo_country_id: null,
 			isbn: null,
 			publication_date: null,
 			url: null,
@@ -464,6 +506,11 @@ export default {
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		
+        verObservar(data){
+            root.observarData=data.observation;
+            root.baseObj[root.title]=data[root.title];
+            root.popupObs= !root.popupObs ? true : false ;
+        },		
 		
 		requisitoArchivo(){
 			let tipos=root.tiposDocumento;
