@@ -50,116 +50,123 @@ enterprise=endpoindt especifico endpoinds tutas generales update
 							<div class="row">
 								<!-- formulatio -->
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Nombre: </label>
-	<DxTextBox placeholder="Nombre" class="form-control" :value.sync="baseObj.name">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+									<label>Nombre: </label>
+									<DxTextBox placeholder="Nombre" class="form-control" :value.sync="baseObj.name">
+									<DxValidator>
+										<DxRequiredRule />
+									</DxValidator>
+									</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>NIT: </label>
-	<DxTextBox placeholder="NIT" class="form-control" :value.sync="baseObj.nit">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+									<label>NIT: </label>
+									<DxTextBox placeholder="NIT" class="form-control" :value.sync="baseObj.nit">
+									<DxValidator>
+										<DxRequiredRule />
+									</DxValidator>
+									</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Categoría: </label>
-	<DxSelectBox
-		:show-clear-button="true"
-		:grouped="false"
-		:search-enabled="false"
-		placeholder="Seleccione..."
-		:value.sync="baseObj.category_id" 
-		class="form-control"
-		:data-source="subtipos" 
-		display-expr="st_name"
-		value-expr="id">
-	</DxSelectBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+									<label>Categoría: </label>
+									<DxSelectBox
+										:show-clear-button="true"
+										:grouped="false"
+										:search-enabled="false"
+										placeholder="Seleccione..."
+										:value.sync="baseObj.category_id" 
+										class="form-control"
+										:data-source="subtipos" 
+										display-expr="st_name"
+										value-expr="id">
+									</DxSelectBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-		<label>Convocatoria Minciencias:</label>
-			<DxSelectBox
-				:grouped="false"
-				:search-enabled="false"
-				placeholder="Seleccione..."
-				:value.sync="baseObj.colciencias_call_id"
-				class="form-control"
-				:data-source="convocatorias"
-				display-expr="name"
-				value-expr="id"
-				item-template="item"
-			>
-				<template #item="{ data }">
-					<div>{{ data.name }} de {{ data.year }}</div>
-				</template>
-			</DxSelectBox>
-		</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Convocatoria Minciencias:</label>
+											<DxSelectBox
+												:grouped="false"
+												:search-enabled="false"
+												placeholder="Seleccione..."
+												:value.sync="baseObj.colciencias_call_id"
+												class="form-control"
+												:data-source="convocatorias"
+												display-expr="name"
+												value-expr="id"
+												item-template="item"
+											>
+												<template #item="{ data }">
+													<div>{{ data.name }} de {{ data.year }}</div>
+												</template>
+											</DxSelectBox>
+										</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Nombre Comercial: </label>
-	<DxTextBox placeholder="Nombre Comercial" class="form-control" :value.sync="baseObj.comercial_name">
-	<DxValidator>
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+									<label>Nombre Comercial: </label>
+									<DxTextBox placeholder="Nombre Comercial" class="form-control" :value.sync="baseObj.comercial_name">
+									<DxValidator>
+									</DxValidator>
+									</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-<div class="form-group">
-<label>Fecha de Obtención: </label>
-	<DxDateBox 
-		class="form-control" 
-		name="date_of_obtaining" 
-		:value.sync="baseObj.date_of_obtaining" 
-		id="date_of_obtaining" 
-		placeholder="DD/MM/YYYY" 
-		display-format="dd/MM/yyyy" 
-		:min="minDate" 
-		:max="actualDate" 
-		type="date"> 
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</DxDateBox>
-	</div>
-</div>
+								<div class="col-md-4">
+								<div class="form-group">
+								<label>Fecha de Obtención: </label>
+									<DxDateBox 
+										class="form-control" 
+										name="date_of_obtaining" 
+										:value.sync="baseObj.date_of_obtaining" 
+										id="date_of_obtaining" 
+										placeholder="DD/MM/YYYY" 
+										display-format="dd/MM/yyyy" 
+										:min="minDate" 
+										:max="actualDate" 
+										type="date"> 
+									<DxValidator> 
+										<DxRequiredRule />
+									</DxValidator> 
+									</DxDateBox>
+									</div>
+								</div>
 
-<div class="col-md-12">
-	<label>Lugar de Obtención: </label>
-<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-</div>
-<div class="col-md-12">
-	<div class="form-group">
-	<label>Observación: </label>
-	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observación" class="form-control">
-	<DxValidator>
-	</DxValidator>
-	</DxTextArea>
-	</div>
-</div>
+								<div class="col-md-12">
+									<label>Lugar de Obtención: </label>
+								<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+								</div>
+								<!-- <div class="col-md-12">
+									<div class="form-group">
+									<label>Observación: </label>
+									<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observación" class="form-control">
+									<DxValidator>
+									</DxValidator>
+									</DxTextArea>
+									</div>
+								</div>
+
+								-->
+
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observaciones: </label>
+										<Observaciones :syncValue.sync="baseObj"/>
+									</div>
+								</div>
 
 
-
-
-<div class="col-md-12" v-if="tiposDocumento.length>0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
+								<div class="col-md-12" v-if="tiposDocumento.length>0">
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div>
 
 								<!-- fin formulario -->
 							</div>

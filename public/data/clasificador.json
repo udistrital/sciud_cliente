@@ -110,7 +110,22 @@
 		{ "name": "proyecto_ley_categoria", "id": 94 },
 		{ "name": "proyecto_ley_documento", "id": 95 },
 		{ "name": "registro_licencia_obra_categoria", "id": 98 },
-		{ "name": "registro_licencia_obra_documento", "id": 99 }
+		{ "name": "registro_licencia_obra_documento", "id": 99 },
+
+		{ "name": "asuntos_interes_categoria", "id": 100 },
+		{ "name": "asuntos_interes_documento", "id": 101 },
+
+		{ "name": "resultado_trabajo_categoria", "id": 106 },
+		{ "name": "resultado_trabajo_documento", "id": 107 },
+
+		{ "name": "generacion_insumos_categoria", "id": 103 },
+		{ "name": "generacion_insumos_documento", "id": 102 },
+
+		{ "name": "fortalecimiento_cadenas_categoria", "id": 104 },
+		{ "name": "fortalecimiento_cadenas_documento", "id": 105 }
+
+
+
 
 	]
 }

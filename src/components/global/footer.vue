@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210526 - ©{{ year }}
+				SICIUD v2.0.20210528 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>

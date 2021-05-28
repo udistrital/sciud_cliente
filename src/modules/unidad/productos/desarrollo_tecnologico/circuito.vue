@@ -136,17 +136,24 @@
 								</div>
 
 								<div class="col-md-6"><Geo :lockElement="loaderElement" :syncObject="baseObj" /></div>
-								<div class="col-md-12">
+								<!-- <div class="col-md-12">
 									<div class="form-group">
 										<label>Observaciones: </label>
 										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
 										</DxTextArea>
 									</div>
+								</div> -->
+
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observaciones: </label>
+										<Observaciones :syncValue.sync="baseObj"/>
+									</div>
 								</div>
 
-<div class="col-md-12" v-if="tiposDocumento.length>0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
+								<div class="col-md-12" v-if="tiposDocumento.length>0">
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div>
 								<!-- fin formulario -->
 							</div>
 						</div>

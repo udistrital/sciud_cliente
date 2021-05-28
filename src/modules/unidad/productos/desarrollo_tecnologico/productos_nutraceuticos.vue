@@ -144,7 +144,7 @@ nutraceutical_product=endpoindt especifico endpoinds tutas generales update
 	<label>Lugar de Obtencion: </label>
 <Geo :lockElement="loaderElement" :syncObject="baseObj" />
 </div>
-<div class="col-md-12">
+<!-- <div class="col-md-12">
 	<div class="form-group">
 	<label>Observacion: </label>
 	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observacion" class="form-control">
@@ -152,8 +152,14 @@ nutraceutical_product=endpoindt especifico endpoinds tutas generales update
 	</DxValidator>
 	</DxTextArea>
 	</div>
-</div>
+</div> -->
 
+<div class="col-md-12">
+	<div class="form-group">
+		<label>Observaciones: </label>
+		<Observaciones :syncValue.sync="baseObj"/>
+	</div>
+</div>
 
 
 <div class="col-md-12" v-if="tiposDocumento.length>0">

@@ -53,7 +53,7 @@ const store = {
 				console.log("getOasUser => ", args);
 				// Verifica que el usuario no exista ya en el state
 				let user_oas_details = getters.getUserOasDetails(args.doc);
-				console.log("user_oas_details", user_oas_details);
+				console.log("user_oas_details =>", user_oas_details);
 				if (typeof user_oas_details !== "undefined") {
 					console.log("Usuario encontrado en state: ", user_oas_details);
 					// 202104020302: Devuelve la respuesta de acuerdo a los parámetros recibidos
@@ -137,6 +137,21 @@ const store = {
 				});
 		},
 
+		// 202105280506: Activa o desactiva un usuario
+		activeUser({ commit, state, dispatch }, args) {
+			console.log("activeUser =>", args);
+			let u = args.user;
+			let o = {
+				updated_by: u.updated_by,
+				active: u.active,
+			};
+			api()
+				.put(`users/${u.id}/active`, { user: o })
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+
 		updateUser({ commit, state, dispatch }, args) {
 			console.log("updateUser =>", args);
 			let u = args.user;
@@ -145,6 +160,7 @@ const store = {
 				oas_user_id: u.oas_user_id,
 				user_role_id: u.user_role_id,
 				updated_by: u.updated_by,
+				active: u.active,
 			};
 			api()
 				.put(`users/${u.id}`, { user: o })
