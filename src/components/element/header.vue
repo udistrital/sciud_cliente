@@ -3,8 +3,8 @@
 		<div class="page-title d-flex">
 			<h1>
 				<i class="icon-books mr-1 color-main-600"></i>
-				<span class="font-weight-semibold" id="title">Unidades de Investigación</span>
-				<span> &raquo; {{ $titleCase(group.group_type_name) }}</span>
+				<span class="font-weight-semibold" id="title">Estructuras de Investigación</span>
+				<span> &raquo; {{ title }}</span>
 			</h1>
 			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 		</div>
@@ -43,10 +43,10 @@
 			>
 			<a
 				href="#"
-				@click.prevent="go('/unidad', `Cargando Unidades`)"
+				@click.prevent="go('/unidad', `Cargando Estructuras`)"
 				title="Volver a Unidades..."
 				class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2"
-				><b><i class="icon-arrow-left2"></i></b> Unidades</a
+				><b><i class="icon-arrow-left2"></i></b> Estructuras</a
 			>
 		</div>
 	</div>
@@ -63,8 +63,16 @@ export default {
 	data: () => ({
 		route: null,
 	}),
+	computed: {
+		title() {
+			if (this.group.id !== null) return this.$titleCase(this.group.group_type_name);
+			return "Nueva Estructura de Investigación";
+		},
+	},
 	methods: {
 		current(section) {
+			// 202105311325: Se esta creando la unidad
+			if (this.group.id === null) return false;
 			this.route = this.$router.currentRoute;
 			return !(this.route.name == "unidad-" + section);
 		},

@@ -8,10 +8,10 @@ Cliente para el Sistema de Información del Centro de Investigaciones y Desarrol
 
 ### Tecnologías Implementadas y Versiones
 
--   <a href="https://vuejs.org/" target="_blank">Vue.js 2.0</a>
--   <a href="https://nodejs.org/es/download/releases/" target="_blank">Node.js 13.14.0</a>
--   <a href="https://jquery.com/" target="_blank">jQuery 3.5.1</a>
--   <a href="https://getbootstrap.com/docs/4.5/getting-started/introduction/" target="_blank">Bootstrap 4.0</a>
+- <a href="https://vuejs.org/" target="_blank">Vue.js 2.0</a>
+- <a href="https://nodejs.org/es/download/releases/" target="_blank">Node.js 13.14.0</a>
+- <a href="https://jquery.com/" target="_blank">jQuery 3.5.1</a>
+- <a href="https://getbootstrap.com/docs/4.5/getting-started/introduction/" target="_blank">Bootstrap 4.0</a>
 
 ### Variables de Entorno
 
@@ -91,9 +91,9 @@ docker stop siciud-v2-front
 
 ### Ejecución CI
 
-| Develop                                                                                                                                                                                                  | Release 0.0.1                                                                                                                                                                                                  | Master                                                                                                                                                                            |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg?ref=refs/heads/develop)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg?ref=refs/heads/release/0.0.1)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) |
+| Develop                                                                                                                                                                                                        | Release 0.0.1                                                                                                                                                                     | Master |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg?ref=refs/heads/release/0.0.2)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) |
 
 ### Licencia
 

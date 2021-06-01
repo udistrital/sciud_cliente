@@ -46,6 +46,7 @@ const store = {
 		authenticated: false,
 		oasToken: typeof window.config !== "undefined" ? window.sessionStorage.getItem(window.config.api.oas.token_name) || null : null,
 		oasTokenExp: window.sessionStorage.getItem(OAS_TOKEN_EXP_IN) || null,
+		oasTokenExpAt: window.sessionStorage.getItem(OAS_TOKEN_EXP_AT) || null,
 		user: window.sessionStorage.getItem(APP_USER) || null,
 	},
 	actions: {
@@ -106,8 +107,7 @@ const store = {
 			}
 		},
 		authLogout: ({ commit, state }, callback) => {
-			commit("authLogout");
-			if (isFunction(callback)) callback();
+			commit("authLogout", callback);
 		},
 		oasInit: ({ commit, state }, callback) => {
 			// Construye el objeto OAS
@@ -139,6 +139,7 @@ const store = {
 			oidc.setExpiresAt(OAS_TOKEN_EXP_AT, OAS_TOKEN_EXP_IN);
 			state.oasToken = args.qs.access_token;
 			state.oasTokenExp = args.qs.expires_in;
+			state.oasTokenExp = args.qs.expires_in;
 
 			// 202103120702: Obtiene el usuario de la OAS
 			console.log(window.vm.$sep);
@@ -162,7 +163,7 @@ const store = {
 			window.sessionStorage.setItem(APP_USER, JSON.stringify(args.user));
 			if (isFunction(args.callback)) args.callback({ is_success: true, user: args.user });
 		},
-		authLogout: (state) => {
+		authLogout: (state, cb) => {
 			console.log("authLogout");
 			console.log("window.location.host", window.location.host);
 			console.log("window.location.hostname", window.location.hostname);
@@ -181,6 +182,7 @@ const store = {
 				for (const item in state) state[item] = null;
 				state.authenticated = false;
 				console.log("logout url =>", url);
+				if (isFunction(cb)) cb();
 				// if (process.env.NODE_ENV.toString().toLowerCase() === "production") window.location.replace(url);
 			}
 		},
@@ -209,7 +211,14 @@ const store = {
 		oasToken: (state, getters) => {
 			return state.oasToken;
 		},
+		oasTokenExp: (state, getters) => {
+			return window.sessionStorage.getItem(OAS_TOKEN_EXP_IN) || null;
+		},
+		oasTokenExpAt: (state, getters) => {
+			return window.sessionStorage.getItem(OAS_TOKEN_EXP_AT) || null;
+		},
 	},
 };
 
+export { APP_USER, OAS_SESSION, OAS_STATE, OAS_TOKEN_EXP_AT, OAS_TOKEN_EXP_IN, OAS_TOKEN_ID };
 export default store;

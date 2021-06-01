@@ -4,24 +4,16 @@
 			<div class="page-title d-flex">
 				<h1>
 					<i class="icon-books mr-1 color-main-600"></i>
-					<span class="font-weight-semibold" id="title">Unidades de Investigación</span>
+					<span class="font-weight-semibold" id="title">Estructuras de Investigación</span>
 					<span id="msg"></span>
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			<!-- <div class="header-elements" v-if="editMode">
-				<a
-					href="#"
-					@click.prevent="add()"
-					title="Nueva Unidad de Investigación..."
-					class="btn btn-main btn-labeled btn-labeled-left legitRipple slide"
-					id="btn-add"
-					><b><i class="icon-database-add"></i></b> Nueva Unidad</a
-				>
-				<a href="#" @click.prevent="reload()" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left legitRipple slide btn-back ml-3"
-					><b><i class="icon-arrow-left"></i></b> Volver a Unidades</a
-				>
-			</div> -->
+			<div class="header-elements" v-if="editMode">
+				<router-link tag="a" to="/unidad/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva Estructura de Investigación...">
+					<b><i class="icon-database-add"></i></b> Nueva Estructura
+				</router-link>
+			</div>
 		</div>
 
 		<div class="row" id="panel-unidades">
@@ -62,7 +54,7 @@
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="{2} unidades de investigación (Página {0} de {1})"
+									info-text="{2} Estructuras de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 								<DxColumn
@@ -360,11 +352,12 @@ export default {
 	mounted() {
 		console.log("MOUNTED");
 		root.loaderElement = "#panel-unidades .card-body";
-		root.loaderMessage = "Cargando unidades";
+		root.loaderMessage = "Cargando Estructuras";
 		root.loaderShow();
 		root.unidad = window.vm.$clone(root.baseEntity);
 		root.getGroupRoles();
 		root.loaderHide();
+		console.log("editMode", root.editMode);
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -496,7 +489,7 @@ export default {
 		cancel() {
 			// root.editMode = false;
 			console.log(root.$sep);
-			$("#title").html("Unidades de Investigación");
+			$("#title").html("Estructuras de Investigación");
 			$("#msg").html("");
 			$("#panel-unidades-head .btn-back").fadeOut();
 			$("#panel-unidades .data").fadeOut(function() {

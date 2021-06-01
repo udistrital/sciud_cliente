@@ -18,21 +18,50 @@
 
 <script>
 /* eslint-disable no-unused-vars */
+let root = null;
 import { mapActions, mapGetters } from "vuex";
 export default {
 	name: "globalHeader",
 	components: {},
 	data: () => ({
-		some: "thing",
+		date: null,
+		timer: null,
 	}),
 	methods: {
-		...mapActions("auth/login", ["setData"]),
+		...mapActions("auth/login", ["authLogout"]),
 	},
-	created() {},
 	computed: {
-		date() {
-			return this.$getFormattedDate();
-		},
+		...mapGetters("auth/login", ["authenticated", "oasTokenExp", "oasTokenExpAt"]),
+	},
+	mounted() {
+		// 202011142222:
+		this.$global();
+		root.date = this.$getFormattedDate();
+		root.timer = setInterval(function() {
+			// console.log(root.$sep);
+			let expCr = new Date();
+			root.date = root.$getFormattedDate(expCr);
+			if (root.authenticated) {
+				// console.log("oasTokenExp", root.oasTokenExp);
+				// console.log("oasTokenExpAt", root.oasTokenExpAt);
+				let expDf = new Date(root.oasTokenExpAt);
+				// console.log("expDf", root.$getFormattedDate(expDf));
+				// 202106010035: Add one minute
+				// https://stackoverflow.com/a/8036135
+				expDf.setTime(expDf.getTime() + 1 * 60000);
+				// console.log("expCr", root.date);
+				// console.log("expDf", root.$getFormattedDate(expDf));
+				if (expDf < expCr)
+					root.authLogout(function() {
+						// window.location.reload();
+						root.$router.push("/inicio");
+					});
+			}
+			// console.log("TIMER => src/components/global/header.vue =>", root.date);
+		}, 5000);
+	},
+	created() {
+		root = this;
 	},
 };
 </script>

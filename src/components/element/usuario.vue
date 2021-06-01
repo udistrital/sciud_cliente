@@ -176,21 +176,19 @@ export default {
 						root.loaderHide();
 						root.$info(`El usuario con el documento "${id}" ya se encuentra registrado.`, function() {});
 					} else {
-						root.getOasUser({
-							doc: id,
-							cb: function(usr) {
-								// console.clear();
-								console.log("User", usr);
-								root.loaderHide();
-								if (typeof usr.Id !== "undefined") {
-									root.baseObj.oas_details = usr.TerceroId;
-									root.baseObj.oas_user_id = usr.TerceroId.Id.toString();
-									root.baseObj.name = usr.TerceroId.NombreCompleto;
-								} else {
-									root.$info(`No se encontró ningún usuario con el documento "${id}"`, function() {});
-								}
-							},
-						});
+						let oas_user = await root.getOasUser({ doc: id });
+						if (!("TerceroId" in oas_user)) {
+							let m = `El documento "${id}" no se encuentra registrado<br>en el `;
+							m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
+							m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
+							root.$info(m);
+							root.loaderHide();
+							return false;
+						}
+						root.baseObj.oas_details = oas_user.TerceroId;
+						root.baseObj.oas_user_id = oas_user.TerceroId.Id.toString();
+						root.baseObj.name = oas_user.TerceroId.NombreCompleto;
+						root.loaderHide();
 					}
 				}
 			},
