@@ -25,9 +25,9 @@
 														<label>Documento de identidad:</label>
 														<DxNumberBox
 															ref="nbIdNum"
-															:show-clear-button="true"
 															class="form-control"
-															:value.sync="baseObj.identification_number"
+															:show-clear-button="true"
+															:value.sync="researcher.identification_number"
 															placeholder="Documento de identidad"
 														>
 															<DxValidator>
@@ -44,7 +44,7 @@
 															:show-clear-button="true"
 															:grouped="false"
 															:data-source="groupRoles"
-															:value.sync="baseObj.role_id"
+															:value.sync="group_member.role_id"
 															:search-enabled="false"
 															placeholder="Seleccione..."
 															class="form-control"
@@ -57,65 +57,110 @@
 														</DxSelectBox>
 													</div>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<div class="form-group">
 														<label>Nombre:</label>
-														<DxTextBox :value.sync="baseObj.name" placeholder="Nombre" class="form-control" :read-only="true" mode="text">
+														<DxTextBox :value.sync="group_member.name" placeholder="Nombre" class="form-control" :read-only="true" mode="text">
 															<DxValidator>
 																<DxRequiredRule />
 															</DxValidator>
 														</DxTextBox>
 													</div>
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-4">
 													<div class="row">
 														<div class="col-md-6">
 															<div class="form-group">
+																<label>Investigador ID:</label>
+																<DxTextBox :value.sync="researcher.id" placeholder="Investigador ID" class="form-control" :read-only="true" />
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
 																<label>OAS ID:</label>
-																<DxTextBox :value.sync="baseObj.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
+																<DxTextBox :value.sync="researcher.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
 																	<DxValidator>
 																		<DxRequiredRule />
 																	</DxValidator>
 																</DxTextBox>
 															</div>
 														</div>
-														<div class="col-md-6">
+														<!-- <div class="col-md-2">
 															<div class="form-group">
 																<label>Activo:</label>
-																<DxSwitch :value.sync="baseObj.active" :read-only="!editMode" switched-on-text="SI" switched-off-text="NO" />
+																<DxSwitch :value.sync="group_member.active" :read-only="!editMode" switched-on-text="SI" switched-off-text="NO" />
 															</div>
-														</div>
-													</div>
-												</div>
-
-												<div class="col-md-3">
-													<div class="form-group">
-														<label>ORCID ID:</label>
-														<DxTextBox :value.sync="baseObj.orcid_id" placeholder="ORCID ID" class="form-control" :read-only="true" mode="text" />
-													</div>
-												</div>
-												<div class="col-md-3">
-													<div class="form-group">
-														<label>Firma Científica:</label>
-														<DxTextBox :value.sync="baseObj.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" />
+														</div> -->
 													</div>
 												</div>
 												<div class="col-md-2">
 													<div class="form-group">
-														<label>Número de Celular:</label>
-														<DxTextBox
-															:value.sync="baseObj.mobile_number"
-															placeholder="Número de Celular"
-															class="form-control"
-															mask="(000) 000-0000"
-															mode="text"
-														/>
+														<label>ORCID ID:</label>
+														<DxTextBox :value.sync="researcher.orcid_id" placeholder="ORCID ID" class="form-control" :read-only="true" mode="text" />
 													</div>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Firma Científica:</label>
+														<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" />
+													</div>
+												</div>
+												<div class="col-md-5">
+													<div class="row">
+														<div class="col-md-3">
+															<div class="form-group">
+																<label>Celular 1:</label>
+																<DxTextBox
+																	:value.sync="researcher.mobile_number_one"
+																	placeholder="Celular 1"
+																	class="form-control"
+																	mask="(000) 000-0000"
+																	mode="text"
+																/>
+															</div>
+														</div>
+														<div class="col-md-3">
+															<div class="form-group">
+																<label>Celular 2:</label>
+																<DxTextBox
+																	:value.sync="researcher.mobile_number_two"
+																	placeholder="Celular 2"
+																	class="form-control"
+																	mask="(000) 000-0000"
+																	mode="text"
+																/>
+															</div>
+														</div>
+														<div class="col-md-3">
+															<div class="form-group">
+																<label>Teléfono 1:</label>
+																<DxTextBox
+																	:value.sync="researcher.phone_number_one"
+																	placeholder="Teléfono 1"
+																	class="form-control"
+																	mask="000-0000"
+																	mode="text"
+																/>
+															</div>
+														</div>
+														<div class="col-md-3">
+															<div class="form-group">
+																<label>Teléfono 2:</label>
+																<DxTextBox
+																	:value.sync="researcher.phone_number_two"
+																	placeholder="Teléfono 2"
+																	class="form-control"
+																	mask="000-0000"
+																	mode="text"
+																/>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">
 													<div class="form-group">
 														<label>Dirección:</label>
-														<DxTextBox :value.sync="baseObj.address" placeholder="Dirección" class="form-control" :read-only="true" mode="text" />
+														<DxTextBox :value.sync="researcher.address" placeholder="Dirección" class="form-control" mode="text" />
 													</div>
 												</div>
 											</div>
@@ -179,7 +224,7 @@
 											<DxGroupPanel :visible="true" :allow-column-dragging="true" />
 											<DxGrouping :auto-expand-all="false" />
 											<DxSummary>
-												<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
+												<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} integrantes" />
 											</DxSummary>
 											<DxPager
 												:visible="true"
@@ -259,7 +304,7 @@
 													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="userEdit(data.data)" href="#">
 														<i class="icon-database-edit"></i>
 													</a>
-													<a
+													<!-- <a
 														v-if="data.data.gm_state_id === 1"
 														title="Desactivar usuario..."
 														class="cmd-item color-main-600 mr-2"
@@ -270,7 +315,7 @@
 													</a>
 													<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="userActive(data.data, true)" href="#">
 														<i class="icon-database-check"></i>
-													</a>
+													</a> -->
 												</span>
 											</template>
 										</DxDataGrid>
@@ -286,7 +331,9 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body code">
-						{{ JSON.stringify(baseObj, null, 3) }}
+						<strong>group_member:</strong> {{ JSON.stringify(group_member, null, 3) }}
+						<hr />
+						<strong>researcher:</strong> {{ JSON.stringify(researcher, null, 3) }}
 					</div>
 					<div class="card-footer">
 						<a @click.prevent="scrollTop()" class="font-weight-semibold" href="#">SCROLL!!!</a>
@@ -346,7 +393,7 @@ export default {
 			cb: function(result) {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
-				root.loadMembers();
+				root.loadMembers(true);
 			},
 		});
 	},
@@ -355,6 +402,8 @@ export default {
 		setTimeout(function() {
 			root.nbId = root.$refs.nbIdNum.instance;
 			root.nbIdBtn = root.nbId.getButton("search");
+			root.group_member_bk = root.$clone(root.group_member);
+			root.researcher_bk = root.$clone(root.researcher);
 			console.log("root.nbIdBtn", root.nbIdBtn);
 		}, 1000);
 	},
@@ -394,6 +443,7 @@ export default {
 		cineDetallados: {},
 		files: [],
 		nbId: null,
+		fromCancel: false,
 		nbIdBtn: null,
 		formRefName: "tree-view",
 		group: null,
@@ -433,30 +483,34 @@ export default {
 			text: "Buscar",
 			onClick: async () => {
 				// console.clear();
-				let id = root.baseObj.identification_number;
+				let id = root.researcher.identification_number;
 				console.log("Documento", id);
 				if (id !== null && id.toString().length > 0) {
 					root.loaderShow("Buscando usuario");
 
 					// 202103171618: Verifica que no exista en el grupo actual ->  80192128 1000136995
-					let exists = false;
+					let current_user = null;
 					root.groupResearchers.forEach((item) => {
 						// console.log(`${item.researcher.identification_number} === ${id}`);
 						if (item.researcher.identification_number.toString() === id.toString()) {
-							console.log("ITEM!!!", item);
-							exists = true;
+							current_user = item;
 							return;
 						}
 					});
-					if (exists) {
-						root.$info(`El usuario con el documento "${id}" ya se<br>encuentra registrado como investigador en el grupo.`);
+					if (current_user !== null) {
+						console.log(root.$sep);
+						console.log("current_user =>", current_user);
+						let rol = current_user.role_name;
+						let det = current_user.oas_details;
+						let nombre = typeof det !== "undefined" ? `"${det.TerceroId.NombreCompleto}"` : `con el documento "${id}"`;
+						root.$info(`El usuario ${nombre} ya se<br>encuentra registrado como "${rol}" en el grupo.`);
 						root.loaderHide();
 						return false;
 					}
 
 					// 202103171645: Verifica que el usuario exista en la OAS
-					let u = await root.getOasUser(id);
-					if (!("TerceroId" in u)) {
+					let oas_user = await root.getOasUser({ doc: id });
+					if (!("TerceroId" in oas_user)) {
 						let m = `El documento "${id}" no se encuentra registrado<br>en el `;
 						m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
 						m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
@@ -464,45 +518,51 @@ export default {
 						root.loaderHide();
 						return false;
 					}
+					console.log(root.$sep);
+					console.log("await root.getOasUser =>", oas_user);
+					let t = oas_user.TerceroId;
+					root.group_member.name = t.NombreCompleto;
+					root.researcher.oas_researcher_id = t.Id.toString();
 
 					// 202103171630: Obtiene el investigador
-					let r = await root.getResearcher(id);
-					console.log("r", r);
-					if (r.length > 0) {
-						root.loaderHide();
-						root.$info(`El usuario con el documento "${id}" ya se encuentra registrado.`, function() {});
+					console.log(root.$sep);
+					let researcher = await root.getResearcher(id);
+					console.log("await root.getResearcher =>", researcher);
+					if (researcher.length > 0) {
+						researcher[0].id = researcher[0].id.toString();
+						researcher[0].identification_number = parseInt(researcher[0].identification_number);
+						root.researcher = researcher[0];
+						root.researcher.oas_researcher_id = t.Id.toString();
+						root.group_member.researcher_id = root.researcher.id;
 					} else {
-						root.getOasUser({
-							doc: id,
-							cb: function(usr) {
-								// console.clear();
-								console.log("User", usr);
-								root.loaderHide();
-								if (typeof usr.Id !== "undefined") {
-									root.baseObj.oas_user_id = usr.Id.toString();
-									root.baseObj.name = usr.TerceroId.NombreCompleto;
-								} else {
-									root.$info(`No se encontró ningún usuario con el documento "${id}"`, function() {});
-								}
-							},
-						});
+						console.log("");
 					}
+					root.loaderHide();
 				}
 			},
 		},
-		baseObj: {
+		group_member_bk: null,
+		group_member: {
 			id: null,
-			active: true,
-			address: null,
-			gm_state_id: null,
-			created_by: null,
-			identification_number: null,
-			mobile_number: null,
-			name: null,
-			oas_researcher_id: null,
-			orcid_id: null,
 			role_id: null,
+			researcher_id: null,
+			name: null,
+			active: true,
+			created_by: null,
+			updated_by: null,
+		},
+		researcher_bk: null,
+		researcher: {
+			id: null,
+			oas_researcher_id: null,
+			identification_number: null,
+			orcid_id: null,
 			scientific_signature: null,
+			mobile_number_one: null,
+			mobile_number_two: null,
+			phone_number_one: null,
+			phone_number_two: null,
+			address: null,
 		},
 		validationRules: {
 			required: { type: "required", message: "Position is required." },
@@ -515,11 +575,6 @@ export default {
 					return r.test(e.value);
 				},
 			},
-		},
-		group_member: {
-			role_id: 2,
-			researcherId: 1,
-			typeResearcher: "external",
 		},
 		grupoInterinstitucional: [
 			{
@@ -543,7 +598,7 @@ export default {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 	},
 	methods: {
-		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
+		...mapActions("unidad", ["getUnit", "getResearcher", "getResearchers", "saveResearcher", "updateResearcher", "addGroupMember", "updateGroupMember"]),
 		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
 		cmdVisible(data) {
 			// console.log("cmdVisible", e);
@@ -575,6 +630,7 @@ export default {
 							.forEach((row) => {
 								if (!("oas_details" in row.data)) items.push(row.data);
 							});
+						if (root.grid.getVisibleRows().length > 0) root.grid.expandRow(root.grid.getKeyByRowIndex(0));
 						if (items.length > 0) {
 							root.getOasUsers({
 								users: items,
@@ -606,7 +662,7 @@ export default {
 				},
 			});
 		},
-		loadMembers() {
+		loadMembers(loaderHide = true, cb) {
 			// root.loaderShow("Cargando Integrantes", root.panelMain);
 			if (root.grid !== null && typeof root.grid !== "undefined") {
 				root.grid.clearFilter();
@@ -624,24 +680,31 @@ export default {
 					console.log("root.groupResearchers", root.groupResearchers);
 					root.dsMembers.reload();
 					root.loading = false;
-					root.loaderHide();
+					if (loaderHide) root.loaderHide();
+					if (root.$isFunction(cb)) cb();
 				},
 			});
 		},
-		userEdit(data) {
-			// console.clear();
+		userEdit(d) {
+			console.clear();
 			root.mode == "edit";
+			let data = root.$clone(d);
 			console.log("data", data);
+			// root.$refs.vGroup.instance.reset();
 			root.nbIdBtn = root.nbId.getButton("search");
 			console.log("root.nbIdBtn", root.nbIdBtn);
 			root.nbId.option("readOnly", true);
-			root.baseObj.id = data.id;
-			root.baseObj.active = data.gm_state_id === 1;
-			root.baseObj.oas_researcher_id = data.oas_details.TerceroId.Id.toString();
-			root.baseObj.name = data.oas_details.TerceroId.NombreCompleto;
-			root.baseObj.identification_number = parseInt(data.oas_details.Numero);
-			root.baseObj.role_id = parseInt(data.role_id);
-			console.log("root.baseObj", root.baseObj);
+			root.nbIdBtn.option("visible", false);
+			root.group_member.id = data.id;
+			root.group_member.role_id = data.role_id;
+			root.group_member.active = data.gm_state_id === 1;
+			root.group_member.researcher_id = data.researcher.id.toString();
+			root.group_member.name = data.oas_details.TerceroId.NombreCompleto;
+			data.researcher.id = data.researcher.id.toString();
+			data.researcher.identification_number = parseInt(data.researcher.identification_number);
+			root.researcher = data.researcher;
+			if (typeof data.oas_details !== "undefined") root.researcher.oas_researcher_id = data.oas_details.TerceroId.Id.toString();
+			console.log("root.group_member", root.group_member);
 			$(root.panelData + " .card-header.main").html("Editando integrante");
 			$(root.panelGrid).fadeOut(function() {
 				$(root.panelData).fadeIn();
@@ -650,30 +713,55 @@ export default {
 		userAdd() {
 			root.mode == "add";
 			root.nbId.option("readOnly", false);
+			root.nbIdBtn = root.nbId.getButton("search");
+			root.nbIdBtn.option("visible", true);
 			$(root.panelData + " .card-header.main").html("Nuevo integrante");
 			$(root.panelGrid).fadeOut(function() {
 				$(root.panelData).fadeIn();
 			});
 		},
 		async userSave() {
-			console.log("Obj", this.baseObj);
+			console.clear();
+			console.log(root.$sep);
 			var result = this.$refs.vGroup.instance.validate();
 			console.log("result", result);
 			if (result.isValid) {
 				root.loaderShow("Guardando usuario", "#panel-integrantes-data .card");
-				root.baseObj[root.mode === "add" ? "created_by" : "updated_by"] = root.user_id;
-				let r = await (root.mode == "add" ? root.saveResearcher(root.baseObj) : root.updateResearcher(root.baseObj));
-				console.log("Saved", r);
-				root.loaderHide();
-				root.grid.refresh();
-				root.$info(`El usuario con el documento "${this.baseObj.identification_number}" se asoció exitosamente!`, function() {
-					root.userCancel();
+
+				// 202106010400: Investigador
+				root.researcher[root.researcher.id === null ? "created_by" : "updated_by"] = root.user_id;
+				console.log("root.researcher =>", root.researcher);
+				let r = await (root.researcher.id === null ? root.saveResearcher(root.researcher) : root.updateResearcher(root.researcher));
+				console.log("SAVED Researcher =>", r);
+
+				// 202106010400: Integrante
+				root.group_member.researcher_id = r.id;
+				let msg = root.group_member.id === null ? "asoció" : "actualizó";
+				root.group_member[root.mode === "add" ? "created_by" : "updated_by"] = root.user_id;
+				let o = { group_id: root.group.id, item: root.group_member };
+				console.log("root.group_member =>", o);
+				r = await (root.group_member.id === null ? root.addGroupMember(o) : root.updateGroupMember(o));
+				console.log("SAVED group_member =>", r);
+
+				// 202106010429: Finaliza
+				root.loadMembers(false, function() {
+					// root.loaderHide();
+					root.userCancel(true);
 				});
+				// root.$info(`El usuario con el documento "${root.researcher.identification_number}" se ${msg} exitosamente!`, function() {
+				// root.loaderShow("Recargando usuarios", "#panel-integrantes-data .card");
+				// window.location.reload();
+
+				// });
 			}
 		},
-		userCancel() {
+		userCancel(loaderHide = false) {
+			root.fromCancel = true;
 			$(root.panelData).fadeOut(function() {
+				if (loaderHide) root.loaderHide();
 				$(root.panelGrid).fadeIn(function() {
+					root.group_member = root.$clone(root.group_member_bk);
+					root.researcher = root.$clone(root.researcher_bk);
 					root.$refs.vGroup.instance.reset();
 					$(root.panelData).clear();
 					// console.clear();

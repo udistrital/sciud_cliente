@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210528 - ©{{ year }}
+				SICIUD v2.0.20210601 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -28,12 +28,12 @@
 				<li class="nav-item" v-if="isDev && !authenticated">
 					<a :href="linkLogin4" class="navbar-nav-link legitRipple color-text"><i class="icon-user"></i> Estudiante</a>
 				</li>
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a href="http://cidc.udistrital.edu.co" class="navbar-nav-link legitRipple" target="_blank"><i class="icon-file-text2"></i> Documentación</a>
 				</li>
 				<li class="nav-item">
 					<a href="http://cidc.udistrital.edu.co" class="navbar-nav-link legitRipple pr-1" target="_blank"><i class="icon-lifebuoy"></i> Soporte</a>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 	</div>

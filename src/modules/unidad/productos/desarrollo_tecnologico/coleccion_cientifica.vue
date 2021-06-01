@@ -206,15 +206,12 @@ scientific_collection=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class="col-md-12">
-	<div class="form-group">
-	<label>Observación: </label>
-	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observación" class="form-control">
-	<DxValidator>
-	</DxValidator>
-	</DxTextArea>
-	</div>
-</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observaciones: </label>
+										<Observaciones :syncValue.sync="baseObj"/>
+									</div>
+								</div>
 
 
 

@@ -98,10 +98,10 @@ const store = {
 					dispatch("getMembersOas", args);
 				});
 		},
-		// 202103171451: Guarda un investigador
+		// 202105280535: Obtiene un investigador
 		async getResearcher({ commit, state, dispatch }, id) {
 			return await api()
-				.get(`researcher?identification_number=${id}`)
+				.get(`researchers?identification_number=${id}`)
 				.then((r) => {
 					return r.data;
 				});
@@ -123,9 +123,17 @@ const store = {
 				});
 		},
 		// 202103171451: Guarda un investigador
-		async addResearcherToGroup({ commit, state, dispatch }, args) {
+		async addGroupMember({ commit, state, dispatch }, args) {
 			return await api()
 				.post(`research_units/${args.group_id}/group_member/`, { group_member: args.item })
+				.then((r) => {
+					return r.data;
+				});
+		},
+		// 202103171451: Guarda un investigador
+		async updateGroupMember({ commit, state, dispatch }, args) {
+			return await api()
+				.put(`research_units/${args.group_id}/group_member/${args.item.id}`, { group_member: args.item })
 				.then((r) => {
 					return r.data;
 				});
@@ -172,11 +180,11 @@ const store = {
 			}
 
 			// 202011260110: Guarda la unidad
-			if (args.unidad.id.toString() === "0") {
-				// Crear unidad
-				// 202010271455: Se corrige error al enviar unidad enviando 'research_group'
+			// 202105311400: Creando unidad
+			if (args.unidad.id === null) {
+				// 202010271455: Crear unidad => Se corrige error al enviar unidad enviando 'research_group'
 				api()
-					.post("research_group", {
+					.post("research_units", {
 						research_group: args.unidad,
 					})
 					.then((r) => {

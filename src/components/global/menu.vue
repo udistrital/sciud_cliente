@@ -16,9 +16,9 @@
 					</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link to="/unidad" tag="a" class="navbar-nav-link legitRipple" title="Unidades de Investigación...">
+					<router-link to="/unidad" tag="a" class="navbar-nav-link legitRipple" title="Estructuras de Investigación...">
 						<i class="icon-books"></i>
-						Unidades de Investigación
+						Estructuras de Investigación
 					</router-link>
 				</li>
 				<!--

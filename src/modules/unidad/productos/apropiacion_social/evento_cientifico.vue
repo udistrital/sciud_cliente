@@ -180,12 +180,19 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 									</div>
 								</div>
 
-								<div class="col-md-12">
+								<!-- <div class="col-md-12">
 									<div class="form-group">
 										<label>Observaciones: </label>
 										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.eve_observation" placeholder="Observaciones" class="form-control">
 											<DxValidator> </DxValidator>
 										</DxTextArea>
+									</div>
+								</div> -->
+
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observaciones: </label>
+										<Observaciones :syncValue.sync="baseObj"/>
 									</div>
 								</div>
 
@@ -464,6 +471,7 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
+			observation:null,
 			geo_city_id: null,
 			geo_state_id: null,
 			geo_country_id: null,
@@ -602,6 +610,7 @@ export default {
 			console.log(this.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
+			root.baseObj.eve_observation=root.baseObj.observation;
 			if (result.isValid) {
 				console.log("VALID!");
 				root.scrollTop();
@@ -636,7 +645,7 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
-
+			root.baseObj.observation=root.baseObj.eve_observation;
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});

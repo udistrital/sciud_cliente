@@ -5,7 +5,7 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body group-detail" id="group-panel">
-						<div class="row mb-3">
+						<div class="row mb-3" v-if="group.id">
 							<div class="col d-flex justify-content-between align-items-end">
 								<div class="title"><i class="icon-books"></i> {{ $titleCase(group.name) }}</div>
 								<div class="sub-title"><i class="icon-info"></i> Información</div>
@@ -19,13 +19,13 @@
 										<div class="row">
 											<div class="col-md-10">
 												<div class="form-group">
-													<label>Nombre de la unidad:</label>
+													<label>Nombre de la estructura:</label>
 													<DxTextBox
 														:show-clear-button="true"
 														:read-only="!editMode"
 														class="form-control"
 														:value.sync="group.name"
-														placeholder="Nombre de la unidad"
+														placeholder="Nombre de la estructura"
 														name="name"
 														id="name"
 													>
@@ -543,23 +543,39 @@ export default {
 	name: "datosBasicos",
 	created: function() {
 		root = this;
+		// console.clear();
+		console.log("root.$baseUrl()", root.$baseUrl());
 		root.loaderElement = "#group-panel";
 		root.getOcde();
 		root.getCine(root.getFacultades());
-		root.getUnit({
-			id: root.$route.params.unidadId,
-			cb: function(result) {
-				root.group = result;
-				console.log("group", root.group);
-				setTimeout(function() {
-					root.ocdeChange({ value: root.group.oecd_knowledge_subarea_id });
-					root.cineChange({ value: root.group.cine_specific_area_id });
-					root.facultadChange({ value: root.group.faculty_ids });
-					document.title += ` ${root.$titleCase(root.group.name)}`;
-					root.loaderHide();
-				}, 500);
-			},
-		});
+		// 202105311305: Determina si se esta creando o editando
+		console.log("root.$route", root.$route);
+		// 202105311314: Editando
+		if (root.$route.name === "unidad-info") {
+			root.getUnit({
+				id: root.$route.params.unidadId,
+				cb: function(result) {
+					root.group = result;
+					console.log("group", root.group);
+					setTimeout(function() {
+						root.ocdeChange({ value: root.group.oecd_knowledge_subarea_id });
+						root.cineChange({ value: root.group.cine_specific_area_id });
+						root.facultadChange({ value: root.group.faculty_ids });
+						document.title += ` ${root.$titleCase(root.group.name)}`;
+						root.mode = "edit";
+						root.loaderHide();
+					}, 500);
+				},
+			});
+		} else {
+			// 202105311312: Creando
+			document.title += ` Nueva Estructura`;
+			root.group = root.baseGroup;
+			root.group.created_by = root.user_id;
+			root.group.updated_by = root.user_id;
+			root.mode = "add";
+			root.loaderHide();
+		}
 	},
 	mounted() {
 		root.lineas = root.subtypesByType("unidad_linea_investigacion");
@@ -640,6 +656,41 @@ export default {
 			{ name: "Documentos", value: "image/*" },
 			{ name: "Videos", value: "video/*" },
 		],
+		baseGroup: {
+			id: null,
+			name: null,
+			acronym: null,
+			cidc_act_number: null,
+			cidc_registration_date: null,
+			cine_detailed_area_ids: [],
+			cine_broad_area_id: null,
+			cine_specific_area_id: null,
+			colciencias_code: null,
+			curricular_project_ids: [],
+			description: null,
+			email: null,
+			faculty_act_number: null,
+			faculty_ids: [],
+			faculty_registration_date: null,
+			group_state_id: 1, // Activo
+			group_type_id: 3, // Grupo de Investigación
+			gruplac: null,
+			historical_colciencias: [],
+			interinstitutional: false,
+			legacy_siciud_id: null,
+			mission: null,
+			oecd_knowledge_area_id: null,
+			oecd_knowledge_subarea_id: null,
+			oecd_discipline_ids: [],
+			research_focus_ids: [],
+			snies_id: null,
+			vision: null,
+			webpage: null,
+			created_by: null,
+			updated_by: null,
+			created_at: null,
+			updated_at: null,
+		},
 	}),
 	computed: {
 		...mapState("unidad", ["documents"]),
@@ -734,8 +785,12 @@ export default {
 		},
 		save() {
 			console.log(root.$sep);
+			// console.clear();
 			var result = root.$refs.basicGroup.instance.validate();
+			// root.loaderHide();
 			console.log("result", result);
+			// root.loaderMessage = "Rekiki";
+			// root.loaderShow();
 			if (result.isValid) {
 				console.log("VALID!");
 				$("#btn-add").fadeOut();
@@ -752,8 +807,21 @@ export default {
 					unidad: root.group,
 					callback: function(result) {
 						console.log("result", result);
-						root.loaderHide();
-						root.$info(`La unidad "${result.name}" se actualizó exitosamente!`);
+						// 202105311349: Redirecciona si se creó La estructura
+						if (root.mode == "add") {
+							root.loaderHide();
+							root.$info(`La estructura "${result.name}" se creó exitosamente!`, function() {
+								root.loaderShow(`Cargando "${result.name}"`, "#group-panel");
+								setTimeout(function() {
+									window.location.href = window.location.href.replace("/crear", `/${result.id}`);
+								}, 1000);
+								// https://support.nemedi.com/udistrital/siciud-v2/unidad/crear
+								// root.$router.push(`/unidad`);
+							});
+						} else {
+							root.loaderHide();
+							root.$info(`La estructura "${result.name}" se actualizó exitosamente!`);
+						}
 					},
 				});
 			}
@@ -790,7 +858,7 @@ export default {
 						},
 					});
 					// 202105071020: Filtra Lineas de Investigación por Facultad
-					console.clear();
+					// console.clear();
 					let final = [];
 					console.log("items", items);
 					console.log("root.lineas", root.lineas);

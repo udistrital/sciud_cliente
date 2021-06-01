@@ -49,7 +49,7 @@
 												href="#"
 												id="a-doc-link"
 												target="_blank"
-												@click.prevent="documentShow"
+												@click.prevent="documentShow(current)"
 												class="btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100"
 											>
 												<b><i class="icon-link"></i></b> OBSERVAR DOCUMENTO

@@ -37,12 +37,12 @@ let routes = new router({
 		{
 			name: "unidad",
 			path: "/unidad",
-			meta: { title: "Unidades de Investigación", requiresAuth: true },
+			meta: { title: "Estructuras de Investigación", requiresAuth: true },
 			component: () => import("@/modules/unidad/"),
 		},
 		{
-			name: "unidad-nueva",
-			path: "/unidad/nueva",
+			name: "unidad-crear",
+			path: "/unidad/crear",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/informacion"),
 		},

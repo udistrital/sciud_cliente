@@ -58,7 +58,7 @@
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="Página {0} de {1} ({2} unidades de investigación)"
+									info-text="Página {0} de {1} ({2} Estructuras de investigación)"
 								/>
 								<DxSearchPanel :visible="true" :highlight-case-sensitive="true" />
 								<DxColumn
@@ -266,7 +266,7 @@ export default {
 		console.log("MOUNTED");
 		root = this;
 		this.loaderElement = "#panel-unidades .card-body";
-		this.loaderMessage = "Cargando unidades";
+		this.loaderMessage = "Cargando Estructuras";
 		this.loaderShow();
 		this.unidad = window.vm.$clone(this.baseEntity);
 		this.getGroupRoles();
@@ -360,7 +360,7 @@ export default {
 		cancel(validationGroup) {
 			root.editMode = false;
 			console.log(this.$sep);
-			$("#title").html("Unidades de Investigación");
+			$("#title").html("Estructuras de Investigación");
 			$("#msg").html("");
 			root.scrollTop();
 			$("#panel-unidades .data").fadeOut(function() {

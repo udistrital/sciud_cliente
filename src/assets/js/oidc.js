@@ -186,6 +186,7 @@ export function setExpiresAt(expAt = "expires_at", expIn = "expires_in") {
 		let secs = expires_at.getSeconds() + parseInt(window.sessionStorage.getItem(expIn), 10) - 60;
 		expires_at.setSeconds(secs);
 		window.sessionStorage.setItem(expAt, expires_at.toUTCString());
+		return expires_at;
 	}
 }
 
