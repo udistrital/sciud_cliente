@@ -72,7 +72,7 @@ steps:
     commands:
       - node --version
       - npm i
-      - npm run build:prod
+      - NODE_ENV=production npm run build
     when:
       branch:
         - master
