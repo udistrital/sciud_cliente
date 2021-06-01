@@ -2,12 +2,42 @@
 	<div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
+				
+				<DxItem title="Taller Creación">
+					<template #default>
+						<tallerCreacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Taller Creación"
+							endPointRute="creation_workshops"
+							objEpdata="creation_workshop"
+							titleBtn="Nuevo taller Creación"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+
+				<DxItem title="Red de Conomimiento">
+					<template #default>
+						<RedConocimiento 
+							:group="group" 
+							:editMode="editMode" 
+							title="Red de conocimiento Especializado"
+							endPointRute="knowledge_networks"
+							objEpdata="knowledge_network"
+							titleBtn="Nueva Red de Conocimiento"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
 
 				<DxItem title="Evento Científico">
 					<template #default>
 						<EventoCientifico :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
+
 				<DxItem title="Eventos Artísticos de Arquitectura o de Diseño">
 					<template #default>
 						<EventoArtistico :group="group" :editMode="editMode" />
@@ -77,6 +107,7 @@
 <script>
 let root;
 import DxTabPanel, { DxItem } from "devextreme-vue/tab-panel";
+
 export default {
 	name: "datosBasicos",
 	components: {
@@ -88,7 +119,8 @@ export default {
 		ResultadoTrabajo: () => import("@/modules/unidad/productos/apropiacion_social/resultado_trabajo"),
 		GeneracionInsumos: () => import("@/modules/unidad/productos/apropiacion_social/generacion_insumos"),
 		FortalecimientoCadenas: () => import("@/modules/unidad/productos/apropiacion_social/fortalecimiento_cadenas"),
-
+		RedConocimiento: () => import("@/modules/unidad/productos/apropiacion_social/red_conocimiento"),
+		tallerCreacion: () => import("@/modules/unidad/productos/apropiacion_social/trabajo_creacion")
 	},
 	mounted() {
 		root = this;

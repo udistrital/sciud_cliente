@@ -121,6 +121,12 @@
 		{ "name": "generacion_insumos_categoria", "id": 103 },
 		{ "name": "generacion_insumos_documento", "id": 102 },
 
+		{ "name": "red_conocimiento_categoria", "id": 111 },
+		{ "name": "red_conocimiento_documento", "id": 112 },
+
+		{ "name": "taller_creacion_categoria", "id": 113 },
+		{ "name": "taller_creacion_documento", "id": 114 },
+
 		{ "name": "fortalecimiento_cadenas_categoria", "id": 104 },
 		{ "name": "fortalecimiento_cadenas_documento", "id": 105 }
 

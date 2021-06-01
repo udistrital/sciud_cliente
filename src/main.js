@@ -134,8 +134,10 @@ vue.mixin({
 		},
 		loaderShow(msg, element) {
 			let root = this;
-			console.log("LENGTH", window.jQuery(".dx-overlay-wrapper").length);
-			if (window.jQuery(".dx-overlay-wrapper").length <= 0) {
+			console.log("root.$loader.visible =>", root.$loader.visible);
+			// console.log("LENGTH", window.jQuery(".dx-overlay-wrapper:visible").length);
+			// if (window.jQuery(".dx-overlay-wrapper").length <= 0) {
+			if (!root.$loader.visible) {
 				// console.log(window.vm.$sep);
 				// console.log("MASK!");
 				// console.log("root.loaderMessage", root.loaderMessage);

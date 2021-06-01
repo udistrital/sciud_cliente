@@ -9,9 +9,9 @@
 			</div>
 			<div class="header-elements">
 				<span id="panel-usuarios-cmds">
-					<a href="#" @click.prevent="addOas" title="Crear usuario OAS..." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
+					<!-- <a href="#" @click.prevent="addOas" title="Crear usuario OAS..." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
 						<b><i class="icon-database-add"></i></b> CREAR USUARIO OAS
-					</a>
+					</a> -->
 					<a href="#" @click.prevent="add" title="Asociar usuario..." class="btn btn-main btn-labeled btn-labeled-left legitRipple ml-3">
 						<b><i class="icon-database-add"></i></b> ASOCIAR USUARIO
 					</a>
@@ -147,7 +147,7 @@
 								<DxButton @click="saveOas" class="nb">
 									<template #default>
 										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-											GUARDAR <b><i class="icon-database-add"></i></b>
+											GUARDAR<b><i class="icon-database-add"></i></b>
 										</span>
 									</template>
 								</DxButton>
@@ -205,7 +205,7 @@
 								/>
 								<DxColumn
 									:allow-filtering="false"
-									:allow-sorting="true"
+									:allow-sorting="false"
 									:customize-text="nullText"
 									:width="120"
 									alignment="center"
@@ -343,6 +343,7 @@ export default {
 		panelOas: null,
 		actionTitle: null,
 		gridLoading: false,
+		baseObjBk: null,
 		baseObj: {
 			name: null,
 			identification_number: null,
@@ -408,6 +409,7 @@ export default {
 			// DxNumberBox del documento de identidad, niveles de ref
 			root.nbId = root.$refs.Usuario.$refs.nbId.instance.instance();
 			console.log("root.nbId options =>", root.nbId.option());
+			root.baseObjBk = root.$clone(root.baseObj);
 		}, 2000);
 	},
 	computed: {
@@ -483,9 +485,11 @@ export default {
 			} else return false;
 		},
 		save(validationGroup) {
+			console.clear();
 			if (validationGroup === "skip" || validationGroup.validate().isValid) {
 				console.log("Save => Usuario Enviado =>", root.baseObj);
-				if (!validationGroup === "skip") root.loaderShow("Guardando usuario", root.panelData);
+				// if (!validationGroup === "skip") root.loaderShow("Guardando usuario", "#panel-usuarios-data");
+				root.loaderShow("Guardando usuario", "#panel-usuarios-data .card:first-child");
 				let fn = root.saveUser;
 				if (root.mode == "edit") {
 					fn = root.updateUser;
@@ -568,6 +572,7 @@ export default {
 				$(root.panelCmd).fadeIn();
 				$(root.panelGrid).fadeIn(function() {
 					root.$refs.vgUserOas.instance.reset();
+					root.baseObj = root.$clone(root.baseObjBk);
 					root.mode = null;
 				});
 			});
