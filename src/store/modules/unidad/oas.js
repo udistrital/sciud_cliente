@@ -23,7 +23,7 @@ const store = {
 				// api(imp ? "local" : "oas")
 				// 	.get(imp ? "facultadProyecto" : "/oikos_crud_api/v2/dependencia_padre/FacultadesConProyectos")
 				api("oas")
-					.get("/oikos_crud_api/v2/dependencia_padre/FacultadesConProyectos")
+					.get("/oikos_crud_api/v1/dependencia_padre/FacultadesConProyectos")
 					.then((r) => {
 						// console.log("response", r);
 						r.data.forEach((element) => {
