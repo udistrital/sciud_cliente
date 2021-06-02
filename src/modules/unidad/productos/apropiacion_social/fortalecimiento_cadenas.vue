@@ -69,6 +69,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
                                     <div class="form-group">
                                     <label>Categoría: </label>
                                     <DxSelectBox
+                                        :show-clear-button="true"
                                         :grouped="false"
                                         :search-enabled="false"
                                         placeholder="Seleccione..."
@@ -85,7 +86,8 @@ regulation=endpoindt especifico endpoinds tutas generales update
                                     <div class="form-group">
                                         <label>Convocatoria Minciencias:</label>
                                             <DxSelectBox
-                                                :grouped="false"
+                                        :show-clear-button="true"
+                                        :grouped="false"
                                                 :search-enabled="false"
                                                 placeholder="Seleccione..."
                                                 :value.sync="baseObj.colciencias_call_id"
@@ -169,6 +171,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
                                     <div class="form-group">
                                     <label>Id Grupo Investigación: </label>
                                     <DxSelectBox
+                                        :show-clear-button="true"
                                         :grouped="false"
                                         :search-enabled="false"
                                         placeholder="Seleccione..."
