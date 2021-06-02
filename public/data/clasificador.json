@@ -127,6 +127,24 @@
 		{ "name": "taller_creacion_categoria", "id": 113 },
 		{ "name": "taller_creacion_documento", "id": 114 },
 
+		{ "name": "documento_trabajo_w_categoria", "id": 117 },
+		{ "name": "documento_trabajo_w_documento", "id": 118 },
+
+		{ "name": "secuencia_genetica_categoria", "id": 119 },
+		{ "name": "secuencia_genetica_documento", "id": 120 },
+
+		{ "name": "informe_final_categoria", "id": 123 },
+		{ "name": "informe_final_documento", "id": 124 },
+
+		{ "name": "informe_tecnico_categoria", "id": 125 },
+		{ "name": "informe_tecnico_documento", "id": 126 },
+
+		{ "name": "Consultorias_cientificas_categoria", "id": 127 },
+		{ "name": "Consultorias_cientificas_documento", "id": 128 },
+
+		{ "name": "consultorias_arte_categoria", "id": 129 },
+		{ "name": "consultorias_arte_documento", "id": 130 },
+
 		{ "name": "fortalecimiento_cadenas_categoria", "id": 104 },
 		{ "name": "fortalecimiento_cadenas_documento", "id": 105 }
 

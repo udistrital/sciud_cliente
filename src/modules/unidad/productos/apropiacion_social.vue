@@ -3,6 +3,109 @@
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				
+				
+				
+				<DxItem title="Consultorías en arte, arquitectura y diseño">
+					<template #default>
+						<ConsultoriasArtisticas
+							:group="group" 
+							:editMode="editMode" 
+							title="Consultorías en arte, arquitectura y diseño"
+							endPointRute="consultancies"
+							objEpdata="consultancy"
+							titleBtn="Agregar Consultoría Artistica"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Consultorías científicas">
+					<template #default>
+						<ConsultoriasCientificas
+							:group="group" 
+							:editMode="editMode" 
+							title="Consultorías científicas- tecnologías"
+							endPointRute="consultancies"
+							objEpdata="consultancy"
+							titleBtn="Agregar Consultoría científica"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Informes Técnicos">
+					<template #default>
+						<InformeTecnico
+							:group="group" 
+							:editMode="editMode" 
+							title="Informes Técnicos"
+							endPointRute="reports"
+							objEpdata="report"
+							titleBtn="Agregar Informe final"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+
+				<DxItem title="Informe de Investigación">
+					<template #default>
+						<InformeFinal
+							:group="group" 
+							:editMode="editMode" 
+							title="Informe Final de Investigación"
+							endPointRute="reports"
+							objEpdata="report"
+							titleBtn="Agregar Informe final"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Nueva Secuencia Genética">
+					<template #default>
+						<SecuenciaGenetica
+							:group="group" 
+							:editMode="editMode" 
+							title="Nueva Secuencia Genética"
+							endPointRute="new_genetic_sequences"
+							objEpdata="new_genetic_sequence"
+							titleBtn="Agregar Nueva Secuencia"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+
+				<DxItem title="Nueva Secuencia Genética">
+					<template #default>
+						<SecuenciaGenetica
+							:group="group" 
+							:editMode="editMode" 
+							title="Nueva Secuencia Genética"
+							endPointRute="new_genetic_sequences"
+							objEpdata="new_genetic_sequence"
+							titleBtn="Agregar Nueva Secuencia"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+				
+				<DxItem title="Working paper">
+					<template #default>
+						<DocumentoTrabajo
+							:group="group" 
+							:editMode="editMode" 
+							title="Documento de trabajo (Working paper)"
+							endPointRute="working_papers"
+							objEpdata="working_paper"
+							titleBtn="Nuevo Documento de trabajo"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+
 				<DxItem title="Taller Creación">
 					<template #default>
 						<tallerCreacion
@@ -44,12 +147,12 @@
 					</template>
 				</DxItem>
 
-				<DxItem title="Fortalecimiento o Solucion de Asuntos de Anteres">
+				<DxItem title="Fortalecimiento o Solucion de Asuntos de Interes">
 					<template #default>
 						<AsuntosInteres 
 							:group="group" 
 							:editMode="editMode" 
-							title="Fortalecimiento o Solucion de Asuntos de Anteres"
+							title="Fortalecimiento o Solucion de Asuntos de Interes"
 							endPointRute="appropriation_processes"
 							objEpdata="appropriation_process"
 							titleBtn="Nuevo fortalecimiento o solucion"	
@@ -120,7 +223,13 @@ export default {
 		GeneracionInsumos: () => import("@/modules/unidad/productos/apropiacion_social/generacion_insumos"),
 		FortalecimientoCadenas: () => import("@/modules/unidad/productos/apropiacion_social/fortalecimiento_cadenas"),
 		RedConocimiento: () => import("@/modules/unidad/productos/apropiacion_social/red_conocimiento"),
-		tallerCreacion: () => import("@/modules/unidad/productos/apropiacion_social/trabajo_creacion")
+		tallerCreacion: () => import("@/modules/unidad/productos/apropiacion_social/trabajo_creacion"),
+		DocumentoTrabajo: () => import("@/modules/unidad/productos/apropiacion_social/documento_trabajo"),
+		SecuenciaGenetica: () => import("@/modules/unidad/productos/apropiacion_social/secuencia_genetica"),
+		InformeFinal: ()=> import("@/modules/unidad/productos/apropiacion_social/informe_final"),
+		InformeTecnico: ()=> import("@/modules/unidad/productos/apropiacion_social/informe_tecnico"),
+		ConsultoriasCientificas: ()=> import("@/modules/unidad/productos/apropiacion_social/consultorias_cientificas"),
+		ConsultoriasArtisticas: ()=> import("@/modules/unidad/productos/apropiacion_social/consultorias_artisticas")
 	},
 	mounted() {
 		root = this;
