@@ -94,6 +94,7 @@ const store = {
 					.get(`researcher_research_units?identification_number=${doc}`)
 					.then((r) => {
 						let groups = r.data;
+						console.log(window.vm.$sep);
 						console.log("Grupos de integrante =>", groups);
 						// 202103120414: Si tiene acceso a algún grupo autoriza
 						if (groups.length > 0) {

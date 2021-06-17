@@ -54,137 +54,109 @@ regulation=endpoindt especifico endpoinds tutas generales update
 							<div class="row">
 								<!-- formulatio -->
 
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                <label>Nombre: </label>
-                                <DxTextBox placeholder="Nombre" class="form-control" :value.sync="baseObj.name">
-                                <DxValidator>
-                                    <DxRequiredRule />
-                                </DxValidator>
-                                </DxTextBox>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                <label>Categoría: </label>
-                                <DxSelectBox
-                                    :grouped="false"
-                                    :search-enabled="false"
-                                    placeholder="Seleccione..."
-                                    :value.sync="baseObj.category_id" 
-                                    class="form-control"
-                                    :data-source="subtipos" 
-                                    display-expr="st_name"
-                                    value-expr="id">
-                                </DxSelectBox>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Convocatoria Minciencias:</label>
-                                        <DxSelectBox
-                                            :grouped="false"
-                                            :search-enabled="false"
-                                            placeholder="Seleccione..."
-                                            :value.sync="baseObj.colciencias_call_id"
-                                            class="form-control"
-                                            :data-source="convocatorias"
-                                            display-expr="name"
-                                            value-expr="id"
-                                            item-template="item"
-                                        >
-                                            <template #item="{ data }">
-                                                <div>{{ data.name }} de {{ data.year }}</div>
-                                            </template>
-                                        </DxSelectBox>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                    <label>Titulo: </label>
+                                    <DxTextBox placeholder="Titulo" class="form-control" :value.sync="baseObj.title">
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                    </DxValidator>
+                                    </DxTextBox>
                                     </div>
-                            </div>
+                                </div>
 
-                            <div class="col-md-4">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                    <label>Categoría: </label>
+                                    <DxSelectBox
+                                        :show-clear-button="true"
+                                        :grouped="false"
+                                        :search-enabled="false"
+                                        placeholder="Seleccione..."
+                                        :value.sync="baseObj.category_id" 
+                                        class="form-control"
+                                        :data-source="subtipos" 
+                                        display-expr="st_name"
+                                        value-expr="id">
+                                    </DxSelectBox>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Convocatoria Minciencias:</label>
+                                            <DxSelectBox
+                                        :show-clear-button="true"
+                                        :grouped="false"
+                                                :search-enabled="false"
+                                                placeholder="Seleccione..."
+                                                :value.sync="baseObj.colciencias_call_id"
+                                                class="form-control"
+                                                :data-source="convocatorias"
+                                                display-expr="name"
+                                                value-expr="id"
+                                                item-template="item"
+                                            >
+                                                <template #item="{ data }">
+                                                    <div>{{ data.name }} de {{ data.year }}</div>
+                                                </template>
+                                            </DxSelectBox>
+                                        </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                    <label>DOI: </label>
+                                    <DxTextBox placeholder="DOI" class="form-control" :value.sync="baseObj.doi">
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                    </DxValidator>
+                                    </DxTextBox>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
                                 <div class="form-group">
-                                <label>Institución Fundadora: </label>
-                                <DxTextBox placeholder="Institución Fundadora" class="form-control" :value.sync="baseObj.funding_institution">
-                                <DxValidator>
-                                    <DxRequiredRule />
-                                </DxValidator>
-                                </DxTextBox>
+                                <label>Fecha Elaboración: </label>
+                                    <DxDateBox 
+                                        class="form-control" 
+                                        name="elaboration_date" 
+                                        :value.sync="baseObj.elaboration_date" 
+                                        id="elaboration_date" 
+                                        placeholder="DD/MM/YYYY" 
+                                        display-format="dd/MM/yyyy" 
+                                        :min="minDate" 
+                                        :max="actualDate" 
+                                        type="date"> 
+                                    <DxValidator> 
+                                        <DxRequiredRule />
+                                    </DxValidator> 
+                                    </DxDateBox>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                <label>Nombre Organización: </label>
-                                <DxTextBox placeholder="Nombre Organización" class="form-control" :value.sync="baseObj.organization_name">
-                                <DxValidator>
-                                </DxValidator>
-                                </DxTextBox>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                    <label>Institución relacionada: </label>
+                                    <DxTextBox placeholder="Institución relacionada" class="form-control" :value.sync="baseObj.related_institution">
+                                    <DxValidator>
+                                    </DxValidator>
+                                    </DxTextBox>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4">
-                            <div class="form-group">
-                            <label>Fecha Inicio: </label>
-                                <DxDateBox 
-                                    class="form-control" 
-                                    name="start_date" 
-                                    :value.sync="baseObj.start_date" 
-                                    id="start_date" 
-                                    placeholder="DD/MM/YYYY" 
-                                    display-format="dd/MM/yyyy" 
-                                    :min="minDate" 
-                                    :max="actualDate" 
-                                    type="date"> 
-                                <DxValidator> 
-                                    <DxRequiredRule />
-                                </DxValidator> 
-                                </DxDateBox>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                    <label>Pagina Web: </label>
+                                    <DxTextBox placeholder="Pagina Web" class="form-control" :value.sync="baseObj.web_page">
+                                    <DxValidator>
+                                        <DxRequiredRule />
+                                        <DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+                                    </DxValidator>
+                                    </DxTextBox>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4">
-                            <div class="form-group">
-                            <label>Fecha Final: </label>
-                                <DxDateBox 
-                                    class="form-control" 
-                                    name="finish_date" 
-                                    :value.sync="baseObj.finish_date" 
-                                    id="finish_date" 
-                                    placeholder="DD/MM/YYYY" 
-                                    display-format="dd/MM/yyyy" 
-                                    :min="minDate" 
-                                    :max="actualDate" 
-                                    type="date"> 
-                                <DxValidator> 
-                                    <DxRequiredRule />
-                                </DxValidator> 
-                                </DxDateBox>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                <label>Tipo Participación: </label>
-                                <DxSelectBox
-                                    :grouped="false"
-                                    :search-enabled="false"
-                                    placeholder="Seleccione..."
-                                    :value.sync="baseObj.participation_id" 
-                                    class="form-control"
-                                    :data-source="participationid" 
-                                    display-expr="st_name"
-                                    value-expr="id">
-                                </DxSelectBox>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <label>Lugar del taller: </label>
-                            <Geo :lockElement="loaderElement" :syncObject="baseObj" />
-                            </div>
-                               
 
                                 <div class="col-md-12">
                                     <div class="form-group">
@@ -262,19 +234,15 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='name'  caption='Nombre' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='funding_institution'  caption='Institucion Financiadora' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='start_date'  caption='Fecha Inicio' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='finish_date'  caption='Fecha Final' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='participation_name'  caption='Participacion' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='organization_name'  caption='Organización' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='category_name'  caption='Categoria' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
+                        <DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+
+                        <DxColumn data-field='title'  caption='Titulo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='category_name'  caption='Categoria' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='doi'  caption='DOI' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='elaboration_date'  caption='Fecha Elabora ion' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='related_institution'  caption='Institucion financiadora' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
                         <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
                         <DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='geo_country_name'  caption='Pais' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='geo_state_name'  caption='Estado ' data-type='string' alignment='center' :visible='false' :allow-grouping='false' /> 
 
 						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
 						<DxColumn data-field="web_page" caption="Pagina" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
@@ -282,7 +250,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 
 						<template #tplWeb="{ data }">
-							<a v-if="data.data.web_page != '' && data.data.web_page != null" :title="data.data.web_page" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+							<a v-if="data.data.web_page != '' && data.data.web_page != null" :title="data.data.web_page" class="cmd-item color-main-600 mr-2" :href="data.data.web_page" Target="_blank">
 								<i class="icon-link"></i> Visitar
 							</a>
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -303,7 +271,6 @@ regulation=endpoindt especifico endpoinds tutas generales update
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a>
-
 								<span v-if="editMode">
 									<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
@@ -454,7 +421,7 @@ export default {
         // },
 	},
 	data: () => ({
-		namePanel:"redconocimiento",
+		namePanel:"paperWorking",
         codEP: null,//611 612 613
         popupObs: false,
         observarData:"",
@@ -487,32 +454,27 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-            name: null, 
-            category_id: null, 
-            colciencias_call_id: null, 
-            funding_institution: null, 
-            geo_city_id: null, 
-            geo_country_id: null, 
-            geo_state_id: null, 
-            organization_name: null, 
-            research_group_id: null, 
-            start_date: null, 
-            finish_date: null, 
-            observation: null, 
-            participation_id: null, 
+            title: null,
+            category_id: null,
+            colciencias_call_id: null,
+            doi: null,
+            elaboration_date: null,
+            related_institution: null,
+            research_group_id: null,
+            observation: null,
+            web_page: null,
             active: true,
 		},
 	}),
 	created() {
 		// console.clear();
 		root = this;
-        
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		// root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
-		root.subtipos = root.subtypesByType("taller_creacion_categoria");
-		root.tiposDocumento = root.subtypesByType("taller_creacion_documento");
-        root.participationid = root.subtypesByType("evento_participacion");
+		root.subtipos = root.subtypesByType("documento_trabajo_w_categoria");
+		root.tiposDocumento = root.subtypesByType("documento_trabajo_w_documento");
+        // root.participationid = root.subtypesByType("evento_participacion");
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);

@@ -189,7 +189,7 @@
 										<a
 											title="Observar información..."
 											href="#"
-											@click.prevent="go(`unidad/${data.value}`, 'Cargando Información')"
+											@click.prevent="go(data.value, `unidad/${data.value}`, 'Cargando Información')"
 											class="cmd-item color-main-600 mr-2"
 										>
 											<i class="icon-info"></i>
@@ -197,7 +197,7 @@
 										<a
 											title="Observar documentos..."
 											href="#"
-											@click.prevent="go(`unidad/${data.value}/documentos`, 'Cargando Documentos')"
+											@click.prevent="go(data.value, `unidad/${data.value}/documentos`, 'Cargando Documentos')"
 											class="cmd-item color-main-600 mr-2"
 										>
 											<i class="icon-file-pdf"></i>
@@ -205,7 +205,7 @@
 										<a
 											title="Observar integrantes..."
 											href="#"
-											@click.prevent="go(`unidad/${data.value}/integrantes`, 'Cargando Integrantes')"
+											@click.prevent="go(data.value, `unidad/${data.value}/integrantes`, 'Cargando Integrantes')"
 											class="cmd-item color-main-600 mr-2"
 										>
 											<i class="icon-users"></i>
@@ -213,7 +213,7 @@
 										<a
 											title="Observar producción..."
 											href="#"
-											@click.prevent="go(`unidad/${data.value}/produccion`, 'Cargando Producción')"
+											@click.prevent="go(data.value, `unidad/${data.value}/produccion`, 'Cargando Producción')"
 											class="cmd-item color-main-600"
 										>
 											<i class="icon-trophy"></i>
@@ -269,13 +269,7 @@
 		<div class="row" v-if="isDev && debug">
 			<div class="col">
 				<div class="card">
-					<div class="card-body">
-						editMode: {{ editMode }}<br />
-						{{ JSON.stringify(unidad, null, 3) }}
-					</div>
-					<div class="card-footer">
-						<a @click.prevent="scrollTop()" class="font-weight-semibold" href="#">SCROLL!!!</a>
-					</div>
+					<div class="card-body"><span class="font-weight-semibold">editMode:</span> {{ editMode }}</div>
 				</div>
 			</div>
 		</div>
@@ -426,7 +420,7 @@ export default {
 		...mapActions("unidad/documentos", { getDocs: "get" }),
 		cmdClick(e) {
 			console.log("e.itemData", e.itemData);
-			root.go(e.itemData.command, `Cargando ${e.itemData.text}`);
+			root.go(e.itemData.text, e.itemData.command, `Cargando ${e.itemData.text}`);
 		},
 		cmdGet(data) {
 			return [
@@ -524,7 +518,7 @@ export default {
 		edit(row) {
 			console.log("row", row);
 			root.setUnit(row.data);
-			root.go(`/unidad/${row.data.id}`);
+			root.go(row.data.id, `/unidad/${row.data.id}`);
 		},
 		edit2(row) {
 			root.mode = "add";
