@@ -7,7 +7,7 @@
 						<Articulo :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				
+
 				<DxItem title="Capítulos de Libro">
 					<template #default>
 						<Capitulo :group="group" :editMode="editMode" />
@@ -19,13 +19,13 @@
 						<Libro :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				
+
 				<DxItem title="Notas Científicas">
 					<template #default>
 						<Nota :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-				
+
 				<DxItem title="Nuevas Razas Animales">
 					<template #default>
 						<NuevaRaza :group="group" :editMode="editMode" />
@@ -41,8 +41,8 @@
 					<template #default>
 						<Vegetales :group="group" :editMode="editMode" />
 					</template>
-				</DxItem>		
-				
+				</DxItem>
+
 				<DxItem title="Obras de Investigación o Creación">
 					<template #default>
 						<Obra :group="group" :editMode="editMode" />
@@ -54,8 +54,6 @@
 						<Patente :group="group" :editMode="editMode" />
 					</template>
 				</DxItem>
-
-				
 			</DxTabPanel>
 		</div>
 	</div>
@@ -84,7 +82,6 @@ export default {
 		};
 	},
 	mounted() {
-		console.clear();
 		root = this;
 		root.tp = root.$refs.tabPanel.instance;
 		console.log("root", root);
@@ -93,7 +90,6 @@ export default {
 		});
 	},
 	props: {
-		
 		group: {
 			type: Object,
 			default: () => {},

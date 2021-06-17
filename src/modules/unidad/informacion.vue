@@ -510,11 +510,9 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						editMode: {{ editMode }}<br />
-						{{ JSON.stringify(group, null, 3) }}
-					</div>
-					<div class="card-footer">
-						<a @click.prevent="scrollTop()" class="font-weight-semibold" href="#">SCROLL!!!</a>
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -543,6 +541,8 @@ export default {
 	name: "datosBasicos",
 	created: function() {
 		root = this;
+		// 202106162214: 202106162214 Nuevo
+		console.log("router", root.$router);
 		// console.clear();
 		console.log("root.$baseUrl()", root.$baseUrl());
 		root.loaderElement = "#group-panel";
@@ -551,9 +551,10 @@ export default {
 		// 202105311305: Determina si se esta creando o editando
 		console.log("root.$route", root.$route);
 		// 202105311314: Editando
+		let uId = root.$route.params.unidadId;
 		if (root.$route.name === "unidad-info") {
 			root.getUnit({
-				id: root.$route.params.unidadId,
+				id: uId,
 				cb: function(result) {
 					root.group = result;
 					console.log("group", root.group);

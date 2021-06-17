@@ -61,6 +61,7 @@ vue.mixin({
 		locale("es");
 	},
 	data: () => ({
+		editModeOld: false,
 		loaderMessage: null,
 		loaderElement: null,
 		si_no: [
@@ -111,7 +112,8 @@ vue.mixin({
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
-		go(path, lockMsg = "Cargando", lockEl = ".page-content") {
+		go(groupId = 0, path, lockMsg = "Cargando", lockEl = ".page-content") {
+			console.log("groupId", groupId);
 			this.loaderShow(lockMsg, lockEl);
 			this.$router.push({ path: path });
 		},
@@ -206,7 +208,33 @@ vue.mixin({
 		...mapState("auth/usuario", ["roles"]),
 		...mapState("auth/login", ["authenticated", "user"]),
 		editMode() {
-			return this.user_role_id === 1;
+			let result = false;
+			console.log(window.vm.$sep);
+			console.log("editMode");
+			if (this.user_role_id === 1) {
+				result = true;
+			} else {
+				console.log("this.$route.params", this.$route.params);
+				let groupId = this.$route.params.unidadId;
+				if (typeof groupId !== "undefined") {
+					console.log("groupId =>", groupId);
+					console.log("user =>", window.vm.user);
+					console.log("groups =>", window.vm.user.groups);
+					// 202106162157: Filtra el grupo actual de los grupos seleccionados
+					if (typeof window.vm.user.groups !== "undefined") {
+						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
+						if (typeof g !== "undefined") {
+							console.log("current_group =>", g);
+							console.log("current_group => role_id =>", g.role_id);
+							// 202106170127: Si es director en el grupo actual
+							if (g.role_id === 1) result = true;
+						}
+					}
+				}
+			}
+			console.log("editMode =>", result);
+			console.log(window.vm.$sep);
+			return result;
 		},
 		minDate() {
 			return new Date(2000, 0, 1);

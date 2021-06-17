@@ -49,6 +49,17 @@
 				</div>
 			</div>
 		</div>
+		<div class="row" v-if="isDev && debug">
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>

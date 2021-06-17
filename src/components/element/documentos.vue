@@ -87,7 +87,13 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						<a href="#" id="btn-doc-add" @click.prevent="documentAdd" class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple slide">
+						<a
+							href="#"
+							v-if="editMode"
+							id="btn-doc-add"
+							@click.prevent="documentAdd"
+							class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple slide"
+						>
 							<b><i class="icon-database-add"></i></b> NUEVO DOCUMENTO
 						</a>
 						<DxDataGrid
@@ -195,6 +201,17 @@
 								</span>
 							</template>
 						</DxDataGrid>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" v-if="isDev && debug">
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">mainObj:</span> {{ JSON.stringify(mainObj, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -321,51 +338,50 @@ export default {
 			root.fileError = $(root.panelDataDoc + " #file-error");
 			root.btnDocLink = $(root.panelDataDoc + " #a-doc-link");
 			root.actionTitle = $(root.panelDataDoc + " .card-header");
+			if ($("#panel-produccion").length > 0) root.loaderElement = $("#panel-produccion .card-body");
 			// 202104230923: https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxFileUploader/
-			root.uploader = root.$refs.uploader.instance;
-			if ($("#panel-produccion").length > 0) {
-				root.loaderElement = $("#panel-produccion .card-body");
-			}
-			root.uploader.option({
-				labelText: "",
-				width: "100%",
-				uploadMode: "useForm",
-				// accept: "document/*.pdf",
-				maxFileSize: 4000000,
-				selectButtonText: "SELECCIONAR DOCUMENTO",
-				allowedFileExtensions: [".pdf"],
-				// elementAttr: {
-				// 	id: "kuki",
-				// 	class: "w-100",
-				// },
-				onInitialized: (e) => {
-					console.log("onInitialized", e);
-				},
-				onValueChanged: (e) => {
-					console.log("onValueChanged", e);
-					root.fileError.hide();
-					root.file = e.value.length > 0 ? e.value[0] : null;
-					console.log("root.file", root.file);
-					let saveBtn = $(root.panelDataDoc + " #btn-save");
-					let errors = $(e.element).find(".dx-fileuploader-file-status-message span");
-					if (errors.length > 0) {
-						console.log(`HAS ${errors.length} ERRORS!!`);
-						saveBtn.disable();
-					} else {
-						saveBtn.enable();
-					}
-				},
-				onContentReady: (e) => {
-					console.log("FileUploader onContentReady", e);
-					var el = $(e.element);
-					el.find(".dx-fileuploader-upload-button,.dx-fileuploader-input-container").hide();
-					root.btnDocSelect = el.find(".dx-fileuploader-button.dx-button-has-text:first");
-					let b = root.btnDocSelect;
-					root.btnDocSelect.removeAttr("class").addClass("btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100");
-					if (root.btnDocSelect.find("i").length <= 0)
-						root.btnDocSelect.html('<b><i class="icon-file-pdf"></i></b><span>' + root.btnDocSelect.find(".dx-button-text").text() + "</span>");
-				},
-			});
+			root.uploader = typeof root.$refs.uploader !== "undefined" ? root.$refs.uploader.instance : null;
+			if (root.uploader !== null)
+				root.uploader.option({
+					labelText: "",
+					width: "100%",
+					uploadMode: "useForm",
+					// accept: "document/*.pdf",
+					maxFileSize: 4000000,
+					selectButtonText: "SELECCIONAR DOCUMENTO",
+					allowedFileExtensions: [".pdf"],
+					// elementAttr: {
+					// 	id: "kuki",
+					// 	class: "w-100",
+					// },
+					onInitialized: (e) => {
+						console.log("onInitialized", e);
+					},
+					onValueChanged: (e) => {
+						console.log("onValueChanged", e);
+						root.fileError.hide();
+						root.file = e.value.length > 0 ? e.value[0] : null;
+						console.log("root.file", root.file);
+						let saveBtn = $(root.panelDataDoc + " #btn-save");
+						let errors = $(e.element).find(".dx-fileuploader-file-status-message span");
+						if (errors.length > 0) {
+							console.log(`HAS ${errors.length} ERRORS!!`);
+							saveBtn.disable();
+						} else {
+							saveBtn.enable();
+						}
+					},
+					onContentReady: (e) => {
+						console.log("FileUploader onContentReady", e);
+						var el = $(e.element);
+						el.find(".dx-fileuploader-upload-button,.dx-fileuploader-input-container").hide();
+						root.btnDocSelect = el.find(".dx-fileuploader-button.dx-button-has-text:first");
+						let b = root.btnDocSelect;
+						root.btnDocSelect.removeAttr("class").addClass("btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100");
+						if (root.btnDocSelect.find("i").length <= 0)
+							root.btnDocSelect.html('<b><i class="icon-file-pdf"></i></b><span>' + root.btnDocSelect.find(".dx-button-text").text() + "</span>");
+					},
+				});
 		}, 500);
 	},
 	computed: {

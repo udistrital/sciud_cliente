@@ -26,6 +26,17 @@
 				</div>
 			</div>
 		</div>
+		<div class="row" v-if="isDev && debug">
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -61,8 +72,9 @@ export default {
 		console.log(root.$sep);
 		root.tiposDocumento = root.subtypesByType("unidad_tipo_documento");
 		console.log("root.tiposDocumento", root.tiposDocumento);
+		let uId = root.$route.params.unidadId;
 		root.getUnit({
-			id: root.$route.params.unidadId,
+			id: uId,
 			cb: function(result) {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
