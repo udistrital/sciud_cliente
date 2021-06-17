@@ -75,7 +75,7 @@
 																<DxTextBox :value.sync="researcher.id" placeholder="Investigador ID" class="form-control" :read-only="true" />
 															</div>
 														</div>
-														<div class="col-md-6">
+														<div class="col-md-4">
 															<div class="form-group">
 																<label>OAS ID:</label>
 																<DxTextBox :value.sync="researcher.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
@@ -85,12 +85,18 @@
 																</DxTextBox>
 															</div>
 														</div>
-														<!-- <div class="col-md-2">
+														<div class="col-md-2">
 															<div class="form-group">
 																<label>Activo:</label>
-																<DxSwitch :value.sync="group_member.active" :read-only="!editMode" switched-on-text="SI" switched-off-text="NO" />
+																<DxSwitch
+																	:value.sync="group_member.active"
+																	:read-only="!editMode"
+																	switched-on-text="SI"
+																	switched-off-text="NO"
+																	@valueChanged="activeChanged"
+																/>
 															</div>
-														</div> -->
+														</div>
 													</div>
 												</div>
 												<div class="col-md-2">
@@ -327,16 +333,16 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="row" v-if="isDev && debug">
 			<div class="col">
 				<div class="card">
-					<div class="card-body code">
-						<strong>group_member:</strong> {{ JSON.stringify(group_member, null, 3) }}
-						<hr />
-						<strong>researcher:</strong> {{ JSON.stringify(researcher, null, 3) }}
-					</div>
-					<div class="card-footer">
-						<a @click.prevent="scrollTop()" class="font-weight-semibold" href="#">SCROLL!!!</a>
+					<div class="card-body">
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">group_member:</span> {{ JSON.stringify(group_member, null, 3) }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">researcher:</span> {{ JSON.stringify(researcher, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -388,8 +394,9 @@ export default {
 		root.panelGrid = root.panelMain + "-grid";
 		root.loaderElement = root.panelMain;
 		root.loaderMessage = "Cargando Información<br>de Integrantes";
+		let uId = root.$route.params.unidadId;
 		root.getUnit({
-			id: root.$route.params.unidadId,
+			id: uId,
 			cb: function(result) {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
@@ -400,8 +407,8 @@ export default {
 	mounted() {
 		console.log(this.$sep);
 		setTimeout(function() {
-			root.nbId = root.$refs.nbIdNum.instance;
-			root.nbIdBtn = root.nbId.getButton("search");
+			root.nbId = typeof root.$refs.nbIdNum !== "undefined" ? root.$refs.nbIdNum.instance : null;
+			root.nbIdBtn = root.nbId !== null ? root.nbId.getButton("search") : null;
 			root.group_member_bk = root.$clone(root.group_member);
 			root.researcher_bk = root.$clone(root.researcher);
 			console.log("root.nbIdBtn", root.nbIdBtn);
@@ -545,6 +552,7 @@ export default {
 		group_member: {
 			id: null,
 			role_id: null,
+			gm_state_id: 1,
 			researcher_id: null,
 			name: null,
 			active: true,
@@ -600,6 +608,15 @@ export default {
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearcher", "getResearchers", "saveResearcher", "updateResearcher", "addGroupMember", "updateGroupMember"]),
 		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
+		activeChanged(e) {
+			const previousValue = e.previousValue;
+			const is_active = e.value;
+			console.log("previousValue =>", previousValue);
+			console.log("newValue =>", is_active);
+			root.group_member.gm_state_id = is_active ? 1 : 2;
+			console.log("root.group_member", root.group_member);
+			// Event handling commands go here
+		},
 		cmdVisible(data) {
 			// console.log("cmdVisible", e);
 			return typeof data.oas_details !== "undefined" && typeof data.oas_details.Id !== "undefined";
@@ -678,6 +695,10 @@ export default {
 					console.log("getResearchers", result);
 					root.groupResearchers = result.researchers;
 					console.log("root.groupResearchers", root.groupResearchers);
+					// 202106170030: Solo activos para roles diferentes a admin y gestor
+					if (root.user_role_id > 2) {
+						root.groupResearchers = root.groupResearchers.filter((o) => o.gm_state_id === 1);
+					}
 					root.dsMembers.reload();
 					root.loading = false;
 					if (loaderHide) root.loaderHide();
@@ -736,18 +757,18 @@ export default {
 
 				// 202106010400: Integrante
 				root.group_member.researcher_id = r.id;
-				let msg = root.group_member.id === null ? "asoció" : "actualizó";
-				root.group_member[root.mode === "add" ? "created_by" : "updated_by"] = root.user_id;
+				root.group_member.created_by = root.user_id;
+				root.group_member.updated_by = root.user_id;
 				let o = { group_id: root.group.id, item: root.group_member };
 				console.log("root.group_member =>", o);
 				r = await (root.group_member.id === null ? root.addGroupMember(o) : root.updateGroupMember(o));
 				console.log("SAVED group_member =>", r);
-
 				// 202106010429: Finaliza
 				root.loadMembers(false, function() {
 					// root.loaderHide();
 					root.userCancel(true);
 				});
+				// let msg = root.group_member.id === null ? "asoció" : "actualizó";
 				// root.$info(`El usuario con el documento "${root.researcher.identification_number}" se ${msg} exitosamente!`, function() {
 				// root.loaderShow("Recargando usuarios", "#panel-integrantes-data .card");
 				// window.location.reload();
