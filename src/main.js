@@ -211,7 +211,7 @@ vue.mixin({
 			let result = false;
 			console.log(window.vm.$sep);
 			console.log("editMode");
-			if (this.user_role_id === 1) {
+			if (this.user_role_id === 1 || this.user_role_id === 2) {
 				result = true;
 			} else {
 				console.log("this.$route.params", this.$route.params);
