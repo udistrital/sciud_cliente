@@ -1,7 +1,15 @@
-\* data.row.data.title = titulo de participantes data.data.title = titulo para activar o desactivar Ingresar Libro = Titulo botones Libro = Titulo principal
-Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifico books = rutas generales *\
+\* 
+data.title=titulo para activar o desactiva
+{{titleBtn}}  = Titulo botones 
+{{title}}  = Titulo principal 
+{{titleBtn}} =titulo abreviado
+namePanel=nombredepaneles
+root.endPointRute = regulation enlace
+regulation=endpoindt especifico endpoinds tutas generales update
+*\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panel-libro">
+	<div class="col mt-3 pl-1 pr-1" :id="namePanel">
+		
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -9,19 +17,19 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Libros Resultados de Investigación</span>
+								<span class="font-weight-semibold">{{title}}</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button v-if="editMode" type="button" @click.prevent="add()" title=" Ingresar Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Ingresar Libro
+								<button type="button" @click.prevent="add()" v-if="editMode"  title="Agregar Nuevo Elemento .." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-database-add"></i></b> {{titleBtn}}
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al Ingresar Libro.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver a Libro
+								<button type="button" @click.prevent="retorno()" title="Volver al panel principal.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b> Volver A {{title}}
 								</button>
 							</span>
 						</div>
@@ -29,19 +37,23 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 				</div>
 			</div>
 		</div>
-		<Documentos id="panel-libro-documentos" end-point="books" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-		<Participantes id="panel-libro-participantes" end-point="books" :product="baseObj" :group="group" ref="participantes" :parent="this" />
-		<DxValidationGroup ref="basicGroup">
+
+
+        <Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Participantes :id="id_panel_participantes" :end-point="endPointRute" :product="baseObj" :group="group" ref="participantes" :parent="this" />
+		
+        <DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Libro</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{titleBtn}} </span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
+
 
 								<div class="col-md-3">
 									<div class="form-group">
@@ -64,8 +76,8 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 											id="cidcRegistrationDate"
 											placeholder="dd/mm/yyyy"
 											display-format="dd/MM/yyyy"
-											:min="min"
-											:max="now"
+											:min="minDate"
+											:max="actualDate"
 											type="date"
 										>
 											<DxValidator>
@@ -150,24 +162,17 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 
 								<div class="col-md-12"><label>Lugar de publicación:</label><Geo :lockElement="loaderElement" :syncObject="baseObj" /></div>
 
-								<!-- <div class="col-md-12">
-									<div class="form-group">
-										<label>Observaciones:</label>
-										<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observaciones" class="form-control">
-										</DxTextArea>
-									</div>
-								</div> -->
 
-								<div class="col-md-12">
-									<div class="form-group">
-										<label>Observaciones: </label>
-										<Observaciones :syncValue.sync="baseObj"/>
-									</div>
-								</div>
-																
-								<div class="col-md-12" v-if="tiposDocumento.length>0">
-									<div class="card-body" v-html="requisitoArchivo()"></div>
-								</div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Observaciones: </label>
+                                        <Observaciones :syncValue.sync="baseObj"/>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" v-if="tiposDocumento.length>0">
+                                    <div class="card-body" v-html="requisitoArchivo()"></div>
+                                </div>
 
 								<!-- fin formulario -->
 							</div>
@@ -200,6 +205,7 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 		</DxValidationGroup>
 		<div class="row grid">
 			<div class="col">
+                <h2></h2>
 				<div class="p-0">
 					<DxDataGrid
 						class="main"
@@ -233,7 +239,7 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
+                        
 						<DxColumn data-field="id" caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="title" caption="Título" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="editorial_name" caption="Editorial" data-type="string" alignment="left" :visible="true" />
@@ -287,7 +293,9 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 								</span>
 							</span>
 						</template>
+
 					</DxDataGrid>
+
 				</div>
 			</div>
 		</div>
@@ -297,12 +305,13 @@ Libro = titulo abreviado panel-libro = nombredepaneles book = endpoindt especifi
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
+
         <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>
 						<i class="icon-info mr-1 color-main-600"></i>
-						<span class="font-weight-semibold">{{baseObj[title]}}</span>
+						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
 					</h3>
 					<div v-html="observarData"></div>
 				</div>
@@ -347,13 +356,13 @@ import {
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
+//import { DxStateStoring } from 'node_modules/devextreme-vue/pivot-grid';
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "Libro",
 	components: {
 		// Commands,
-		DxPopup,
+        DxPopup,
 		DxButton,
 		DxColumn,
 		DxPatternRule,
@@ -383,18 +392,49 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		title:{
-			type: String,
-			default: () => 'title',
-		},
 		group: {
 			type: Object,
 			default: () => null,
 		},
+        // namePanel:{
+        //     type: String,
+        //     default: () => "panelPrincipal",
+        // },
+        endPointRute:{
+            type: String,
+            default: () => null,
+        },
+        objEpdata:{
+            type: String,
+            default: () => null,
+        },
+        title:{
+            type: String,
+            default: () => null,
+        },
+        titleBtn:{
+            type: String,
+            default: () => null,
+        },
+        titlecolum:{
+            type: String,
+            default: () => null,
+        },
+        // },
+        // codEP:{
+        //     type: String,
+        //     default: () => null,
+        // },
+        // padre:{
+        //     type: Object,
+		// 	default: () => null,
+        // },
 	},
 	data: () => ({
-		popupObs: false,
-		observarData: null,
+		namePanel:"libro",
+        codEP: 412, //libro investigacion 412
+        popupObs: false,
+        observarData:"",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -402,7 +442,8 @@ export default {
 		mode: null,
 		unidad: null,
 		section: null,
-		tipos: [],
+		//tipos: 587, //584-179
+        tipox:[],
 		totalCount: 0,
 		tiposDocumento: [],
 		subtipos: [],
@@ -416,8 +457,10 @@ export default {
 		docLink: null,
 		firstLoad: true,
 		now: new Date(),
-		min: new Date(1950, 1, 1),
 		baseEnt: null,
+        participationid: null,
+        id_panel_documentos: "documentos",
+        id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
@@ -435,7 +478,6 @@ export default {
 		},
 	}),
 	created() {
-		// console.clear();
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
@@ -443,26 +485,34 @@ export default {
 		root.tiposDocumento = root.subtypesByType("libro_documento");
 	},
 	mounted() {
-		console.log("root.tipos", root.tipos);
-		root.panelData = $("#panel-libro .data");
-		root.panelGrid = $("#panel-libro .grid");
-		root.panelCmds = $("#panel-libro .cmds");
-		root.panelCmdBack = $("#panel-libro .cmds-back");
-		root.panelDocs = $("#panel-libro-documentos");
-		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#panel-libro .grid";
+		console.log("root.tipos", this.tipos);
+        root.id_panel_documentos= this.namePanel + "documentos"
+        root.id_panel_participantes= this.namePanel + "participantes"
+		root.panelData = $("#" + this.namePanel + " .data");
+        root.panelGrid = $("#" + this.namePanel + " .grid");
+        root.panelCmds = $("#" + this.namePanel + " .cmds");
+        root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
+        root.panelDocs = $("#" + this.namePanel + "-documentos");
+        root.loaderMessage = "Cargando Elementos";
+        root.loaderElement = "#" + this.namePanel + " .grid";
+
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
+            let data = root.codEP;
+            data = (data != null) ? "book_type_id=" + data : null,
+            console.warn("codEP: ",root.codEP);
+            console.warn("valor de data: ",root.codEP);
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `research_units/${this.group.id}/books`,
+				stringParam: data,
+				endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando elementos", root.panelGrid);
+					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -476,15 +526,20 @@ export default {
 	watch: {},
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		
         verObservar(data){
             root.observarData=data.observation;
-            root.baseObj[root.title]=data[root.title];
+            root.baseObj[root.titlecolum]=data[root.titlecolum];
             root.popupObs= !root.popupObs ? true : false ;
-        },		
+        },
 		
+        verObservarObj(data){
+            root.observarData=data.target_audiences;
+            root.baseObj[root.titlecolum]="Objetivo";
+            root.popupObs= !root.popupObs ? true : false ;
+        },
+
 		requisitoArchivo(){
 			let tipos=root.tiposDocumento;
 			let i=0, print="";
@@ -501,24 +556,23 @@ export default {
 		},
 
 		participantes(data) {
-			// console.clear();
 			root.section = "participantes";
 			console.log("participantes", data.row.data);
 			root.baseObj = data.row.data;
 			// 202104111513: Error
-			// if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
 			let rd = data.row.data;
-			// if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
-			// console.log("rd", rd);
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#panel-libro .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data.title}`);
-			root.panelParticipantes = $("#panel-libro-participantes");
-			console.log("root.panelParticipantes", root.panelParticipantes.length);
-			$("#panel-libro-documentos").hide();
+			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data[root.titlecolum]}`);
+			root.panelParticipantes = $("#" + root.id_panel_participantes);
+			console.log("root.panelParticipantes", root.id_panel_participantes.length);
+			$("#" + root.namePanel + "-documentos").hide();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panel-libro-participantes .grid").fadeIn();
+				$("#" + root.namePanel + "-participantes .grid").fadeIn();
 				root.panelParticipantes.fadeIn(function(params) {});
 			});
 		},
@@ -528,16 +582,16 @@ export default {
 			console.log("documentos", data.row.data);
 			root.section = "documentos";
 			// 202104111513: Error
-			// if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
 			let rd = data.row.data;
-			// if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
-			// console.log("rd", rd);
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
 			root.baseObj = rd;
-			$("#panel-libro .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.title}`);
+			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data[root.titlecolum]}`);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelCmdBack.fadeIn();
-				$("#panel-libro-documentos").fadeIn(function(params) {});
+				$("#" + root.id_panel_documentos).fadeIn(function(params) {});
 			});
 		},
 
@@ -552,37 +606,41 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#panel-libro-documentos").fadeOut(function(params) {
+				$("#" + root.id_panel_documentos).fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#panel-libro .item-title").html("");
+			$("#" + root.namePanel + " .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
 
 		save() {
 			console.log(this.$sep);
-			
 			var result = root.$refs.basicGroup.instance.validate();
-		
 			console.log("result", result);
 			if (result.isValid) {
 				console.log("VALID!");
 				root.scrollTop();
 				root.panelCmds.fadeOut();
 				// root.loaderElement = ;
-				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
+				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Elemento";
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
+                
+				root.baseObj.book_type_id = root.codEP;
+                root.baseObj.research_group_id=root.group.id;
 				let obj = root.baseObj;
+                //let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
 				let dto = {
+					newFormat:true,
 					unidadId: root.group.id,
-					stringEP: "books",
+					stringEP: root.endPointRute,
 					mod: obj.id,
-					objectSend: { book: obj },
+					//objectSend: { regulation : obj },
+                    objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -601,7 +659,7 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
-
+            //root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
@@ -612,7 +670,10 @@ export default {
 			console.log("ADD");
 			root.mode = "add";
 			root.baseObj = this.$clone(this.baseEnt);
+            //root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
+            console.warn("clase padre: ", this.padre);
+            console.warn("name panel: ", root.namePanel);
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
 			});
@@ -632,27 +693,21 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.title}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
+                    let active=JSON.stringify({active: state,  updated_by: root.user_id});
+
 					var dto = {
-						url: `research_units/${root.group.id}/books/${data.data.id}/active`,
-						data: {
-							book: {
-								active: state,
-								updated_by: 1,
-							},
-						},
+                        newFormat:true,
+                        url: `${root.endPointRute}/${data.data.id}`,
+                        data:  JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
 						cb: function(result) {
 							console.log("Result", result);
 							root.grid.refresh();
 							root.loaderHide();
-							// root.cancel(validationGroup);
-							// $("#data").fadeOut(function () {
-							// $("#grid").fadeIn(function () {});
-							// });
 						},
 					};
 					console.log("dto", dto);
@@ -666,15 +721,7 @@ export default {
 			this.grid = e.component;
 		},
 
-		onContentReady() {
-			// $(".commands a").click(function() {
-			// 	console.log("Come on lets show the dropdown!!");
-			// });
-			// var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
-			// var b = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>s</span> ";
-			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(b);
-		},
+		onContentReady() {},
 	},
 };
 </script>

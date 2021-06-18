@@ -3,7 +3,78 @@
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				
-				
+				<DxItem title="Publicaciones Editoriales No Especializadas">
+					<template #default>
+						<DivulgacionPublicacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Publicaciones Editoriales No Especializadas"
+							endPointRute="publications"
+							objEpdata="publication"
+							titleBtn="Nueva Publicacion"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+				<!-- tiene duracion -->
+				<DxItem title="Producciones Contenido Digital">
+					<template #default>
+						<DivulgacionDigital
+							:group="group" 
+							:editMode="editMode" 
+							title="Producciones de Contenido Digital"
+							endPointRute="publications"
+							objEpdata="publication"
+							titleBtn="Nueva Produccion"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+				<!-- tiene duracion -->
+				<DxItem title="Producción Contenido Transmedia">
+					<template #default>
+						<DivulgacionTransmedia
+							:group="group" 
+							:editMode="editMode" 
+							title="Producción de Estrategias y Contenido Transmedia"
+							endPointRute="publications"
+							objEpdata="publication"
+							titleBtn="Nueva Produccion"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Desarrollos Web">
+					<template #default>
+						<DesarrolloWeb
+							:group="group" 
+							:editMode="editMode" 
+							title="Desarrollos Web"
+							endPointRute="publications"
+							objEpdata="publication"
+							titleBtn="Anexar Desarrollo Web"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+
+				<DxItem title="Ediciones de Revista">
+					<template #default>
+						<EdicionRevista
+							:group="group" 
+							:editMode="editMode" 
+							title="Ediciones de Revista o Libro de Divulgación Científica"
+							endPointRute="magazine_editions"
+							objEpdata="magazine_edition"
+							titleBtn="Nueva Ediciones de Revista"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
 				
 				<DxItem title="Consultorías en arte, arquitectura y diseño">
 					<template #default>
@@ -229,7 +300,12 @@ export default {
 		InformeFinal: ()=> import("@/modules/unidad/productos/apropiacion_social/informe_final"),
 		InformeTecnico: ()=> import("@/modules/unidad/productos/apropiacion_social/informe_tecnico"),
 		ConsultoriasCientificas: ()=> import("@/modules/unidad/productos/apropiacion_social/consultorias_cientificas"),
-		ConsultoriasArtisticas: ()=> import("@/modules/unidad/productos/apropiacion_social/consultorias_artisticas")
+		ConsultoriasArtisticas: ()=> import("@/modules/unidad/productos/apropiacion_social/consultorias_artisticas"),
+		EdicionRevista: ()=> import("@/modules/unidad/productos/apropiacion_social/edicion_revista"),
+		DivulgacionPublicacion: ()=> import("@/modules/unidad/productos/apropiacion_social/divulgacion_publicacion"),
+		DivulgacionDigital: ()=> import("@/modules/unidad/productos/apropiacion_social/produccion_digital"),
+		DivulgacionTransmedia: ()=> import("@/modules/unidad/productos/apropiacion_social/produccion_transmedia"),
+		DesarrolloWeb: ()=> import("@/modules/unidad/productos/apropiacion_social/desarrollo_web")
 	},
 	mounted() {
 		root = this;
