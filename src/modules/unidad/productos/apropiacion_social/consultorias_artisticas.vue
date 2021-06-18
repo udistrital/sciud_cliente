@@ -225,7 +225,10 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-                        <DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        
+						<!--  -->
+							<!-- user_role_id -->
+						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
 
                         <DxColumn data-field='title'  caption='Titulo' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
                         <DxColumn data-field='consultation_date'  caption='Fecha Consultoria' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
@@ -243,7 +246,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						<!-- <DxColumn data-field="database_url" caption="Pagina" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
-
+						<!-- </template> -->
 						<!-- <template #tplWeb="{ data }">
 							<a v-if="data.data.database_url != '' && data.data.database_url != null" :title="data.data.database_url" class="cmd-item color-main-600 mr-2" :href="data.data.database_url" Target="_blank">
 								<i class="icon-link"></i> Visitar
@@ -691,7 +694,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]}"</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
