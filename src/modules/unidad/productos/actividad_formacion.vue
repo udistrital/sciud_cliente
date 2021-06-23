@@ -2,66 +2,120 @@
 	<div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
+				<DxItem title="Acompañamiento y Asesoría">
+					<template #default>
+						<AcompaniamientoAsesoria
+							:group="group" 
+							:editMode="editMode" 
+							title="Acompañamiento y Asesoría de Línea Temática"
+							endPointRute="accompaniment_consultancies"
+							objEpdata="accompaniment_consultancy"
+							titleBtn="Nuevo Acompañamiento"	
+							titlecolum="project_name"
+						/>
+					</template>
+				</DxItem>
+				
+				<DxItem title="Apoyo a Creación de Investigadores">
+					<template #default>
+						<ApoyoCreacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Apoyo a Creación Programa o Curso de Formación de Investigadores"
+							endPointRute="training_courses"
+							objEpdata="training_course"
+							titleBtn="Nuevo Curso o Apoyo"	
+							titlecolum="program_name"
+						/>
+					</template>
+				</DxItem>
+				
+				
+				
+				
 				<DxItem title="Dirección de Trabajos Pregrado">
 					<template #default>
 						<Trabajos :group="group" :editMode="editMode" title="Trabajo de Grado Pregrado" id_trabajo="1" />
 					</template>
 				</DxItem>
+
 				<DxItem title="Dirección de Trabajos Maestria">
 					<template #default>
-						<Trabajos2 :group="group" :editMode="editMode" title="Tesis oTrabajo de Grado Maestria" id_trabajo="2" />
+						<Trabajos2 :group="group" :editMode="editMode" title="Tesis o Trabajo de Grado Maestria" id_trabajo="2" />
 					</template>
 				</DxItem>
+				
 				<DxItem title="Dirección de Trabajos Doctorado">
 					<template #default>
 						<Trabajos3 :group="group" :editMode="editMode" title="Tesis Doctorado" id_trabajo="3" />
 					</template>
 				</DxItem>
-				<!-- <DxItem title="Tesis Doctorado">
+
+
+
+
+
+
+				<DxItem title="Proyecto de Investigación y Desarrollo">
 					<template #default>
-						<Doctorado :group="group" :editMode="editMode" title="Dirección de Tesis de Doctorado" />
+						<ProyectoInvestigacionDesarrollo
+							:group="group" 
+							:editMode="editMode" 
+							title="Proyecto de Investigación y Desarrollo"
+							endPointRute="investigation_projects"
+							objEpdata="investigation_project"
+							titleBtn="Nuevo Proyecto Desarrollo"	
+							titlecolum="title"
+						/>
 					</template>
 				</DxItem>
-				<DxItem title="Trabajo Maestría">
+
+				<DxItem title="Proyecto de Investigación- Creación">
 					<template #default>
-						<Maestria :group="group" :editMode="editMode" title="Dirección de Trabajo de Grado de Maestría" />
+						<ProyectoInvestigacionCreacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Proyecto de Investigación- Creación"
+							endPointRute="investigation_projects"
+							objEpdata="investigation_project"
+							titleBtn="Nueva Creacion"	
+							titlecolum="title"
+						/>
 					</template>
 				</DxItem>
-				<DxItem title="Trabajo Pregrado">
+
+
+				<DxItem title="Proyecto ID+I con Formación">
 					<template #default>
-						<Pregrado :group="group" :editMode="editMode" title="Dirección de Trabajo de Grado de Pregrado" />
+						<ProyectoIDI
+							:group="group" 
+							:editMode="editMode" 
+							title="Proyecto ID+I con Formación"
+							endPointRute="idi_investigation_projects"
+							objEpdata="idi_investigation_project"
+							titleBtn="Nuevo Proyecto ID+I"	
+							titlecolum="title"
+						/>
 					</template>
 				</DxItem>
-				<DxItem title="Investigación Desarrollo">
+				
+
+				<DxItem title="Proyecto de Extensión CTeI">
 					<template #default>
-						<Desarrollo :group="group" :editMode="editMode" title="Proyectos de Investigación y Desarrollo" />
+						<ProyectoExtencion
+							:group="group" 
+							:editMode="editMode" 
+							title="Proyecto de Extensión y Responsabilidad Social en CTeI"
+							endPointRute="extension_projects"
+							objEpdata="extension_project"
+							titleBtn="Nuevo Proyecto"	
+							titlecolum="project_name"
+						/>
 					</template>
 				</DxItem>
-				<DxItem title="Investigación Creación">
-					<template #default>
-						<Creacion :group="group" :editMode="editMode" title="Proyectos de Investigación-Creación" />
-					</template>
-				</DxItem>
-				<DxItem title="Proyecto (ID+I)">
-					<template #default>
-						<Desarrollo_idi :group="group" :editMode="editMode" title="Desarrollo e Innovación (ID+I)" />
-					</template>
-				</DxItem>
-				<DxItem title="Proyecto CTI">
-					<template #default>
-						<Proyeccion_cti :group="group" :editMode="editMode" title="Extensión y Responsabilidad Social en CTI" />
-					</template>
-				</DxItem>
-				<DxItem title="Apoyo Investigadores">
-					<template #default>
-						<Apoyo :group="group" :editMode="editMode" title="Apoyo a Creación de Cursos, Formación de Investigadores" />
-					</template>
-				</DxItem>
-				<DxItem title="Acompañamiento y Accesorias">
-					<template #default>
-						<Ondas :group="group" :editMode="editMode" title="Acompañamientos y asesorías (programa Ondas)" />
-					</template>
-				</DxItem> -->
+
+
+
 			</DxTabPanel>
 		</div>
 
@@ -79,15 +133,12 @@ export default {
 		Trabajos: () => import("@/modules/unidad/productos/actividad_formacion/trabajo_grado_p"),
 		Trabajos2: () => import("@/modules/unidad/productos/actividad_formacion/trabajo_grado_m"),
 		Trabajos3: () => import("@/modules/unidad/productos/actividad_formacion/trabajo_grado_d"),
-		// Doctorado: () => import("@/modules/unidad/productos/actividad_formacion/doctorado"),
-		// Maestria: () => import("@/modules/unidad/productos/actividad_formacion/maestria"),
-		// Pregrado: () => import("@/modules/unidad/productos/actividad_formacion/pregrado"),
-		// Desarrollo: () => import("@/modules/unidad/productos/actividad_formacion/desarrollo"),
-		// Creacion: () => import("@/modules/unidad/productos/actividad_formacion/creacion"),
-		// Desarrollo_idi: () => import("@/modules/unidad/productos/actividad_formacion/desarrollo_idi"),
-		// Proyeccion_cti: () => import("@/modules/unidad/productos/actividad_formacion/proyeccion_cti"),
-		// Apoyo: () => import("@/modules/unidad/productos/actividad_formacion/apoyo"),
-		// Ondas: () => import("@/modules/unidad/productos/actividad_formacion/ondas"),
+		AcompaniamientoAsesoria: () => import("@/modules/unidad/productos/actividad_formacion/Acompaniamiento_asesoria"),
+		ApoyoCreacion: () => import("@/modules/unidad/productos/actividad_formacion/apoyo_creacion"),
+		ProyectoExtencion: () => import("@/modules/unidad/productos/actividad_formacion/proyecto_extencion"),
+		ProyectoIDI: () => import("@/modules/unidad/productos/actividad_formacion/proyecto_idi"),
+		ProyectoInvestigacionDesarrollo: () => import("@/modules/unidad/productos/actividad_formacion/proyecto_investigacion_desarrollo"),
+		ProyectoInvestigacionCreacion: () => import("@/modules/unidad/productos/actividad_formacion/proyecto_investigacion_creacion"),
 	},
 	mounted() {
 		root = this;

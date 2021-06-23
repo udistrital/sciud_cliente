@@ -164,16 +164,36 @@
 		{ "name": "desarrollo_web_categoria", "id": 138 },
 		{ "name": "desarrollo_web_documento", "id": 139 },
 
-
-
 		{ "name": "edicion_revista_categoria", "id": 121 },
 		{ "name": "edicion_revista_documento", "id": 122 },
 
+		{ "name": "generacion_contenido_tipo", "id": 177 },
+		{ "name": "generacion_contenido_categoria", "id": 146 },
+		{ "name": "generacion_contenido_documento", "id": 147 },
+
+		{ "name": "boletin_divulgativo_categoria", "id": 148 },
+		{ "name": "boletin_divulgativo_documento", "id": 149 },
+
+		{ "name": "acompaniamiento_asesoria_categoria", "id": 168 },
+		{ "name": "acompaniamiento_asesoria_documento", "id": 169 },
+		
+		{ "name": "apoyo_creacion_categoria", "id": 164 },
+		{ "name": "apoyo_creacion_documento", "id": 165 },
+
+		{ "name": "proyecto_extencion_categoria", "id": 166 },
+		{ "name": "proyecto_extencion_documento", "id": 167 },
+		
+		{ "name": "proyecto_investigacion_desarrollo_categoria", "id": 156 },
+		{ "name": "proyecto_investigacion_desarrollo_documento", "id": 157 },
+
+		{ "name": "proyecto_investigacion_creacion_categoria", "id": 158 },
+		{ "name": "proyecto_investigacion_creacion_documento", "id": 159 },
+		
+		{ "name": "proyecto_idi_categoria", "id": 162 },
+		{ "name": "proyecto_idi_documento", "id": 163 },
+
 		{ "name": "fortalecimiento_cadenas_categoria", "id": 104 },
 		{ "name": "fortalecimiento_cadenas_documento", "id": 105 }
-
-
-
 
 	]
 }
