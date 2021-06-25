@@ -82,12 +82,48 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
+									data-field="member_count"
+									caption="Integrantes"
+									data-type="int"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="true"
+									:allow-sorting="true"
+									:visible="user_role_id == 1"
+									:width="90"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="active_member_count"
+									:caption="user_role_id == 1 ? 'Int. Activos' : 'Integrantes'"
+									data-type="int"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="true"
+									:allow-sorting="true"
+									:visible="true"
+									:width="user_role_id == 1 ? 90 : 120"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="inactive_member_count"
+									caption="Int. Inactivos"
+									data-type="int"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="true"
+									:allow-sorting="true"
+									:visible="user_role_id == 1"
+									:width="90"
+								/>
+								<DxColumn
+									:allow-filtering="true"
 									:visible="false"
 									data-field="acronym"
 									caption="Acrónimo"
 									data-type="string"
 									alignment="center"
-									:width="100"
+									:width="90"
 									cell-template="tplNull"
 								/>
 								<DxColumn
@@ -132,24 +168,12 @@
 								/>
 								<DxColumn
 									:allow-filtering="false"
-									data-field="member_count"
-									caption="Integrantes"
-									data-type="int"
-									alignment="center"
-									:allow-grouping="true"
-									:allow-search="true"
-									:allow-sorting="true"
-									:visible="true"
-									:width="120"
-								/>
-								<DxColumn
-									:allow-filtering="false"
 									data-field="email"
 									caption="Email"
 									data-type="string"
 									alignment="center"
 									:visible="true"
-									:width="100"
+									:width="70"
 									cell-template="tplEmail"
 								/>
 								<DxColumn
@@ -159,17 +183,17 @@
 									data-type="string"
 									alignment="center"
 									:visible="true"
-									:width="100"
+									:width="70"
 									cell-template="tplUrl"
 								/>
 								<DxColumn
 									:allow-filtering="false"
 									data-field="webpage"
-									caption="Página Web"
+									caption="Web"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="100"
+									:width="70"
+									:visible="user_role_id !== 1"
 									cell-template="tplUrl"
 								/>
 								<DxColumn
@@ -179,7 +203,7 @@
 									data-type="string"
 									alignment="center"
 									:visible="true"
-									:width="100"
+									:width="90"
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
