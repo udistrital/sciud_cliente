@@ -3,61 +3,6 @@
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 
-				<DxItem title="Libro de Divulgación">
-					<template #default>
-						<LibroDivulgativo
-							:group="group" 
-							:editMode="editMode" 
-							title="Libro de Divulgación o Compilación de Divulgación"
-							endPointRute="simple_books"
-							objEpdata="simple_book"
-							titleBtn="Nuevo Libro Divulgativo"	
-							titlecolum="title"
-						/>
-					</template>
-				</DxItem>
-
-				<DxItem title="Manuales y Guías Especializados">
-					<template #default>
-						<ManualesGuias
-							:group="group" 
-							:editMode="editMode" 
-							title="Manuales y Guías Especializados"
-							endPointRute="simple_books"
-							objEpdata="simple_book"
-							titleBtn="Nuevo Manual"	
-							titlecolum="title"
-						/>
-					</template>
-				</DxItem>
-
-				<DxItem title="Libros de Creación (piloto)">
-					<template #default>
-						<LibrosCreacion
-							:group="group" 
-							:editMode="editMode" 
-							title="Libros de Creación (piloto)"
-							endPointRute="simple_books"
-							objEpdata="simple_book"
-							titleBtn="Nuevo Libro Creación"	
-							titlecolum="title"
-						/>
-					</template>
-				</DxItem>
-
-				<DxItem title="Libro de Formación">
-					<template #default>
-						<LibrosFormacion
-							:group="group" 
-							:editMode="editMode" 
-							title="Libro de Formación"
-							endPointRute="simple_books"
-							objEpdata="simple_book"
-							titleBtn="Nuevo Libro Formación"	
-							titlecolum="title"
-						/>
-					</template>
-				</DxItem>
 
 				<!-- falta endpoint -->
 				<DxItem title="Boletin Divulgativo">
@@ -223,6 +168,64 @@
 							objEpdata="report"
 							titleBtn="Agregar Informe final"	
 							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Libro de Divulgación">
+					<template #default>
+						<LibroDivulgativo
+							:group="group" 
+							:editMode="editMode" 
+							title="Libro de Divulgación o Compilación de Divulgación"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Libro Divulgativo"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				
+
+				<DxItem title="Libros de Creación (piloto)">
+					<template #default>
+						<LibrosCreacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Libros de Creación (piloto)"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Libro Creación"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Libro de Formación Q2-Q3">
+					<template #default>
+						<LibrosFormacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Libro de Formación Q2-Q3"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Libro Formación"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Manuales y Guías Especializados">
+					<template #default>
+						<ManualesGuias
+							:group="group" 
+							:editMode="editMode" 
+							title="Manuales y Guías Especializados"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Manual"	
+							titlecolum="title"
 						/>
 					</template>
 				</DxItem>

@@ -100,7 +100,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	<div class="form-group">
 	<label>Categoría : </label>
 	<DxSelectBox
-		::show-clear-button="true"
+		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."
@@ -117,7 +117,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	<div class="form-group">
 		<label>Convocatoria Minciencias:</label>
 			<DxSelectBox
-				::show-clear-button="true"
+				:show-clear-button="true"
 				:grouped="false"
 				:search-enabled="false"
 				placeholder="Seleccione..."

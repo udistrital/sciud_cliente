@@ -93,6 +93,7 @@ innovation=endpoindt especifico endpoinds tutas generales update
 	<div class="form-group">
 		<label>Convocatoria Minciencias:</label>
 			<DxSelectBox
+				:show-clear-button="true"
 				:grouped="false"
 				:search-enabled="false"
 				placeholder="Seleccione..."

@@ -81,6 +81,7 @@ clinical_practice_guideline=endpoindt especifico endpoinds tutas generales updat
 	<div class="form-group">
 		<label>Convocatoria Minciencias:</label>
 			<DxSelectBox
+				:show-clear-button="true"
 				:grouped="false"
 				:search-enabled="false"
 				placeholder="Seleccione..."
