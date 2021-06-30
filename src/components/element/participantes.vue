@@ -104,7 +104,7 @@
 					<div class="card-body mb-0 pb-0 pt-3">
 						<DxValidationGroup ref="valGroupExt">
 							<div class="row">
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label>Tipo de Participante:</label>
 										<DxSelectBox
@@ -124,7 +124,20 @@
 										</DxSelectBox>
 									</div>
 								</div>
-								<div class="col-md-4">
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>ORCID ID:</label>
+										<DxTextBox 
+										:value.sync="baseObj.orcid_id" 
+										placeholder="ORCID ID" 
+										class="form-control" 
+										:read-only="false" 
+										mode="text" />
+									</div>
+								</div>
+
+								<div class="col-md-3">
 									<div class="form-group">
 										<label>Nombre(s):</label>
 										<!-- :element-attr="{ style: 'text-transform:uppercase' }" -->
@@ -142,7 +155,7 @@
 										</DxTextBox>
 									</div>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label>Apellido(s):</label>
 										<DxTextBox
@@ -373,6 +386,18 @@
 									data-field="id"
 									data-type="string"
 								/>
+								
+								<DxColumn
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:allow-grouping="false"
+									:customize-text="nullText"
+									alignment="center"
+									caption="ORCID"
+									data-field="orcid_id"
+									data-type="string"
+								/>
+
 								<DxColumn
 									:allow-filtering="true"
 									:allow-sorting="true"
@@ -499,6 +524,7 @@ export default {
 			last_name: null,
 			name: null,
 			updated_by: null,
+			orcid_id: null,
 		},
 	}),
 	beforeUpdate() {
@@ -744,6 +770,7 @@ export default {
 						first_name: this.baseObj.first_name,
 						last_name: this.baseObj.last_name,
 						participant_type_id: this.baseObj.participant_type_id,
+						orcid_id: this.baseObj.orcid_id,
 					},
 				};
 			}

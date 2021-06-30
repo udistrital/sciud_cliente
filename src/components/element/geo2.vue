@@ -111,7 +111,7 @@ export default {
 		gStates(e) {
 			root.states = [];
 			root.cities = [];
-			root.loaderShow("Cargando Estados", root.lockElement);
+			// root.loaderShow("Cargando Estados", root.lockElement);
 			if (e.value === null) return null;
 			setTimeout(function() {
 				root.getStates({
@@ -125,7 +125,7 @@ export default {
 		},
 		gCities(e) {
 			root.cities = [];
-			root.loaderShow("Cargando Ciudades", root.lockElement);
+			// root.loaderShow("Cargando Ciudades", root.lockElement);
 			if (e.value === null) return null;
 			setTimeout(function() {
 				root.getCities({

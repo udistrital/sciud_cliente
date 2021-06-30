@@ -146,7 +146,7 @@ nutraceutical_product=endpoindt especifico endpoinds tutas generales update
 </div>
 <!-- <div class="col-md-12">
 	<div class="form-group">
-	<label>Observacion: </label>
+	<label>Observación: </label>
 	<DxTextArea :height="100" :max-length="400" :value.sync="baseObj.observation" placeholder="Observacion" class="form-control">
 	<DxValidator>
 	</DxValidator>
@@ -285,7 +285,7 @@ nutraceutical_product=endpoindt especifico endpoinds tutas generales update
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>

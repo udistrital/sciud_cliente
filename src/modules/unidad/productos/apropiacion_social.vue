@@ -2,6 +2,63 @@
 	<div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
+
+				<DxItem title="Libro de Divulgación">
+					<template #default>
+						<LibroDivulgativo
+							:group="group" 
+							:editMode="editMode" 
+							title="Libro de Divulgación o Compilación de Divulgación"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Libro Divulgativo"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Manuales y Guías Especializados">
+					<template #default>
+						<ManualesGuias
+							:group="group" 
+							:editMode="editMode" 
+							title="Manuales y Guías Especializados"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Manual"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Libros de Creación (piloto)">
+					<template #default>
+						<LibrosCreacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Libros de Creación (piloto)"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Libro Creación"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
+				<DxItem title="Libro de Formación">
+					<template #default>
+						<LibrosFormacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Libro de Formación"
+							endPointRute="simple_books"
+							objEpdata="simple_book"
+							titleBtn="Nuevo Libro Formación"	
+							titlecolum="title"
+						/>
+					</template>
+				</DxItem>
+
 				<!-- falta endpoint -->
 				<DxItem title="Boletin Divulgativo">
 					<template #default>
@@ -227,6 +284,7 @@
 					</template>
 				</DxItem>
 
+
 				<DxItem title="Red de Conomimiento">
 					<template #default>
 						<RedConocimiento 
@@ -257,7 +315,19 @@
 				</DxItem>				
 
 
-				
+				<DxItem title="Publicaciones Editoriales No Especializadas">
+					<template #default>
+						<DivulgacionPublicacion
+							:group="group" 
+							:editMode="editMode" 
+							title="Publicaciones Editoriales No Especializadas"
+							endPointRute="publications"
+							objEpdata="publication"
+							titleBtn="Nueva Publicacion"	
+							titlecolum="name"
+						/>
+					</template>
+				</DxItem>
 
 				
 				
@@ -344,6 +414,10 @@ export default {
 		DesarrolloWeb: ()=> import("@/modules/unidad/productos/apropiacion_social/desarrollo_web"),
 		GeneracionContenidos: ()=> import("@/modules/unidad/productos/apropiacion_social/generacion_contenido"),
 		BoletinDivulgativo: ()=> import("@/modules/unidad/productos/apropiacion_social/boletin_divulgativo"),
+		LibroDivulgativo: ()=> import("@/modules/unidad/productos/apropiacion_social/libro_divulgativo"),
+		ManualesGuias: ()=> import("@/modules/unidad/productos/apropiacion_social/manuales_guías"),
+		LibrosCreacion: ()=> import("@/modules/unidad/productos/apropiacion_social/libros_creacion"),
+		LibrosFormacion: ()=> import("@/modules/unidad/productos/apropiacion_social/libro_formacion"),
 	},
 	mounted() {
 		root = this;
