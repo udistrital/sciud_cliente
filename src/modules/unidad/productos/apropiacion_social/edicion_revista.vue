@@ -127,9 +127,20 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
+
 <div class="col-md-3">
+	<div class="form-group">
+	<label>Año Publicación:</label>
+	<DxNumberBox placeholder="Año Publicación:" class="form-control" :value.sync="baseObj.publication_year">
+	<DxValidator>
+		<DxRequiredRule />
+	</DxValidator>
+	</DxNumberBox>
+	</div>
+</div>
+<!--<div class="col-md-3">
 <div class="form-group">
-<label>Año Publicación: </label>
+ <label>Año Publicación: </label>
 	<DxDateBox 
 		class="form-control" 
 		name="publication_year" 
@@ -145,7 +156,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	</DxValidator> 
 	</DxDateBox>
 	</div>
-</div>
+</div> -->
 
 <div class="col-md-3">
 	<div class="form-group">
@@ -331,7 +342,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 			</div>
 		</div>
 
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>

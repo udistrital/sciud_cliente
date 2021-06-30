@@ -53,10 +53,11 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
-<div class='col-md-3'>
-	<div class='form-group'>
-	<label>Nombre Proyecto: </label>
-	<DxTextBox placeholder='Nombre Proyecto' class='form-control' :value.sync='baseObj.project_name'>
+
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Titulo: </label>
+	<DxTextBox placeholder="Titulo" class="form-control" :value.sync="baseObj.title">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -64,10 +65,10 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class='col-md-3'>
-	<div class='form-group'>
-	<label>Nombre Proyecto Ext: </label>
-	<DxTextBox placeholder='Nombre Proyecto Ext' class='form-control' :value.sync='baseObj.name_ext_project'>
+<div class="col-md-4">
+	<div class="form-group">
+	<label>ISBN: </label>
+	<DxTextBox placeholder="ISBN" class="form-control" :value.sync="baseObj.isbn">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -75,30 +76,19 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class='col-md-3'>
-	<div class='form-group'>
-	<label>Institucion o Entidad: </label>
-	<DxTextBox placeholder='Institucion o Entidad' class='form-control' :value.sync='baseObj.institution'>
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-<div class='col-md-3'>
-<div class='form-group'>
-<label>Fecha Inicio: </label>
+<div class="col-md-4">
+<div class="form-group">
+<label>Fecha Publicacion: </label>
 	<DxDateBox 
-		class='form-control' 
-		name='start_date' 
-		:value.sync='baseObj.start_date' 
-		id='start_date' 
-		placeholder='DD/MM/YYYY' 
-		display-format='dd/MM/yyyy' 
-		:min='minDate' 
-		:max='actualDate' 
-		type='date'> 
+		class="form-control" 
+		name="publication_date" 
+		:value.sync="baseObj.publication_date" 
+		id="publication_date" 
+		placeholder="DD/MM/YYYY" 
+		display-format="dd/MM/yyyy" 
+		:min="minDate" 
+		:max="actualDate" 
+		type="date"> 
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -106,74 +96,71 @@ regulation=endpoindt especifico endpoinds tutas generales update
 	</div>
 </div>
 
-<div class='col-md-3'>
-<div class='form-group'>
-<label>Fecha Final: </label>
-	<DxDateBox 
-		class='form-control' 
-		name='final_date' 
-		:value.sync='baseObj.final_date' 
-		id='final_date' 
-		placeholder='DD/MM/YYYY' 
-		display-format='dd/MM/yyyy' 
-		:min='minDate' 
-		:max='actualDate' 
-		type='date'> 
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</DxDateBox>
+<div class="col-md-3">
+	<div class="form-group">
+	<label>Categoría : </label>
+	<DxSelectBox
+		::show-clear-button="true"
+		:grouped="false"
+		:search-enabled="false"
+		placeholder="Seleccione..."
+		:value.sync="baseObj.category_id" 
+		class="form-control"
+		:data-source="subtipos" 
+		display-expr="st_name"
+		value-expr="id">
+	</DxSelectBox>
 	</div>
 </div>
 
-<div class='col-md-3'>
-	<div class='form-group'>
-	<label>Nombre Comunidad: </label>
-	<DxTextBox placeholder='Nombre Comunidad' class='form-control' :value.sync='baseObj.community_name'>
+<div class="col-md-3">
+	<div class="form-group">
+		<label>Convocatoria Minciencias:</label>
+			<DxSelectBox
+				::show-clear-button="true"
+				:grouped="false"
+				:search-enabled="false"
+				placeholder="Seleccione..."
+				:value.sync="baseObj.colciencias_call_id"
+				class="form-control"
+				:data-source="convocatorias"
+				display-expr="name"
+				value-expr="id"
+				item-template="item"
+			>
+				<template #item="{ data }">
+					<div>{{ data.name }} de {{ data.year }}</div>
+				</template>
+			</DxSelectBox>
+		</div>
+</div>
+
+<div class="col-md-3">
+	<div class="form-group">
+	<label>Nombre Editorial: </label>
+	<DxTextBox placeholder="Nombre Editorial" class="form-control" :value.sync="baseObj.editorial_name">
 	<DxValidator>
+		<DxRequiredRule />
 	</DxValidator>
 	</DxTextBox>
 	</div>
 </div>
 
-<div class='col-md-3'>
-	<div class='form-group'>
-	<label>Categoría: </label>
-	<DxSelectBox
-		::show-clear-button='true'
-		:grouped='false'
-		:search-enabled='false'
-		placeholder='Seleccione...'
-		:value.sync='baseObj.category_id' 
-		class='form-control'
-		:data-source='subtipos' 
-		display-expr='st_name'
-		value-expr='id'>
-	</DxSelectBox>
+<div class="col-md-3">
+	<div class="form-group">
+	<label>Url: </label>
+	<DxTextBox placeholder="Url" class="form-control" :value.sync="baseObj.url">
+	<DxValidator>
+		<DxRequiredRule />
+		<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+	</DxValidator>
+	</DxTextBox>
 	</div>
 </div>
 
-<div class='col-md-3'>
-	<div class='form-group'>
-	<label>Minciencias: </label>
-	<DxSelectBox
-		::show-clear-button='true'
-		:grouped='false'
-		:search-enabled='false'
-		placeholder='Seleccione...'
-		:value.sync='baseObj.colciencias_call_id' 
-		class='form-control'
-		:data-source='convocatorias' 
-		display-expr='name'
-		value-expr='id'>
-	</DxSelectBox>
-	</div>
-</div>
-
-
-<div class='col-md-12'>
-	<label>Lugar: </label>
-	<Geo :lockElement='loaderElement' :syncObject='baseObj' />
+<div class="col-md-12">
+	<label>Lugar Publicacion: </label>
+    <Geo :lockElement="loaderElement" :syncObject="baseObj" />
 </div>
 
 
@@ -256,40 +243,38 @@ regulation=endpoindt especifico endpoinds tutas generales update
                         
 						<!--  -->
 							<!-- user_role_id -->
-						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<!-- <DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' />  -->
 
-						<DxColumn data-field='project_name'  caption='Nombre Proyecto' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='start_date'  caption='Fecha Inicio' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='final_date'  caption='Fecha Final' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='community_name'  caption='Nombre Comunidades' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='title'  caption='Titulo' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='isbn'  caption='ISBN' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='editorial_name'  caption='Editorial' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+                        <DxColumn data-field='publication_date'  caption='Fecha Publicacion' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
                         <DxColumn data-field='category_name'  caption='Categoria' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='institution'  caption='Institucion' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='name_ext_project'  caption='Nombre Proyecto Ext' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
                         <DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
                         <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
                         <DxColumn data-field='geo_country_name'  caption='Pais' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
-                        <DxColumn data-field='geo_state_name'  caption='Estado' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+                        <DxColumn data-field='geo_state_name'  caption='estado' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
 
                         <!-- <DxColumn data-field='target_audiences'  caption='Objetivo Público' data-type='string' alignment='center' :visible='true'  cell-template="tplObj"/>  -->
 						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
-						<!-- <DxColumn data-field="web_page" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" /> -->
+						<DxColumn data-field="url" caption="Pagina" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 						<!-- </template> -->
-						<!-- <template #tplWeb="{ data }">
-							<a v-if="data.data.web_page != '' && data.data.web_page != null" :title="data.data.web_page" class="cmd-item color-main-600 mr-2" :href="data.data.web_page" Target="_blank">
+						<template #tplWeb="{ data }">
+							<a v-if="data.data.url != '' && data.data.url != null" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
 								<i class="icon-link"></i> Visitar
 							</a>
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
-						</template> -->
-<!-- 
+						</template>
+
                         <template #tplObj="{ data }">
 							<a v-if="data.data.target_audiences != '' && data.data.target_audiences != null" :title="data.data.target_audiences" class="cmd-item color-main-600 mr-2" @click.prevent="verObservarObj(data.data)" href="#" Target="_blank">
 								<i class="icon-info mr-1"></i> Ver
 							</a>
 							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
-						</template> -->
+						</template>
 
                         <template #tplObs="{ data }">
 							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
@@ -457,8 +442,8 @@ export default {
         // },
 	},
 	data: () => ({
-		namePanel:"ProyectoExtencion",
-        codEP: null,
+		namePanel:"GuiaManualASC",
+        codEP: 622,
         popupObs: false,
         observarData:"",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -490,21 +475,20 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			administrative_act: null,
-            category_id: null,
+			category_id: null,
             colciencias_call_id: null,
-            community_name: null,
-            final_date: null,
+            editorial_name: null,
             geo_city_id: null,
             geo_country_id: null,
             geo_state_id: null,
-            institution: null,
-            name_ext_project: null,
+            isbn: null,
             observation: null,
-            project_name: null,
+            publication_date: null,
+            product_type_id: null,
             research_group_id: null,
-            start_date: null,
-            active: true,
+            title: null,
+            url: null,
+            active: true,	
 		},
 	}),
 	created() {
@@ -512,9 +496,9 @@ export default {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
-		// root.tipox = root.subtypesByType("acompaniamiento_asesoria_tipo");
-		root.subtipos = root.subtypesByType("proyecto_extencion_categoria");
-		root.tiposDocumento = root.subtypesByType("proyecto_extencion_documento");
+		// root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
+		root.subtipos = root.subtypesByType("manuales_guias_especializados_categoria");
+		root.tiposDocumento = root.subtypesByType("manuales_guias_especializados_documento");
         // root.participationid = root.subtypesByType("evento_participacion");
 	},
 	mounted() {

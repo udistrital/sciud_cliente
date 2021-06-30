@@ -71,8 +71,8 @@
 		{ "name": "innovacion_procedimiento_documento", "id": 74 },
 		{ "name": "libro_categoria", "id": 12 },
 		{ "name": "libro_documento", "id": 23 },
-		{ "name": "libro_formacion_categoria", "id": 142 },
-		{ "name": "libro_formacion_documento", "id": 143 },
+		{ "name": "libro_formacion_categoria", "id": 192 },
+		{ "name": "libro_formacion_documento", "id": 193 },
 		{ "name": "manuales_modelos_categoria", "id": 86 },
 		{ "name": "manuales_modelos_documento", "id": 87 },
 		{ "name": "nota_cientifica_categoria", "id": 20 },
@@ -163,6 +163,21 @@
 		{ "name": "unidad_tipo_documento", "id": 21 },
 		{ "name": "variedad_vegetal_categoria", "id": 16 },
 		{ "name": "variedad_vegetal_documento", "id": 26 },
+
+
+		{ "name": "libro_divulgacion_categoria", "id": 140 },
+		{ "name": "libro_divulgacion_documento", "id": 141 },
+
+		{ "name": "manuales_guias_especializados_categoria", "id": 144 },
+		{ "name": "manuales_guias_especializados_documento", "id": 145 },
+
+		{ "name": "libros_creacion_categoria", "id": 150 },
+		{ "name": "libros_creacion_documento", "id": 151 },
+
+		{ "name": "Libros_formación_apropiacion_categoria", "id": 142 },
+		{ "name": "Libros_formación_apropiacion_documento", "id": 143},
+
+
 		{ "name": "variedad_vegetal_estado_peticion", "id": 64 }		
 	]
 }

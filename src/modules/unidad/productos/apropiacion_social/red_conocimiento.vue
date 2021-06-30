@@ -262,13 +262,26 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
 
+						<DxColumn data-field='name'  caption='Nombre' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='category_name'  caption='Categoría' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='funding_community'  caption='Comunidad' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='funding_institution'  caption='Institución Financiadora' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='geo_country_name'  caption='País' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='geo_state_name'  caption='Estado' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+						<DxColumn data-field='start_date'  caption='Fecha Inicio' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='finish_date'  caption='Fecha Final' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='String' alignment='center' :visible='false' :allow-grouping='false' /> 
+
+
 						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
 						<DxColumn data-field="web_page" caption="Pagina" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 
 						<template #tplWeb="{ data }">
-							<a v-if="data.data.web_page != '' && data.data.web_page != null" :title="data.data.web_page" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
+							<a v-if="data.data.web_page != '' && data.data.web_page != null" :title="data.data.web_page" class="cmd-item color-main-600 mr-2" :href="data.data.web_page" Target="_blank">
 								<i class="icon-link"></i> Visitar
 							</a>
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -315,7 +328,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 			</div>
 		</div>
 
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>

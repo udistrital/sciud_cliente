@@ -51,11 +51,6 @@
 					</template>
 				</DxItem>
 
-
-
-
-
-
 				<DxItem title="Proyecto de Investigación y Desarrollo">
 					<template #default>
 						<ProyectoInvestigacionDesarrollo

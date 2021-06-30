@@ -321,7 +321,7 @@
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>

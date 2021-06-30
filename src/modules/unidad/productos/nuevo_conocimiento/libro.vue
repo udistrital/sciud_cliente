@@ -306,7 +306,7 @@ regulation=endpoindt especifico endpoinds tutas generales update
 			</div>
 		</div>
 
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
             <div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
                     <h3>
@@ -635,7 +635,7 @@ export default {
 				let obj = root.baseObj;
                 //let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
 				let dto = {
-					newFormat:true,
+					newFormat: false,
 					unidadId: root.group.id,
 					stringEP: root.endPointRute,
 					mod: obj.id,
@@ -666,7 +666,7 @@ export default {
 			});
 		},
 
-		add() {
+		add(){
 			console.log("ADD");
 			root.mode = "add";
 			root.baseObj = this.$clone(this.baseEnt);

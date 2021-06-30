@@ -1,5 +1,5 @@
 <template>
-    <DxPopup :visible="data" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
+    <DxPopup :visible="data" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
         <div class="row">
             <div class="col">
                 <h3>
