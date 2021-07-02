@@ -1,5 +1,5 @@
 {
-    "debug":  true,
+    "debug":  false,
     "pageSize":  20,
     "pageSizes":  [
                       10,
