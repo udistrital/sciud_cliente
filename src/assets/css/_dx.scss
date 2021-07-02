@@ -1263,8 +1263,18 @@ tr.hovered {
 					background-color: $main-color-600 !important;
 					.dx-icon {
 						&::before {
-							color: #fff !important;
-							font-weight: 600 !important;
+							color: #fff;
+							font-weight: 600;
+						}
+					}
+				}
+				.dx-calendar-disabled-navigator-link {
+					.dx-button-content {
+						opacity: 1;
+						.dx-icon {
+							&::before {
+								color: rgba(#fff, 0.4) !important;
+							}
 						}
 					}
 				}
