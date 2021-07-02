@@ -95,53 +95,6 @@
 	color: $main-color-500 !important;
 }
 
-.dx-datebox-wrapper-calendar .dx-calendar {
-	border: none;
-	margin: 0.2rem 0.4rem;
-	thead tr th {
-		box-shadow: none;
-		color: $main-color-500;
-		text-transform: uppercase;
-		margin: 0;
-		padding: 0;
-	}
-}
-
-.dx-button-content {
-	border: 0;
-	padding: 4px 12px;
-	padding-bottom: 2px;
-}
-
-.dx-dropdowneditor.dx-dropdowneditor-active .dx-dropdowneditor-icon {
-	background-color: transparent;
-}
-
-.dx-datebox-calendar .dx-dropdowneditor-icon:before {
-	$size: 16px;
-	content: "\ea63";
-	font-family: icomoon;
-	color: $main-color-600 !important;
-	line-height: $size;
-	font-size: $size;
-	width: $size !important;
-	height: $size !important;
-}
-
-.dx-calendar-cell {
-	font-size: 0.9rem;
-	padding: 0;
-	margin: 0;
-	text-transform: uppercase;
-	&.dx-calendar-today,
-	&.dx-calendar-selected-date {
-		border: none;
-		box-shadow: none !important;
-		background-color: $main-color-600 !important;
-		color: #fff !important;
-	}
-}
-
 .dx-popup-wrapper > .dx-overlay-content {
 	border: none;
 	background: #fff;
@@ -181,38 +134,14 @@
 	}
 }
 
-.dx-calendar-navigator {
-	line-height: 1.6;
-	height: 36px;
-	display: table;
-	border-collapse: collapse;
-	border-bottom: 1px solid #ddd;
-
-	.dx-button {
-		border: none;
-	}
-	.dx-calendar-caption-button {
-		border: none;
-		font-size: 1rem;
-		font-weight: 700;
-		line-height: 1rem;
-		text-transform: uppercase;
-		right: 32px;
-		left: 32px;
-		.dx-button-content {
-			padding: 0 !important;
-		}
-	}
+.dx-button-content {
+	border: 0;
+	padding: 4px 12px;
+	padding-bottom: 2px;
 }
 
-.dx-calendar-body {
-	top: 45px;
-}
-
-.dx-calendar-cell.dx-calendar-empty-cell {
-	background: none;
-	color: rgb(224, 224, 224) !important;
-	font-style: italic !important;
+.dx-dropdowneditor.dx-dropdowneditor-active .dx-dropdowneditor-icon {
+	background-color: transparent;
 }
 
 .dx-group-cell {
@@ -1252,6 +1181,121 @@ tr.hovered {
 		iframe {
 			width: 100%;
 			height: 100%;
+		}
+	}
+}
+
+.dx-datebox-calendar .dx-dropdowneditor-icon:before {
+	$size: 16px;
+	content: "\ea63";
+	font-family: icomoon;
+	color: $main-color-600 !important;
+	line-height: $size;
+	font-size: $size;
+	width: $size !important;
+	height: $size !important;
+}
+
+.dx-calendar-cell {
+	font-size: 0.9rem;
+	padding: 0;
+	margin: 0;
+	text-transform: uppercase;
+	&.dx-calendar-today,
+	&.dx-calendar-selected-date {
+		border: none;
+		box-shadow: none !important;
+		background-color: $main-color-600 !important;
+		color: #fff !important;
+	}
+}
+
+.dx-calendar-navigator {
+	line-height: 1.6;
+	height: 36px;
+	display: table;
+	border-collapse: collapse;
+	border-bottom: 1px solid #ddd;
+
+	.dx-button {
+		border: none;
+	}
+	.dx-calendar-caption-button {
+		border: none;
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1rem;
+		text-transform: uppercase;
+		right: 32px;
+		left: 32px;
+		.dx-button-content {
+			padding: 0 !important;
+		}
+	}
+}
+
+.dx-calendar-body {
+	top: 45px;
+}
+
+.dx-calendar-cell.dx-calendar-empty-cell {
+	background: none;
+	color: rgb(224, 224, 224) !important;
+	font-style: italic !important;
+}
+
+.dx-datebox-wrapper-calendar {
+	.dx-overlay-content {
+		.dx-popup-content {
+			margin: 0;
+			margin-top: 0.5rem;
+			.dx-calendar-navigator {
+				border: none;
+				.dx-calendar-caption-button {
+					.dx-button-content {
+						.dx-button-text {
+							font-size: 1.06rem !important;
+						}
+					}
+				}
+				.dx-button-content {
+					border-radius: 5px;
+					background-color: $main-color-600 !important;
+					.dx-icon {
+						&::before {
+							color: #fff !important;
+							font-weight: 600 !important;
+						}
+					}
+				}
+				.dx-calendar-navigator-previous-month {
+					.dx-button-content {
+						border-top-right-radius: 0;
+						border-bottom-right-radius: 0;
+					}
+				}
+				.dx-calendar-navigator-next-month {
+					.dx-button-content {
+						border-top-left-radius: 0;
+						border-bottom-left-radius: 0;
+					}
+				}
+
+				.dx-calendar-caption-button {
+					background-color: none !important;
+				}
+			}
+			.dx-calendar {
+				border: none;
+				margin: 0.2rem 0.4rem;
+				thead tr th {
+					box-shadow: none;
+					color: $main-color-500;
+					text-transform: uppercase;
+					margin: 0;
+					padding: 0;
+				}
+			}
 		}
 	}
 }
