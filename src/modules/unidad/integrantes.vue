@@ -188,6 +188,8 @@
 																	<div class="form-group">
 																		<label>Fecha inicio periodo:</label>
 																		<DxDateBox
+																			@focus-in="date_focus_in"
+																			@focus-out="date_focus_out"
 																			:max="now"
 																			type="date"
 																			class="form-control"
@@ -206,6 +208,8 @@
 																	<div class="form-group">
 																		<label>Fecha fin periodo:</label>
 																		<DxDateBox
+																			@focus-in="date_focus_in"
+																			@focus-out="date_focus_out"
 																			:max="now"
 																			type="date"
 																			class="form-control"

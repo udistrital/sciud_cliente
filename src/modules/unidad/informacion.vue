@@ -232,6 +232,8 @@
 												<div class="form-group">
 													<label>Fecha creación CIDC:</label>
 													<DxDateBox
+														@focus-in="date_focus_in"
+														@focus-out="date_focus_out"
 														class="form-control"
 														:read-only="!editMode"
 														name="cidcRegistrationDate"
@@ -271,6 +273,8 @@
 												<div class="form-group">
 													<label>Fecha creación Facultad:</label>
 													<DxDateBox
+														@focus-in="date_focus_in"
+														@focus-out="date_focus_out"
 														class="form-control"
 														name="facultyRegistrationDate"
 														:value.sync="group.faculty_registration_date"

@@ -77,6 +77,8 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 									<div class="form-group">
 										<label>Fecha Publicacion: </label>
 										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
 											class="form-control"
 											name="publication_date"
 											:value.sync="baseObj.publication_date"

@@ -112,6 +112,14 @@ vue.mixin({
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+		date_focus_in(e) {
+			// console.log("date_focus_in =>", e);
+			e.component.open();
+		},
+		date_focus_out(e) {
+			// console.log("date_focus_out =>", e);
+			e.component.close();
+		},
 		get_role_id: (name) => {
 			let item = window.clasificador.rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
@@ -225,21 +233,28 @@ vue.mixin({
 	computed: {
 		...mapState("auth/usuario", ["roles"]),
 		...mapState("auth/login", ["authenticated", "user"]),
+		es_admin() {
+			return this.user_role_id == this.get_role_id("administrador");
+		},
 		editMode() {
 			let result = false;
 			console.log(window.vm.$sep);
 			console.log("editMode");
-			if (this.user_role_id === 1 || this.user_role_id === 2) {
+			if (
+				this.user_role_id === this.get_role_id("administrador") ||
+				this.user_role_id === this.get_role_id("gestor") ||
+				this.user_role_id === this.get_role_id("gestor_facultad")
+			) {
 				result = true;
 			} else {
 				console.log("this.$route.params", this.$route.params);
 				let groupId = this.$route.params.unidadId;
-				if (typeof groupId !== "undefined") {
+				if (typeof groupId !== "undefined" && typeof window.vm.user !== "undefined") {
 					console.log("groupId =>", groupId);
 					console.log("user =>", window.vm.user);
-					console.log("groups =>", window.vm.user.groups);
 					// 202106162157: Filtra el grupo actual de los grupos seleccionados
 					if (typeof window.vm.user.groups !== "undefined") {
+						console.log("groups =>", window.vm.user.groups);
 						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
 						if (typeof g !== "undefined") {
 							console.log("current_group =>", g);

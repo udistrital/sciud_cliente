@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 let $ = window.jQuery;
 import axios from "axios";
+import store from "@/store";
 import { custom } from "devextreme/ui/dialog";
 
 // 202009081539:
@@ -120,7 +121,15 @@ export default (source = "rest", args = {}) => {
 				delete error.response.data.traces;
 				msg = JSON.stringify(error.response, null, "\t");
 			}
-			show(`${error}`, msg);
+			console.log("error.response.status =>", error.response.status);
+			if (error.response.status === 401) {
+				console.log("store =>", store);
+				store.commit("auth/login/authLogout", function() {
+					window.vm.$router.push("/inicio");
+				});
+			} else {
+				show(`${error}`, msg);
+			}
 			return Promise.reject(error);
 		}
 	);

@@ -1309,3 +1309,16 @@ tr.hovered {
 		}
 	}
 }
+.dx-popup-normal {
+	&.dx-popup-draggable {
+		.dx-popup-title {
+			background-color: $main-color-600;
+			.dx-toolbar-label {
+				line-height: auto;
+				.dx-item-content {
+					color: #fff;
+				}
+			}
+		}
+	}
+}

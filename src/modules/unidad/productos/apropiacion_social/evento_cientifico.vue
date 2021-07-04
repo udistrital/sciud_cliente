@@ -15,7 +15,13 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nuevo Evento Científico.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button
+									type="button"
+									@click.prevent="add()"
+									v-if="editMode"
+									title="Nuevo Evento Científico.."
+									class="btn btn-main btn-labeled btn-labeled-left "
+								>
 									<b><i class="icon-database-add"></i></b> Nuevo Evento Científico
 								</button>
 							</span>
@@ -58,6 +64,8 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 									<div class="form-group">
 										<label>Fecha de inicio: </label>
 										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
 											class="form-control"
 											name="eve_start_date"
 											:value.sync="baseObj.eve_start_date"
@@ -79,6 +87,8 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 									<div class="form-group">
 										<label>Fecha de finalización: </label>
 										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
 											class="form-control"
 											name="eve_finish_date"
 											:value.sync="baseObj.eve_finish_date"
@@ -192,7 +202,7 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Observaciones: </label>
-										<Observaciones :syncValue.sync="baseObj"/>
+										<Observaciones :syncValue.sync="baseObj" />
 									</div>
 								</div>
 
@@ -305,13 +315,20 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 						/>
 						<!-- <DxColumn data-field="eve_observation:" caption="Observaciones" data-type="text" alignment="center" :visible="false" :allow-grouping="false" /> -->
 
-						<DxColumn data-field='eve_observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
+						<DxColumn data-field="eve_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" />
 						<!-- <DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/>  -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
 
 						<template #tplObs="{ data }">
-							<a v-if="data.data.eve_observation != '' && data.data.eve_observation != null" :title="data.data.eve_observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+							<a
+								v-if="data.data.eve_observation != '' && data.data.eve_observation != null"
+								:title="data.data.eve_observation"
+								class="cmd-item color-main-600 mr-2"
+								@click.prevent="verObservar(data.data)"
+								href="#"
+								Target="_blank"
+							>
 								<i class="icon-info mr-1"></i> Ver
 							</a>
 							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -346,19 +363,20 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
-            <div class="row" style="overflow-y: scroll; height:148px">
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
+			<div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
-                    <h3>
+					<h3>
 						<i class="icon-info mr-1 color-main-600"></i>
-						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
+						<span class="font-weight-semibold">{{ baseObj[titlecolum] }}</span>
 					</h3>
 					<div v-html="observarData"></div>
 				</div>
 			</div>
-            <div class="row">
-				<div class="col"><hr>
-					<DxButton @click="popupObs=false" class="nb">
+			<div class="row">
+				<div class="col">
+					<hr />
+					<DxButton @click="popupObs = false" class="nb">
 						<template #default>
 							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
 								<b><i class="icon-database-remove"></i></b> Salir
@@ -368,7 +386,6 @@ panelartisticoCultural=nombredepaneles event=endpoindt especifico events rutas g
 				</div>
 			</div>
 		</DxPopup>
-
 	</div>
 </template>
 
@@ -432,10 +449,10 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-        titlecolum:{
-            type: String,
-            default: () => 'eve_name',
-        },
+		titlecolum: {
+			type: String,
+			default: () => "eve_name",
+		},
 		group: {
 			type: Object,
 			default: () => null,
@@ -443,7 +460,7 @@ export default {
 	},
 	data: () => ({
 		popupObs: false,
-        observarData:"",
+		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -471,7 +488,7 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-			observation:null,
+			observation: null,
 			geo_city_id: null,
 			geo_state_id: null,
 			geo_country_id: null,
@@ -538,12 +555,12 @@ export default {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		
-        verObservar(data){
-            root.observarData=data.eve_observation;
-            root.baseObj[root.titlecolum]=data[root.titlecolum];
-            root.popupObs= !root.popupObs ? true : false ;
-        },
+
+		verObservar(data) {
+			root.observarData = data.eve_observation;
+			root.baseObj[root.titlecolum] = data[root.titlecolum];
+			root.popupObs = !root.popupObs ? true : false;
+		},
 		participantes(data) {
 			// console.clear();
 			root.section = "participantes";
@@ -610,7 +627,7 @@ export default {
 			console.log(this.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
-			root.baseObj.eve_observation=root.baseObj.observation;
+			root.baseObj.eve_observation = root.baseObj.observation;
 			if (result.isValid) {
 				console.log("VALID!");
 				root.scrollTop();
@@ -645,7 +662,7 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
-			root.baseObj.observation=root.baseObj.eve_observation;
+			root.baseObj.observation = root.baseObj.eve_observation;
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});

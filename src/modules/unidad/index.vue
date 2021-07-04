@@ -9,7 +9,7 @@
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			<div class="header-elements" v-if="editMode">
+			<div class="header-elements" v-if="es_admin">
 				<router-link tag="a" to="/unidad/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva Estructura de Investigación...">
 					<b><i class="icon-database-add"></i></b> Nueva Estructura
 				</router-link>
@@ -89,20 +89,20 @@
 									:allow-grouping="false"
 									:allow-search="true"
 									:allow-sorting="true"
-									:visible="user_role_id == 1"
+									:visible="es_admin"
 									:width="90"
 								/>
 								<DxColumn
 									:allow-filtering="true"
 									data-field="active_member_count"
-									:caption="user_role_id == 1 ? 'Int. Activos' : 'Integrantes'"
+									:caption="es_admin ? 'Int. Activos' : 'Integrantes'"
 									data-type="int"
 									alignment="center"
 									:allow-grouping="false"
 									:allow-search="true"
 									:allow-sorting="true"
 									:visible="true"
-									:width="user_role_id == 1 ? 90 : 120"
+									:width="es_admin ? 90 : 120"
 								/>
 								<DxColumn
 									:allow-filtering="true"
@@ -113,7 +113,7 @@
 									:allow-grouping="false"
 									:allow-search="true"
 									:allow-sorting="true"
-									:visible="user_role_id == 1"
+									:visible="es_admin"
 									:width="90"
 								/>
 								<DxColumn
@@ -193,17 +193,17 @@
 									data-type="string"
 									alignment="center"
 									:width="70"
-									:visible="user_role_id !== 1"
+									:visible="es_admin"
 									cell-template="tplUrl"
 								/>
 								<DxColumn
+									:width="90"
 									:allow-filtering="true"
 									data-field="group_state_id"
 									caption="Estado"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="90"
+									:visible="es_admin"
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
@@ -413,10 +413,12 @@ export default {
 			}
 			return DxStore({
 				ids: ids,
-				faculties: faculties,
 				key: ["id"],
-				endPoint: "research_units",
+				faculties: faculties,
 				loadBaseEntity: true,
+				endPoint: "research_units",
+				// 202107040725: Determina si debe mostrar solo los grupos activos
+				state: root.es_admin ? null : 1,
 				onLoading: function(loadOptions) {
 					root.loaderShow();
 					setTimeout(function() {
