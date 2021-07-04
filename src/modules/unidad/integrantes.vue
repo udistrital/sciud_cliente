@@ -811,6 +811,7 @@ export default {
 			"getUnit",
 			"saveResearcher",
 			"updateGroupMember",
+			"activatePeriod",
 			"updatePeriod",
 			"updateResearcher",
 		]),
@@ -984,6 +985,23 @@ export default {
 				$(root.panelData).fadeIn();
 			});
 		},
+		async disablePeriods(periods) {
+			console.log(root.$sep);
+			console.log("disablePeriods =>", periods);
+			let results = [];
+			// 202107032207: Actualiza en for
+			for (let x = 0; x < periods.length; x++) {
+				let period = periods[x];
+				period.is_current = false;
+				// period.active = false;
+				period.final_date = new Date().getFormatted();
+				period.updated_by = root.user_id;
+				let p = await root.updatePeriod(period);
+				console.log("UPDATED period =>", p);
+				results.push(p);
+			}
+			return results;
+		},
 		async userSave() {
 			console.clear();
 			console.log(root.$sep);
@@ -1043,17 +1061,11 @@ export default {
 						console.log(root.$sep);
 						// Actualiza el integrante
 						r = await root.updateGroupMember(o);
+
 						// 202107011429: Cierra los periodos actuales
-						let ps = root.group_member.gm_periods.filter((o) => o.is_current);
-						ps.forEach((period) => {
-							period.is_current = false;
-							period.active = false;
-							period.final_date = new Date().getFormatted();
-							period.updated_by = root.user_id;
-							console.log("period TO UPDATE =>", p);
-							let p = root.updatePeriod(period);
-							console.log("UPDATED period =>", p);
-						});
+						let periods = root.group_member.gm_periods.filter((o) => o.is_current);
+						await root.disablePeriods(periods);
+
 						// 202107011445: Crea el nuevo periodo SOLO si está marcado como activo el nuevo
 						if (root.group_member.active) {
 							let p = await root.addPeriod({
@@ -1130,25 +1142,43 @@ export default {
 				});
 			});
 		},
-		userActive(data, state) {
-			// console.clear();
+		async userActive(data, state) {
+			console.clear();
 			console.log("data", data);
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let ti = data.oas_details.TerceroId;
 			let mn = typeof ti !== "undefined" ? `<br>"${ti.NombreCompleto}"` : `con<br>el documento "${root.$formatDocument(data.identification_number)}"`;
 			let msg = `¿Realmente desea ${a} al usuario ${mn}?`;
-			this.$confirm(msg, function(si_no) {
-				console.log("result", si_no);
-				if (si_no) {
-					let usr = data;
-					usr.active = state;
+			this.$confirm(msg, async function(confirma) {
+				console.log("confirma =>", confirma);
+				if (confirma) {
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
 					root.loaderShow();
-					root.updateUser({
-						user: usr,
-						cb: function(result) {
-							console.log("Result", result);
+					// 202107040008: Investigador
+					let researcher = data.researcher;
+					researcher.active = state;
+					researcher.updated_by = root.user_id;
+					console.log("researcher TO SEND =>", researcher);
+					let r = await root.updateResearcher(researcher);
+					console.log("SAVED Researcher =>", r);
+
+					// 202107040008: Integrante
+					let group_member = data;
+					group_member.active = state;
+					group_member.updated_by = root.user_id;
+					let gm = await root.updateGroupMember({ group_id: root.group.id, item: group_member });
+					console.log("group_member desactivado =>", gm);
+					// 202107010440: Carga los periodos
+					root.getPeriods({
+						group_member_id: group_member.id,
+						cb: async function(periods) {
+							console.log("RECEIVED periods.data =>", periods.data);
+							let currents = periods.data.filter((o) => o.is_current);
+							console.log("periods to disable =>", currents);
+							let updated_periods = await root.disablePeriods(currents);
+							console.log("updated_periods =>", updated_periods);
+							// root.userEditEnd();
 							root.grid.refresh();
 							root.loaderHide();
 						},

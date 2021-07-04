@@ -23,7 +23,7 @@
 									</DxNumberBox>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Nombre:</label>
 									<DxTextBox :value.sync="baseObj.name" placeholder="Nombre" class="form-control" :read-only="true" name="name" mode="text">
@@ -33,34 +33,61 @@
 									</DxTextBox>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<label>OAS ID:</label>
-									<DxTextBox :value.sync="baseObj.oas_user_id" placeholder="OAS ID" class="form-control" :read-only="true">
-										<DxValidator>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<label>OAS ID:</label>
+											<DxTextBox :value.sync="baseObj.oas_user_id" placeholder="OAS ID" class="form-control" :read-only="true">
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxTextBox>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label>Rol:</label>
+											<DxSelectBox
+												:show-clear-button="true"
+												:grouped="false"
+												:data-source="userRoles"
+												:value.sync="baseObj.user_role_id"
+												:search-enabled="false"
+												placeholder="Seleccione un rol..."
+												class="form-control"
+												@value-changed="enableFaculties"
+												display-expr="name"
+												value-expr="id"
+											>
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxSelectBox>
+										</div>
+									</div>
+									<div class="col-md-6" v-if="faculties.length > 0">
+										<div class="form-group">
+											<label>Facultades:</label>
+											<DxTagBox
+												name="faculty_ids"
+												id="faculty_ids"
+												display-expr="Nombre"
+												value-expr="Id"
+												class="form-control"
+												:search-enabled="false"
+												:show-selection-controls="true"
+												:value.sync="faculty_ids"
+												placeholder="Seleccione una o más facultades..."
+												:data-source="faculties"
+											>
+												<!-- @value-changed="facultadChange" -->
+												<!-- <DxValidator>
 											<DxRequiredRule />
-										</DxValidator>
-									</DxTextBox>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<label>Rol:</label>
-									<DxSelectBox
-										:show-clear-button="true"
-										:grouped="false"
-										:data-source="userRoles"
-										:value.sync="baseObj.user_role_id"
-										:search-enabled="false"
-										placeholder="Seleccione..."
-										class="form-control"
-										display-expr="name"
-										value-expr="id"
-									>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-									</DxSelectBox>
+										</DxValidator> -->
+											</DxTagBox>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -106,7 +133,7 @@
 </template>
 <script>
 let root = null;
-import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
+import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup, DxTagBox } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
 import { mapActions } from "vuex";
@@ -120,6 +147,7 @@ export default {
 		DxTextBox,
 		DxValidationGroup,
 		DxValidator,
+		DxTagBox,
 	},
 	props: {
 		id: {
@@ -131,6 +159,10 @@ export default {
 			default: () => {},
 		},
 		userRoles: {
+			type: Array,
+			default: () => [],
+		},
+		faculties: {
 			type: Array,
 			default: () => [],
 		},
@@ -159,8 +191,13 @@ export default {
 		gridInit(e) {
 			return e;
 		},
+		enableFaculties(e) {
+			console.clear();
+			console.log("e", e);
+		},
 	},
 	data: () => ({
+		faculty_ids: [],
 		searchButton: {
 			text: "Buscar",
 			onClick: async () => {

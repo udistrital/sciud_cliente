@@ -220,7 +220,7 @@ const store = {
 			state.items = data;
 		},
 		setRoles(state, data) {
-			state.roles = data;
+			state.roles = window.vm.$objectSort(data, "name");
 			state.loadingRoles = false;
 			// console.log(window.vm._sep);
 			console.log("state.roles", state.roles);

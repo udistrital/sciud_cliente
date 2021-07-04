@@ -139,6 +139,7 @@ const store = {
 					return r.data;
 				});
 		},
+		//#region Periodos
 		// 202103171451: Guarda un investigador
 		async addPeriod({ commit, state, dispatch }, args) {
 			return await api()
@@ -151,6 +152,14 @@ const store = {
 		async updatePeriod({ commit, state, dispatch }, gm_perdiod) {
 			return await api()
 				.put(`gm_periods/${gm_perdiod.id}`, { gm_period: gm_perdiod })
+				.then((r) => {
+					return r.data;
+				});
+		},
+		// 202107011423: Actualiza un periodo
+		async activatePeriod({ commit, state, dispatch }, gm_perdiod) {
+			return await api()
+				.patch(`gm_periods/${gm_perdiod.id}`, { gm_period: gm_perdiod })
 				.then((r) => {
 					return r.data;
 				});
@@ -183,6 +192,7 @@ const store = {
 				args.cb(item.periods);
 			}
 		},
+		//#endregion
 		// 202010282329: Async https://stackoverflow.com/a/63997702
 		async getMembersOas({ commit, dispatch, state }, args) {
 			console.log(window.vm.$sep);

@@ -157,7 +157,7 @@
 				</div>
 			</div>
 		</div>
-		<Usuario :userRoles="roles" :baseObj="baseObj" :saveFn="save" :cancelFn="cancel" id="panel-usuarios-data" ref="Usuario" />
+		<Usuario :userRoles="roles" :baseObj="baseObj" :saveFn="save" :cancelFn="cancel" :faculties="facultades" id="panel-usuarios-data" ref="Usuario" />
 		<div class="row" id="panel-usuarios-grid">
 			<div class="col">
 				<div class="card" id="data-container">
@@ -394,6 +394,7 @@ export default {
 		root = this;
 	},
 	mounted() {
+		root.getFacultades();
 		root.loaderElement = ".card-body.grid";
 		root.loaderMessage = "Cargando usuarios";
 		root.baseObj.created_by = root.user_id;
@@ -410,9 +411,11 @@ export default {
 			root.nbId = root.$refs.Usuario.$refs.nbId.instance.instance();
 			console.log("root.nbId options =>", root.nbId.option());
 			root.baseObjBk = root.$clone(root.baseObj);
+			console.log("Facultades =>", root.facultades);
 		}, 2000);
 	},
 	computed: {
+		...mapGetters("unidad/oas", ["facultades"]),
 		...mapGetters("usuario", ["getUserOasDetails"]),
 		nombre_completo: () => {
 			let n = [];
@@ -472,6 +475,7 @@ export default {
 		},
 	},
 	methods: {
+		...mapActions("unidad/oas", { getFacultades: "facultades" }),
 		...mapActions("auth/usuario", ["getUser", "saveUser", "saveUserOas", "updateUser", "activeUser", "getOasUsers", "getOasUser"]),
 		search() {
 			console.log("DOC", this.baseObj.identification_number);
