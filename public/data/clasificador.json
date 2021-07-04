@@ -8,12 +8,12 @@
 		{ "id": 6, "name": "gestor_facultad" }
 	],
 	"facultad": [
-		{ "id": 8, "id_oas": 8, "nombre": "VICERRECTORIA ACADEMICA" },
-		{ "id": 512, "id_oas": 14, "nombre": "FACULTAD DE INGENIERIA" },
-		{ "id": 511, "id_oas": 17, "nombre": "FACULTAD DE CIENCIAS Y EDUCACION" },
-		{ "id": 159, "id_oas": 35, "nombre": "FACULTAD DE ARTES -  ASAB" },
-		{ "id": 513, "id_oas": 65, "nombre": "FACULTAD DE MEDIO AMBIENTE" },
-		{ "id": 514, "id_oas": 66, "nombre": "FACULTAD TECNOLOGICA" }
+		{ "id": 8, "id_oas": 8, "nombre": "Vicerrectoria Académica" },
+		{ "id": 512, "id_oas": 14, "nombre": "Facultad de Ingeniería" },
+		{ "id": 511, "id_oas": 17, "nombre": "Facultad de Ciencias y Educación" },
+		{ "id": 159, "id_oas": 35, "nombre": "Facultad de Artes (ASAB)" },
+		{ "id": 513, "id_oas": 65, "nombre": "Facultad de Medio Ambiente" },
+		{ "id": 514, "id_oas": 66, "nombre": "Facultad Tecnológica" }
 	],
 	"subtipo": [
 		{ "name": "acompaniamiento_asesoria_categoria", "id": 168 },
