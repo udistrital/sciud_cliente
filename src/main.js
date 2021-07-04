@@ -125,9 +125,11 @@ vue.mixin({
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
 		go(groupId = 0, path, lockMsg = "Cargando", lockEl = ".page-content") {
+			console.clear();
 			console.log("groupId", groupId);
 			this.loaderShow(lockMsg, lockEl);
 			this.$router.push({ path: path });
+			console.log("this.$router", this.$router);
 		},
 		capitalize(e) {
 			e.component.instance().option("value", this.$titleCase(e.value));

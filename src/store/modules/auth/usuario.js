@@ -96,6 +96,18 @@ const store = {
 				});
 		},
 
+		getStructures({ commit, dispatch, state }, args) {
+			// 202103120931: Es integrante, consulta los grupos respectivos
+			api()
+				.get(`researcher_research_units?identification_number=${args.doc}`)
+				.then((r) => {
+					let groups = r.data;
+					console.log(window.vm.$sep);
+					console.log("Grupos de integrante =>", groups);
+					return args.cb(groups);
+				});
+		},
+
 		getDocuments({ commit, dispatch, state }, cb) {
 			api("local")
 				.get("cedulas")

@@ -89,7 +89,24 @@ const store = {
 			if (userLocal.user_role_id !== 5) {
 				return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
 			} else {
+				dispatch(
+					"auth/usuario/getStructures",
+					{
+						doc: doc,
+						cb: function(groups) {
+							if (groups.length > 0) {
+								user["groups"] = groups;
+								return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
+							} else {
+								// 202103120416: No se encontraron grupos para el usuario, niega el acceso
+								return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: user }) : null;
+							}
+						},
+					},
+					{ root: true }
+				);
 				// 202103120931: Es integrante, consulta los grupos respectivos
+				/*
 				api()
 					.get(`researcher_research_units?identification_number=${doc}`)
 					.then((r) => {
@@ -105,6 +122,7 @@ const store = {
 							return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: user }) : null;
 						}
 					});
+					*/
 			}
 		},
 		authLogout: ({ commit, state }, callback) => {
