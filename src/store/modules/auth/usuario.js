@@ -160,6 +160,7 @@ const store = {
 				oas_user_id: u.oas_user_id,
 				user_role_id: u.user_role_id,
 				updated_by: u.updated_by,
+				faculties_ids: u.faculties_ids,
 				active: u.active,
 			};
 			api()

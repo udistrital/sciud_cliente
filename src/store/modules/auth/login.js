@@ -146,6 +146,9 @@ const store = {
 			console.log(window.vm.$sep);
 			console.log("store.auth => dispatch => usuario/getOasUser");
 			let userDetails = await dispatch("auth/usuario/getOasUser", { doc: args.user.local.identification_number }, { root: true });
+			if (typeof userDetails.TerceroId !== "undefined") {
+				userDetails.TerceroId.NombreCompleto = window.vm.$titleCase(userDetails.TerceroId.NombreCompleto);
+			}
 			console.log("store.auth => dispatch => usuario/getOasUser => Recibido => ", userDetails);
 			args.user["oas_details"] = userDetails;
 			commit("authSuccess", args);

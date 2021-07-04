@@ -45,7 +45,7 @@
 											</DxTextBox>
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col">
 										<div class="form-group">
 											<label>Rol:</label>
 											<DxSelectBox
@@ -66,25 +66,26 @@
 											</DxSelectBox>
 										</div>
 									</div>
-									<div class="col-md-6" v-if="faculties.length > 0">
+									<div id="col-faculties" class="col-md-6 slide" v-if="faculties.length > 0">
 										<div class="form-group">
 											<label>Facultades:</label>
 											<DxTagBox
-												name="faculty_ids"
-												id="faculty_ids"
-												display-expr="Nombre"
-												value-expr="Id"
-												class="form-control"
+												:data-source="faculties"
+												:disabled="true"
 												:search-enabled="false"
 												:show-selection-controls="true"
-												:value.sync="faculty_ids"
+												:value.sync="baseObj.faculties_ids"
+												class="form-control"
+												display-expr="Nombre"
+												id="faculty_ids"
+												name="faculty_ids"
 												placeholder="Seleccione una o más facultades..."
-												:data-source="faculties"
+												ref="tbFaculties"
+												value-expr="Id"
 											>
-												<!-- @value-changed="facultadChange" -->
-												<!-- <DxValidator>
-											<DxRequiredRule />
-										</DxValidator> -->
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
 											</DxTagBox>
 										</div>
 									</div>
@@ -132,7 +133,8 @@
 	</div>
 </template>
 <script>
-let root = null;
+let root = null,
+	$ = window.jQuery;
 import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup, DxTagBox } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
@@ -192,8 +194,22 @@ export default {
 			return e;
 		},
 		enableFaculties(e) {
-			console.clear();
+			// console.clear();
+			console.log(root.$sep);
 			console.log("e", e);
+			// root.faculty_ids = [];
+			let col = $("#col-faculties");
+			let tb = root.$refs.tbFaculties.instance;
+			console.log("tbFaculties", tb);
+			// 202107040342: get_role_id en main.js
+			if (e.value === root.get_role_id("gestor_facultad")) {
+				console.log("ES GESTOR FACULTAD!");
+				tb.option("disabled", false);
+				col.fadeIn();
+			} else {
+				tb.option("disabled", true);
+				col.fadeOut();
+			}
 		},
 	},
 	data: () => ({

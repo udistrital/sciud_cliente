@@ -404,8 +404,12 @@ export default {
 				if (exceptions.includes(word.toLowerCase())) {
 					res.push(word.toLowerCase());
 				} else {
-					var w = this.$capitalize(word.toString());
-					res.push(w);
+					if (word.includes("(") || word.includes(")")) {
+						res.push(word.toUpperCase());
+					} else {
+						var w = this.$capitalize(word.toString());
+						res.push(w);
+					}
 				}
 			});
 			words = res.join(" ");

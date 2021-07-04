@@ -22,7 +22,7 @@ let baseEntity = null,
 		"userData",
 	];
 export default (
-	o = { endPoint: null, key: ["id"], onLoading: null, onApiLoaded: null, onLoaded: null, loadBaseEntity: false, ids: null, stringParam: null }
+	o = { endPoint: null, key: ["id"], onLoading: null, onApiLoaded: null, onLoaded: null, loadBaseEntity: false, ids: null, faculties: null, stringParam: null }
 ) => {
 	// let url = "http://localhost:4500/data/_tst5.json"
 	return new CustomStore({
@@ -32,6 +32,8 @@ export default (
 			let params = "?";
 			// 202103120940: Agrega un parametro ids si se recibe el listado
 			if (typeof o.ids !== "undefined" && o.ids.length > 0) params += `ids=${o.ids.join(",")}&`;
+			// 202107040619: Se agrega el parámetro faculties
+			if (typeof o.faculties !== "undefined" && o.faculties.length > 0) params += `faculties=${o.faculties.join(",")}&`;
 			if (typeof o.stringParam !== "undefined" && o.stringParam !== null) params += o.stringParam + "&";
 			args.forEach(function(i) {
 				if (i in loadOptions && isNotEmpty(loadOptions[i])) {

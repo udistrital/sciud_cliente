@@ -30,7 +30,7 @@
 								@initialized="gridInit"
 								@content-ready="onContentReady"
 								:allow-column-reordering="true"
-								:data-source="dataSource"
+								:data-source="dsEstructuras"
 								:remote-operations="true"
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
@@ -359,7 +359,7 @@ export default {
 		unidad: null,
 		documentos: [],
 		isValid: false,
-		baseEntity: null,
+		baseEntity: {},
 		docLink: null,
 		firstLoad: true,
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
@@ -386,17 +386,34 @@ export default {
 		estadosUnidad() {
 			return root.subtypesByType("unidad_estado");
 		},
-		dataSource: function() {
+		dsEstructuras: function() {
 			// 202103120855: Obtiene los grupos del usuario actual si es participante
 			var ids = [];
 			console.log("root.user_role_id", root.user_role_id);
-			if (root.user_role_id === 5) {
-				root.user.groups.forEach((group) => {
+			if (root.user_role_id === root.get_role_id("integrante")) {
+				console.clear();
+				console.log("ES INTEGRANTE!");
+				console.log("root.user =>", root.user);
+				console.log("root.user.groups =>", root.user.groups);
+				// 202107040646: Solo los grupos en los que se encuentre activo el usuario
+				let groups = root.user.groups.filter((o) => o.gm_state_id === 1);
+				console.log("groups =>", groups);
+				groups.forEach((group) => {
 					ids.push(group.research_group_id);
 				});
 			}
+			// 202107040621: Determina las facultades si el usuario tiene rol Gestor facultad
+			let faculties = [];
+			if (root.user_role_id === root.get_role_id("gestor_facultad")) {
+				console.clear();
+				console.log("ES GESTOR FACULTAD!");
+				console.log("root.user =>", root.user);
+				faculties = root.user.local.faculties_ids;
+				console.log("faculties =>", faculties);
+			}
 			return DxStore({
 				ids: ids,
+				faculties: faculties,
 				key: ["id"],
 				endPoint: "research_units",
 				loadBaseEntity: true,
@@ -419,9 +436,9 @@ export default {
 					console.log("baseEntity", baseEntity);
 					if (root.baseEntity === null) {
 						root.baseEntity = baseEntity;
-						root.baseEntity.id = 0;
-						root.baseEntity.cidc_registration_date = new Date();
-						root.baseEntity.faculty_registration_date = new Date();
+						root.baseEntity["id"] = 0;
+						root.baseEntity["cidc_registration_date"] = new Date();
+						root.baseEntity["faculty_registration_date"] = new Date();
 						root.unidad = window.vm.$clone(root.baseEntity);
 						console.log("root.baseEntity", root.baseEntity);
 					}

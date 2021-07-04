@@ -492,7 +492,7 @@
 						</div>
 						<div class="row mt-3">
 							<div class="col">
-								<a href="#" @click.prevent="go('/unidad')" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple"
+								<a href="#" @click.prevent="go(0, '/unidad')" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple"
 									><b><i class="icon-arrow-left"></i></b> Volver</a
 								>
 							</div>

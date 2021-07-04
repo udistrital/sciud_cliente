@@ -191,13 +191,13 @@
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="Página {0} de {1} ({2} usuarios por asociar)"
+									info-text="Página {0} de {1} ({2} usuarios)"
 								/>
 								<DxColumn
+									:width="90"
 									:allow-filtering="false"
 									:allow-search="false"
 									:allow-sorting="true"
-									:width="120"
 									alignment="center"
 									caption="SICIUD ID"
 									data-field="id"
@@ -207,13 +207,14 @@
 									:allow-filtering="false"
 									:allow-sorting="false"
 									:customize-text="nullText"
-									:width="120"
+									:width="90"
 									alignment="center"
 									caption="OAS ID"
 									data-field="oas_details.TerceroId.Id"
 									data-type="string"
 								/>
 								<DxColumn
+									:width="120"
 									:allow-filtering="true"
 									:allow-sorting="true"
 									:customize-text="$formatDocument"
@@ -225,13 +226,34 @@
 								<DxColumn
 									:allow-filtering="false"
 									:allow-sorting="false"
-									:customize-text="nullText"
+									:customize-text="nullTextTitle"
 									alignment="center"
 									caption="Nombre"
 									data-field="oas_details.TerceroId.NombreCompleto"
 									data-type="string"
 								/>
 								<DxColumn
+									width="120"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Estructuras"
+									data-field="total_structures"
+									data-type="int"
+								/>
+								<DxColumn
+									width="120"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Facultades"
+									data-field="total_faculties"
+									data-type="int"
+								/>
+								<DxColumn
+									:width="140"
 									:sort-index="0"
 									:allow-filtering="true"
 									:allow-sorting="true"
@@ -270,9 +292,11 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						<span class="font-weight-semibold">baseObj:</span> {{ JSON.stringify(baseObj, null, 3) }} <br />
-						<span class="font-weight-semibold">tercero:</span> {{ JSON.stringify(tercero, null, 3) }} <br />
-						<span class="font-weight-semibold">cedula:</span> {{ JSON.stringify(cedula, null, 3) }} <br />
+						<span class="font-weight-semibold">baseObj:</span> {{ JSON.stringify(baseObj, null, 3) }}
+						<hr />
+						<span class="font-weight-semibold">tercero:</span> {{ JSON.stringify(tercero, null, 3) }}
+						<hr />
+						<span class="font-weight-semibold">cedula:</span> {{ JSON.stringify(cedula, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -498,6 +522,8 @@ export default {
 				if (root.mode == "edit") {
 					fn = root.updateUser;
 					root.baseObj.updated_by = root.user_id;
+					// 202107040342: get_role_id en main.js
+					if (root.baseObj.user_role_id !== root.get_role_id("gestor_facultad")) root.baseObj.faculties_ids = [];
 				} else root.baseObj.updated_by = root.user_id;
 				fn({
 					user: root.baseObj,

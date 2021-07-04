@@ -112,6 +112,10 @@ vue.mixin({
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+		get_role_id: (name) => {
+			let item = window.clasificador.rol.find((o) => o.name == name);
+			return typeof item !== "undefined" ? item["id"] : null;
+		},
 		go(groupId = 0, path, lockMsg = "Cargando", lockEl = ".page-content") {
 			console.log("groupId", groupId);
 			this.loaderShow(lockMsg, lockEl);
@@ -199,6 +203,20 @@ vue.mixin({
 		nullText(cellInfo) {
 			if (cellInfo.valueText.length > 0) {
 				return cellInfo.valueText;
+			} else {
+				return "--";
+			}
+		},
+		nullTextCap(cellInfo) {
+			if (cellInfo.valueText.length > 0) {
+				return window.vm.$capitalize(cellInfo.valueText);
+			} else {
+				return "--";
+			}
+		},
+		nullTextTitle(cellInfo) {
+			if (cellInfo.valueText.length > 0) {
+				return window.vm.$titleCase(cellInfo.valueText);
 			} else {
 				return "--";
 			}
