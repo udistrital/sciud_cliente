@@ -334,6 +334,8 @@ axios
 				console.log("window.config", window.config);
 				console.log("window.clasificador", window.clasificador);
 				console.log("window.vm.$store", window.vm.$store);
+				document.documentElement.style.setProperty("--base-url", process.env.BASE_URL);
+				console.log("document.documentElement.style", document.documentElement.style);
 			})
 			.catch((err) => {
 				console.log("ERROR", err);

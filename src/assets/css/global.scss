@@ -649,7 +649,6 @@ label.error {
 		color: #fff;
 		content: "!";
 		border-radius: 50%;
-
 		margin-right: 3px;
 	}
 }
@@ -672,7 +671,7 @@ hr.sep {
 		min-height: 825px;
 	}
 
-	background: url("/assets/img/bg-pages.png") no-repeat center center;
+	background: url($base-url+"assets/img/bg-pages.png") no-repeat center center;
 
 	.card-body,
 	&.nbg {

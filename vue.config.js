@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 var webpack = require("webpack");
+var targetPath = "/udistrital/siciud-v2/";
+
 module.exports = {
 	productionSourceMap: process.env.NODE_ENV !== "production",
 	// publicPath: process.env.BASE_URL,
 	// publicPath: "/",
-	publicPath: process.env.NODE_ENV === "production" ? "/udistrital/siciud-v2/" : "/",
+	publicPath: process.env.NODE_ENV === "production" ? targetPath : "/",
 	// https://stackoverflow.com/a/60402866
 	// https://cli.vuejs.org/guide/webpack.html#modifying-options-of-a-plugin
 	chainWebpack: (config) => {
@@ -40,5 +42,19 @@ module.exports = {
 				}),
 			],
 		};
+	},
+	// 202107052027: SASS CSS Config
+	// https://stackoverflow.com/a/62078502
+	// https://cli.vuejs.org/guide/css.html#passing-options-to-pre-processor-loaders
+	// https://webpack.js.org/loaders/sass-loader/#additionaldata
+	css: {
+		loaderOptions: {
+			sass: {
+				additionalData: () => {
+					let ad = `$base-url: "${process.env.NODE_ENV === "production" ? targetPath : "/"}";`;
+					return ad;
+				},
+			},
+		},
 	},
 };
