@@ -16,6 +16,7 @@ const store = {
 		states: [],
 		types: [],
 		documents: [],
+		userPeriods: [],
 		currentItems: [],
 		researchGroups: [],
 		members: [],
@@ -138,6 +139,60 @@ const store = {
 					return r.data;
 				});
 		},
+		//#region Periodos
+		// 202103171451: Guarda un investigador
+		async addPeriod({ commit, state, dispatch }, args) {
+			return await api()
+				.post(`group_member/${args.group_member_id}/gm_periods`, { gm_period: args.gm_period })
+				.then((r) => {
+					return r.data;
+				});
+		},
+		// 202107011423: Actualiza un periodo
+		async updatePeriod({ commit, state, dispatch }, gm_perdiod) {
+			return await api()
+				.put(`gm_periods/${gm_perdiod.id}`, { gm_period: gm_perdiod })
+				.then((r) => {
+					return r.data;
+				});
+		},
+		// 202107011423: Actualiza un periodo
+		async activatePeriod({ commit, state, dispatch }, gm_perdiod) {
+			return await api()
+				.patch(`gm_periods/${gm_perdiod.id}`, { gm_period: gm_perdiod })
+				.then((r) => {
+					return r.data;
+				});
+		},
+		// 202107011641: Obtiene los periodos de un integrante
+		getPeriods({ getters, state }, args) {
+			api()
+				.get(`group_member/${args.group_member_id}/gm_periods?requireTotalCount=true&sort=[{"selector":"id","desc":true}]`)
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+		// 202107010439: Obtiene los periodos de un integrante (con estado)
+		getPeriodsState({ getters, state }, args) {
+			// Verifica que el usuario no exista ya en el state
+			let item = getters.getPeriods(args.group_member_id);
+			console.clear();
+			console.log("item =>", item);
+			if (typeof item === "undefined") {
+				api()
+					.get(`group_member/${args.group_member_id}/gm_periods?requireTotalCount=true`)
+					.then((r) => {
+						state.userPeriods.push({
+							group_member_id: args.group_member_id,
+							periods: r.data,
+						});
+						args.cb(r.data);
+					});
+			} else {
+				args.cb(item.periods);
+			}
+		},
+		//#endregion
 		// 202010282329: Async https://stackoverflow.com/a/63997702
 		async getMembersOas({ commit, dispatch, state }, args) {
 			console.log(window.vm.$sep);
@@ -280,6 +335,9 @@ const store = {
 		},
 	},
 	getters: {
+		getPeriods: (state) => (group_member_id) => {
+			return state.userPeriods.find((o) => o.group_member_id.toString() === group_member_id.toString());
+		},
 		researchers: (state, getters) => (unidadId) => {
 			let result = null;
 			state.researchGroups.forEach((group) => {

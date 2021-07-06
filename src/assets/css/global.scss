@@ -426,10 +426,6 @@ textarea.code {
 	top: 0;
 }
 
-.card-body.mh {
-	min-height: 840px;
-}
-
 // .btn btn-main float-right dx-button dx-button-normal dx-button-mode-contained dx-widget .navbar-sticky.is_stuck {
 // 	// border: 1px solid red !important;
 // 	z-index: 2000;
@@ -653,7 +649,6 @@ label.error {
 		color: #fff;
 		content: "!";
 		border-radius: 50%;
-
 		margin-right: 3px;
 	}
 }
@@ -665,4 +660,23 @@ hr.sep {
 	margin-bottom: 0.5rem !important;
 	padding-bottom: 0.5rem !important;
 	border-bottom: 1px dotted #999 !important;
+}
+
+.card-body {
+	&.mh {
+		min-height: 840px;
+	}
+
+	&.mhn {
+		min-height: 825px;
+	}
+
+	// 202107052113: '$base-url' definida en 'vue.config.js'
+	// 202107052123: https://stackoverflow.com/a/8608551
+	background: url(#{$base-url}assets/img/bg-pages.png) no-repeat center center;
+
+	.card-body,
+	&.nbg {
+		background: none !important;
+	}
 }

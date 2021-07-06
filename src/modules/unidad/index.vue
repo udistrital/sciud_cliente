@@ -9,7 +9,7 @@
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			<div class="header-elements" v-if="editMode">
+			<div class="header-elements" v-if="es_admin">
 				<router-link tag="a" to="/unidad/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva Estructura de Investigación...">
 					<b><i class="icon-database-add"></i></b> Nueva Estructura
 				</router-link>
@@ -19,10 +19,13 @@
 		<div class="row" id="panel-unidades">
 			<div class="col">
 				<div class="card">
-					<div class="card-body mh pt-3">
-						<!-- <div class="slide data" v-if="unidad">
+					<div :class="'card-body pt-3 ' + (es_admin ? 'mh' : 'mhn')">
+						<!-- // 202107051635: https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/FilterPanel/Vue -->
+						<!--
+						<div class="slide data" v-if="unidad">
 							<Tabs ref="Tabs" :group="unidad" :parent="this" :documents="documentos" :saveFn="save" :cancelFn="cancel" :editMode="editMode" />
-						</div> -->
+						</div>
+						-->
 						<div class="grid">
 							<DxDataGrid
 								class="main"
@@ -30,31 +33,32 @@
 								@initialized="gridInit"
 								@content-ready="onContentReady"
 								:allow-column-reordering="true"
-								:data-source="dataSource"
+								:data-source="dsEstructuras"
 								:remote-operations="true"
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
 								:show-borders="false"
 							>
 								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
-								<DxStateStoring :enabled="true" type="sessionStorage" />
+								<DxColumnChooser :enabled="es_admin" mode="dragAndDrop" />
 								<DxExport :enabled="false" />
-								<DxColumnChooser :enabled="true" mode="dragAndDrop" />
-								<DxSorting mode="multiple" /><!-- single, multiple, none" -->
-								<DxPaging :page-size="dgPageSize" />
+								<DxFilterPanel :visible="false" />
 								<DxFilterRow :visible="true" />
+								<DxGrouping :auto-expand-all="true" />
+								<DxGroupPanel :visible="es_admin" :allow-column-dragging="true" />
 								<DxLoadPanel :enabled="false" />
-								<DxGroupPanel :visible="true" :allow-column-dragging="true" />
-								<DxGrouping :auto-expand-all="false" />
+								<DxPaging :page-size="dgPageSize" />
+								<DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
+								<DxStateStoring :enabled="true" type="sessionStorage" />
 								<DxSummary>
-									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} unidades" />
+									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} estructuras" />
 								</DxSummary>
 								<DxPager
 									:show-info="true"
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="{2} Estructuras de investigación (Página {0} de {1})"
+									info-text="{2} estructuras de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 								<DxColumn
@@ -62,13 +66,13 @@
 									:sort-index="1"
 									sort-order="asc"
 									data-field="id"
-									caption="Id"
-									data-type="int"
+									caption="ID"
+									data-type="number"
 									alignment="center"
 									:allow-sorting="true"
 									:width="70"
 								/>
-								<DxColumn :allow-filtering="true" data-field="group_type_id" caption="Tipo" data-type="int" alignment="left" :visible="true" :width="180">
+								<DxColumn :allow-filtering="true" data-field="group_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" :width="180">
 									<DxLookup :data-source="tiposUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
 								<DxColumn
@@ -82,12 +86,60 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
+									data-field="member_count"
+									caption="Integrantes"
+									data-type="number"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="true"
+									:allow-sorting="true"
+									:visible="es_admin"
+									:width="90"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="active_member_count"
+									:caption="es_admin ? 'Int. Activos' : 'Integrantes'"
+									data-type="number"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="true"
+									:allow-sorting="true"
+									:visible="true"
+									:width="es_admin ? 90 : 120"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="inactive_member_count"
+									caption="Int. Inactivos"
+									data-type="number"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="true"
+									:allow-sorting="true"
+									:visible="es_admin"
+									:width="90"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="faculty_ids.length"
+									caption="Facultades"
+									data-type="number"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="false"
+									:allow-sorting="false"
+									:visible="es_admin"
+									:width="90"
+								/>
+								<DxColumn
+									:allow-filtering="true"
 									:visible="false"
 									data-field="acronym"
 									caption="Acrónimo"
 									data-type="string"
 									alignment="center"
-									:width="100"
+									:width="90"
 									cell-template="tplNull"
 								/>
 								<DxColumn
@@ -131,25 +183,13 @@
 									cell-template="tplNull"
 								/>
 								<DxColumn
-									:allow-filtering="false"
-									data-field="member_count"
-									caption="Integrantes"
-									data-type="int"
-									alignment="center"
-									:allow-grouping="true"
-									:allow-search="true"
-									:allow-sorting="true"
-									:visible="true"
-									:width="120"
-								/>
-								<DxColumn
+									:width="70"
 									:allow-filtering="false"
 									data-field="email"
 									caption="Email"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="100"
+									:visible="!es_admin"
 									cell-template="tplEmail"
 								/>
 								<DxColumn
@@ -158,28 +198,29 @@
 									caption="GrupLAC"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="100"
+									:visible="!es_admin"
+									:width="70"
 									cell-template="tplUrl"
 								/>
 								<DxColumn
 									:allow-filtering="false"
 									data-field="webpage"
-									caption="Página Web"
+									caption="Web"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="100"
+									:width="70"
+									:visible="!es_admin"
 									cell-template="tplUrl"
 								/>
 								<DxColumn
+									:width="90"
 									:allow-filtering="true"
 									data-field="group_state_id"
 									caption="Estado"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="100"
+									:visible="es_admin"
+									:group-index="es_admin ? 0 : null"
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
@@ -266,7 +307,7 @@
 			</div>
 		</div>
 
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body"><span class="font-weight-semibold">editMode:</span> {{ editMode }}</div>
@@ -288,19 +329,20 @@ import DxDropDownButton from "devextreme-vue/drop-down-button";
 import {
 	DxColumn,
 	DxColumnChooser,
-	DxStateStoring,
 	DxDataGrid,
 	DxExport,
+	DxFilterPanel,
 	DxFilterRow,
 	DxGrouping,
 	DxGroupItem,
 	DxGroupPanel,
-	DxLookup,
 	DxLoadPanel,
+	DxLookup,
 	DxPager,
 	DxPaging,
 	DxSearchPanel,
 	DxSorting,
+	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { mapActions, mapGetters } from "vuex";
@@ -312,6 +354,7 @@ export default {
 		DxStateStoring,
 		DxDropDownButton,
 		DxColumn,
+		DxFilterPanel,
 		DxColumnChooser,
 		DxLookup,
 		DxDataGrid,
@@ -335,10 +378,9 @@ export default {
 		unidad: null,
 		documentos: [],
 		isValid: false,
-		baseEntity: null,
+		baseEntity: {},
 		docLink: null,
 		firstLoad: true,
-		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;
@@ -362,20 +404,39 @@ export default {
 		estadosUnidad() {
 			return root.subtypesByType("unidad_estado");
 		},
-		dataSource: function() {
+		dsEstructuras: function() {
 			// 202103120855: Obtiene los grupos del usuario actual si es participante
 			var ids = [];
 			console.log("root.user_role_id", root.user_role_id);
-			if (root.user_role_id === 5) {
-				root.user.groups.forEach((group) => {
+			if (root.user_role_id === root.get_role_id("integrante")) {
+				console.clear();
+				console.log("ES INTEGRANTE!");
+				console.log("root.user =>", root.user);
+				console.log("root.user.groups =>", root.user.groups);
+				// 202107040646: Solo los grupos en los que se encuentre activo el usuario
+				let groups = root.user.groups.filter((o) => o.gm_state_id === 1);
+				console.log("groups =>", groups);
+				groups.forEach((group) => {
 					ids.push(group.research_group_id);
 				});
+			}
+			// 202107040621: Determina las facultades si el usuario tiene rol Gestor facultad
+			let faculties = [];
+			if (root.user_role_id === root.get_role_id("gestor_facultad")) {
+				console.clear();
+				console.log("ES GESTOR FACULTAD!");
+				console.log("root.user =>", root.user);
+				faculties = root.user.local.faculties_ids;
+				console.log("faculties =>", faculties);
 			}
 			return DxStore({
 				ids: ids,
 				key: ["id"],
-				endPoint: "research_units",
+				faculties: faculties,
 				loadBaseEntity: true,
+				endPoint: "research_units",
+				// 202107040725: Determina si debe mostrar solo los grupos activos
+				state: root.es_admin ? null : 1,
 				onLoading: function(loadOptions) {
 					root.loaderShow();
 					setTimeout(function() {
@@ -395,9 +456,9 @@ export default {
 					console.log("baseEntity", baseEntity);
 					if (root.baseEntity === null) {
 						root.baseEntity = baseEntity;
-						root.baseEntity.id = 0;
-						root.baseEntity.cidc_registration_date = new Date();
-						root.baseEntity.faculty_registration_date = new Date();
+						root.baseEntity["id"] = 0;
+						root.baseEntity["cidc_registration_date"] = new Date();
+						root.baseEntity["faculty_registration_date"] = new Date();
 						root.unidad = window.vm.$clone(root.baseEntity);
 						console.log("root.baseEntity", root.baseEntity);
 					}

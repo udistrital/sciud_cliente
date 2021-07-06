@@ -71,6 +71,16 @@ Number.prototype.formatSize = function() {
 	return filesize.replaceAll(",00", "");
 };
 
+Date.prototype.getFormatted = function() {
+	var d = this,
+		month = "" + (d.getMonth() + 1),
+		day = "" + d.getDate(),
+		year = d.getFullYear();
+	if (month.length < 2) month = "0" + month;
+	if (day.length < 2) day = "0" + day;
+	return [year, month, day].join("-");
+};
+
 //#endregion
 
 //#region Vue
@@ -96,6 +106,21 @@ export default {
 	install(vue, options) {
 		vue.prototype.$current = null;
 		vue.prototype.$sep = "---------------------------------------------------------------------------------\n";
+
+		// 202103090317: Get deep field value
+		// https://stackoverflow.com/a/6394014
+		vue.prototype.$isDifferent = function(obj1, obj2) {
+			let is_different = false;
+			for (var prop in obj1) {
+				if (Object.prototype.hasOwnProperty.call(obj1, prop) && Object.prototype.hasOwnProperty.call(obj2, prop)) {
+					if (obj1[prop] != obj2[prop]) {
+						is_different = true;
+						break;
+					}
+				}
+			}
+			return is_different;
+		};
 
 		// 202103090317: Get deep field value
 		// https://stackoverflow.com/a/6394014
@@ -379,8 +404,12 @@ export default {
 				if (exceptions.includes(word.toLowerCase())) {
 					res.push(word.toLowerCase());
 				} else {
-					var w = this.$capitalize(word.toString());
-					res.push(w);
+					if (word.includes("(") || word.includes(")")) {
+						res.push(word.toUpperCase());
+					} else {
+						var w = this.$capitalize(word.toString());
+						res.push(w);
+					}
 				}
 			});
 			words = res.join(" ");

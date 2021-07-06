@@ -165,6 +165,8 @@
 									<div class="form-group">
 										<label>Fecha Aprobación:</label>
 										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
 											class="form-control"
 											name="approval_date"
 											:value.sync="baseObj.approval_date"
@@ -182,6 +184,8 @@
 									<div class="form-group">
 										<label>Fecha Publicación:</label>
 										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
 											class="form-control"
 											name="publication_date"
 											:value.sync="baseObj.publication_date"
@@ -233,15 +237,13 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Observaciones: </label>
-										<Observaciones :syncValue.sync="baseObj"/>
+										<Observaciones :syncValue.sync="baseObj" />
 									</div>
 								</div>
 
-								<div class="col-md-12" v-if="tiposDocumento.length>0">
+								<div class="col-md-12" v-if="tiposDocumento.length > 0">
 									<div class="card-body" v-html="requisitoArchivo()"></div>
 								</div>
-
-
 							</div>
 						</div>
 						<div class="card-footer">
@@ -309,7 +311,7 @@
 							data-field="id"
 							caption="ID"
 							sort-order="asc"
-							data-type="int"
+							data-type="number"
 							alignment="center"
 							:visible="true"
 							:allow-grouping="false"
@@ -419,13 +421,19 @@
 							width="100"
 						/>
 
-
-						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
+						<DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
 
 						<template #tplObs="{ data }">
-							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+							<a
+								v-if="data.data.observation != '' && data.data.observation != null"
+								:title="data.data.observation"
+								class="cmd-item color-main-600 mr-2"
+								@click.prevent="verObservar(data.data)"
+								href="#"
+								Target="_blank"
+							>
 								<i class="icon-info mr-1"></i> Ver
 							</a>
 							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -461,19 +469,20 @@
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
-            <div class="row" style="overflow-y: scroll; height:148px">
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
+			<div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
-                    <h3>
+					<h3>
 						<i class="icon-info mr-1 color-main-600"></i>
-						<span class="font-weight-semibold">{{baseObj[title]}}</span>
+						<span class="font-weight-semibold">{{ baseObj[title] }}</span>
 					</h3>
 					<div v-html="observarData"></div>
 				</div>
 			</div>
-            <div class="row">
-				<div class="col"><hr>
-					<DxButton @click="popupObs=false" class="nb">
+			<div class="row">
+				<div class="col">
+					<hr />
+					<DxButton @click="popupObs = false" class="nb">
 						<template #default>
 							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
 								<b><i class="icon-database-remove"></i></b> Salir
@@ -483,7 +492,6 @@
 				</div>
 			</div>
 		</DxPopup>
-
 	</div>
 </template>
 
@@ -547,9 +555,9 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		title:{
+		title: {
 			type: String,
-			default: () => 'title',
+			default: () => "title",
 		},
 		group: {
 			type: Object,
@@ -649,28 +657,28 @@ export default {
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		
-		verObservar(data){
-            root.observarData=data.observation;
-            root.baseObj[root.title]=data[root.title];
-            root.popupObs= !root.popupObs ? true : false ;
-        },
 
-		requisitoArchivo(){
-			let tipos=root.tiposDocumento;
-			let i=0, print="";
-			if(Array.isArray(tipos) && tipos.length != 0 && root.editMode){
-				print="<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
-				print=print + "<ul>";
-				for(i=0; i<tipos.length; i++){
-					let text = tipos[i].st_description==null ? "": "<br>"+tipos[i].st_description ;
-					if(tipos[i].active) print=print + "<li>" + "<b>"+tipos[i].st_name+ "</b>"+text+"</li>";
+		verObservar(data) {
+			root.observarData = data.observation;
+			root.baseObj[root.title] = data[root.title];
+			root.popupObs = !root.popupObs ? true : false;
+		},
+
+		requisitoArchivo() {
+			let tipos = root.tiposDocumento;
+			let i = 0,
+				print = "";
+			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print = print + "<ul>";
+				for (i = 0; i < tipos.length; i++) {
+					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
 				}
-				print=print + "</ul>";
+				print = print + "</ul>";
 			}
 			return print;
 		},
-
 
 		participantes(data) {
 			// console.clear();

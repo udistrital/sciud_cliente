@@ -67,7 +67,7 @@
 									:allow-filtering="false"
 									data-field="id"
 									caption="Id"
-									data-type="int"
+									data-type="number"
 									alignment="center"
 									:allow-sorting="true"
 									:width="70"
@@ -114,7 +114,7 @@
 								<DxColumn
 									data-field="member_ids.length"
 									caption="Miembros"
-									data-type="int"
+									data-type="number"
 									alignment="center"
 									:allow-grouping="false"
 									:allow-filtering="false"
@@ -191,7 +191,7 @@
 			</div>
 		</div>
 
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">

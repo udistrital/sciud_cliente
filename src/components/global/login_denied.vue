@@ -1,7 +1,7 @@
 <template>
 	<div class="content d-flex justify-content-center align-items-center">
 		<div class="col-xl-4 col-lg-5 col-md-6 col-sm-7 col-xs-10 mb-4 mt-4 p-0 card" id="login">
-			<div class="card-body d-flex justify-content-center align-items-center">
+			<div class="card-body nbg d-flex justify-content-center align-items-center">
 				<span class="text-center slide" id="error">
 					<h1 class="font-weight-semibold mb-3"><i class="icon-warning color-error d-block"></i> Acceso denegado</h1>
 					<h3 class="font-weight-semibold color-gray-50">Lo sentimos, no se puede conceder acceso<br />con las credenciales suministradas.</h3>

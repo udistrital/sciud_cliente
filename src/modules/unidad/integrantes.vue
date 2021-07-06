@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="card slide" id="panel-integrantes">
-					<div class="card-body group-detail">
+					<div class="card-body group-detail mh">
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
@@ -89,6 +89,7 @@
 															<div class="form-group">
 																<label>Activo:</label>
 																<DxSwitch
+																	ref="chkActiveRef"
 																	:value.sync="group_member.active"
 																	:read-only="!editMode"
 																	switched-on-text="SI"
@@ -99,23 +100,27 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-2">
-													<div class="form-group">
-														<label>ORCID ID:</label>
-														<DxTextBox :value.sync="researcher.orcid_id" placeholder="ORCID ID" class="form-control" :read-only="true" mode="text" />
-													</div>
-												</div>
-												<div class="col-md-2">
-													<div class="form-group">
-														<label>Firma Científica:</label>
-														<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" />
-													</div>
-												</div>
-												<div class="col-md-5">
+												<div class="col-md-3">
 													<div class="row">
-														<div class="col-md-3">
+														<div class="col">
 															<div class="form-group">
-																<label>Celular 1:</label>
+																<label>ORCID ID:</label>
+																<DxTextBox :value.sync="researcher.orcid_id" placeholder="ORCID ID" class="form-control" :read-only="false" mode="text" />
+															</div>
+														</div>
+														<div class="col">
+															<div class="form-group">
+																<label>Firma Científica:</label>
+																<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" />
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="row">
+														<div class="col">
+															<div class="form-group">
+																<label>Celular:</label>
 																<DxTextBox
 																	:value.sync="researcher.mobile_number_one"
 																	placeholder="Celular 1"
@@ -125,7 +130,7 @@
 																/>
 															</div>
 														</div>
-														<div class="col-md-3">
+														<!-- <div class="col-md-3">
 															<div class="form-group">
 																<label>Celular 2:</label>
 																<DxTextBox
@@ -136,10 +141,10 @@
 																	mode="text"
 																/>
 															</div>
-														</div>
-														<div class="col-md-3">
+														</div> -->
+														<div class="col">
 															<div class="form-group">
-																<label>Teléfono 1:</label>
+																<label>Teléfono:</label>
 																<DxTextBox
 																	:value.sync="researcher.phone_number_one"
 																	placeholder="Teléfono 1"
@@ -149,7 +154,7 @@
 																/>
 															</div>
 														</div>
-														<div class="col-md-3">
+														<!-- <div class="col-md-3">
 															<div class="form-group">
 																<label>Teléfono 2:</label>
 																<DxTextBox
@@ -160,17 +165,169 @@
 																	mode="text"
 																/>
 															</div>
-														</div>
+														</div> -->
 													</div>
 												</div>
-												<div class="col-md-3">
-													<div class="form-group">
-														<label>Dirección:</label>
-														<DxTextBox :value.sync="researcher.address" placeholder="Dirección" class="form-control" mode="text" />
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-5">
+															<div class="form-group">
+																<label>Dirección:</label>
+																<DxTextBox
+																	:value.sync="researcher.address"
+																	:show-clear-button="true"
+																	placeholder="Dirección"
+																	class="form-control"
+																	mode="text"
+																/>
+															</div>
+														</div>
+														<div class="col-md-7">
+															<div class="row">
+																<div class="col">
+																	<div class="form-group">
+																		<label>Fecha inicio periodo:</label>
+																		<DxDateBox
+																			@focus-in="date_focus_in"
+																			@focus-out="date_focus_out"
+																			:max="now"
+																			type="date"
+																			class="form-control"
+																			:show-clear-button="false"
+																			:value.sync="gm_period.initial_date"
+																			placeholder="DD/MM/YYYY"
+																			display-format="dd/MM/yyyy"
+																		>
+																			<DxValidator>
+																				<DxRequiredRule />
+																			</DxValidator>
+																		</DxDateBox>
+																	</div>
+																</div>
+																<div class="col">
+																	<div class="form-group">
+																		<label>Fecha fin periodo:</label>
+																		<DxDateBox
+																			@focus-in="date_focus_in"
+																			@focus-out="date_focus_out"
+																			:max="now"
+																			type="date"
+																			class="form-control"
+																			:show-clear-button="false"
+																			:value.sync="gm_period.final_date"
+																			placeholder="DD/MM/YYYY"
+																			display-format="dd/MM/yyyy"
+																		/>
+																	</div>
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
 										</DxValidationGroup>
+										<div class="row" id="periods">
+											<div class="col mb-3">
+												<fieldset>
+													<legend>Periodos</legend>
+													<DxDataGrid
+														class="main"
+														width="100%"
+														:show-borders="false"
+														:dataSource="dsPeriods"
+														:remote-operations="false"
+														:hover-state-enabled="true"
+														:row-alternation-enabled="true"
+														:allow-column-reordering="false"
+														no-data-text="No hay periodos registrados"
+													>
+														<DxExport :enabled="false" />
+														<DxColumnChooser :enabled="false" mode="dragAndDrop" />
+														<DxSorting mode="single" /><!-- single, multiple, none" -->
+														<DxPaging :page-size="dgPageSize" />
+														<DxFilterRow :visible="false" />
+														<DxLoadPanel :enabled="false" />
+														<DxGroupPanel :visible="false" :allow-column-dragging="true" />
+														<DxGrouping :auto-expand-all="false" />
+														<!-- <DxSummary>
+															<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} integrantes" />
+														</DxSummary> -->
+														<DxPager
+															:visible="false"
+															:show-info="true"
+															:show-page-size-selector="true"
+															:show-navigation-buttons="true"
+															:allowed-page-sizes="dgPageSizes"
+															info-text="{2} periodos (página {0} de {1})"
+														/>
+														<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
+														<DxColumn
+															:allow-grouping="false"
+															:allow-filtering="false"
+															:allow-search="false"
+															:allow-sorting="true"
+															:width="120"
+															alignment="center"
+															caption="Periodo ID"
+															data-field="id"
+															data-type="string"
+														/>
+														<DxColumn
+															:allow-grouping="false"
+															:allow-filtering="false"
+															:allow-sorting="true"
+															:customize-text="nullText"
+															caption="Fecha inicio"
+															data-field="initial_date"
+															alignment="center"
+															data-type="date"
+															format="dd/MM/yyyy"
+														/>
+														<DxColumn
+															:allow-grouping="false"
+															:allow-filtering="false"
+															:allow-sorting="true"
+															:customize-text="nullText"
+															caption="Fecha fin"
+															data-field="final_date"
+															alignment="center"
+															data-type="date"
+															format="dd/MM/yyyy"
+														/>
+														<DxColumn
+															:allow-filtering="true"
+															:allow-sorting="true"
+															:allow-grouping="false"
+															alignment="center"
+															caption="Rol"
+															data-field="role_name"
+															:customize-text="nullText"
+															data-type="string"
+														/>
+														<DxColumn
+															:allow-filtering="true"
+															:allow-sorting="true"
+															:allow-grouping="false"
+															alignment="center"
+															caption="Periodo actual"
+															data-field="is_current"
+															:customize-text="yesNo"
+															data-type="bool"
+														/>
+														<!--
+														<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
+														<template #tpl="{ data }">
+															<span class="cmds" v-if="cmdVisible(data.data)">
+																<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="userEdit(data.data)" href="#">
+																	<i class="icon-database-edit"></i>
+																</a>
+															</span>
+														</template>
+														-->
+													</DxDataGrid>
+												</fieldset>
+											</div>
+										</div>
 									</div>
 									<div class="card-footer">
 										<div class="row">
@@ -298,7 +455,7 @@
 												:width="100"
 												:group-index="0"
 												caption="Activo"
-												data-type="int"
+												data-type="number"
 												alignment="center"
 												:visible="true"
 												data-field="gm_state_id"
@@ -334,7 +491,7 @@
 			</div>
 		</div>
 
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -343,6 +500,8 @@
 						<span class="font-weight-semibold">group_member:</span> {{ JSON.stringify(group_member, null, 3) }}
 						<hr class="sep" />
 						<span class="font-weight-semibold">researcher:</span> {{ JSON.stringify(researcher, null, 3) }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">gm_period:</span> {{ JSON.stringify(gm_period, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -372,7 +531,7 @@ import {
 	DxSorting,
 	DxSummary,
 } from "devextreme-vue/data-grid";
-import { DxButton, DxSelectBox, DxSwitch, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
+import { DxButton, DxSelectBox, DxSwitch, DxTextBox, DxNumberBox, DxValidationGroup, DxDateBox } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
 import CustomStore from "devextreme/data/custom_store";
@@ -400,7 +559,7 @@ export default {
 			cb: function(result) {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
-				root.loadMembers(true);
+				root.loadMembers();
 			},
 		});
 	},
@@ -408,10 +567,13 @@ export default {
 		console.log(this.$sep);
 		setTimeout(function() {
 			root.nbId = typeof root.$refs.nbIdNum !== "undefined" ? root.$refs.nbIdNum.instance : null;
+			root.chkActive = typeof root.$refs.chkActiveRef !== "undefined" ? root.$refs.chkActiveRef.instance : null;
 			root.nbIdBtn = root.nbId !== null ? root.nbId.getButton("search") : null;
 			root.group_member_bk = root.$clone(root.group_member);
 			root.researcher_bk = root.$clone(root.researcher);
+			root.gm_period_bk = root.$clone(root.gm_period);
 			console.log("root.nbIdBtn", root.nbIdBtn);
+			console.log("root.chkActive", root.chkActive);
 		}, 1000);
 	},
 	beforeUpdate: () => {},
@@ -423,6 +585,7 @@ export default {
 		DxButton,
 		DxColumn,
 		DxColumnChooser,
+		DxDateBox,
 		DxDataGrid,
 		DxExport,
 		DxFilterRow,
@@ -446,6 +609,8 @@ export default {
 		Header: () => import("@/components/element/header"),
 	},
 	data: () => ({
+		chkActive: null,
+		periods: null,
 		accept: "*.",
 		cineDetallados: {},
 		files: [],
@@ -477,8 +642,26 @@ export default {
 				key: "id",
 				loadMode: "processed", // "raw",
 				load: (loadOptions) => {
-					console.log("loadOptions", loadOptions);
+					console.log(root.$sep);
+					console.log("dsMembers loadOptions =>", loadOptions);
+					console.log("root.groupResearchers =>", root.groupResearchers);
 					return root.groupResearchers;
+				},
+				onLoaded: function(result) {
+					// root.loading = false;
+					console.log("onLoaded");
+				},
+			}),
+		}),
+		dsPeriods: new DataSource({
+			store: new CustomStore({
+				key: "id",
+				loadMode: "processed", // "raw",
+				load: (loadOptions) => {
+					console.log(root.$sep);
+					console.log("dsMembers loadOptions =>", loadOptions);
+					console.log("root.periods =>", root.periods);
+					return root.periods;
 				},
 				onLoaded: function(result) {
 					// root.loading = false;
@@ -548,6 +731,7 @@ export default {
 				}
 			},
 		},
+		group_member_bk1: null,
 		group_member_bk: null,
 		group_member: {
 			id: null,
@@ -559,6 +743,7 @@ export default {
 			created_by: null,
 			updated_by: null,
 		},
+		researcher_bk1: null,
 		researcher_bk: null,
 		researcher: {
 			id: null,
@@ -571,6 +756,21 @@ export default {
 			phone_number_one: null,
 			phone_number_two: null,
 			address: null,
+		},
+		gm_period_bk1: null,
+		gm_period_bk: null,
+		gm_period: {
+			id: null,
+			initial_date: new Date(),
+			final_date: null,
+			role_id: null,
+			is_current: true,
+			active: true,
+			group_member_id: null,
+			created_by: null,
+			updated_by: null,
+			created_at: new Date(),
+			updated_at: new Date(),
 		},
 		validationRules: {
 			required: { type: "required", message: "Position is required." },
@@ -606,7 +806,19 @@ export default {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 	},
 	methods: {
-		...mapActions("unidad", ["getUnit", "getResearcher", "getResearchers", "saveResearcher", "updateResearcher", "addGroupMember", "updateGroupMember"]),
+		...mapActions("unidad", [
+			"addGroupMember",
+			"addPeriod",
+			"getPeriods",
+			"getResearcher",
+			"getResearchers",
+			"getUnit",
+			"saveResearcher",
+			"updateGroupMember",
+			"activatePeriod",
+			"updatePeriod",
+			"updateResearcher",
+		]),
 		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
 		activeChanged(e) {
 			const previousValue = e.previousValue;
@@ -639,7 +851,8 @@ export default {
 					if (!root.loading) {
 						root.loading = true;
 						root.loaderShow();
-						// root.loaderShow("Cargando integrantes", $("#panel-integrantes .card-body")[0]);
+						// root.loaderShow("Guardando usuario", "#panel-integrantes-data .card");
+						// root.loaderShow("Cargando integrantes", "#panel-integrantes-data .card");
 						let items = [];
 						root.grid
 							.getVisibleRows()
@@ -686,24 +899,40 @@ export default {
 				root.grid.collapseAll(0);
 				root.grid.pageIndex(0);
 			}
+			if (!loaderHide) root.loading = true;
 			root.getResearchers({
 				id: root.group.id,
 				cb: function(result) {
 					// console.clear();
-					root.loading = false;
+					// root.loading = false;
 					console.log(root.$sep);
-					console.log("getResearchers", result);
+					console.log("getResearchers =>", result);
 					root.groupResearchers = result.researchers;
-					console.log("root.groupResearchers", root.groupResearchers);
+					console.log("root.groupResearchers =>", root.groupResearchers);
 					// 202106170030: Solo activos para roles diferentes a admin y gestor
 					if (root.user_role_id > 2) {
 						root.groupResearchers = root.groupResearchers.filter((o) => o.gm_state_id === 1);
 					}
-					root.dsMembers.reload();
-					root.loading = false;
-					if (loaderHide) root.loaderHide();
+					if (loaderHide) {
+						root.dsMembers.reload();
+						root.loading = false;
+						root.loaderHide();
+					}
 					if (root.$isFunction(cb)) cb();
 				},
+			});
+		},
+		userEditEnd() {
+			$(root.panelData + " #periods").show();
+			root.dsPeriods.reload();
+			$(root.panelData + " #periods").show();
+			$(root.panelData + " .card-header.main").html("Editando integrante");
+			$(root.panelGrid).fadeOut(function() {
+				$(root.panelData).fadeIn();
+				// 202107010657: Copias para verificar cambios
+				root.group_member_bk1 = root.$clone(root.group_member);
+				root.researcher_bk1 = root.$clone(root.researcher);
+				root.gm_period_bk1 = root.$clone(root.gm_period);
 			});
 		},
 		userEdit(d) {
@@ -716,6 +945,7 @@ export default {
 			console.log("root.nbIdBtn", root.nbIdBtn);
 			root.nbId.option("readOnly", true);
 			root.nbIdBtn.option("visible", false);
+			root.chkActive.option("readOnly", false);
 			root.group_member.id = data.id;
 			root.group_member.role_id = data.role_id;
 			root.group_member.active = data.gm_state_id === 1;
@@ -726,9 +956,24 @@ export default {
 			root.researcher = data.researcher;
 			if (typeof data.oas_details !== "undefined") root.researcher.oas_researcher_id = data.oas_details.TerceroId.Id.toString();
 			console.log("root.group_member", root.group_member);
-			$(root.panelData + " .card-header.main").html("Editando integrante");
-			$(root.panelGrid).fadeOut(function() {
-				$(root.panelData).fadeIn();
+			// 202107010440: Carga los periodos si no lo ha hecho ya
+			root.getPeriods({
+				group_member_id: data.id,
+				cb: function(periods) {
+					root.periods = periods.data;
+					console.log("root.periods =>", root.periods);
+					root.group_member.gm_periods = periods.data;
+					let p = root.periods.filter((o) => o.is_current);
+					if (p.length > 0) {
+						root.gm_period = root.$clone(p[0]);
+						root.gm_period_bk1 = root.$clone(p[0]);
+					} else {
+						root.gm_period = root.$clone(root.gm_period_bk);
+						root.gm_period_bk = root.$clone(root.gm_period_bk);
+					}
+					console.log("AFTER root.group_member", root.group_member);
+					root.userEditEnd();
+				},
 			});
 		},
 		userAdd() {
@@ -736,24 +981,57 @@ export default {
 			root.nbId.option("readOnly", false);
 			root.nbIdBtn = root.nbId.getButton("search");
 			root.nbIdBtn.option("visible", true);
+			root.chkActive.option("readOnly", true);
+			$(root.panelData + " #periods").hide();
 			$(root.panelData + " .card-header.main").html("Nuevo integrante");
+			root.gm_state = root.$clone(root.gm_state_bk);
 			$(root.panelGrid).fadeOut(function() {
 				$(root.panelData).fadeIn();
 			});
 		},
+		async disablePeriods(periods) {
+			console.log(root.$sep);
+			console.log("disablePeriods =>", periods);
+			let results = [];
+			// 202107032207: Actualiza en for
+			for (let x = 0; x < periods.length; x++) {
+				let period = periods[x];
+				period.is_current = false;
+				// period.active = false;
+				period.final_date = new Date().getFormatted();
+				period.updated_by = root.user_id;
+				let p = await root.updatePeriod(period);
+				console.log("UPDATED period =>", p);
+				results.push(p);
+			}
+			return results;
+		},
 		async userSave() {
 			console.clear();
 			console.log(root.$sep);
+			console.log("userSave() START");
 			var result = this.$refs.vGroup.instance.validate();
 			console.log("result", result);
 			if (result.isValid) {
 				root.loaderShow("Guardando usuario", "#panel-integrantes-data .card");
 
 				// 202106010400: Investigador
-				root.researcher[root.researcher.id === null ? "created_by" : "updated_by"] = root.user_id;
-				console.log("root.researcher =>", root.researcher);
-				let r = await (root.researcher.id === null ? root.saveResearcher(root.researcher) : root.updateResearcher(root.researcher));
-				console.log("SAVED Researcher =>", r);
+				let r = null;
+				root.researcher.created_by = root.user_id;
+				root.researcher.updated_by = root.user_id;
+				// 202107010713: Condicional
+				if (root.researcher.id === null) {
+					// Nuevo
+					r = await root.saveResearcher(root.researcher);
+				} else {
+					// Actualizando
+					if (root.$isDifferent(root.researcher_bk1, root.researcher)) {
+						console.log(root.$sep);
+						r = await root.updateResearcher(root.researcher);
+						console.log("researcher CAMBIÓ!!");
+						console.log("SAVED Researcher =>", r);
+					} else r = root.researcher;
+				}
 
 				// 202106010400: Integrante
 				root.group_member.researcher_id = r.id;
@@ -761,12 +1039,96 @@ export default {
 				root.group_member.updated_by = root.user_id;
 				let o = { group_id: root.group.id, item: root.group_member };
 				console.log("root.group_member =>", o);
-				r = await (root.group_member.id === null ? root.addGroupMember(o) : root.updateGroupMember(o));
-				console.log("SAVED group_member =>", r);
+
+				// 202107010713: Si el integrante es NUEVO
+				if (root.group_member.id === null) {
+					console.log("group_member NUEVO!!");
+					// Crea el nuevo integrante
+					r = await root.addGroupMember(o);
+					// 202107011429: Crea el periodo para el nuevo integrante
+					let p = root.addPeriod({
+						group_member_id: r.id,
+						gm_period: {
+							initial_date: root.gm_period.initial_date,
+							final_date: null,
+							role_id: root.group_member.role_id,
+							is_current: true,
+							active: true,
+							created_by: root.user_id,
+						},
+					});
+					console.log("CREATED period =>", p);
+				} else {
+					// 202107051834: El integrante ya existe
+					console.log("SAVED group_member =>", r);
+					// Si cambió el rol o el estado (activo o inactivo)
+					if (root.group_member_bk1.role_id != root.group_member.role_id || root.group_member_bk1.gm_state_id != root.group_member.gm_state_id) {
+						console.log("group_member CAMBIÓ!!");
+						console.log(root.$sep);
+						// Actualiza el integrante
+						console.log("updateGroupMember =>", o);
+						r = await root.updateGroupMember(o);
+						console.log("updateGroupMember recibido =>", r);
+
+						// 202107011429: Cierra los periodos actuales
+						let periods = root.group_member.gm_periods.filter((o) => o.is_current);
+						await root.disablePeriods(periods);
+
+						// 202107011445: Crea el nuevo periodo SOLO si está marcado como activo el nuevo
+						if (root.group_member.active) {
+							let np = {
+								group_member_id: root.group_member.id,
+								gm_period: {
+									initial_date: new Date().getFormatted(),
+									// initial_date: root.gm_period.initial_date,
+									final_date: null,
+									role_id: root.group_member.role_id,
+									is_current: true,
+									active: true,
+									created_by: root.user_id,
+								},
+							};
+							console.log("addPeriod =>", np);
+							let p = await root.addPeriod(np);
+							console.log("CREATED period =>", p);
+						}
+					} else {
+						// 202107011736: Si no cambiaron rol o estado (activo o inactivo) verifica si cambió la fecha de inicio
+						if (root.gm_period_bk1.initial_date != root.gm_period.initial_date) {
+							console.log("gm_period CAMBIÓ!! =>", root.gm_period);
+							let p = null;
+							// 202107011844: Actualiza o crea el periodo
+							if (root.gm_period.id !== null) {
+								root.gm_period.updated_by = root.user_id;
+								p = await root.updatePeriod(root.gm_period);
+								console.log("UPDATED period =>", p);
+							} else {
+								p = await root.addPeriod({
+									group_member_id: root.group_member.id,
+									gm_period: {
+										initial_date: root.gm_period.initial_date,
+										final_date: null,
+										role_id: root.group_member.role_id,
+										is_current: true,
+										active: true,
+										created_by: root.user_id,
+									},
+								});
+								console.log("CREATED period =>", p);
+							}
+						}
+					}
+				}
+
 				// 202106010429: Finaliza
+				console.log("userSave() END");
+				console.log(root.$sep);
 				root.loadMembers(false, function() {
-					// root.loaderHide();
-					root.userCancel(true);
+					root.loading = false;
+					root.userCancel(true, function() {
+						root.dsMembers.reload();
+						if (root.grid.getVisibleRows().length > 0) root.grid.expandRow(root.grid.getKeyByRowIndex(0));
+					});
 				});
 				// let msg = root.group_member.id === null ? "asoció" : "actualizó";
 				// root.$info(`El usuario con el documento "${root.researcher.identification_number}" se ${msg} exitosamente!`, function() {
@@ -776,38 +1138,57 @@ export default {
 				// });
 			}
 		},
-		userCancel(loaderHide = false) {
+		userCancel(loaderHide = false, cb) {
 			root.fromCancel = true;
 			$(root.panelData).fadeOut(function() {
 				if (loaderHide) root.loaderHide();
 				$(root.panelGrid).fadeIn(function() {
 					root.group_member = root.$clone(root.group_member_bk);
 					root.researcher = root.$clone(root.researcher_bk);
+					root.gm_state = root.$clone(root.gm_state_bk);
 					root.$refs.vGroup.instance.reset();
 					$(root.panelData).clear();
-					// console.clear();
+					if (root.$isFunction(cb)) cb();
 				});
 			});
 		},
-		userActive(data, state) {
-			// console.clear();
+		async userActive(data, state) {
+			console.clear();
 			console.log("data", data);
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let ti = data.oas_details.TerceroId;
 			let mn = typeof ti !== "undefined" ? `<br>"${ti.NombreCompleto}"` : `con<br>el documento "${root.$formatDocument(data.identification_number)}"`;
 			let msg = `¿Realmente desea ${a} al usuario ${mn}?`;
-			this.$confirm(msg, function(si_no) {
-				console.log("result", si_no);
-				if (si_no) {
-					let usr = data;
-					usr.active = state;
+			this.$confirm(msg, async function(confirma) {
+				console.log("confirma =>", confirma);
+				if (confirma) {
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
 					root.loaderShow();
-					root.updateUser({
-						user: usr,
-						cb: function(result) {
-							console.log("Result", result);
+					// 202107040008: Investigador
+					let researcher = data.researcher;
+					researcher.active = state;
+					researcher.updated_by = root.user_id;
+					console.log("researcher TO SEND =>", researcher);
+					let r = await root.updateResearcher(researcher);
+					console.log("SAVED Researcher =>", r);
+
+					// 202107040008: Integrante
+					let group_member = data;
+					group_member.active = state;
+					group_member.updated_by = root.user_id;
+					let gm = await root.updateGroupMember({ group_id: root.group.id, item: group_member });
+					console.log("group_member desactivado =>", gm);
+					// 202107010440: Carga los periodos
+					root.getPeriods({
+						group_member_id: group_member.id,
+						cb: async function(periods) {
+							console.log("RECEIVED periods.data =>", periods.data);
+							let currents = periods.data.filter((o) => o.is_current);
+							console.log("periods to disable =>", currents);
+							let updated_periods = await root.disablePeriods(currents);
+							console.log("updated_periods =>", updated_periods);
+							// root.userEditEnd();
 							root.grid.refresh();
 							root.loaderHide();
 						},

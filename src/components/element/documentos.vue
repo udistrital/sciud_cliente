@@ -189,7 +189,7 @@
 								alignment="center"
 								caption="Tamaño"
 								data-field="doc_size"
-								data-type="int"
+								data-type="number"
 							/>
 							<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
@@ -205,7 +205,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -475,7 +475,7 @@ export default {
 		},
 		documentShow: async (data) => {
 			console.clear();
-			root.loaderShow("Cargando Documento", "#" + root.id);
+			root.loaderShow("Cargando Documento", $("#panel-documentos").length > 0 ? "#panel-documentos" : "#" + root.id);
 			setTimeout(async function() {
 				console.log("data", data);
 				console.log("root.current", root.current);

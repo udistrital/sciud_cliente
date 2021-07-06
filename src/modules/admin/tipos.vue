@@ -181,7 +181,7 @@
 									alignment="left"
 									caption="Tipo"
 									data-field="type_id"
-									data-type="int"
+									data-type="number"
 								>
 									<DxLookup :data-source="types" value-expr="id" display-expr="t_name" />
 								</DxColumn>
@@ -258,7 +258,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body"><strong>baseObj:</strong> {{ JSON.stringify(baseObj, null, 3) }}</div>

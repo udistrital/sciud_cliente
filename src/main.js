@@ -1,18 +1,20 @@
 // Componentes globales
 import axios from "axios";
-// CSS
+
+// DX
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
 import { loadMessages, locale } from "devextreme/localization";
-// DX
 import esMessages from "devextreme/localization/messages/es.json";
+
+// Otros
 import vue from "vue";
 import { mapActions, mapState } from "vuex";
 import app from "./app.vue";
-import "./assets/css/global.scss";
 import global from "./assets/js/global";
 import router from "./router";
 import store from "./store";
+import "./assets/css/global.scss";
 
 // 202010290157: Observable -> https://stackoverflow.com/a/58968089
 // ".page-content:first"
@@ -86,10 +88,9 @@ vue.mixin({
 		],
 	}),
 	mounted() {
-		// 202011142222:
 		this.$global();
 
-		// 202105242012: Se
+		// 202105242012:
 		if (this.user !== null && this.user.local !== null && typeof this.user.local !== "undefined") {
 			// 202103081850: Carga los roles de usuario globalmente
 			this.getAllRoles();
@@ -97,31 +98,42 @@ vue.mixin({
 			this.getTypes();
 			this.getSubtypes();
 		}
-
-		// 202010220211: Verifica autenticación con intervalo en MS
-		// if (!window.authChecking) {
-		// 	window.authChecking = true;
-		// 	window.setInterval(() => {
-		// 		if (!this.authenticated) this.logOut();
-		// 	}, window.authCheckingTime * 60 * 1000);
-		// }
-
-		// this.loaderHide();
 	},
 	methods: {
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+		date_focus_in(e) {
+			// console.log("date_focus_in =>", e);
+			e.component.open();
+		},
+		date_focus_out(e) {
+			// console.log("date_focus_out =>", e);
+			e.component.close();
+		},
+		get_role_id: (name) => {
+			let item = window.clasificador.rol.find((o) => o.name == name);
+			return typeof item !== "undefined" ? item["id"] : null;
+		},
+		get_faculty_name: (id) => {
+			let item = window.clasificador.facultad.find((o) => o.id.toString() == id.toString());
+			return typeof item !== "undefined" ? item["nombre"] : null;
+		},
+		get_faculty_name_by_oas: (oas_id) => {
+			let item = window.clasificador.facultad.find((o) => o.id_oas.toString() == oas_id.toString());
+			return typeof item !== "undefined" ? item["nombre"] : null;
+		},
 		go(groupId = 0, path, lockMsg = "Cargando", lockEl = ".page-content") {
+			console.clear();
 			console.log("groupId", groupId);
 			this.loaderShow(lockMsg, lockEl);
 			this.$router.push({ path: path });
+			console.log("this.$router", this.$router);
 		},
 		capitalize(e) {
 			e.component.instance().option("value", this.$titleCase(e.value));
 		},
 		confirmLeave() {
-			// return window.confirm("Do you really want to leave? you have unsaved changes!");
 			return true;
 		},
 		confirmStayInDirtyForm() {
@@ -137,28 +149,18 @@ vue.mixin({
 		loaderShow(msg, element) {
 			let root = this;
 			console.log("root.$loader.visible =>", root.$loader.visible);
-			// console.log("LENGTH", window.jQuery(".dx-overlay-wrapper:visible").length);
-			// if (window.jQuery(".dx-overlay-wrapper").length <= 0) {
 			if (!root.$loader.visible) {
-				// console.log(window.vm.$sep);
-				// console.log("MASK!");
-				// console.log("root.loaderMessage", root.loaderMessage);
-				// console.log("root.loaderElement", root.loaderElement);
 				root.$loader = {
 					visible: true,
 					message: typeof msg !== "undefined" ? msg : typeof root.loaderMessage !== "undefined" ? root.loaderMessage : loaderBase.message,
 					element: typeof element !== "undefined" ? element : typeof root.loaderElement !== "undefined" ? root.loaderElement : loaderBase.element,
 				};
-				// console.log(window.vm.$sep);
 			}
 		},
 		loaderHide() {
 			let root = this;
 			if (root.$loader.visible) {
-				// console.log(window.vm.$sep);
-				// console.log("UNMASK!");
 				this.$loader = loaderBase;
-				// console.log(window.vm.$sep);
 			}
 		},
 		logOut() {
@@ -203,25 +205,46 @@ vue.mixin({
 				return "--";
 			}
 		},
+		nullTextCap(cellInfo) {
+			if (cellInfo.valueText.length > 0) {
+				return window.vm.$capitalize(cellInfo.valueText);
+			} else {
+				return "--";
+			}
+		},
+		nullTextTitle(cellInfo) {
+			if (cellInfo.valueText.length > 0) {
+				return window.vm.$titleCase(cellInfo.valueText);
+			} else {
+				return "--";
+			}
+		},
 	},
 	computed: {
 		...mapState("auth/usuario", ["roles"]),
 		...mapState("auth/login", ["authenticated", "user"]),
+		es_admin() {
+			return this.user_role_id == this.get_role_id("administrador");
+		},
 		editMode() {
 			let result = false;
 			console.log(window.vm.$sep);
 			console.log("editMode");
-			if (this.user_role_id === 1 || this.user_role_id === 2) {
+			if (
+				this.user_role_id === this.get_role_id("administrador") ||
+				this.user_role_id === this.get_role_id("gestor") ||
+				this.user_role_id === this.get_role_id("gestor_facultad")
+			) {
 				result = true;
 			} else {
 				console.log("this.$route.params", this.$route.params);
 				let groupId = this.$route.params.unidadId;
-				if (typeof groupId !== "undefined") {
+				if (typeof groupId !== "undefined" && typeof window.vm.user !== "undefined") {
 					console.log("groupId =>", groupId);
 					console.log("user =>", window.vm.user);
-					console.log("groups =>", window.vm.user.groups);
 					// 202106162157: Filtra el grupo actual de los grupos seleccionados
 					if (typeof window.vm.user.groups !== "undefined") {
+						console.log("groups =>", window.vm.user.groups);
 						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
 						if (typeof g !== "undefined") {
 							console.log("current_group =>", g);
@@ -251,7 +274,7 @@ vue.mixin({
 		dgPageSizes() {
 			return window.config.pageSizes;
 		},
-		isDev() {
+		is_dev() {
 			return process.env.NODE_ENV.toString().toLowerCase() === "development";
 		},
 		baseUrl() {
