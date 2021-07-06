@@ -19,10 +19,13 @@
 		<div class="row" id="panel-unidades">
 			<div class="col">
 				<div class="card">
-					<div class="card-body mh pt-3">
-						<!-- <div class="slide data" v-if="unidad">
+					<div :class="'card-body pt-3 ' + (es_admin ? 'mh' : 'mhn')">
+						<!-- // 202107051635: https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/FilterPanel/Vue -->
+						<!--
+						<div class="slide data" v-if="unidad">
 							<Tabs ref="Tabs" :group="unidad" :parent="this" :documents="documentos" :saveFn="save" :cancelFn="cancel" :editMode="editMode" />
-						</div> -->
+						</div>
+						-->
 						<div class="grid">
 							<DxDataGrid
 								class="main"
@@ -37,24 +40,25 @@
 								:show-borders="false"
 							>
 								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
-								<DxStateStoring :enabled="true" type="sessionStorage" />
+								<DxColumnChooser :enabled="es_admin" mode="dragAndDrop" />
 								<DxExport :enabled="false" />
-								<DxColumnChooser :enabled="true" mode="dragAndDrop" />
-								<DxSorting mode="multiple" /><!-- single, multiple, none" -->
-								<DxPaging :page-size="dgPageSize" />
+								<DxFilterPanel :visible="false" />
 								<DxFilterRow :visible="true" />
+								<DxGrouping :auto-expand-all="true" />
+								<DxGroupPanel :visible="es_admin" :allow-column-dragging="true" />
 								<DxLoadPanel :enabled="false" />
-								<DxGroupPanel :visible="true" :allow-column-dragging="true" />
-								<DxGrouping :auto-expand-all="false" />
+								<DxPaging :page-size="dgPageSize" />
+								<DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
+								<DxStateStoring :enabled="true" type="sessionStorage" />
 								<DxSummary>
-									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} unidades" />
+									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} estructuras" />
 								</DxSummary>
 								<DxPager
 									:show-info="true"
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="{2} Estructuras de investigación (Página {0} de {1})"
+									info-text="{2} estructuras de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 								<DxColumn
@@ -62,13 +66,13 @@
 									:sort-index="1"
 									sort-order="asc"
 									data-field="id"
-									caption="Id"
-									data-type="int"
+									caption="ID"
+									data-type="number"
 									alignment="center"
 									:allow-sorting="true"
 									:width="70"
 								/>
-								<DxColumn :allow-filtering="true" data-field="group_type_id" caption="Tipo" data-type="int" alignment="left" :visible="true" :width="180">
+								<DxColumn :allow-filtering="true" data-field="group_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" :width="180">
 									<DxLookup :data-source="tiposUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
 								<DxColumn
@@ -84,7 +88,7 @@
 									:allow-filtering="true"
 									data-field="member_count"
 									caption="Integrantes"
-									data-type="int"
+									data-type="number"
 									alignment="center"
 									:allow-grouping="false"
 									:allow-search="true"
@@ -96,7 +100,7 @@
 									:allow-filtering="true"
 									data-field="active_member_count"
 									:caption="es_admin ? 'Int. Activos' : 'Integrantes'"
-									data-type="int"
+									data-type="number"
 									alignment="center"
 									:allow-grouping="false"
 									:allow-search="true"
@@ -108,11 +112,23 @@
 									:allow-filtering="true"
 									data-field="inactive_member_count"
 									caption="Int. Inactivos"
-									data-type="int"
+									data-type="number"
 									alignment="center"
 									:allow-grouping="false"
 									:allow-search="true"
 									:allow-sorting="true"
+									:visible="es_admin"
+									:width="90"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="faculty_ids.length"
+									caption="Facultades"
+									data-type="number"
+									alignment="center"
+									:allow-grouping="false"
+									:allow-search="false"
+									:allow-sorting="false"
 									:visible="es_admin"
 									:width="90"
 								/>
@@ -167,13 +183,13 @@
 									cell-template="tplNull"
 								/>
 								<DxColumn
+									:width="70"
 									:allow-filtering="false"
 									data-field="email"
 									caption="Email"
 									data-type="string"
 									alignment="center"
-									:visible="true"
-									:width="70"
+									:visible="!es_admin"
 									cell-template="tplEmail"
 								/>
 								<DxColumn
@@ -182,7 +198,7 @@
 									caption="GrupLAC"
 									data-type="string"
 									alignment="center"
-									:visible="true"
+									:visible="!es_admin"
 									:width="70"
 									cell-template="tplUrl"
 								/>
@@ -193,7 +209,7 @@
 									data-type="string"
 									alignment="center"
 									:width="70"
-									:visible="es_admin"
+									:visible="!es_admin"
 									cell-template="tplUrl"
 								/>
 								<DxColumn
@@ -204,6 +220,7 @@
 									data-type="string"
 									alignment="center"
 									:visible="es_admin"
+									:group-index="es_admin ? 0 : null"
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
@@ -290,7 +307,7 @@
 			</div>
 		</div>
 
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body"><span class="font-weight-semibold">editMode:</span> {{ editMode }}</div>
@@ -312,19 +329,20 @@ import DxDropDownButton from "devextreme-vue/drop-down-button";
 import {
 	DxColumn,
 	DxColumnChooser,
-	DxStateStoring,
 	DxDataGrid,
 	DxExport,
+	DxFilterPanel,
 	DxFilterRow,
 	DxGrouping,
 	DxGroupItem,
 	DxGroupPanel,
-	DxLookup,
 	DxLoadPanel,
+	DxLookup,
 	DxPager,
 	DxPaging,
 	DxSearchPanel,
 	DxSorting,
+	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { mapActions, mapGetters } from "vuex";
@@ -336,6 +354,7 @@ export default {
 		DxStateStoring,
 		DxDropDownButton,
 		DxColumn,
+		DxFilterPanel,
 		DxColumnChooser,
 		DxLookup,
 		DxDataGrid,
@@ -362,7 +381,6 @@ export default {
 		baseEntity: {},
 		docLink: null,
 		firstLoad: true,
-		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;

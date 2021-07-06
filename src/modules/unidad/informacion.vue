@@ -59,7 +59,7 @@
 													<DxTagBox
 														name="faculty_ids"
 														id="faculty_ids"
-														:read-only="!editMode"
+														:read-only="!es_admin"
 														value-expr="Id"
 														display-expr="Nombre"
 														class="form-control"
@@ -510,7 +510,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">

@@ -86,10 +86,9 @@ vue.mixin({
 		],
 	}),
 	mounted() {
-		// 202011142222:
 		this.$global();
 
-		// 202105242012: Se
+		// 202105242012:
 		if (this.user !== null && this.user.local !== null && typeof this.user.local !== "undefined") {
 			// 202103081850: Carga los roles de usuario globalmente
 			this.getAllRoles();
@@ -97,16 +96,6 @@ vue.mixin({
 			this.getTypes();
 			this.getSubtypes();
 		}
-
-		// 202010220211: Verifica autenticación con intervalo en MS
-		// if (!window.authChecking) {
-		// 	window.authChecking = true;
-		// 	window.setInterval(() => {
-		// 		if (!this.authenticated) this.logOut();
-		// 	}, window.authCheckingTime * 60 * 1000);
-		// }
-
-		// this.loaderHide();
 	},
 	methods: {
 		...mapActions("auth/login", ["authLogout"]),
@@ -124,6 +113,14 @@ vue.mixin({
 			let item = window.clasificador.rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+		get_faculty_name: (id) => {
+			let item = window.clasificador.facultad.find((o) => o.id.toString() == id.toString());
+			return typeof item !== "undefined" ? item["nombre"] : null;
+		},
+		get_faculty_name_by_oas: (oas_id) => {
+			let item = window.clasificador.facultad.find((o) => o.id_oas.toString() == oas_id.toString());
+			return typeof item !== "undefined" ? item["nombre"] : null;
+		},
 		go(groupId = 0, path, lockMsg = "Cargando", lockEl = ".page-content") {
 			console.clear();
 			console.log("groupId", groupId);
@@ -135,7 +132,6 @@ vue.mixin({
 			e.component.instance().option("value", this.$titleCase(e.value));
 		},
 		confirmLeave() {
-			// return window.confirm("Do you really want to leave? you have unsaved changes!");
 			return true;
 		},
 		confirmStayInDirtyForm() {
@@ -151,28 +147,18 @@ vue.mixin({
 		loaderShow(msg, element) {
 			let root = this;
 			console.log("root.$loader.visible =>", root.$loader.visible);
-			// console.log("LENGTH", window.jQuery(".dx-overlay-wrapper:visible").length);
-			// if (window.jQuery(".dx-overlay-wrapper").length <= 0) {
 			if (!root.$loader.visible) {
-				// console.log(window.vm.$sep);
-				// console.log("MASK!");
-				// console.log("root.loaderMessage", root.loaderMessage);
-				// console.log("root.loaderElement", root.loaderElement);
 				root.$loader = {
 					visible: true,
 					message: typeof msg !== "undefined" ? msg : typeof root.loaderMessage !== "undefined" ? root.loaderMessage : loaderBase.message,
 					element: typeof element !== "undefined" ? element : typeof root.loaderElement !== "undefined" ? root.loaderElement : loaderBase.element,
 				};
-				// console.log(window.vm.$sep);
 			}
 		},
 		loaderHide() {
 			let root = this;
 			if (root.$loader.visible) {
-				// console.log(window.vm.$sep);
-				// console.log("UNMASK!");
 				this.$loader = loaderBase;
-				// console.log(window.vm.$sep);
 			}
 		},
 		logOut() {
@@ -286,7 +272,7 @@ vue.mixin({
 		dgPageSizes() {
 			return window.config.pageSizes;
 		},
-		isDev() {
+		is_dev() {
 			return process.env.NODE_ENV.toString().toLowerCase() === "development";
 		},
 		baseUrl() {

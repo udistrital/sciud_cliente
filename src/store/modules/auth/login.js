@@ -77,7 +77,7 @@ const store = {
 			console.log("Usuario local", userLocal);
 
 			// 202103120410: NO es usuario del sistema
-			if (userLocal === null) return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: userOas }) : null;
+			if (userLocal === null) return args.cb({ hasAccess: false, user: userOas });
 
 			// 202103120410: Es usuario del sistema
 			let user = {
@@ -85,9 +85,10 @@ const store = {
 				oas: userOas,
 			};
 			console.log("user", user);
+
 			// 202104191437: Si NO es integrante
 			if (userLocal.user_role_id !== 5) {
-				return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
+				return args.cb({ hasAccess: true, user: user });
 			} else {
 				dispatch(
 					"auth/usuario/getStructures",
@@ -96,10 +97,10 @@ const store = {
 						cb: function(groups) {
 							if (groups.length > 0) {
 								user["groups"] = groups;
-								return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
+								return args.cb({ hasAccess: true, user: user });
 							} else {
 								// 202103120416: No se encontraron grupos para el usuario, niega el acceso
-								return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: user }) : null;
+								return args.cb({ hasAccess: false, user: user });
 							}
 						},
 					},

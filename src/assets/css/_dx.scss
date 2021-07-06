@@ -733,6 +733,7 @@
 }
 
 .dx-toolbar-items-container {
+	background-color: transparent !important;
 	.dx-button {
 		float: right;
 		margin-left: 15px;
@@ -1319,6 +1320,61 @@ tr.hovered {
 					color: #fff;
 				}
 			}
+		}
+	}
+}
+
+.dx-datagrid,
+.dx-accordion,
+.dx-toolbar {
+	background-color: transparent;
+}
+
+.dx-datagrid-rowsview {
+	background-color: #fff;
+}
+
+.dx-tabs-nav-buttons {
+	border: none !important;
+	.dx-tabs-nav-button {
+		// background-color: $main-color-600 !important;
+		box-shadow: none !important;
+		border: none !important;
+		background-color: #fff;
+		&.dx-tabs-nav-button-left {
+			border: 0 !important;
+			border-right: 1px solid $main-color-500 !important;
+		}
+		&.dx-tabs-nav-button-right {
+			border: 0 !important;
+			border-left: 1px solid $main-color-500 !important;
+		}
+		.dx-button-content {
+			i {
+				&::before {
+					font-weight: 600;
+				}
+			}
+		}
+	}
+	.dx-tabs-scrollable {
+		.dx-scrollable-wrapper {
+			border-bottom: 1px solid $main-color-500 !important;
+		}
+	}
+}
+
+.dx-accordion-item-title {
+	&::before {
+		font-weight: 600;
+		color: $main-color-600;
+	}
+}
+
+.dx-icon {
+	&.dx-icon-filter-operation-default {
+		&::before {
+			color: $main-color-600 !important;
 		}
 	}
 }

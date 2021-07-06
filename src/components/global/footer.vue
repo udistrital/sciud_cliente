@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210704 - ©{{ year }}
+				SICIUD v2.0.20210705 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -21,7 +21,7 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-lg-auto" v-else>
-				<li class="nav-item" v-for="(item, index) in items" :key="index">
+				<li class="nav-item" v-for="(item, index) in links" :key="index">
 					<a :href="linkLogin(item.cc)" :class="cssClass" :data-title="item.title"><i class="icon-user"></i> {{ item.text }}</a>
 				</li>
 			</ul>
@@ -95,11 +95,16 @@ export default {
 				title: "Hector Julian Sanchez Ramirez (Integrante)",
 				text: "Integrante 2",
 			},
+			{
+				cc: "19296014",
+				title: "German Arturo Lopez Martinez (Integrante Inactivo)",
+				text: "Inactivo",
+			},
 		],
 	}),
 	watch: {
 		$route(to) {
-			this.showDev = to.name !== "login" && !this.authenticated && this.isDev;
+			this.showDev = to.name !== "login" && !this.authenticated && this.is_dev;
 		},
 	},
 	methods: {
@@ -133,10 +138,12 @@ export default {
 	},
 	computed: {
 		...mapGetters("auth/login", ["oasToken"]),
+		links() {
+			return this.is_dev ? this.items : [];
+		},
 		token() {
 			return window.config.api.oas.token_value;
 		},
-		// 1.655.467.973
 		year: function() {
 			return new Date().getFullYear();
 		},

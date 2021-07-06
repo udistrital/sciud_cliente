@@ -175,14 +175,14 @@
 								:show-borders="false"
 							>
 								<DxColumnChooser :enabled="false" mode="dragAndDrop" />
-								<DxSorting mode="multiple" /><!-- single, multiple, none -->
-								<DxPaging :page-size="dgPageSize" /><!-- dgPageSize -->
 								<DxFilterRow :visible="true" />
-								<DxLoadPanel :enabled="false" />
-								<DxGroupPanel :visible="false" :allow-column-dragging="true" />
 								<DxGrouping :auto-expand-all="false" />
+								<DxGroupPanel :visible="false" :allow-column-dragging="true" />
+								<DxLoadPanel :enabled="false" />
+								<DxPaging :page-size="dgPageSize" /><!-- dgPageSize -->
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
-								<!-- https://js.devexpress.com/Documentation/Guide/UI_Components/DataGrid/Columns/Column_Types/Lookup_Columns -->
+								<DxSorting mode="multiple" /><!-- single, multiple, none -->
+								<DxStateStoring :enabled="true" type="sessionStorage" />
 								<DxSummary>
 									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
 								</DxSummary>
@@ -195,11 +195,13 @@
 								/>
 								<DxColumn
 									:width="90"
+									:sort-index="0"
+									sort-order="asc"
 									:allow-filtering="false"
 									:allow-search="false"
 									:allow-sorting="true"
 									alignment="center"
-									caption="SICIUD ID"
+									caption="ID"
 									data-field="id"
 									data-type="string"
 								/>
@@ -234,7 +236,7 @@
 								/>
 								<DxColumn
 									width="120"
-									data-type="int"
+									data-type="number"
 									:allow-filtering="true"
 									:allow-sorting="true"
 									:customize-text="nullText"
@@ -258,14 +260,34 @@
 									<span v-else>0</span>
 								</template>
 								<DxColumn
-									width="120"
+									width="90"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Activo en"
+									data-field="total_active_structures"
+									data-type="number"
+								/>
+								<DxColumn
+									width="90"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Inactivo en"
+									data-field="total_inactive_structures"
+									data-type="number"
+								/>
+								<DxColumn
+									width="100"
 									:allow-filtering="true"
 									:allow-sorting="true"
 									:customize-text="nullText"
 									alignment="center"
 									caption="Facultades"
 									data-field="total_faculties"
-									data-type="int"
+									data-type="number"
 								/>
 								<DxColumn
 									:width="140"
@@ -276,7 +298,7 @@
 									alignment="center"
 									caption="Rol"
 									data-field="user_role_id"
-									data-type="int"
+									data-type="number"
 								>
 									<DxLookup :data-source="roles" value-expr="id" display-expr="name" />
 								</DxColumn>
@@ -307,8 +329,8 @@
 			<template>
 				<span>
 					<span class="font-weight-semibold color-main-600">Estructuras:</span> {{ structureObj.total_structures }}<br />
-					<span class="font-weight-semibold color-main-600">Activas:</span> {{ structureObj.total_active_structures }}<br />
-					<span class="font-weight-semibold color-main-600">Inactivas:</span> {{ structureObj.total_inactive_structures }}<br />
+					<span class="font-weight-semibold color-main-600">Activo en:</span> {{ structureObj.total_active_structures }}<br />
+					<span class="font-weight-semibold color-main-600">Inactivo en:</span> {{ structureObj.total_inactive_structures }}<br />
 					<small class="font-weight-semibold"><i>(Clic para observar)</i></small>
 				</span>
 			</template>
@@ -317,8 +339,8 @@
 			:drag-enabled="false"
 			:close-on-outside-click="false"
 			:show-title="true"
-			:width="1000"
-			:height="500"
+			:width="1200"
+			:height="840"
 			:title="structureObj.title"
 			:visible="popupVisible"
 			@hidden="popupVisible = false"
@@ -334,13 +356,16 @@
 				:show-borders="false"
 			>
 				<DxColumnChooser :enabled="false" mode="dragAndDrop" />
-				<DxSorting mode="single" />
-				<DxPaging :page-size="10" />
-				<DxFilterRow :visible="false" />
-				<DxLoadPanel :enabled="false" />
-				<DxGroupPanel :visible="false" :allow-column-dragging="false" />
+				<DxFilterRow :visible="true" />
 				<DxGrouping :auto-expand-all="true" />
+				<DxGroupPanel :visible="true" :allow-column-dragging="true" />
+				<DxLoadPanel :enabled="false" />
+				<DxPaging :page-size="dgPageSize" />
 				<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
+				<DxSorting mode="single" />
+				<DxSummary>
+					<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} estructuras" />
+				</DxSummary>
 				<DxPager
 					:show-info="true"
 					:show-page-size-selector="false"
@@ -351,16 +376,17 @@
 				<DxColumn
 					:width="90"
 					:sort-index="0"
+					sort-order="asc"
 					:allow-filtering="false"
 					:allow-search="false"
 					:allow-sorting="true"
 					alignment="center"
 					caption="ID"
 					data-field="research_group_id"
-					data-type="int"
+					data-type="number"
 				/>
 				<DxColumn
-					:allow-filtering="false"
+					:allow-filtering="true"
 					:allow-sorting="true"
 					:customize-text="nullTextTitle"
 					alignment="left"
@@ -369,36 +395,44 @@
 					data-type="string"
 				/>
 				<DxColumn
-					:width="80"
+					:width="170"
 					:allow-filtering="true"
 					:allow-sorting="true"
 					:customize-text="nullText"
 					alignment="center"
 					caption="Tipo"
 					data-field="group_type_id"
-					data-type="int"
-				/>
+					data-type="number"
+					:group-index="1"
+				>
+					<DxLookup :data-source="tiposUnidad" value-expr="id" display-expr="st_name" />
+				</DxColumn>
 				<DxColumn
-					:width="80"
+					:width="100"
 					:allow-filtering="true"
 					:allow-sorting="true"
 					:customize-text="nullText"
 					alignment="center"
-					caption="Activo"
-					data-field="group_state_id"
-					data-type="int"
-				/>
+					caption="Estado en la estructura"
+					data-field="gm_state_id"
+					data-type="string"
+					:group-index="0"
+				>
+					<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
+				</DxColumn>
 				<DxColumn
-					:width="100"
+					:width="120"
 					:sort-index="0"
-					:allow-filtering="true"
-					:allow-sorting="true"
+					:allow-filtering="user_roles.length > 1"
+					:allow-sorting="user_roles.length > 1"
 					:customize-text="nullText"
 					alignment="center"
 					caption="Rol"
-					data-field="role_name"
-					data-type="string"
-				/>
+					data-field="role_id"
+					data-type="number"
+				>
+					<DxLookup :data-source="user_roles" value-expr="role_id" display-expr="role_name" />
+				</DxColumn>
 				<DxColumn :allow-filtering="false" data-field="research_group_id" caption="" :width="120" alignment="center" cell-template="tplCommands" />
 				<template #tplCommands="{ data }">
 					<span class="cmds">
@@ -438,7 +472,7 @@
 				</template>
 			</DxDataGrid>
 		</DxPopup>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -467,11 +501,12 @@ import {
 	DxGroupItem,
 	DxGroupPanel,
 	DxLoadPanel,
+	DxLookup,
 	DxPager,
 	DxPaging,
 	DxSearchPanel,
-	DxLookup,
 	DxSorting,
+	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxPopup, DxTooltip, DxValidationGroup } from "devextreme-vue";
@@ -481,27 +516,28 @@ import { mapActions, mapGetters } from "vuex";
 export default {
 	name: "inicio",
 	components: {
-		DxColumn,
-		DxTooltip,
 		DxButton,
-		DxLookup,
+		DxColumn,
 		DxColumnChooser,
-		DxPopup,
 		DxDataGrid,
 		DxFilterRow,
 		DxGrouping,
 		DxGroupItem,
 		DxGroupPanel,
 		DxLoadPanel,
+		DxLookup,
+		DxNumberBox,
 		DxPager,
 		DxPaging,
+		DxPopup,
 		DxRequiredRule,
 		DxSearchPanel,
 		DxSelectBox,
 		DxSorting,
+		DxStateStoring,
 		DxSummary,
 		DxTextBox,
-		DxNumberBox,
+		DxTooltip,
 		DxValidationGroup,
 		DxValidator,
 		Usuario: () => import("@/components/element/usuario"),
@@ -509,6 +545,7 @@ export default {
 	data: () => ({
 		mode: null,
 		items: [],
+		user_roles: [],
 		popupVisible: false,
 		grid: null,
 		structures: [],
@@ -604,6 +641,15 @@ export default {
 	computed: {
 		...mapGetters("unidad/oas", ["facultades"]),
 		...mapGetters("usuario", ["getUserOasDetails"]),
+		...mapGetters("core/tipo", ["subtypesByType"]),
+		tiposUnidad() {
+			return root.subtypesByType("unidad_tipo");
+		},
+		estadosUnidad() {
+			let eu = root.subtypesByType("unidad_estado");
+			console.log("Estado unidad =>", eu);
+			return eu;
+		},
 		nombre_completo: () => {
 			let n = [];
 			let t = root.tercero;
@@ -669,7 +715,20 @@ export default {
 			root.getStructures({
 				doc: data.identification_number,
 				cb: function(groups) {
-					console.clear();
+					// console.clear();
+
+					// 202107051930: Construye la matriz para el selector de roles
+					let ur = [];
+					groups.forEach((item) => {
+						if (ur.filter((o) => o.role_id == item.role_id).length <= 0) {
+							ur.push({
+								role_id: item.role_id,
+								role_name: item.role_name,
+							});
+						}
+					});
+					root.user_roles = ur;
+
 					let t = groups.length + " estructuras asociadas";
 					let od = data.oas_details.TerceroId;
 					if (typeof od !== "undefined") {
@@ -687,12 +746,12 @@ export default {
 			});
 		},
 		tooltip(e, data, show) {
-			console.clear();
+			// console.clear();
 			let el = e.target || e.srcElement;
-			console.log("el =>", el);
-			console.log("ttip =>", root.ttip);
-			console.log("show =>", show);
-			console.log("data =>", data);
+			// console.log("el =>", el);
+			// console.log("ttip =>", root.ttip);
+			// console.log("show =>", show);
+			// console.log("data =>", data);
 			if (show) {
 				root.structureObj = data;
 				root.ttip.option("target", el);
@@ -823,6 +882,7 @@ export default {
 				if (si_no) {
 					let usr = data.data;
 					usr.active = state;
+					usr.updated_by = root.user_id;
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
 					root.loaderShow();
 					root.activeUser({

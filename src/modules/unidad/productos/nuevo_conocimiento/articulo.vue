@@ -311,7 +311,7 @@
 							data-field="id"
 							caption="ID"
 							sort-order="asc"
-							data-type="int"
+							data-type="number"
 							alignment="center"
 							:visible="true"
 							:allow-grouping="false"

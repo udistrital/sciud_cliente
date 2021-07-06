@@ -237,7 +237,7 @@ paneldiseno=nombredepaneles industrial_design=endpoindt especifico endpoinds tut
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-						<DxColumn data-field="id" caption="Id" data-type="int" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn data-field="id" caption="Id" data-type="number" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="ind_dsg_registration_title" caption="Titulo" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="category_name" caption="Categoria" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="colciencias_call_name" caption="Min Ciencias" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />

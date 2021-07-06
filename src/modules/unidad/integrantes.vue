@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="card slide" id="panel-integrantes">
-					<div class="card-body group-detail">
+					<div class="card-body group-detail mh">
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
@@ -455,7 +455,7 @@
 												:width="100"
 												:group-index="0"
 												caption="Activo"
-												data-type="int"
+												data-type="number"
 												alignment="center"
 												:visible="true"
 												data-field="gm_state_id"
@@ -491,7 +491,7 @@
 			</div>
 		</div>
 
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -1039,7 +1039,8 @@ export default {
 				root.group_member.updated_by = root.user_id;
 				let o = { group_id: root.group.id, item: root.group_member };
 				console.log("root.group_member =>", o);
-				// 202107010713: Condicional
+
+				// 202107010713: Si el integrante es NUEVO
 				if (root.group_member.id === null) {
 					console.log("group_member NUEVO!!");
 					// Crea el nuevo integrante
@@ -1058,13 +1059,16 @@ export default {
 					});
 					console.log("CREATED period =>", p);
 				} else {
+					// 202107051834: El integrante ya existe
 					console.log("SAVED group_member =>", r);
-					// Actualiza solo si cambiaron rol o estado (activo o inactivo)
+					// Si cambió el rol o el estado (activo o inactivo)
 					if (root.group_member_bk1.role_id != root.group_member.role_id || root.group_member_bk1.gm_state_id != root.group_member.gm_state_id) {
 						console.log("group_member CAMBIÓ!!");
 						console.log(root.$sep);
 						// Actualiza el integrante
+						console.log("updateGroupMember =>", o);
 						r = await root.updateGroupMember(o);
+						console.log("updateGroupMember recibido =>", r);
 
 						// 202107011429: Cierra los periodos actuales
 						let periods = root.group_member.gm_periods.filter((o) => o.is_current);
@@ -1072,22 +1076,24 @@ export default {
 
 						// 202107011445: Crea el nuevo periodo SOLO si está marcado como activo el nuevo
 						if (root.group_member.active) {
-							let p = await root.addPeriod({
+							let np = {
 								group_member_id: root.group_member.id,
 								gm_period: {
-									// initial_date: new Date().getFormatted(),
-									initial_date: root.gm_period.initial_date,
+									initial_date: new Date().getFormatted(),
+									// initial_date: root.gm_period.initial_date,
 									final_date: null,
 									role_id: root.group_member.role_id,
 									is_current: true,
 									active: true,
 									created_by: root.user_id,
 								},
-							});
+							};
+							console.log("addPeriod =>", np);
+							let p = await root.addPeriod(np);
 							console.log("CREATED period =>", p);
 						}
 					} else {
-						// 202107011736: Si no cambiaron rol o estado (activo o inactivo) verifica si camció la fecha de inicio
+						// 202107011736: Si no cambiaron rol o estado (activo o inactivo) verifica si cambió la fecha de inicio
 						if (root.gm_period_bk1.initial_date != root.gm_period.initial_date) {
 							console.log("gm_period CAMBIÓ!! =>", root.gm_period);
 							let p = null;
