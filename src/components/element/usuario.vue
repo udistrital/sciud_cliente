@@ -23,7 +23,7 @@
 									</DxNumberBox>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Nombre:</label>
 									<DxTextBox :value.sync="baseObj.name" placeholder="Nombre" class="form-control" :read-only="true" name="name" mode="text">
@@ -33,34 +33,62 @@
 									</DxTextBox>
 								</div>
 							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<label>OAS ID:</label>
-									<DxTextBox :value.sync="baseObj.oas_user_id" placeholder="OAS ID" class="form-control" :read-only="true">
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-									</DxTextBox>
-								</div>
-							</div>
-							<div class="col-md-2">
-								<div class="form-group">
-									<label>Rol:</label>
-									<DxSelectBox
-										:show-clear-button="true"
-										:grouped="false"
-										:data-source="userRoles"
-										:value.sync="baseObj.user_role_id"
-										:search-enabled="false"
-										placeholder="Seleccione..."
-										class="form-control"
-										display-expr="name"
-										value-expr="id"
-									>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-									</DxSelectBox>
+							<div class="col-md-6">
+								<div class="row">
+									<div class="col-md-2">
+										<div class="form-group">
+											<label>OAS ID:</label>
+											<DxTextBox :value.sync="baseObj.oas_user_id" placeholder="OAS ID" class="form-control" :read-only="true">
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxTextBox>
+										</div>
+									</div>
+									<div class="col">
+										<div class="form-group">
+											<label>Rol:</label>
+											<DxSelectBox
+												:show-clear-button="true"
+												:grouped="false"
+												:data-source="userRoles"
+												:value.sync="baseObj.user_role_id"
+												:search-enabled="false"
+												placeholder="Seleccione un rol..."
+												class="form-control"
+												@value-changed="enableFaculties"
+												display-expr="name"
+												value-expr="id"
+											>
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxSelectBox>
+										</div>
+									</div>
+									<div id="col-faculties" class="col-md-6 slide" v-if="faculties.length > 0">
+										<div class="form-group">
+											<label>Facultades:</label>
+											<DxTagBox
+												:data-source="faculties"
+												:disabled="true"
+												:search-enabled="false"
+												:show-selection-controls="true"
+												:value.sync="baseObj.faculties_ids"
+												class="form-control"
+												display-expr="Nombre"
+												id="faculty_ids"
+												name="faculty_ids"
+												placeholder="Seleccione una o más facultades..."
+												ref="tbFaculties"
+												value-expr="Id"
+											>
+												<DxValidator>
+													<DxRequiredRule />
+												</DxValidator>
+											</DxTagBox>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -90,7 +118,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body code">
@@ -105,8 +133,9 @@
 	</div>
 </template>
 <script>
-let root = null;
-import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
+let root = null,
+	$ = window.jQuery;
+import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup, DxTagBox } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
 import { mapActions } from "vuex";
@@ -120,6 +149,7 @@ export default {
 		DxTextBox,
 		DxValidationGroup,
 		DxValidator,
+		DxTagBox,
 	},
 	props: {
 		id: {
@@ -131,6 +161,10 @@ export default {
 			default: () => {},
 		},
 		userRoles: {
+			type: Array,
+			default: () => [],
+		},
+		faculties: {
 			type: Array,
 			default: () => [],
 		},
@@ -159,8 +193,27 @@ export default {
 		gridInit(e) {
 			return e;
 		},
+		enableFaculties(e) {
+			// console.clear();
+			console.log(root.$sep);
+			console.log("e", e);
+			// root.faculty_ids = [];
+			let col = $("#col-faculties");
+			let tb = root.$refs.tbFaculties.instance;
+			console.log("tbFaculties", tb);
+			// 202107040342: get_role_id en main.js
+			if (e.value === root.get_role_id("gestor_facultad")) {
+				console.log("ES GESTOR FACULTAD!");
+				tb.option("disabled", false);
+				col.fadeIn();
+			} else {
+				tb.option("disabled", true);
+				col.fadeOut();
+			}
+		},
 	},
 	data: () => ({
+		faculty_ids: [],
 		searchButton: {
 			text: "Buscar",
 			onClick: async () => {

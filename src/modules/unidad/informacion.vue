@@ -59,7 +59,7 @@
 													<DxTagBox
 														name="faculty_ids"
 														id="faculty_ids"
-														:read-only="!editMode"
+														:read-only="!es_admin"
 														value-expr="Id"
 														display-expr="Nombre"
 														class="form-control"
@@ -232,6 +232,8 @@
 												<div class="form-group">
 													<label>Fecha creación CIDC:</label>
 													<DxDateBox
+														@focus-in="date_focus_in"
+														@focus-out="date_focus_out"
 														class="form-control"
 														:read-only="!editMode"
 														name="cidcRegistrationDate"
@@ -271,6 +273,8 @@
 												<div class="form-group">
 													<label>Fecha creación Facultad:</label>
 													<DxDateBox
+														@focus-in="date_focus_in"
+														@focus-out="date_focus_out"
 														class="form-control"
 														name="facultyRegistrationDate"
 														:value.sync="group.faculty_registration_date"
@@ -492,7 +496,7 @@
 						</div>
 						<div class="row mt-3">
 							<div class="col">
-								<a href="#" @click.prevent="go('/unidad')" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple"
+								<a href="#" @click.prevent="go(0, '/unidad')" title="Volver a Unidades..." class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple"
 									><b><i class="icon-arrow-left"></i></b> Volver</a
 								>
 							</div>
@@ -506,7 +510,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">

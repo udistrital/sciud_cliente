@@ -157,7 +157,7 @@
 				</div>
 			</div>
 		</div>
-		<Usuario :userRoles="roles" :baseObj="baseObj" :saveFn="save" :cancelFn="cancel" id="panel-usuarios-data" ref="Usuario" />
+		<Usuario :userRoles="roles" :baseObj="baseObj" :saveFn="save" :cancelFn="cancel" :faculties="facultades" id="panel-usuarios-data" ref="Usuario" />
 		<div class="row" id="panel-usuarios-grid">
 			<div class="col">
 				<div class="card" id="data-container">
@@ -175,14 +175,14 @@
 								:show-borders="false"
 							>
 								<DxColumnChooser :enabled="false" mode="dragAndDrop" />
-								<DxSorting mode="multiple" /><!-- single, multiple, none -->
-								<DxPaging :page-size="dgPageSize" /><!-- dgPageSize -->
 								<DxFilterRow :visible="true" />
-								<DxLoadPanel :enabled="false" />
-								<DxGroupPanel :visible="false" :allow-column-dragging="true" />
 								<DxGrouping :auto-expand-all="false" />
+								<DxGroupPanel :visible="false" :allow-column-dragging="true" />
+								<DxLoadPanel :enabled="false" />
+								<DxPaging :page-size="dgPageSize" /><!-- dgPageSize -->
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
-								<!-- https://js.devexpress.com/Documentation/Guide/UI_Components/DataGrid/Columns/Column_Types/Lookup_Columns -->
+								<DxSorting mode="multiple" /><!-- single, multiple, none -->
+								<DxStateStoring :enabled="true" type="sessionStorage" />
 								<DxSummary>
 									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
 								</DxSummary>
@@ -191,15 +191,17 @@
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="Página {0} de {1} ({2} usuarios por asociar)"
+									info-text="Página {0} de {1} ({2} usuarios)"
 								/>
 								<DxColumn
+									:width="90"
+									:sort-index="0"
+									sort-order="asc"
 									:allow-filtering="false"
 									:allow-search="false"
 									:allow-sorting="true"
-									:width="120"
 									alignment="center"
-									caption="SICIUD ID"
+									caption="ID"
 									data-field="id"
 									data-type="string"
 								/>
@@ -207,13 +209,14 @@
 									:allow-filtering="false"
 									:allow-sorting="false"
 									:customize-text="nullText"
-									:width="120"
+									:width="90"
 									alignment="center"
 									caption="OAS ID"
 									data-field="oas_details.TerceroId.Id"
 									data-type="string"
 								/>
 								<DxColumn
+									:width="120"
 									:allow-filtering="true"
 									:allow-sorting="true"
 									:customize-text="$formatDocument"
@@ -225,13 +228,69 @@
 								<DxColumn
 									:allow-filtering="false"
 									:allow-sorting="false"
-									:customize-text="nullText"
+									:customize-text="nullTextTitle"
 									alignment="center"
 									caption="Nombre"
 									data-field="oas_details.TerceroId.NombreCompleto"
 									data-type="string"
 								/>
 								<DxColumn
+									width="120"
+									data-type="number"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Estructuras"
+									data-field="total_structures"
+									cell-template="tpl-structures"
+								/>
+								<template #tpl-structures="{ data }">
+									<span v-if="data.data.total_structures > 1">
+										<a
+											href="#"
+											class="color-main-600"
+											@click.prevent="loadStructures(data.data)"
+											@mouseover="tooltip($event, data.data, true)"
+											@mouseleave="tooltip($event, data.data, false)"
+										>
+											T:{{ data.data.total_structures }} / A:{{ data.data.total_active_structures }} / I:{{ data.data.total_inactive_structures }}
+										</a>
+									</span>
+									<span v-else>0</span>
+								</template>
+								<DxColumn
+									width="90"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Activo en"
+									data-field="total_active_structures"
+									data-type="number"
+								/>
+								<DxColumn
+									width="90"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Inactivo en"
+									data-field="total_inactive_structures"
+									data-type="number"
+								/>
+								<DxColumn
+									width="100"
+									:allow-filtering="true"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Facultades"
+									data-field="total_faculties"
+									data-type="number"
+								/>
+								<DxColumn
+									:width="140"
 									:sort-index="0"
 									:allow-filtering="true"
 									:allow-sorting="true"
@@ -239,7 +298,7 @@
 									alignment="center"
 									caption="Rol"
 									data-field="user_role_id"
-									data-type="int"
+									data-type="number"
 								>
 									<DxLookup :data-source="roles" value-expr="id" display-expr="name" />
 								</DxColumn>
@@ -266,13 +325,162 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<DxTooltip ref="ttip" position="top">
+			<template>
+				<span>
+					<span class="font-weight-semibold color-main-600">Estructuras:</span> {{ structureObj.total_structures }}<br />
+					<span class="font-weight-semibold color-main-600">Activo en:</span> {{ structureObj.total_active_structures }}<br />
+					<span class="font-weight-semibold color-main-600">Inactivo en:</span> {{ structureObj.total_inactive_structures }}<br />
+					<small class="font-weight-semibold"><i>(Clic para observar)</i></small>
+				</span>
+			</template>
+		</DxTooltip>
+		<DxPopup
+			:drag-enabled="false"
+			:close-on-outside-click="false"
+			:show-title="true"
+			:width="1200"
+			:height="840"
+			:title="structureObj.title"
+			:visible="popupVisible"
+			@hidden="popupVisible = false"
+		>
+			<DxDataGrid
+				class="main"
+				width="100%"
+				:allow-column-reordering="true"
+				:data-source="structures"
+				:remote-operations="false"
+				:hover-state-enabled="true"
+				:row-alternation-enabled="true"
+				:show-borders="false"
+			>
+				<DxColumnChooser :enabled="false" mode="dragAndDrop" />
+				<DxFilterRow :visible="true" />
+				<DxGrouping :auto-expand-all="true" />
+				<DxGroupPanel :visible="true" :allow-column-dragging="true" />
+				<DxLoadPanel :enabled="false" />
+				<DxPaging :page-size="dgPageSize" />
+				<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
+				<DxSorting mode="single" />
+				<DxSummary>
+					<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} estructuras" />
+				</DxSummary>
+				<DxPager
+					:show-info="true"
+					:show-page-size-selector="false"
+					:show-navigation-buttons="true"
+					:allowed-page-sizes="dgPageSizes"
+					info-text="Página {0} de {1} ({2} estructuras)"
+				/>
+				<DxColumn
+					:width="90"
+					:sort-index="0"
+					sort-order="asc"
+					:allow-filtering="false"
+					:allow-search="false"
+					:allow-sorting="true"
+					alignment="center"
+					caption="ID"
+					data-field="research_group_id"
+					data-type="number"
+				/>
+				<DxColumn
+					:allow-filtering="true"
+					:allow-sorting="true"
+					:customize-text="nullTextTitle"
+					alignment="left"
+					caption="Nombre"
+					data-field="research_group_name"
+					data-type="string"
+				/>
+				<DxColumn
+					:width="170"
+					:allow-filtering="true"
+					:allow-sorting="true"
+					:customize-text="nullText"
+					alignment="center"
+					caption="Tipo"
+					data-field="group_type_id"
+					data-type="number"
+					:group-index="1"
+				>
+					<DxLookup :data-source="tiposUnidad" value-expr="id" display-expr="st_name" />
+				</DxColumn>
+				<DxColumn
+					:width="100"
+					:allow-filtering="true"
+					:allow-sorting="true"
+					:customize-text="nullText"
+					alignment="center"
+					caption="Estado en la estructura"
+					data-field="gm_state_id"
+					data-type="string"
+					:group-index="0"
+				>
+					<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
+				</DxColumn>
+				<DxColumn
+					:width="120"
+					:sort-index="0"
+					:allow-filtering="user_roles.length > 1"
+					:allow-sorting="user_roles.length > 1"
+					:customize-text="nullText"
+					alignment="center"
+					caption="Rol"
+					data-field="role_id"
+					data-type="number"
+				>
+					<DxLookup :data-source="user_roles" value-expr="role_id" display-expr="role_name" />
+				</DxColumn>
+				<DxColumn :allow-filtering="false" data-field="research_group_id" caption="" :width="120" alignment="center" cell-template="tplCommands" />
+				<template #tplCommands="{ data }">
+					<span class="cmds">
+						<a
+							title="Observar información..."
+							href="#"
+							@click.prevent="go(data.value, `/unidad/${data.value}`, 'Cargando Información')"
+							class="cmd-item color-main-600 mr-2"
+						>
+							<i class="icon-info"></i>
+						</a>
+						<a
+							title="Observar documentos..."
+							href="#"
+							@click.prevent="go(data.value, `/unidad/${data.value}/documentos`, 'Cargando Documentos')"
+							class="cmd-item color-main-600 mr-2"
+						>
+							<i class="icon-file-pdf"></i>
+						</a>
+						<a
+							title="Observar integrantes..."
+							href="#"
+							@click.prevent="go(data.value, `/unidad/${data.value}/integrantes`, 'Cargando Integrantes')"
+							class="cmd-item color-main-600 mr-2"
+						>
+							<i class="icon-users"></i>
+						</a>
+						<a
+							title="Observar producción..."
+							href="#"
+							@click.prevent="go(data.value, `/unidad/${data.value}/produccion`, 'Cargando Producción')"
+							class="cmd-item color-main-600"
+						>
+							<i class="icon-trophy"></i>
+						</a>
+					</span>
+				</template>
+			</DxDataGrid>
+		</DxPopup>
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						<span class="font-weight-semibold">baseObj:</span> {{ JSON.stringify(baseObj, null, 3) }} <br />
-						<span class="font-weight-semibold">tercero:</span> {{ JSON.stringify(tercero, null, 3) }} <br />
-						<span class="font-weight-semibold">cedula:</span> {{ JSON.stringify(cedula, null, 3) }} <br />
+						<span class="font-weight-semibold">baseObj:</span> {{ JSON.stringify(baseObj, null, 3) }}
+						<hr />
+						<span class="font-weight-semibold">tercero:</span> {{ JSON.stringify(tercero, null, 3) }}
+						<hr />
+						<span class="font-weight-semibold">cedula:</span> {{ JSON.stringify(cedula, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -293,23 +501,23 @@ import {
 	DxGroupItem,
 	DxGroupPanel,
 	DxLoadPanel,
+	DxLookup,
 	DxPager,
 	DxPaging,
 	DxSearchPanel,
-	DxLookup,
 	DxSorting,
+	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
-import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxValidationGroup } from "devextreme-vue";
+import { DxButton, DxSelectBox, DxTextBox, DxNumberBox, DxPopup, DxTooltip, DxValidationGroup } from "devextreme-vue";
 import DxValidator, { DxRequiredRule } from "devextreme-vue/validator";
 import { mapActions, mapGetters } from "vuex";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
 	name: "inicio",
 	components: {
-		DxColumn,
 		DxButton,
-		DxLookup,
+		DxColumn,
 		DxColumnChooser,
 		DxDataGrid,
 		DxFilterRow,
@@ -317,15 +525,19 @@ export default {
 		DxGroupItem,
 		DxGroupPanel,
 		DxLoadPanel,
+		DxLookup,
+		DxNumberBox,
 		DxPager,
 		DxPaging,
+		DxPopup,
 		DxRequiredRule,
 		DxSearchPanel,
 		DxSelectBox,
 		DxSorting,
+		DxStateStoring,
 		DxSummary,
 		DxTextBox,
-		DxNumberBox,
+		DxTooltip,
 		DxValidationGroup,
 		DxValidator,
 		Usuario: () => import("@/components/element/usuario"),
@@ -333,7 +545,17 @@ export default {
 	data: () => ({
 		mode: null,
 		items: [],
+		user_roles: [],
+		popupVisible: false,
 		grid: null,
+		structures: [],
+		structureObj: {
+			title: null,
+			total_structures: 0,
+			total_active_structures: 0,
+			total_inactive_structures: 0,
+		},
+		ttip: null,
 		grupo: null,
 		results: "",
 		testId: "1032479929",
@@ -394,6 +616,7 @@ export default {
 		root = this;
 	},
 	mounted() {
+		root.getFacultades();
 		root.loaderElement = ".card-body.grid";
 		root.loaderMessage = "Cargando usuarios";
 		root.baseObj.created_by = root.user_id;
@@ -404,16 +627,29 @@ export default {
 		root.panelData = `${root_id}-data`;
 		root.actionTitle = `${root_id}-data #action-title`;
 		root.panelOas = `${root_id}-oas`;
+		root.ttip = root.$refs.ttip.instance;
+		console.log("root.ttip", root.ttip);
 		// 202104121825: TO para esperar la cargar de módulos
 		setTimeout(function() {
 			// DxNumberBox del documento de identidad, niveles de ref
 			root.nbId = root.$refs.Usuario.$refs.nbId.instance.instance();
 			console.log("root.nbId options =>", root.nbId.option());
 			root.baseObjBk = root.$clone(root.baseObj);
+			console.log("Facultades =>", root.facultades);
 		}, 2000);
 	},
 	computed: {
+		...mapGetters("unidad/oas", ["facultades"]),
 		...mapGetters("usuario", ["getUserOasDetails"]),
+		...mapGetters("core/tipo", ["subtypesByType"]),
+		tiposUnidad() {
+			return root.subtypesByType("unidad_tipo");
+		},
+		estadosUnidad() {
+			let eu = root.subtypesByType("unidad_estado");
+			console.log("Estado unidad =>", eu);
+			return eu;
+		},
 		nombre_completo: () => {
 			let n = [];
 			let t = root.tercero;
@@ -472,7 +708,58 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("auth/usuario", ["getUser", "saveUser", "saveUserOas", "updateUser", "activeUser", "getOasUsers", "getOasUser"]),
+		...mapActions("unidad/oas", { getFacultades: "facultades" }),
+		...mapActions("auth/usuario", ["getUser", "saveUser", "saveUserOas", "updateUser", "activeUser", "getOasUsers", "getOasUser", "getStructures"]),
+		loadStructures(data) {
+			root.loaderShow("Cargando estructuras", "#data-container .card-body");
+			root.getStructures({
+				doc: data.identification_number,
+				cb: function(groups) {
+					// console.clear();
+
+					// 202107051930: Construye la matriz para el selector de roles
+					let ur = [];
+					groups.forEach((item) => {
+						if (ur.filter((o) => o.role_id == item.role_id).length <= 0) {
+							ur.push({
+								role_id: item.role_id,
+								role_name: item.role_name,
+							});
+						}
+					});
+					root.user_roles = ur;
+
+					let t = groups.length + " estructuras asociadas";
+					let od = data.oas_details.TerceroId;
+					if (typeof od !== "undefined") {
+						t += ` al usuario "${od.NombreCompleto}"`;
+					} else {
+						t += ` al documento "${data.identification_number}"`;
+					}
+					root.structureObj.title = t;
+					root.popupVisible = true;
+					root.structures = groups;
+					console.log("root.structures =>", root.structures);
+					console.log("data =>", data);
+					root.loaderHide();
+				},
+			});
+		},
+		tooltip(e, data, show) {
+			// console.clear();
+			let el = e.target || e.srcElement;
+			// console.log("el =>", el);
+			// console.log("ttip =>", root.ttip);
+			// console.log("show =>", show);
+			// console.log("data =>", data);
+			if (show) {
+				root.structureObj = data;
+				root.ttip.option("target", el);
+				root.ttip.show();
+			} else {
+				root.ttip.hide();
+			}
+		},
 		search() {
 			console.log("DOC", this.baseObj.identification_number);
 		},
@@ -494,6 +781,8 @@ export default {
 				if (root.mode == "edit") {
 					fn = root.updateUser;
 					root.baseObj.updated_by = root.user_id;
+					// 202107040342: get_role_id en main.js
+					if (root.baseObj.user_role_id !== root.get_role_id("gestor_facultad")) root.baseObj.faculties_ids = [];
 				} else root.baseObj.updated_by = root.user_id;
 				fn({
 					user: root.baseObj,
@@ -593,6 +882,7 @@ export default {
 				if (si_no) {
 					let usr = data.data;
 					usr.active = state;
+					usr.updated_by = root.user_id;
 					root.loaderMessage = `${state ? "Activando" : "Desactivando"} usuario`;
 					root.loaderShow();
 					root.activeUser({
@@ -616,8 +906,8 @@ export default {
 						root.loaderShow();
 					}
 				},
-				contentReady: () => {
-					// console.log("contentReady", e);
+				contentReady: (e) => {
+					console.log("contentReady", e);
 					console.log("root.gridLoading", root.gridLoading);
 					if (!root.gridLoading) root.loaderHide();
 				},

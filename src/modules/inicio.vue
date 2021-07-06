@@ -17,9 +17,10 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<div class="card" style="height: 450px">
+				<div class="card">
 					<!-- <div class="card-header bg-main-600 font-weight-semibold">INICIO</div> -->
-					<div class="card-body d-flex justify-content-center flex-column">
+					<!-- <div class="card-body d-flex justify-content-center flex-column"> -->
+					<div :class="'card-body d-flex justify-content-center flex-column ' + (es_admin ? 'mh' : 'mhn')">
 						<h4 class="font-weight-semibold text-center">
 							Sistema de Información de Investigaciones - SICIUD v2.0
 						</h4>

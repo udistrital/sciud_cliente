@@ -1,12 +1,6 @@
-\* 
-data.name=titulo para activar o desactivar 
-Innovación generada en la gestión empresarial  = Titulo botones 
-Innovación generada en la gestión empresarial  = Titulo principal 
-Innovacion_generada=titulo abreviado
-panelInnovacion_generada=nombredepaneles
-innovations = innovation enlace
-innovation=endpoindt especifico endpoinds tutas generales update
-*\
+\* data.name=titulo para activar o desactivar Innovación generada en la gestión empresarial = Titulo botones Innovación generada en la gestión empresarial =
+Titulo principal Innovacion_generada=titulo abreviado panelInnovacion_generada=nombredepaneles innovations = innovation enlace innovation=endpoindt especifico
+endpoinds tutas generales update *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" id="panelInnovacion_generada">
 		<div class="row">
@@ -16,18 +10,29 @@ innovation=endpoindt especifico endpoinds tutas generales update
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">Innovación generada en la gestión empresarial  </span>
+								<span class="font-weight-semibold">Innovación generada en la gestión empresarial </span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Nueva Innovación generada en la gestión empresarial .." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button
+									type="button"
+									@click.prevent="add()"
+									v-if="editMode"
+									title="Nueva Innovación generada en la gestión empresarial .."
+									class="btn btn-main btn-labeled btn-labeled-left "
+								>
 									<b><i class="icon-database-add"></i></b> Nueva Innovación Generada
 								</button>
 							</span>
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al Innovación generada en la gestión empresarial .." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button
+									type="button"
+									@click.prevent="retorno()"
+									title="Volver al Innovación generada en la gestión empresarial .."
+									class="btn btn-main btn-labeled btn-labeled-left "
+								>
 									<b><i class="icon-arrow-left"></i></b> Volver A Innovación Generada
 								</button>
 							</span>
@@ -36,7 +41,7 @@ innovation=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</div>
-        <Documentos id="panelInnovacion_generada-documentos" end-point="innovations" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Documentos id="panelInnovacion_generada-documentos" end-point="innovations" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
 		<Participantes id="panelInnovacion_generada-participantes" end-point="innovations" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -50,117 +55,121 @@ innovation=endpoindt especifico endpoinds tutas generales update
 							<div class="row">
 								<!-- formulatio -->
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Nombre de la Innovación: </label>
-	<DxTextBox placeholder="Nombre de la Innovación" class="form-control" :value.sync="baseObj.name">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Nombre de la Innovación: </label>
+										<DxTextBox placeholder="Nombre de la Innovación" class="form-control" :value.sync="baseObj.name">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>NIT: </label>
-	<DxTextBox placeholder="NIT" class="form-control" :value.sync="baseObj.nit">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>NIT: </label>
+										<DxTextBox placeholder="NIT" class="form-control" :value.sync="baseObj.nit">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Categoría: </label>
-	<DxSelectBox
-		:show-clear-button="true"
-		:grouped="false"
-		:search-enabled="false"
-		placeholder="Seleccione..."
-		:value.sync="baseObj.category_id" 
-		class="form-control"
-		:data-source="subtipos" 
-		display-expr="st_name"
-		value-expr="id">
-	</DxSelectBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Categoría: </label>
+										<DxSelectBox
+											:show-clear-button="true"
+											:grouped="false"
+											:search-enabled="false"
+											placeholder="Seleccione..."
+											:value.sync="baseObj.category_id"
+											class="form-control"
+											:data-source="subtipos"
+											display-expr="st_name"
+											value-expr="id"
+										>
+										</DxSelectBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-		<label>Convocatoria Minciencias:</label>
-			<DxSelectBox
-				:grouped="false"
-				:search-enabled="false"
-				placeholder="Seleccione..."
-				:value.sync="baseObj.colciencias_call_id"
-				class="form-control"
-				:data-source="convocatorias"
-				display-expr="name"
-				value-expr="id"
-				item-template="item"
-			>
-				<template #item="{ data }">
-					<div>{{ data.name }} de {{ data.year }}</div>
-				</template>
-			</DxSelectBox>
-		</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Convocatoria Minciencias:</label>
+										<DxSelectBox
+											:show-clear-button="true"
+											:grouped="false"
+											:search-enabled="false"
+											placeholder="Seleccione..."
+											:value.sync="baseObj.colciencias_call_id"
+											class="form-control"
+											:data-source="convocatorias"
+											display-expr="name"
+											value-expr="id"
+											item-template="item"
+										>
+											<template #item="{ data }">
+												<div>{{ data.name }} de {{ data.year }}</div>
+											</template>
+										</DxSelectBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Nombre de la Compañía: </label>
-	<DxTextBox placeholder="Nombre de la Compañía" class="form-control" :value.sync="baseObj.company_name">
-	<DxValidator>
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Nombre de la Compañía: </label>
+										<DxTextBox placeholder="Nombre de la Compañía" class="form-control" :value.sync="baseObj.company_name">
+											<DxValidator> </DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-<div class="form-group">
-<label>Fecha de Obtención: </label>
-	<DxDateBox 
-		class="form-control" 
-		name="date_of_obtaining" 
-		:value.sync="baseObj.date_of_obtaining" 
-		id="date_of_obtaining" 
-		placeholder="DD/MM/YYYY" 
-		display-format="dd/MM/yyyy" 
-		:min="minDate" 
-		:max="actualDate" 
-		type="date"> 
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</DxDateBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Fecha de Obtención: </label>
+										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
+											class="form-control"
+											name="date_of_obtaining"
+											:value.sync="baseObj.date_of_obtaining"
+											id="date_of_obtaining"
+											placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy"
+											:min="minDate"
+											:max="actualDate"
+											type="date"
+										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxDateBox>
+									</div>
+								</div>
 
-<div class="col-md-12">
-	<label>Lugar de Obtención: </label>
-<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-</div>
-<!-- <div class="col-md-12">
+								<div class="col-md-12">
+									<label>Lugar de Obtención: </label>
+									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+								</div>
+								<!-- <div class="col-md-12">
 									<div class="form-group">
 										<label>Observaciones: </label>
 										<Observaciones :syncValue.sync="baseObj"/>
 									</div>
 								</div> -->
 
-<div class="col-md-12">
-	<div class="form-group">
-		<label>Observaciones: </label>
-		<Observaciones :syncValue.sync="baseObj"/>
-	</div>
-</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observaciones: </label>
+										<Observaciones :syncValue.sync="baseObj" />
+									</div>
+								</div>
 
-<div class="col-md-12" v-if="tiposDocumento.length>0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
+								<div class="col-md-12" v-if="tiposDocumento.length > 0">
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div>
 
 								<!-- fin formulario -->
 							</div>
@@ -227,26 +236,46 @@ innovation=endpoindt especifico endpoinds tutas generales update
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-						<DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='name'  caption='Nombre' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='nit'  caption='NIT' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='company_name'  caption='Nombre Compañía' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='date_of_obtaining'  caption='Fecha de Obtención' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-						<DxColumn data-field='category_name'  caption='Categoría' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-						<DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-						<DxColumn data-field='colciencias_call_year'  caption='Minciencias Año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field="id" caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn data-field="name" caption="Nombre" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn data-field="nit" caption="NIT" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn data-field="company_name" caption="Nombre Compañía" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn
+							data-field="date_of_obtaining"
+							caption="Fecha de Obtención"
+							data-type="string"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="true"
+						/>
+						<DxColumn data-field="category_name" caption="Categoría" data-type="string" alignment="center" :visible="true" :allow-grouping="true" />
+						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn data-field="colciencias_call_name" caption="Minciencias" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn
+							data-field="colciencias_call_year"
+							caption="Minciencias Año"
+							data-type="string"
+							alignment="center"
+							:visible="false"
+							:allow-grouping="true"
+						/>
 						<!-- <DxColumn data-field='observation'  caption='Observación' data-type='string' alignment='center' :visible='false' :allow-grouping='false' />  -->
-						<DxColumn data-field='geo_country_name'  caption='País' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field="geo_country_name" caption="País" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 
-
-						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
+						<DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
 
 						<template #tplObs="{ data }">
-							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+							<a
+								v-if="data.data.observation != '' && data.data.observation != null"
+								:title="data.data.observation"
+								class="cmd-item color-main-600 mr-2"
+								@click.prevent="verObservar(data.data)"
+								href="#"
+								Target="_blank"
+							>
 								<i class="icon-info mr-1"></i> Ver
 							</a>
 							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -263,7 +292,13 @@ innovation=endpoindt especifico endpoinds tutas generales update
 								<a title="Editar Elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 									<i class="icon-database-edit"></i>
 								</a>
-								<a v-if="data.data.active" title="Desactivar Innovacion_generada..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+								<a
+									v-if="data.data.active"
+									title="Desactivar Innovacion_generada..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="active(data, false)"
+									href="#"
+								>
 									<i class="icon-database-remove"></i>
 								</a>
 								<a v-else title="Activar Innovacion_generada..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
@@ -281,19 +316,20 @@ innovation=endpoindt especifico endpoinds tutas generales update
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
 		</div>
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
-            <div class="row" style="overflow-y: scroll; height:148px">
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
+			<div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
-                    <h3>
+					<h3>
 						<i class="icon-info mr-1 color-main-600"></i>
-						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
+						<span class="font-weight-semibold">{{ baseObj[titlecolum] }}</span>
 					</h3>
 					<div v-html="observarData"></div>
 				</div>
 			</div>
-            <div class="row">
-				<div class="col"><hr>
-					<DxButton @click="popupObs=false" class="nb">
+			<div class="row">
+				<div class="col">
+					<hr />
+					<DxButton @click="popupObs = false" class="nb">
 						<template #default>
 							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
 								<b><i class="icon-database-remove"></i></b> Salir
@@ -303,7 +339,6 @@ innovation=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</DxPopup>
-
 	</div>
 </template>
 
@@ -337,7 +372,7 @@ export default {
 	name: "Innovacion_generada",
 	components: {
 		// Commands,
-        DxPopup,
+		DxPopup,
 		DxButton,
 		DxColumn,
 		DxPatternRule,
@@ -367,10 +402,11 @@ export default {
 		Participantes: () => import("@/components/element/participantes"),
 	},
 	props: {
-		titlecolum:{
+		titlecolum: {
 			type: String,
-			default: () => 'ind_dsg_registration_title',
-		},group: {
+			default: () => "ind_dsg_registration_title",
+		},
+		group: {
 			type: Object,
 			default: () => null,
 		},
@@ -463,24 +499,25 @@ export default {
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		
-        verObservar(data){
-            root.observarData=data.observation;
-            root.baseObj[root.titlecolum]=data[root.titlecolum];
-            root.popupObs= !root.popupObs ? true : false ;
-        },		
-		
-		requisitoArchivo(){
-			let tipos=root.tiposDocumento;
-			let i=0, print="";
-			if(Array.isArray(tipos) && tipos.length != 0 && root.editMode){
-				print="<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
-				print=print + "<ul>";
-				for(i=0; i<tipos.length; i++){
-					let text = tipos[i].st_description==null ? "": "<br>"+tipos[i].st_description ;
-					if(tipos[i].active) print=print + "<li>" + "<b>"+tipos[i].st_name+ "</b>"+text+"</li>";
+
+		verObservar(data) {
+			root.observarData = data.observation;
+			root.baseObj[root.titlecolum] = data[root.titlecolum];
+			root.popupObs = !root.popupObs ? true : false;
+		},
+
+		requisitoArchivo() {
+			let tipos = root.tiposDocumento;
+			let i = 0,
+				print = "";
+			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print = print + "<ul>";
+				for (i = 0; i < tipos.length; i++) {
+					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
 				}
-				print=print + "</ul>";
+				print = print + "</ul>";
 			}
 			return print;
 		},
@@ -560,10 +597,10 @@ export default {
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
 				root.baseObj.product_type_id = root.tipos;
-                root.baseObj.research_group_id=root.group.id;
+				root.baseObj.research_group_id = root.group.id;
 				let obj = root.baseObj;
 				let dto = {
-					newFormat:true,
+					newFormat: true,
 					unidadId: root.group.id,
 					stringEP: "innovations",
 					mod: obj.id,
@@ -623,14 +660,14 @@ export default {
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
-                        //updated_by: 1,
+						//updated_by: 1,
 						//url: `research_units/${root.group.id}/innovations/${data.data.id}/active`,
-                        newFormat:true,
-                        url: `innovations/${data.data.id}`,
+						newFormat: true,
+						url: `innovations/${data.data.id}`,
 						data: {
 							innovation: {
 								active: state,
-                                updated_by: root.user_id
+								updated_by: root.user_id,
 							},
 						},
 						cb: function(result) {

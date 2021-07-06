@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="card" id="panel-documentos">
-					<div class="card-body group-detail">
+					<div class="card-body group-detail mh">
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
@@ -26,7 +26,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 let $ = window.jQuery;
 import axios from "axios";
+import store from "@/store";
 import { custom } from "devextreme/ui/dialog";
 
 // 202009081539:
@@ -40,8 +41,8 @@ export default (source = "rest", args = {}) => {
 	// 202105201059: Url dependiendo el entorno
 	let url = base.url_dev;
 	let cUrl = window.location.href.toLowerCase();
-	let isDev = cUrl.indexOf("pruebassiciud.") > -1 || cUrl.indexOf("siciud.") > -1;
-	if (isDev) url = base.url_prod;
+	let is_dev = cUrl.indexOf("pruebassiciud.") > -1 || cUrl.indexOf("siciud.") > -1;
+	if (is_dev) url = base.url_prod;
 
 	// 202011260213: https://stackoverflow.com/a/6941653
 	let axiosConfig = {
@@ -66,9 +67,9 @@ export default (source = "rest", args = {}) => {
 
 	// 202105201104: Se envía
 	// 202105201115: Ajustado para entornos UD
-	console.log("isDev =>", isDev);
-	isDev = true;
-	if (source === "oas" || source === "oas_mid" || isDev) {
+	console.log("is_dev =>", is_dev);
+	is_dev = true;
+	if (source === "oas" || source === "oas_mid" || is_dev) {
 		base = window.config.api.oas;
 		if (source === "oas") axiosConfig.baseURL = base.url;
 		else if (source === "oas_mid") axiosConfig.baseURL = window.config.auth.oidc.AUTENTICACION_MID;
@@ -120,7 +121,15 @@ export default (source = "rest", args = {}) => {
 				delete error.response.data.traces;
 				msg = JSON.stringify(error.response, null, "\t");
 			}
-			show(`${error}`, msg);
+			console.log("error.response.status =>", error.response.status);
+			if (error.response.status === 401) {
+				console.log("store =>", store);
+				store.commit("auth/login/authLogout", function() {
+					window.vm.$router.push("/inicio");
+				});
+			} else {
+				show(`${error}`, msg);
+			}
 			return Promise.reject(error);
 		}
 	);

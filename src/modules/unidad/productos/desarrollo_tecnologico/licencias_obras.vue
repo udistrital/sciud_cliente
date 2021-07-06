@@ -1,15 +1,7 @@
-\* 
-data.title=titulo para activar o desactiva
-{{titleBtn}}  = Titulo botones 
-{{title}}  = Titulo principal 
-{{titleBtn}} =titulo abreviado
-namePanel=nombredepaneles
-root.endPointRute = regulation enlace
-regulation=endpoindt especifico endpoinds tutas generales update
-*\
+\* data.title=titulo para activar o desactiva {{ titleBtn }} = Titulo botones {{ title }} = Titulo principal {{ titleBtn }} =titulo abreviado
+namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpoindt especifico endpoinds tutas generales update *\
 <template>
 	<div class="col mt-3 pl-1 pr-1" :id="namePanel">
-		
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -17,19 +9,25 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">{{title}}</span>
+								<span class="font-weight-semibold">{{ title }}</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode"  title="Agregar Nuevo Elemento .." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> {{titleBtn}}
+								<button
+									type="button"
+									@click.prevent="add()"
+									v-if="editMode"
+									title="Agregar Nuevo Elemento .."
+									class="btn btn-main btn-labeled btn-labeled-left "
+								>
+									<b><i class="icon-database-add"></i></b> {{ titleBtn }}
 								</button>
 							</span>
 							<span class="cmds-back slide">
 								<button type="button" @click.prevent="retorno()" title="Volver al panel principal.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-arrow-left"></i></b> Volver A {{title}}
+									<b><i class="icon-arrow-left"></i></b> Volver A {{ title }}
 								</button>
 							</span>
 						</div>
@@ -38,156 +36,156 @@ regulation=endpoindt especifico endpoinds tutas generales update
 			</div>
 		</div>
 
-
-        <Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
 		<Participantes :id="id_panel_participantes" :end-point="endPointRute" :product="baseObj" :group="group" ref="participantes" :parent="this" />
-		
-        <DxValidationGroup ref="basicGroup">
+
+		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{titleBtn}} </span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{ titleBtn }} </span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Nombre de la Obra: </label>
-	<DxTextBox placeholder="Nombre de la Obra" class="form-control" :value.sync="baseObj.work_name">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Nombre de la Obra: </label>
+										<DxTextBox placeholder="Nombre de la Obra" class="form-control" :value.sync="baseObj.work_name">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Categoría: </label>
-	<DxSelectBox
-		:show-clear-button="true"
-		:grouped="false"
-		:search-enabled="false"
-		placeholder="Seleccione..."
-		:value.sync="baseObj.category_id" 
-		class="form-control"
-		:data-source="subtipos" 
-		display-expr="st_name"
-		value-expr="id">
-	</DxSelectBox>
-	</div>
-</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Categoría: </label>
+										<DxSelectBox
+											:show-clear-button="true"
+											:grouped="false"
+											:search-enabled="false"
+											placeholder="Seleccione..."
+											:value.sync="baseObj.category_id"
+											class="form-control"
+											:data-source="subtipos"
+											display-expr="st_name"
+											value-expr="id"
+										>
+										</DxSelectBox>
+									</div>
+								</div>
 
-<div class="col-md-3">
-	<div class="form-group">
-		<label>Convocatoria Minciencias:</label>
-			<DxSelectBox
-				:grouped="false"
-				:search-enabled="false"
-				placeholder="Seleccione..."
-				:value.sync="baseObj.colciencias_call_id"
-				class="form-control"
-				:data-source="convocatorias"
-				display-expr="name"
-				value-expr="id"
-				item-template="item"
-			>
-				<template #item="{ data }">
-					<div>{{ data.name }} de {{ data.year }}</div>
-				</template>
-			</DxSelectBox>
-		</div>
-</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Convocatoria Minciencias:</label>
+										<DxSelectBox
+											:show-clear-button="true"
+											:grouped="false"
+											:search-enabled="false"
+											placeholder="Seleccione..."
+											:value.sync="baseObj.colciencias_call_id"
+											class="form-control"
+											:data-source="convocatorias"
+											display-expr="name"
+											value-expr="id"
+											item-template="item"
+										>
+											<template #item="{ data }">
+												<div>{{ data.name }} de {{ data.year }}</div>
+											</template>
+										</DxSelectBox>
+									</div>
+								</div>
 
-<div class="col-md-3">
-<div class="form-group">
-<label>Fecha Contratacion: </label>
-	<DxDateBox 
-		class="form-control" 
-		name="contract_date" 
-		:value.sync="baseObj.contract_date" 
-		id="contract_date" 
-		placeholder="DD/MM/YYYY" 
-		display-format="dd/MM/yyyy" 
-		:min="minDate" 
-		:max="actualDate" 
-		type="date"> 
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</DxDateBox>
-	</div>
-</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Fecha Contratacion: </label>
+										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
+											class="form-control"
+											name="contract_date"
+											:value.sync="baseObj.contract_date"
+											id="contract_date"
+											placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy"
+											:min="minDate"
+											:max="actualDate"
+											type="date"
+										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxDateBox>
+									</div>
+								</div>
 
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Fecha Licenciamiento: </label>
+										<DxDateBox
+											@focus-in="date_focus_in"
+											@focus-out="date_focus_out"
+											class="form-control"
+											name="license_grant_date"
+											:value.sync="baseObj.license_grant_date"
+											id="license_grant_date"
+											placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy"
+											:min="minDate"
+											:max="actualDate"
+											type="date"
+										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxDateBox>
+									</div>
+								</div>
 
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Institución u Organo con licencia: </label>
+										<DxTextBox placeholder="Institución u Organo con licencia" class="form-control" :value.sync="baseObj.license_owner_institution">
+											<DxValidator> </DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-4">
-<div class="form-group">
-<label>Fecha Licenciamiento: </label>
-	<DxDateBox 
-		class="form-control" 
-		name="license_grant_date" 
-		:value.sync="baseObj.license_grant_date" 
-		id="license_grant_date" 
-		placeholder="DD/MM/YYYY" 
-		display-format="dd/MM/yyyy" 
-		:min="minDate" 
-		:max="actualDate" 
-		type="date"> 
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</DxDateBox>
-	</div>
-</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Numero de Registro (D.N.D.A): </label>
+										<DxNumberBox placeholder="Numero de Registro (D.N.D.A)" class="form-control" :value.sync="baseObj.ncd_registry_number" />
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+									</div>
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Institución u Organo con licencia: </label>
-	<DxTextBox placeholder="Institución u Organo con licencia" class="form-control" :value.sync="baseObj.license_owner_institution">
-	<DxValidator>
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-12">
+									<label>Lugar del Acontecimiento: </label>
+									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+								</div>
 
-<div class="col-md-4">
-	<div class="form-group">
-	<label>Numero de Registro (D.N.D.A): </label>
-	<DxNumberBox placeholder="Numero de Registro (D.N.D.A)" class="form-control" :value.sync="baseObj.ncd_registry_number" />
-	<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator> 
-	</div>
-</div>
+								<div class="col-md-12">
+									<label>Lugar de Contratacion: </label>
+									<Geo2 :lockElement="loaderElement" :syncObject="baseObj2" formName="form-group2" formNameControl="form-control2" />
+								</div>
 
+								<div class="col-md-12">
+									<div class="form-group">
+										<label>Observaciones: </label>
+										<Observaciones :syncValue.sync="baseObj" />
+									</div>
+								</div>
 
-
-<div class="col-md-12">
-	<label>Lugar del Acontecimiento: </label>
-    <Geo :lockElement="loaderElement" :syncObject="baseObj" />
-</div>
-
-<div class="col-md-12">
-	<label>Lugar de Contratacion: </label>
-    <Geo2 :lockElement="loaderElement" :syncObject="baseObj2" formName="form-group2" formNameControl="form-control2" />
-</div>
-
-
-
-<div class="col-md-12">
-	<div class="form-group">
-		<label>Observaciones: </label>
-		<Observaciones :syncValue.sync="baseObj"/>
-	</div>
-</div>
-
-<div class="col-md-12" v-if="tiposDocumento.length>0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
+								<div class="col-md-12" v-if="tiposDocumento.length > 0">
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div>
 
 								<!-- fin formulario -->
 							</div>
@@ -221,7 +219,10 @@ regulation=endpoindt especifico endpoinds tutas generales update
 		<div class="row grid">
 			<div class="col">
 				<div class="p-0">
-                    <p><b>Registros de acuerdos de licencia para explotación de obras de Investigación: </b> Creación en Artes, Arquitectura y Diseño protegidas por derechos de autor</p>
+					<p>
+						<b>Registros de acuerdos de licencia para explotación de obras de Investigación: </b> Creación en Artes, Arquitectura y Diseño protegidas por
+						derechos de autor
+					</p>
 					<DxDataGrid
 						class="main"
 						width="100%"
@@ -254,27 +255,76 @@ regulation=endpoindt especifico endpoinds tutas generales update
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-                        <DxColumn data-field='id'  caption='ID' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='work_name'  caption='Nombre Obra' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='ncd_registry_number'  caption='Numero Registro' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='license_owner_institution'  caption='Institucion con Licencia' data-type='string' alignment='center' :visible='true' :allow-grouping='false' /> 
-                        <DxColumn data-field='license_grant_date'  caption='Fecha de Licenciamiento' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='contract_date'  caption='Fecha Contratacion' data-type='string' alignment='center' :visible='true' :allow-grouping='true' /> 
-                        <DxColumn data-field='category_name'  caption='Categoria' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_city_name'  caption='Ciudad' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='contract_geo_city_name'  caption='Ciudad de Contratacion' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_state_name'  caption='Estado' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='contract_geo_state_name'  caption='Estado de Contratacion' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='colciencias_call_name'  caption='Minciencias' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='colciencias_call_year'  caption='Minciencias año' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='geo_country_name'  caption='Pais' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
-                        <DxColumn data-field='contract_geo_country_name'  caption='Pais de Contratacion' data-type='string' alignment='center' :visible='false' :allow-grouping='true' /> 
+						<DxColumn data-field="id" caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn data-field="work_name" caption="Nombre Obra" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn
+							data-field="ncd_registry_number"
+							caption="Numero Registro"
+							data-type="string"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+						/>
+						<DxColumn
+							data-field="license_owner_institution"
+							caption="Institucion con Licencia"
+							data-type="string"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+						/>
+						<DxColumn
+							data-field="license_grant_date"
+							caption="Fecha de Licenciamiento"
+							data-type="string"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="true"
+						/>
+						<DxColumn data-field="contract_date" caption="Fecha Contratacion" data-type="string" alignment="center" :visible="true" :allow-grouping="true" />
+						<DxColumn data-field="category_name" caption="Categoria" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn
+							data-field="contract_geo_city_name"
+							caption="Ciudad de Contratacion"
+							data-type="string"
+							alignment="center"
+							:visible="false"
+							:allow-grouping="true"
+						/>
+						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn
+							data-field="contract_geo_state_name"
+							caption="Estado de Contratacion"
+							data-type="string"
+							alignment="center"
+							:visible="false"
+							:allow-grouping="true"
+						/>
+						<DxColumn data-field="colciencias_call_name" caption="Minciencias" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn
+							data-field="colciencias_call_year"
+							caption="Minciencias año"
+							data-type="string"
+							alignment="center"
+							:visible="false"
+							:allow-grouping="true"
+						/>
+						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
+						<DxColumn
+							data-field="contract_geo_country_name"
+							caption="Pais de Contratacion"
+							data-type="string"
+							alignment="center"
+							:visible="false"
+							:allow-grouping="true"
+						/>
 
-						<DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/> 
+						<DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" />
 						<!-- <DxColumn data-field="url" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
-<!-- 						
+						<!-- 						
 						<template #tplWeb="{ data }">
 							<a v-if="data.data.url != '' && data.data.url != null" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
 								<i class="icon-link"></i> Visitar
@@ -282,8 +332,15 @@ regulation=endpoindt especifico endpoinds tutas generales update
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
 						</template> -->
 
-                        <template #tplObs="{ data }">
-							<a v-if="data.data.observation != '' && data.data.observation != null" :title="data.data.observation" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+						<template #tplObs="{ data }">
+							<a
+								v-if="data.data.observation != '' && data.data.observation != null"
+								:title="data.data.observation"
+								class="cmd-item color-main-600 mr-2"
+								@click.prevent="verObservar(data.data)"
+								href="#"
+								Target="_blank"
+							>
 								<i class="icon-info mr-1"></i> Ver
 							</a>
 							<a v-else title="No dispone" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -312,7 +369,6 @@ regulation=endpoindt especifico endpoinds tutas generales update
 							</span>
 						</template>
 					</DxDataGrid>
-
 				</div>
 			</div>
 		</div>
@@ -329,19 +385,20 @@ regulation=endpoindt especifico endpoinds tutas generales update
 			</div>
 		</div>
 
-        <DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observacion:">
-            <div class="row" style="overflow-y: scroll; height:148px">
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
+			<div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
-                    <h3>
+					<h3>
 						<i class="icon-info mr-1 color-main-600"></i>
-						<span class="font-weight-semibold">{{baseObj[titlecolum]}}</span>
+						<span class="font-weight-semibold">{{ baseObj[titlecolum] }}</span>
 					</h3>
 					<div v-html="observarData"></div>
 				</div>
 			</div>
-            <div class="row">
-				<div class="col"><hr>
-					<DxButton @click="popupObs=false" class="nb">
+			<div class="row">
+				<div class="col">
+					<hr />
+					<DxButton @click="popupObs = false" class="nb">
 						<template #default>
 							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
 								<b><i class="icon-database-remove"></i></b> Salir
@@ -351,7 +408,6 @@ regulation=endpoindt especifico endpoinds tutas generales update
 				</div>
 			</div>
 		</DxPopup>
-
 	</div>
 </template>
 
@@ -385,7 +441,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 export default {
 	components: {
 		// Commands,
-        DxPopup,
+		DxPopup,
 		DxButton,
 		DxColumn,
 		DxPatternRule,
@@ -420,36 +476,36 @@ export default {
 			type: Object,
 			default: () => null,
 		},
-        // namePanel:{
-        //     type: String,
-        //     default: () => "panelPrincipal",
-        // },
-        endPointRute:{
-            type: String,
-            default: () => null,
-        },
-        objEpdata:{
-            type: String,
-            default: () => null,
-        },
-        title:{
-            type: String,
-            default: () => null,
-        },
-        titleBtn:{
-            type: String,
-            default: () => null,
-        },
-        titlecolum:{
-            type: String,
-            default: () => null,
-        },
+		// namePanel:{
+		//     type: String,
+		//     default: () => "panelPrincipal",
+		// },
+		endPointRute: {
+			type: String,
+			default: () => null,
+		},
+		objEpdata: {
+			type: String,
+			default: () => null,
+		},
+		title: {
+			type: String,
+			default: () => null,
+		},
+		titleBtn: {
+			type: String,
+			default: () => null,
+		},
+		titlecolum: {
+			type: String,
+			default: () => null,
+		},
 	},
 	data: () => ({
-		namePanel:"licenciasObras",
-		codEP:null,
-        popupObs: false,
-        observarData:"",
+		namePanel: "licenciasObras",
+		codEP: null,
+		popupObs: false,
+		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		items: [],
 		totaCount: 0,
@@ -458,7 +514,7 @@ export default {
 		unidad: null,
 		section: null,
 		//tipos: 587, //584-179
-        tipox:[],
+		tipox: [],
 		totalCount: 0,
 		tiposDocumento: [],
 		subtipos: [],
@@ -474,29 +530,29 @@ export default {
 		now: new Date(),
 		baseEnt: null,
 		baseEnt2: null,
-        id_panel_documentos: "documentos",
-        id_panel_participantes: "participantes",
+		id_panel_documentos: "documentos",
+		id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
-            work_name: null,
-            category_id: null,
-            colciencias_call_id: null,
-            contract_date: null,
-            contract_geo_city_id: null,
+			work_name: null,
+			category_id: null,
+			colciencias_call_id: null,
+			contract_date: null,
+			contract_geo_city_id: null,
 			contract_geo_state_id: null,
 			contract_geo_country_id: null,
 			geo_city_id: null,
 			geo_state_id: null,
 			geo_country_id: null,
-            license_grant_date: null,
-            license_owner_institution: null,
-            ncd_registry_number: null,
-            research_group_id: null,
-            observation: null,
+			license_grant_date: null,
+			license_owner_institution: null,
+			ncd_registry_number: null,
+			research_group_id: null,
+			observation: null,
 		},
 		baseObj2: {
-            geo_city_id: null,
+			geo_city_id: null,
 			geo_state_id: null,
 			geo_country_id: null,
 		},
@@ -504,7 +560,7 @@ export default {
 	created() {
 		// console.clear();
 		root = this;
-        root.baseEnt2 = this.$clone(this.baseObj);
+		root.baseEnt2 = this.$clone(this.baseObj);
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		// root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
@@ -513,26 +569,24 @@ export default {
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
-        root.id_panel_documentos= this.namePanel + "documentos"
-        root.id_panel_participantes= this.namePanel + "participantes"
+		root.id_panel_documentos = this.namePanel + "documentos";
+		root.id_panel_participantes = this.namePanel + "participantes";
 		root.panelData = $("#" + this.namePanel + " .data");
-        root.panelGrid = $("#" + this.namePanel + " .grid");
-        root.panelCmds = $("#" + this.namePanel + " .cmds");
-        root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
-        root.panelDocs = $("#" + this.namePanel + "-documentos");
-        root.loaderMessage = "Cargando Elementos";
-        root.loaderElement = "#" + this.namePanel + " .grid";
-
+		root.panelGrid = $("#" + this.namePanel + " .grid");
+		root.panelCmds = $("#" + this.namePanel + " .cmds");
+		root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
+		root.panelDocs = $("#" + this.namePanel + "-documentos");
+		root.loaderMessage = "Cargando Elementos";
+		root.loaderElement = "#" + this.namePanel + " .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
-            let data = root.codEP;
-            data = (data != null) ? "product_type_id=" + data : null,
-            console.warn("codEP: ",root.codEP);
-            console.warn("valor de data: ",root.codEP);
+			let data = root.codEP;
+			(data = data != null ? "product_type_id=" + data : null), console.warn("codEP: ", root.codEP);
+			console.warn("valor de data: ", root.codEP);
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
@@ -554,27 +608,28 @@ export default {
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		
-        verObservar(data){
-            root.observarData=data.observation;
-            root.baseObj[root.titlecolum]=data[root.titlecolum].cadena.substring(0, 120);
-            root.popupObs= !root.popupObs ? true : false ;
-        },
-		
-		requisitoArchivo(){
-			let tipos=root.tiposDocumento;
-			let i=0, print="";
-			if(Array.isArray(tipos) && tipos.length != 0 && root.editMode){
-				print="<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
-				print=print + "<ul>";
-				for(i=0; i<tipos.length; i++){
-					let text = tipos[i].st_description==null ? "": "<br>"+tipos[i].st_description ;
-					if(tipos[i].active) print=print + "<li>" + "<b>"+tipos[i].st_name+ "</b>"+text+"</li>";
+
+		verObservar(data) {
+			root.observarData = data.observation;
+			root.baseObj[root.titlecolum] = data[root.titlecolum].cadena.substring(0, 120);
+			root.popupObs = !root.popupObs ? true : false;
+		},
+
+		requisitoArchivo() {
+			let tipos = root.tiposDocumento;
+			let i = 0,
+				print = "";
+			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print = print + "<ul>";
+				for (i = 0; i < tipos.length; i++) {
+					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
 				}
-				print=print + "</ul>";
+				print = print + "</ul>";
 			}
 			return print;
-		}, 
+		},
 
 		participantes(data) {
 			root.section = "participantes";
@@ -587,7 +642,9 @@ export default {
 			console.log("rd", rd);
 			root.baseObj = rd;
 			root.panelCmds.fadeOut();
-			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data[root.titlecolum]}`);
+			$("#" + root.namePanel + " .item-title").html(
+				`<span class="font-weight-semibold"> &raquo; Participantes</span> &raquo; ${data.row.data[root.titlecolum]}`
+			);
 			root.panelParticipantes = $("#" + root.id_panel_participantes);
 			console.log("root.panelParticipantes", root.id_panel_participantes.length);
 			$("#" + root.namePanel + "-documentos").hide();
@@ -651,23 +708,23 @@ export default {
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
 
-                root.baseObj.contract_geo_city_id = root.baseObj2.geo_city_id;
-				root.baseObj.contract_geo_state_id  = root.baseObj2.geo_state_id;
+				root.baseObj.contract_geo_city_id = root.baseObj2.geo_city_id;
+				root.baseObj.contract_geo_state_id = root.baseObj2.geo_state_id;
 				root.baseObj.contract_geo_country_id = root.baseObj2.geo_country_id;
-				
+
 				root.baseObj.product_type_id = root.codEP;
-                root.baseObj.research_group_id=root.group.id;
+				root.baseObj.research_group_id = root.group.id;
 				let obj = root.baseObj;
-                //let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
+				//let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
 
 				alert(JSON.stringify(root.baseObj, null, "\t"));
 				let dto = {
-					newFormat:true,
+					newFormat: true,
 					unidadId: root.group.id,
 					stringEP: root.endPointRute,
 					mod: obj.id,
 					//objectSend: { regulation : obj },
-                    objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
+					objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function(item) {
 						console.log("item", item);
 						root.grid.refresh();
@@ -689,7 +746,7 @@ export default {
 			root.baseObj2.geo_city_id = data.contract_geo_city_id;
 			root.baseObj2.geo_state_id = data.contract_geo_state_id;
 			root.baseObj2.geo_country_id = data.contract_geo_country_id;
-            //root.panelCmdBack.fadeOut();
+			//root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
@@ -701,10 +758,10 @@ export default {
 			root.mode = "add";
 			root.baseObj = this.$clone(this.baseEnt);
 			root.baseObj2 = this.$clone(this.baseEnt2);
-            //root.panelCmdBack.fadeOut();
+			//root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
-            console.warn("clase padre: ", this.padre);
-            console.warn("name panel: ", root.namePanel);
+			console.warn("clase padre: ", this.padre);
+			console.warn("name panel: ", root.namePanel);
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
 			});
@@ -729,12 +786,12 @@ export default {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
-                    let active=JSON.stringify({active: state,  updated_by: root.user_id});
+					let active = JSON.stringify({ active: state, updated_by: root.user_id });
 
 					var dto = {
-                        newFormat:true,
-                        url: `${root.endPointRute}/${data.data.id}`,
-                        data:  JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
+						newFormat: true,
+						url: `${root.endPointRute}/${data.data.id}`,
+						data: JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
 						cb: function(result) {
 							console.log("Result", result);
 							root.grid.refresh();

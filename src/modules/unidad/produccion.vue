@@ -4,7 +4,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="card" id="panel-produccion">
-					<div class="card-body group-detail">
+					<div class="card-body group-detail mh">
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
@@ -22,6 +22,12 @@
 									<template #title="{ data }"
 										><div class="col pt-2 pb-2"><i :class="'icon-' + data.icon"></i>{{ data.title }}</div></template
 									>
+									<!-- <DxItem title="Graficas de Estado de Produccion" icon="pie-chart" id="generacion" data-idx="1">
+										<template #default>
+											<Graficos :group="group" :editMode="editMode" />
+										</template>
+									</DxItem> -->
+
 									<DxItem title="Generación de Nuevo Conocimiento" icon="brain" id="generacion" data-idx="1">
 										<template #default>
 											<NuevoConocimiento :group="group" :editMode="editMode" />
@@ -49,7 +55,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="isDev && debug">
+		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -91,6 +97,7 @@ export default {
 		DesarrolloTecnologico: () => import("@/modules/unidad/productos/desarrollo_tecnologico"),
 		ApropiacionSocial: () => import("@/modules/unidad/productos/apropiacion_social"),
 		ActividadesFormacion: () => import("@/modules/unidad/productos/actividad_formacion"),
+		// Graficos: () => import("@/modules/unidad/productos/info_general"),
 	},
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),

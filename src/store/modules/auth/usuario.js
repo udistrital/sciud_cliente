@@ -96,6 +96,18 @@ const store = {
 				});
 		},
 
+		getStructures({ commit, dispatch, state }, args) {
+			// 202103120931: Es integrante, consulta los grupos respectivos
+			api()
+				.get(`researcher_research_units?identification_number=${args.doc}`)
+				.then((r) => {
+					let groups = r.data;
+					console.log(window.vm.$sep);
+					console.log("Grupos de integrante =>", groups);
+					return args.cb(groups);
+				});
+		},
+
 		getDocuments({ commit, dispatch, state }, cb) {
 			api("local")
 				.get("cedulas")
@@ -160,6 +172,7 @@ const store = {
 				oas_user_id: u.oas_user_id,
 				user_role_id: u.user_role_id,
 				updated_by: u.updated_by,
+				faculties_ids: u.faculties_ids,
 				active: u.active,
 			};
 			api()
@@ -220,7 +233,7 @@ const store = {
 			state.items = data;
 		},
 		setRoles(state, data) {
-			state.roles = data;
+			state.roles = window.vm.$objectSort(data, "name");
 			state.loadingRoles = false;
 			// console.log(window.vm._sep);
 			console.log("state.roles", state.roles);

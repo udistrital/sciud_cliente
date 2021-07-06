@@ -143,6 +143,63 @@ export default {
         productos: 'Articulos',
         cantidad: 2
         }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
+        productos: 'Articulos',
+        cantidad: 2
+        }, {
         productos: 'Libros',
         cantidad: 10
         }],

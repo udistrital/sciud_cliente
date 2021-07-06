@@ -77,7 +77,7 @@ const store = {
 			console.log("Usuario local", userLocal);
 
 			// 202103120410: NO es usuario del sistema
-			if (userLocal === null) return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: userOas }) : null;
+			if (userLocal === null) return args.cb({ hasAccess: false, user: userOas });
 
 			// 202103120410: Es usuario del sistema
 			let user = {
@@ -85,11 +85,29 @@ const store = {
 				oas: userOas,
 			};
 			console.log("user", user);
+
 			// 202104191437: Si NO es integrante
 			if (userLocal.user_role_id !== 5) {
-				return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: true, user: user }) : null;
+				return args.cb({ hasAccess: true, user: user });
 			} else {
+				dispatch(
+					"auth/usuario/getStructures",
+					{
+						doc: doc,
+						cb: function(groups) {
+							if (groups.length > 0) {
+								user["groups"] = groups;
+								return args.cb({ hasAccess: true, user: user });
+							} else {
+								// 202103120416: No se encontraron grupos para el usuario, niega el acceso
+								return args.cb({ hasAccess: false, user: user });
+							}
+						},
+					},
+					{ root: true }
+				);
 				// 202103120931: Es integrante, consulta los grupos respectivos
+				/*
 				api()
 					.get(`researcher_research_units?identification_number=${doc}`)
 					.then((r) => {
@@ -105,6 +123,7 @@ const store = {
 							return this._vm.$isFunction(args.cb) ? args.cb({ hasAccess: false, user: user }) : null;
 						}
 					});
+					*/
 			}
 		},
 		authLogout: ({ commit, state }, callback) => {
@@ -146,6 +165,9 @@ const store = {
 			console.log(window.vm.$sep);
 			console.log("store.auth => dispatch => usuario/getOasUser");
 			let userDetails = await dispatch("auth/usuario/getOasUser", { doc: args.user.local.identification_number }, { root: true });
+			if (typeof userDetails.TerceroId !== "undefined") {
+				userDetails.TerceroId.NombreCompleto = window.vm.$titleCase(userDetails.TerceroId.NombreCompleto);
+			}
 			console.log("store.auth => dispatch => usuario/getOasUser => Recibido => ", userDetails);
 			args.user["oas_details"] = userDetails;
 			commit("authSuccess", args);
