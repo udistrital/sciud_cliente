@@ -47,14 +47,21 @@ module.exports = {
 	// https://stackoverflow.com/a/62078502
 	// https://cli.vuejs.org/guide/css.html#passing-options-to-pre-processor-loaders
 	// https://webpack.js.org/loaders/sass-loader/#additionaldata
-	css: {
-		loaderOptions: {
-			sass: {
-				additionalData: () => {
-					let ad = `$base-url: "${process.env.NODE_ENV === "production" ? targetPath : "/"}";`;
-					return ad;
-				},
-			},
-		},
-	},
+	// css: {
+	// 	requireModuleExtension: false,
+	// 	loaderOptions: {
+	// 		sass: {
+	// 			additionalData: () => {
+	// 				// @/ is an alias to src/
+	// 				let ad = `$base-url: "${process.env.NODE_ENV === "production" ? targetPath : "/"}";`;
+	// 				// ad += `@import "~@/assets/css/global.scss";`;
+	// 				return ad;
+	// 			},
+	// 			sassOptions: {
+	// 				indentWidth: 4,
+	// 				includePaths: ["~@/assets/css"],
+	// 			},
+	// 		},
+	// 	},
+	// },
 };

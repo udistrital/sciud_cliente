@@ -1,18 +1,20 @@
 // Componentes globales
 import axios from "axios";
-// CSS
+
+// DX
 import "devextreme/dist/css/dx.common.css";
 import "devextreme/dist/css/dx.light.css";
 import { loadMessages, locale } from "devextreme/localization";
-// DX
 import esMessages from "devextreme/localization/messages/es.json";
+
+// Otros
 import vue from "vue";
 import { mapActions, mapState } from "vuex";
 import app from "./app.vue";
-import "./assets/css/global.scss";
 import global from "./assets/js/global";
 import router from "./router";
 import store from "./store";
+import "./assets/css/global.scss";
 
 // 202010290157: Observable -> https://stackoverflow.com/a/58968089
 // ".page-content:first"
@@ -334,8 +336,6 @@ axios
 				console.log("window.config", window.config);
 				console.log("window.clasificador", window.clasificador);
 				console.log("window.vm.$store", window.vm.$store);
-				document.documentElement.style.setProperty("--base-url", process.env.BASE_URL);
-				console.log("document.documentElement.style", document.documentElement.style);
 			})
 			.catch((err) => {
 				console.log("ERROR", err);

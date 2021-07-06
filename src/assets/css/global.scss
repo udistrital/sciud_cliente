@@ -671,7 +671,9 @@ hr.sep {
 		min-height: 825px;
 	}
 
-	background: url($base-url+"assets/img/bg-pages.png") no-repeat center center;
+	// 202107052113: '$base-url' definida en 'vue.config.js'
+	// 202107052123: https://stackoverflow.com/a/8608551
+	background: url(#{$base-url}assets/img/bg-pages.png) no-repeat center center;
 
 	.card-body,
 	&.nbg {
