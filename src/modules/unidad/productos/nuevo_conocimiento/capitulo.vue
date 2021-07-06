@@ -278,9 +278,9 @@ Libro = Titulo principal Capitulo = titulo abreviado panelCapitulo = nombredepan
 						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="true" />
 
 						<DxColumn data-field="publication_date" caption="Fecha Publicación" data-type="date" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn data-field="url" caption="Web" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
+						<!-- <DxColumn data-field="url" caption="Web" data-type="string" alignment="center" :visible="false" :allow-grouping="false" /> -->
 
-						<DxColumn data-field="webpage" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<DxColumn data-field="url" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 
