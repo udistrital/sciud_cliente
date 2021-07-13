@@ -18,6 +18,7 @@
 	"subtipo": [
 		{ "name": "acompaniamiento_asesoria_categoria", "id": 168 },
 		{ "name": "acompaniamiento_asesoria_documento", "id": 169 },
+		{ "name": "acompaniamiento_asesoria_documento", "id": 169 },
 		{ "name": "acto_legislativo_categoria", "id": 92 },
 		{ "name": "acto_legislativo_documento", "id": 93 },
 		{ "name": "apoyo_creacion_categoria", "id": 164 },
@@ -41,6 +42,8 @@
 		{ "name": "consultorias_arte_documento", "id": 130 },
 		{ "name": "Consultorias_cientificas_categoria", "id": 127 },
 		{ "name": "Consultorias_cientificas_documento", "id": 128 },
+		{ "name": "convocatoria_rubro", "id": 54 },
+		{ "name": "convocatoria_tipo", "id": 194 },
 		{ "name": "desarrollo_web_categoria", "id": 138 },
 		{ "name": "desarrollo_web_documento", "id": 139 },
 		{ "name": "diseno_industrial_categoria", "id": 32 },
