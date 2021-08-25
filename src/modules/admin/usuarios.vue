@@ -837,6 +837,7 @@ export default {
 			});
 		},
 		edit(data) {
+			console.clear();
 			root.mode = "edit";
 			console.log("data", data);
 			data["identification_number"] = parseInt(data["identification_number"]);
@@ -844,6 +845,7 @@ export default {
 				data["oas_details"] = { TerceroId: { Id: 0, NombreCompleto: null } };
 			} else {
 				data.oas_id = data.oas_details.TerceroId.Id;
+				data.oas_user_id = data.oas_details.TerceroId.Id;
 				data.name = data.oas_details.TerceroId.NombreCompleto;
 			}
 			// 202104121835: Cambia el numberbox en el sub nivel
