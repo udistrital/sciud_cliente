@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210706 - ©{{ year }}
+				SICIUD v2.0.20210825 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -87,18 +87,18 @@ export default {
 			},
 			{
 				cc: "51722992",
-				title: "Marta Esperanza Ospina Espitia (Integrante)",
-				text: "Integrante 1",
+				title: "Marta Esperanza Ospina Espitia (Líder Semillero)",
+				text: "Líder Semillero",
 			},
 			{
-				cc: "94492320",
-				title: "Hector Julian Sanchez Ramirez (Integrante)",
-				text: "Integrante 2",
+				cc: "43105248",
+				title: "Edis Aleida Villa Martinez (Integrante Semillero)",
+				text: "Int. Semillero",
 			},
 			{
 				cc: "19296014",
-				title: "German Arturo Lopez Martinez (Integrante Inactivo)",
-				text: "Inactivo",
+				title: "German Arturo Lopez Martinez (Integrante)",
+				text: "Integrante",
 			},
 		],
 	}),

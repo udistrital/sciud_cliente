@@ -111,6 +111,16 @@ vue.mixin({
 			// console.log("date_focus_out =>", e);
 			e.component.close();
 		},
+		// 202108250029: Obtiene el id de un rol de grupo
+		get_group_role_id: (name) => {
+			let item = window.clasificador.estructura_rol.find((o) => o.name == name);
+			return typeof item !== "undefined" ? item["id"] : null;
+		},
+		// 202108250030: Obtiene el id de un tipo de grupo
+		get_group_type_id: (name) => {
+			let item = window.clasificador.estructura_tipo.find((o) => o.name == name);
+			return typeof item !== "undefined" ? item["id"] : null;
+		},
 		get_role_id: (name) => {
 			let item = window.clasificador.rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
@@ -227,18 +237,19 @@ vue.mixin({
 			return this.user_role_id == this.get_role_id("administrador");
 		},
 		editMode() {
+			let root = this;
 			let result = false;
 			console.log(window.vm.$sep);
 			console.log("editMode");
 			if (
-				this.user_role_id === this.get_role_id("administrador") ||
-				this.user_role_id === this.get_role_id("gestor") ||
-				this.user_role_id === this.get_role_id("gestor_facultad")
+				root.user_role_id === this.get_role_id("administrador") ||
+				root.user_role_id === this.get_role_id("gestor") ||
+				root.user_role_id === this.get_role_id("gestor_facultad")
 			) {
 				result = true;
 			} else {
-				console.log("this.$route.params", this.$route.params);
-				let groupId = this.$route.params.unidadId;
+				console.log("this.$route.params", root.$route.params);
+				let groupId = root.$route.params.unidadId;
 				if (typeof groupId !== "undefined" && typeof window.vm.user !== "undefined") {
 					console.log("groupId =>", groupId);
 					console.log("user =>", window.vm.user);
@@ -250,7 +261,9 @@ vue.mixin({
 							console.log("current_group =>", g);
 							console.log("current_group => role_id =>", g.role_id);
 							// 202106170127: Si es director en el grupo actual
-							if (g.role_id === 1) result = true;
+							if (g.role_id === root.get_group_role_id("director")) result = true;
+							// 202108250019: Si el grupo es semillero y el rol es lider semillero
+							if (g.group_type_id === root.get_group_type_id("semillero") && g.role_id === root.get_group_role_id("lider_semillero")) result = true;
 						}
 					}
 				}

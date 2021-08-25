@@ -7,6 +7,20 @@
 		{ "id": 5, "name": "integrante" },
 		{ "id": 6, "name": "gestor_facultad" }
 	],
+	"estructura_tipo": [
+		{ "id": 3, "name": "grupo" },
+		{ "id": 4, "name": "semillero" },
+		{ "id": 5, "name": "red" }
+	],
+	"estructura_rol": [
+		{ "id": 0, "name": "sin_asignar" },
+		{ "id": 1, "name": "director" },
+		{ "id": 2, "name": "docente" },
+		{ "id": 3, "name": "estudiante" },
+		{ "id": 4, "name": "egresado" },
+		{ "id": 5, "name": "lider_semillero" },
+		{ "id": 6, "name": "invitado" }
+	],
 	"facultad": [
 		{ "id": 8, "id_oas": 8, "nombre": "Vicerrectoria Académica" },
 		{ "id": 512, "id_oas": 14, "nombre": "Facultad de Ingeniería" },
