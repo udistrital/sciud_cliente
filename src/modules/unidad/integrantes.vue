@@ -606,7 +606,7 @@ export default {
 		DxTextBox,
 		DxValidationGroup,
 		DxValidator,
-		Header: () => import("@/components/element/header"),
+		Header: () => import("./_header"),
 	},
 	data: () => ({
 		chkActive: null,

@@ -377,6 +377,42 @@ hr {
 	.btn-sm {
 		margin-top: 7px;
 	}
+	&.text-center {
+		text-align: center;
+		// label {
+		// 	padding-right: 9px;
+		// }
+		input[type="text"] {
+			text-align: center;
+			&::placeholder {
+				text-align: center; /* for Chrome, Firefox, Opera */
+			}
+			&:-ms-input-placeholder {
+				text-align: center; /* for IE 10-11 */
+			}
+			&::-webkit-input-placeholder {
+				text-align: center; /* for IE Edge */
+			}
+		}
+	}
+	&.text-end {
+		text-align: right;
+		label {
+			padding-right: 9px;
+		}
+		input[type="text"] {
+			text-align: right;
+			&::placeholder {
+				text-align: right; /* for Chrome, Firefox, Opera */
+			}
+			&:-ms-input-placeholder {
+				text-align: right; /* for IE 10-11 */
+			}
+			&::-webkit-input-placeholder {
+				text-align: right; /* for IE Edge */
+			}
+		}
+	}
 }
 
 .color-text {
@@ -474,6 +510,10 @@ span.cmds {
 		&:hover {
 			color: $main-color-600;
 			opacity: 1 !important;
+			// i {
+			// 	font-size: 1rem !important;
+			// 	font-weight: 600 !important;
+			// }
 		}
 		i {
 			&::before {
@@ -562,8 +602,8 @@ span.cmds {
 	.title {
 		line-height: 2.4rem;
 		font-size: 2.3rem;
-		font-weight: 300;
-		letter-spacing: -2.8px;
+		font-weight: 200;
+		letter-spacing: -2.4px;
 		i {
 			line-height: 2.4rem;
 			font-weight: 500;
@@ -577,6 +617,19 @@ span.cmds {
 		font-size: 1.8rem;
 		font-weight: 400;
 		letter-spacing: -1.8px;
+		i {
+			font-weight: 500;
+			color: $main-color-500;
+			font-size: 1.4rem;
+			margin-right: 0.15rem;
+		}
+	}
+	.title2 {
+		// padding-left: 3.7rem;
+		line-height: 1.8rem;
+		font-size: 1.6rem;
+		font-weight: 400;
+		letter-spacing: -1.7px;
 		i {
 			font-weight: 500;
 			color: $main-color-500;
@@ -603,6 +656,12 @@ span.cmds {
 			font-weight: 400;
 			letter-spacing: -1.2px;
 			border: none;
+			i {
+				color: $text;
+				font-size: 1.18rem;
+				font-weight: 500;
+				margin-right: 0.1rem;
+			}
 		}
 	}
 	.sep {
@@ -679,4 +738,19 @@ hr.sep {
 	&.nbg {
 		background: none !important;
 	}
+}
+
+.title-zone {
+	.title-desc {
+		font-weight: 600;
+		color: $main-color-600;
+	}
+	b,
+	strong {
+		font-weight: 600;
+	}
+}
+
+.bb {
+	border-bottom: 1px solid $color-gray-10;
 }

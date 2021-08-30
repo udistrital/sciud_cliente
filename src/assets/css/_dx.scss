@@ -690,6 +690,11 @@
 			text-transform: uppercase;
 		}
 	}
+	&.text-end {
+		input[type="text"] {
+			text-align: right;
+		}
+	}
 }
 
 .nb {
@@ -862,7 +867,7 @@
 		margin: 0 !important;
 		list-style: none !important;
 		// min-height: 300px;
-		border-radius: 6px;
+		// border-radius: 2px;
 		background-color: rgba(#fff, 0.97) !important;
 		display: block !important;
 		// align-items: center !important;
@@ -1377,4 +1382,20 @@ tr.hovered {
 			color: $main-color-600 !important;
 		}
 	}
+}
+
+.dx-command-drag {
+	padding-top: 0.5rem !important;
+	vertical-align: top !important;
+	.dx-datagrid-drag-icon {
+		color: $main-color-600;
+		&:before {
+			font-family: icomoon !important;
+			content: "\ee49" !important;
+		}
+	}
+}
+
+.dx-sortable-placeholder {
+	border-color: $main-color-500 !important;
 }

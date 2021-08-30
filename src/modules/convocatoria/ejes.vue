@@ -1,25 +1,28 @@
 <template>
-	<div v-if="group">
-		<Header :group="group" />
+	<div v-if="item">
+		<Header :item="item" />
 		<div class="row">
 			<div class="col">
 				<div class="card" id="panel-documentos">
 					<div class="card-body group-detail mh">
-						<div class="row mb-3">
+						<div class="row pb-3 mb-3 bb">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
-									<div class="title"><i class="icon-books"></i> {{ $titleCase(group.name) }}</div>
-									<div class="sub-title"><i class="icon-file-pdf"></i> Documentos</div>
+									<div>
+										<span class="title d-block"><i class="icon-pencil6"></i> Convocatoria {{ item.call_code }}</span>
+										<span class="title2 d-block mt-2">{{ item.call_name }}</span>
+									</div>
+									<div class="sub-title text-nowrap"><i class="icon-tree6"></i>&nbsp;Ejes Temáticos</div>
 								</div>
 							</div>
 						</div>
 						<Documentos
 							:id="id"
 							:parent="this"
-							:main-obj="group"
+							:main-obj="item"
 							:show-on-load="true"
 							:tipos="tiposDocumento"
-							end-point="research_units"
+							end-point="calls"
 							lock-element="#panel-documentos .card-body"
 						/>
 					</div>
@@ -32,7 +35,7 @@
 					<div class="card-body">
 						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
 						<hr class="sep" />
-						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+						<span class="font-weight-semibold">item:</span> {{ JSON.stringify(item, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -58,28 +61,24 @@ export default {
 		Documentos: () => import("@/components/element/documentos"),
 	},
 	data: () => ({
-		group: null,
-		id: "panel-unidad-documentos",
+		item: null,
+		id: "panel-convocatoria-documentos",
 	}),
 	methods: {
-		...mapActions("unidad", ["getUnit"]),
+		...mapActions("convocatoria", ["getItem"]),
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 	},
-	created: function() {
+	created: async function() {
 		root = this;
 		console.log(root.$sep);
-		root.tiposDocumento = root.subtypesByType("unidad_tipo_documento");
-		console.log("root.tiposDocumento", root.tiposDocumento);
-		let uId = root.$route.params.unidadId;
-		root.getUnit({
-			id: uId,
-			cb: function(result) {
-				root.group = result;
-				document.title += ` ${root.$titleCase(root.group.name)}`;
-			},
-		});
+		root.tiposDocumento = root.subtypesByType("convocatoria_documento");
+		console.log("root.tiposDocumento =>", root.tiposDocumento);
+		let uId = root.$route.params.itemId;
+		root.item = await root.getItem(uId);
+		console.log("item =>", root.item);
+		document.title += ` Convocatoria ${root.item.call_code}`;
 	},
 	updated: () => {
 		console.log(root.$sep);

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 var webpack = require("webpack");
 var targetPath = "/udistrital/siciud-v2/";
+// var targetPath = "/";
 
 module.exports = {
 	productionSourceMap: process.env.NODE_ENV !== "production",

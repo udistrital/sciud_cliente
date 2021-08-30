@@ -604,7 +604,7 @@ export default {
 		DxEmailRule,
 		DxTextBox,
 		DxValidationGroup,
-		Header: () => import("@/components/element/header"),
+		Header: () => import("./_header"),
 	},
 	data: () => ({
 		files: [],

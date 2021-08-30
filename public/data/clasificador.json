@@ -7,6 +7,20 @@
 		{ "id": 5, "name": "integrante" },
 		{ "id": 6, "name": "gestor_facultad" }
 	],
+	"estructura_tipo": [
+		{ "id": 3, "name": "grupo" },
+		{ "id": 4, "name": "semillero" },
+		{ "id": 5, "name": "red" }
+	],
+	"estructura_rol": [
+		{ "id": 0, "name": "sin_asignar" },
+		{ "id": 1, "name": "director" },
+		{ "id": 2, "name": "docente" },
+		{ "id": 3, "name": "estudiante" },
+		{ "id": 4, "name": "egresado" },
+		{ "id": 5, "name": "lider_semillero" },
+		{ "id": 6, "name": "invitado" }
+	],
 	"facultad": [
 		{ "id": 8, "id_oas": 8, "nombre": "Vicerrectoria Académica" },
 		{ "id": 512, "id_oas": 14, "nombre": "Facultad de Ingeniería" },
@@ -34,14 +48,20 @@
 		{ "name": "capitulo_libro_documento", "id": 24 },
 		{ "name": "circuito_categoria", "id": 33 },
 		{ "name": "circuito_documento", "id": 43 },
-		{ "name": "coleccion_cientiica_categoria", "id": 39 },
-		{ "name": "coleccion_cientiica_documento", "id": 49 },
+		{ "name": "coleccion_cientifica_categoria", "id": 39 },
+		{ "name": "coleccion_cientifica_documento", "id": 49 },
 		{ "name": "concepto_tecnico_categoria", "id": 96 },
 		{ "name": "concepto_tecnico_documento", "id": 97 },
 		{ "name": "consultorias_arte_categoria", "id": 129 },
 		{ "name": "consultorias_arte_documento", "id": 130 },
 		{ "name": "consultorias_cientificas_categoria", "id": 127 },
 		{ "name": "consultorias_cientificas_documento", "id": 128 },
+		{ "name": "convocatoria_beneficiario", "id": 195 },
+		{ "name": "convocatoria_criterio", "id": 199 },
+		{ "name": "convocatoria_doc_emitir", "id": 198 },
+		{ "name": "convocatoria_doc_solicitar", "id": 200 },
+		{ "name": "convocatoria_eje_tematico", "id": 197 },
+		{ "name": "convocatoria_estado", "id": 196 },
 		{ "name": "convocatoria_rubro", "id": 54 },
 		{ "name": "convocatoria_tipo", "id": 194 },
 		{ "name": "desarrollo_web_categoria", "id": 138 },
@@ -182,6 +202,12 @@
 		{ "name": "unidad_tipo", "id": 2 },
 		{ "name": "variedad_vegetal_categoria", "id": 16 },
 		{ "name": "variedad_vegetal_documento", "id": 26 },
-		{ "name": "variedad_vegetal_estado_peticion", "id": 64 }
+		{ "name": "variedad_vegetal_estado_peticion", "id": 64 },
+
+		{ "name": "planaccion_form1_tipos", "id": 201 },
+		{ "name": "planaccion_form2_tipos", "id": 202 },
+		{ "name": "planaccion_form2_estado_tipos", "id": 203 },
+		{ "name": "planaccion_form3_estado_tipos", "id": 204 },
+		{ "name": "planaccion_form6_estado_tipos", "id": 207 }
 	]
 }

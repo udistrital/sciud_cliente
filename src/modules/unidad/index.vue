@@ -224,7 +224,7 @@
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
-								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="120" alignment="center" cell-template="tplCommands" />
+								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="150" alignment="center" cell-template="tplCommands" />
 								<template #tplCommands="{ data }">
 									<span class="cmds">
 										<a
@@ -258,6 +258,16 @@
 											class="cmd-item color-main-600"
 										>
 											<i class="icon-trophy"></i>
+										</a>
+
+										<!-- Nuevo elementos plan accion  -->
+										<a
+											title="Observar Plan Accion..."
+											href="#"
+											@click.prevent="go(data.value, `unidad/${data.value}/plan_accion`, 'Cargando Cargando Plan Accion')"
+											class="cmd-item color-main-600"
+										>
+											<i class="icon-clipboard"></i>
 										</a>
 									</span>
 								</template>

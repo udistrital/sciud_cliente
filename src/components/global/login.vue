@@ -98,7 +98,7 @@ export default {
 		if (qs.id_token !== null && qs.id_token !== undefined) {
 			// Es respuesta de la OAS
 			console.log(window.vm.$sep);
-			this.loaderShow("Verificando credenciales<br>un momento por favor", "#login");
+			this.loaderShow("Verificando credenciales", "#login");
 			console.log("qs", qs);
 			// 202103120335: Verifica que el usuario exista localmente
 			root.getUser({

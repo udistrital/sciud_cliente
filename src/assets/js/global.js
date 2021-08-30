@@ -40,7 +40,14 @@ jQuery.fn.enable = function() {
 //#endregion
 
 //#region Number Extensions
-Number.prototype.format = function(decimals, dec_point, thousands_sep) {
+
+// 202107291218;: https://stackoverflow.com/a/2901298
+Number.prototype.format = function() {
+	var number = this;
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+Number.prototype.format2 = function(decimals, dec_point, thousands_sep) {
 	var number = this;
 	number = (number + "").replace(/[^0-9+-Ee.]/g, "");
 	var n = !isFinite(+number) ? 0 : +number,
@@ -64,10 +71,10 @@ Number.prototype.format = function(decimals, dec_point, thousands_sep) {
 
 Number.prototype.formatSize = function() {
 	var filesize = parseInt(this);
-	if (filesize >= 1073741824) filesize = (filesize / 1073741824).format(2, ",", ".") + " GB";
-	else if (filesize >= 1048576) filesize = (filesize / 1048576).format(2, ",", ".") + " MB";
-	else if (filesize >= 1024) filesize = (filesize / 1024).format(0) + " KB";
-	else filesize = filesize.format(0) + " Bytes";
+	if (filesize >= 1073741824) filesize = (filesize / 1073741824).format2(2, ",", ".") + " GB";
+	else if (filesize >= 1048576) filesize = (filesize / 1048576).format2(2, ",", ".") + " MB";
+	else if (filesize >= 1024) filesize = (filesize / 1024).format2(0) + " KB";
+	else filesize = filesize.format2(0) + " Bytes";
 	return filesize.replaceAll(",00", "");
 };
 
@@ -120,6 +127,16 @@ export default {
 				}
 			}
 			return is_different;
+		};
+
+		// 202107132347: Diferencia en meses
+		// https://stackoverflow.com/a/2536445
+		vue.prototype.$monthDiff = function(dateFrom, dateTo) {
+			var months;
+			months = (dateTo.getFullYear() - dateFrom.getFullYear()) * 12;
+			months -= dateFrom.getMonth();
+			months += dateTo.getMonth();
+			return months <= 0 ? 0 : months + 1;
 		};
 
 		// 202103090317: Get deep field value
