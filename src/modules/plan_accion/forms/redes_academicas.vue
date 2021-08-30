@@ -662,6 +662,10 @@ export default {
       type: String,
       default: null,
     },
+    validateImp:{
+			type: Boolean,
+			default: false,
+		},
   },
   data: () => ({
     cineDetallados: [],

@@ -27,13 +27,13 @@
 					<b><i class="icon-file-pdf"></i></b> Vista de Impresión
 				</a>
 
-                <a
+                <!-- <a
 					href="#"
 					@click="print"
 					title="Volver a Unidades..."
 					class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2">
 					<b><i class="icon-file-pdf"></i></b> Vista de Impresión
-				</a>
+				</a> -->
 
 			</div>
 
@@ -79,16 +79,14 @@
                                         </table> 
                                     </div>
                                 </div>	
-                                <br />
+                                
 
-                                <table border="0">
-                                    <thead>
-                                        <tr>
-                                            <th>
+                                <br />
+                                    <div class="card-body group-detail mh">
                                                 <div class="row">
                                                     <div class="col-md-12 mt-3">                                       
                                                                 <fieldset>
-                                                                    <legend>1.0 Información Básica</legend>
+                                                                     <legend><small>1.0 Información Básica </small></legend>
                                                                         <div class="row">
                                                                             <div class="col-md-12">
                                                                                 <div class="row">
@@ -119,201 +117,18 @@
                                                 <div class="row">
                                                     <div class="col-md-12 mt-3">
                                                         <fieldset>
-                                                            <legend>Proceso de Formación para la Investigación/Investigación Formativa</legend>
+                                                             <legend><small>Proceso de Formación para la Investigación/Investigación Formativa </small></legend>
                                                            
-                                                                <div class="p-0">
-                                                <!-- @content-ready="onContentReady" -->
-                                                <DxDataGrid
-                                                    class="main"
-                                                    width="100%"
-                                                    @initialized="gridInit"
-                                                    
-                                                    :allow-column-reordering="true"
-                                                    no-data-text="No hay elementos registrados"
-                                                    :data-source="dataSource"
-                                                    :remote-operations="true"
-                                                    :hover-state-enabled="true"
-                                                    :row-alternation-enabled="true"
-                                                    :word-wrap-enabled="true"
-                                                    :show-borders="false"
-                                                >
-                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                    <DxPaging :page-size="10" />
-                                                    <DxFilterRow :visible="false" />
-                                                    <DxLoadPanel :enabled="false" />
-                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                    <DxGrouping :auto-expand-all="false" />
-                                                    <DxSummary>
-                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                    </DxSummary>
-                                                    <DxPager
-                                                        :show-info="true"
-                                                        :show-page-size-selector="true"
-                                                        :show-navigation-buttons="true"
-                                                        :allowed-page-sizes="dgPageSizes"
-                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                    />
-                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                    <DxColumn data-field='indicator_product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='indicator_description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                                                </DxDataGrid>
-                                            </div>
-                                                            
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-12 mt-3">
-                                                        <fieldset>
-                                                            <legend>Proyecto de Investigación en el Periodo Anual</legend>
-                                                            <div class="p-0">
-                                                                <!-- @content-ready="onContentReady" -->
-                                                                <DxDataGrid
-                                                                    class="main"
-                                                                    width="100%"
-                                                                    @initialized="gridInit"
-                                                                    
-                                                                    :allow-column-reordering="true"
-                                                                    no-data-text="No hay elementos registrados"
-                                                                    :data-source="dataSource2"
-                                                                    :remote-operations="true"
-                                                                    :hover-state-enabled="true"
-                                                                    :row-alternation-enabled="true"
-                                                                    :word-wrap-enabled="true"
-                                                                    :show-borders="false"
-                                                                >
-                                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                                    <DxPaging :page-size="10" />
-                                                                    <DxFilterRow :visible="false" />
-                                                                    <DxLoadPanel :enabled="false" />
-                                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                                    <DxGrouping :auto-expand-all="false" />
-                                                                    <DxSummary>
-                                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                                    </DxSummary>
-                                                                    <DxPager
-                                                                        :show-info="true"
-                                                                        :show-page-size-selector="true"
-                                                                        :show-navigation-buttons="true"
-                                                                        :allowed-page-sizes="dgPageSizes"
-                                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                                    />
-                                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                                    <DxColumn data-field='financing_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='goal_state_name'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-
-                                                                </DxDataGrid>
-                                                            </div>
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-12 mt-3">
-                                                        <fieldset>
-                                                            <legend>Productos Resultado de Procesos de Investigación Creacion e Innovación a Generar para el Periodo Anual</legend>
-                                                             <div class="p-0">
-                                                                <!-- @content-ready="onContentReady" -->
-                                                                <DxDataGrid
-                                                                    class="main"
-                                                                    width="100%"
-                                                                    @initialized="gridInit"
-                                                                    
-                                                                    :allow-column-reordering="true"
-                                                                    no-data-text="No hay elementos registrados"
-                                                                    :data-source="dataSource3"
-                                                                    :remote-operations="true"
-                                                                    :hover-state-enabled="true"
-                                                                    :row-alternation-enabled="true"
-                                                                    :word-wrap-enabled="true"
-                                                                    :show-borders="false"
-                                                                >
-                                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                                    <DxPaging :page-size="10" />
-                                                                    <DxFilterRow :visible="false" />
-                                                                    <DxLoadPanel :enabled="false" />
-                                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                                    <DxGrouping :auto-expand-all="false" />
-                                                                    <DxSummary>
-                                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                                    </DxSummary>
-                                                                    <DxPager
-                                                                        :show-info="true"
-                                                                        :show-page-size-selector="true"
-                                                                        :show-navigation-buttons="true"
-                                                                        :allowed-page-sizes="dgPageSizes"
-                                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                                    />
-                                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                                    <DxColumn data-field='indicator_product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='indicator_description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                                                                </DxDataGrid>
-                                                            </div>
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-12 mt-3">
-                                                        <fieldset>
-                                                            <legend>Productos Con Potencialidad de Transferencia a prestar a la OTRI-Bogotá en el Periodo Anual </legend>
-                                                            
-                                                            <DxDataGrid
-                                                                    class="main"
-                                                                    width="100%"
-                                                                    @initialized="gridInit"
-                                                                    
-                                                                    :allow-column-reordering="true"
-                                                                    no-data-text="No hay elementos registrados"
-                                                                    :data-source="dataSource4"
-                                                                    :remote-operations="true"
-                                                                    :hover-state-enabled="true"
-                                                                    :row-alternation-enabled="true"
-                                                                    :word-wrap-enabled="true"
-                                                                    :show-borders="false"
-                                                                >
-                                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                                    <DxPaging :page-size="10" />
-                                                                    <DxFilterRow :visible="false" />
-                                                                    <DxLoadPanel :enabled="false" />
-                                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                                    <DxGrouping :auto-expand-all="false" />
-                                                                    <DxSummary>
-                                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                                    </DxSummary>
-                                                                    <DxPager
-                                                                        :show-info="true"
-                                                                        :show-page-size-selector="true"
-                                                                        :show-navigation-buttons="true"
-                                                                        :allowed-page-sizes="dgPageSizes"
-                                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                                    />
-                                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                                    <DxColumn data-field='product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                                                                </DxDataGrid>
-                                                             
+                                                <ProcesoFormacion
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)" 
+													:editMode="editMode" 
+													title="Listado de Procesos de Formacion" 
+															
+													titleBtn="Agregar Proceso"	
+													titlecolum="title"
+                          :validateImp="true"
+												/>
 
                                                         </fieldset>
                                                     </div>
@@ -322,57 +137,78 @@
                                                 <div class="row">
                                                     <div class="col-md-12 mt-3">
                                                         <fieldset>
-                                                            <legend>Recursos con que cuenta el Grupo para el Desarrollo de las Actividades de Investigación</legend>
-                                                            <DxDataGrid
-                                                                    class="main"
-                                                                    width="100%"
-                                                                    @initialized="gridInit"
-                                                                    
-                                                                    :allow-column-reordering="true"
-                                                                    no-data-text="No hay elementos registrados"
-                                                                    :data-source="dataSource5"
-                                                                    :remote-operations="true"
-                                                                    :hover-state-enabled="true"
-                                                                    :row-alternation-enabled="true"
-                                                                    :word-wrap-enabled="true"
-                                                                    :show-borders="false"
-                                                                >
-                                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                                    <DxPaging :page-size="10" />
-                                                                    <DxFilterRow :visible="false" />
-                                                                    <DxLoadPanel :enabled="false" />
-                                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                                    <DxGrouping :auto-expand-all="false" />
-                                                                    <DxSummary>
-                                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                                    </DxSummary>
-                                                                    <DxPager
-                                                                        :show-info="true"
-                                                                        :show-page-size-selector="true"
-                                                                        :show-navigation-buttons="true"
-                                                                        :allowed-page-sizes="dgPageSizes"
-                                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                                    />
-                                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                                    <DxColumn data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="100" />
-                                                                    <DxColumn data-field='inventory_plate'  caption='Placa' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                </DxDataGrid>
-                                                            
-
+                                                             <legend><small>Proyecto de Investigación en el Periodo Anual </small></legend>
+                                                             <ProyectoInvestigacion
+                                                                :group="group"
+                                                                :action_panel_id="parseInt($route.params.planId)"   
+                                                                :editMode="editMode" 
+                                                                title="Listado de Proyectos de Investigación" 
+                                                                        
+                                                                titleBtn="Agregar Proyecto"	
+                                                                titlecolum="title"
+                          :validateImp="true"
+                                                            />
                                                         </fieldset>
                                                     </div>
                                                 </div>
 
-                                                <div class="row" id="printMe">
+                                                <div class="row">
                                                     <div class="col-md-12 mt-3">
                                                         <fieldset>
-                                                            <legend>Redes Académicas de Promoción Científica y/o Artística</legend>
+                                                             <legend><small>Productos Resultado de Procesos de Investigación Creacion e Innovación a Generar para el Periodo Anual </small></legend>
+                                                             <ProductosResultados
+                                                                :group="group"
+                                                                :action_panel_id="parseInt($route.params.planId)"    
+                                                                :editMode="editMode" 
+                                                                title="Listado de Productos Resultado de Investigación Creacion" 
+                                                                        
+                                                                titleBtn="Agregar Producto"	
+                                                                titlecolum="title"
+                          :validateImp="true"
+                                                            />
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 mt-3">
+                                                        <fieldset>
+                                                             <legend><small>Productos Con Potencialidad de Transferencia a prestar a la OTRI-Bogotá en el Periodo Anual  </small></legend>
+                                                             <ProductosTransferencia
+                                                                :group="group"
+                                                                :action_panel_id="parseInt($route.params.planId)"  
+                                                                :editMode="editMode" 
+                                                                title="Listado de Productos Con Potencialidad  de Transferencia" 
+                                                                        
+                                                                titleBtn="Agregar Producto"	
+                                                                titlecolum="title"
+                          :validateImp="true"
+                                                            /> 
+                                                    </fieldset>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 mt-3">
+                                                        <fieldset>
+                                                             <legend><small>Recursos con que cuenta el Grupo para el Desarrollo de las Actividades de Investigación </small></legend>
+                                                             <RecursosGrupo
+                                                                :group="group"
+                                                                :action_panel_id="parseInt($route.params.planId)"   
+                                                                :editMode="editMode" 
+                                                                title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"        
+                                                                titleBtn="Agregar Recurso"	
+                                                                titlecolum="title"
+                          :validateImp="true"
+                                                            />
+                                                        </fieldset>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12 mt-3">
+                                                        <fieldset>
+                                                             <legend><small>Redes Académicas de Promoción Científica y/o Artística </small></legend>
                                                           
 
                                                           <div class="card text-dark bg-light mb-12">
@@ -450,10 +286,7 @@
                                                         </fieldset>
                                                     </div>
                                                 </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
+                                    </div>
                             </section>
                         </vue-html2pdf>
 
@@ -468,7 +301,7 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <fieldset>
-                                            <legend>Información Básica</legend>
+                                             <legend><small>Información Básica </small></legend>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="row">
@@ -501,51 +334,18 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <fieldset>
-                                            <legend>Proceso de Formación para la Investigación/Investigación Formativa</legend>
-                                            
-                                            <div class="p-0">
-                                                <!-- @content-ready="onContentReady" -->
-                                                <DxDataGrid
-                                                    class="main"
-                                                    width="100%"
-                                                    @initialized="gridInit"
-                                                    
-                                                    :allow-column-reordering="true"
-                                                    no-data-text="No hay elementos registrados"
-                                                    :data-source="dataSource"
-                                                    :remote-operations="true"
-                                                    :hover-state-enabled="true"
-                                                    :row-alternation-enabled="true"
-                                                    :word-wrap-enabled="true"
-                                                    :show-borders="false"
-                                                >
-                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                    <DxPaging :page-size="10" />
-                                                    <DxFilterRow :visible="false" />
-                                                    <DxLoadPanel :enabled="false" />
-                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                    <DxGrouping :auto-expand-all="false" />
-                                                    <DxSummary>
-                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                    </DxSummary>
-                                                    <DxPager
-                                                        :show-info="true"
-                                                        :show-page-size-selector="true"
-                                                        :show-navigation-buttons="true"
-                                                        :allowed-page-sizes="dgPageSizes"
-                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                    />
-                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                    <DxColumn :width="600" data-field='indicator_product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='indicator_description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                                                </DxDataGrid>
-                                            </div>
-                                            
+                                             <legend><small>Proceso de Formación para la Investigación/Investigación Formativa </small></legend>
+                                              <ProcesoFormacion
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)" 
+													:editMode="editMode" 
+													title="Listado de Procesos de Formacion" 
+															
+													titleBtn="Agregar Proceso"	
+													titlecolum="title"
+                          :validateImp="true"
+												/>
+                                         
                                         </fieldset>
                                     </div>
                                 </div>
@@ -553,51 +353,37 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <fieldset>
-                                            <legend>Proyecto de Investigación en el Periodo Anual</legend>
+                                             <legend><small>Proyecto de Investigación en el Periodo Anual </small></legend>
+                                             <ProyectoInvestigacion
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)"   
+													:editMode="editMode" 
+													title="Listado de Proyectos de Investigación" 
+															
+													titleBtn="Agregar Proyecto"	
+													titlecolum="title"
+                          :validateImp="true"
+												/>
+                                             
+                                        </fieldset>
+                                    </div>
+                                </div>
 
-                                             <div class="p-0">
-                                                <!-- @content-ready="onContentReady" -->
-                                                <DxDataGrid
-                                                    class="main"
-                                                    width="100%"
-                                                    @initialized="gridInit"
-                                                    
-                                                    :allow-column-reordering="true"
-                                                    no-data-text="No hay elementos registrados"
-                                                    :data-source="dataSource2"
-                                                    :remote-operations="true"
-                                                    :hover-state-enabled="true"
-                                                    :row-alternation-enabled="true"
-                                                    :word-wrap-enabled="true"
-                                                    :show-borders="false"
-                                                >
-                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                    <DxPaging :page-size="10" />
-                                                    <DxFilterRow :visible="false" />
-                                                    <DxLoadPanel :enabled="false" />
-                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                    <DxGrouping :auto-expand-all="false" />
-                                                    <DxSummary>
-                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                    </DxSummary>
-                                                    <DxPager
-                                                        :show-info="true"
-                                                        :show-page-size-selector="true"
-                                                        :show-navigation-buttons="true"
-                                                        :allowed-page-sizes="dgPageSizes"
-                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                    />
-                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                    <DxColumn data-field='financing_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn :width="600" data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='goal_state_name'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-
-                                                </DxDataGrid>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-12 mt-3">
+                                        <fieldset>
+                                             <legend><small>Productos Resultado de Procesos de Investigación Creacion e Innovación a Generar para el Periodo Anual </small></legend>
+                                            <ProductosResultados
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)"    
+													:editMode="editMode" 
+													title="Listado de Productos Resultado de Investigación Creacion" 
+															
+													titleBtn="Agregar Producto"	
+													titlecolum="title"
+                          :validateImp="true"
+												/>
+                                             
 
                                         </fieldset>
                                     </div>
@@ -606,51 +392,16 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <fieldset>
-                                            <legend>Productos Resultado de Procesos de Investigación Creacion e Innovación a Generar para el Periodo Anual</legend>
-                                            
-                                             <div class="p-0">
-                                                <!-- @content-ready="onContentReady" -->
-                                                <DxDataGrid
-                                                    class="main"
-                                                    width="100%"
-                                                    @initialized="gridInit"
-                                                    
-                                                    :allow-column-reordering="true"
-                                                    no-data-text="No hay elementos registrados"
-                                                    :data-source="dataSource3"
-                                                    :remote-operations="true"
-                                                    :hover-state-enabled="true"
-                                                    :row-alternation-enabled="true"
-                                                    :word-wrap-enabled="true"
-                                                    :show-borders="false"
-                                                >
-                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                    <DxPaging :page-size="10" />
-                                                    <DxFilterRow :visible="false" />
-                                                    <DxLoadPanel :enabled="false" />
-                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                    <DxGrouping :auto-expand-all="false" />
-                                                    <DxSummary>
-                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                    </DxSummary>
-                                                    <DxPager
-                                                        :show-info="true"
-                                                        :show-page-size-selector="true"
-                                                        :show-navigation-buttons="true"
-                                                        :allowed-page-sizes="dgPageSizes"
-                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                    />
-                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                    <DxColumn :width="400" data-field='indicator_product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='indicator_description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                    <DxColumn data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                                                </DxDataGrid>
-                                            </div>
-
+                                             <legend><small>Productos Con Potencialidad de Transferencia a prestar a la OTRI-Bogotá en el Periodo Anual  </small></legend>
+                                             <ProductosTransferencia
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)"  
+													:editMode="editMode" 
+													title="Listado de Productos Con Potencialidad  de Transferencia" 
+													titleBtn="Agregar Producto"	
+													titlecolum="title"
+                          :validateImp="true"
+												/> 
                                         </fieldset>
                                     </div>
                                 </div>
@@ -658,97 +409,16 @@
                                 <div class="row">
                                     <div class="col-md-12 mt-3">
                                         <fieldset>
-                                            <legend>Productos Con Potencialidad de Transferencia a prestar a la OTRI-Bogotá en el Periodo Anual </legend>
-
-                                            <DxDataGrid
-                                                                    class="main"
-                                                                    width="100%"
-                                                                    @initialized="gridInit"
-                                                                    
-                                                                    :allow-column-reordering="true"
-                                                                    no-data-text="No hay elementos registrados"
-                                                                    :data-source="dataSource4"
-                                                                    :remote-operations="true"
-                                                                    :hover-state-enabled="true"
-                                                                    :row-alternation-enabled="true"
-                                                                    :word-wrap-enabled="true"
-                                                                    :show-borders="false"
-                                                                >
-                                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                                    <DxPaging :page-size="10" />
-                                                                    <DxFilterRow :visible="false" />
-                                                                    <DxLoadPanel :enabled="false" />
-                                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                                    <DxGrouping :auto-expand-all="false" />
-                                                                    <DxSummary>
-                                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                                    </DxSummary>
-                                                                    <DxPager
-                                                                        :show-info="true"
-                                                                        :show-page-size-selector="true"
-                                                                        :show-navigation-buttons="true"
-                                                                        :allowed-page-sizes="dgPageSizes"
-                                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                                    />
-                                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                                    <DxColumn data-field='product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn :width="600" data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
-                                                                </DxDataGrid>
-                                           
-                                        </fieldset>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12 mt-3">
-                                        <fieldset>
-                                            <legend>Recursos con que cuenta el Grupo para el Desarrollo de las Actividades de Investigación</legend>
-                                            <DxDataGrid
-                                                                    class="main"
-                                                                    width="100%"
-                                                                    @initialized="gridInit"
-                                                                    
-                                                                    :allow-column-reordering="true"
-                                                                    no-data-text="No hay elementos registrados"
-                                                                    :data-source="dataSource5"
-                                                                    :remote-operations="true"
-                                                                    :hover-state-enabled="true"
-                                                                    :row-alternation-enabled="true"
-                                                                    :word-wrap-enabled="true"
-                                                                    :show-borders="false"
-                                                                >
-                                                                    <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                                                                    <DxSorting mode="single" /><!-- single, multiple, none" -->
-                                                                    <DxPaging :page-size="10" />
-                                                                    <DxFilterRow :visible="false" />
-                                                                    <DxLoadPanel :enabled="false" />
-                                                                    <DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-                                                                    <DxGrouping :auto-expand-all="false" />
-                                                                    <DxSummary>
-                                                                        <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-                                                                    </DxSummary>
-                                                                    <DxPager
-                                                                        :show-info="true"
-                                                                        :show-page-size-selector="true"
-                                                                        :show-navigation-buttons="true"
-                                                                        :allowed-page-sizes="dgPageSizes"
-                                                                        info-text="Página {0} de {1} ({2} elementos)"
-                                                                    />
-                                                                    <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-                                                                    <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
-                                                                    <DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-                                                                    <DxColumn data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                    <DxColumn data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="100" />
-                                                                    <DxColumn data-field='inventory_plate'  caption='Placa' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-                                                                </DxDataGrid>
-                                                            
+                                             <legend><small>Recursos con que cuenta el Grupo para el Desarrollo de las Actividades de Investigación </small></legend>
+                                              <RecursosGrupo
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)"   
+													:editMode="editMode" 
+													title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"
+													titleBtn="Agregar Recurso"	
+													titlecolum="title"
+                          :validateImp="true"
+												/>                                                          
                                         </fieldset>
                                     </div>
                                 </div>
@@ -758,7 +428,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <fieldset>
-                                            <legend>Redes Académicas de Promoción Científica y/o Artística</legend>
+                                             <legend><small>Redes Académicas de Promoción Científica y/o Artística </small></legend>
                                             
                                             
 <div class="card text-dark bg-light mb-12">
@@ -853,21 +523,6 @@
 let root;
 import { mapActions, mapGetters, mapState } from "vuex";
 import DxStore from "@/store/dx";
-import {
-	DxColumn,
-	DxColumnChooser,
-	DxDataGrid,
-	DxFilterRow,
-	DxGroupItem,
-	DxGroupPanel,
-	DxGrouping,
-	DxLoadPanel,
-	DxPager,
-	DxPaging,
-	DxSearchPanel,
-	DxSorting,
-	DxSummary,
-} from "devextreme-vue/data-grid";
 import VueHtml2pdf from 'vue-html2pdf'
 
 
@@ -879,7 +534,7 @@ export default {
 			cb: function(result) {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
-				root.loadMembers();
+				// root.loadMembers();
 			},
 		});
 	},
@@ -904,163 +559,31 @@ export default {
 		baseEntity: null,
 		docLink: null,
 		firstLoad: true,
-
-
 		group: null,
 		// dataSource: data,
-        html2PdfOptions: {
-        enableLinks: true,
-        filename: this.userData.name,
-        margin: [140, 40, 40, 140],
-        image: {
-          type: 'jpeg',
-          quality: 1,
-        },
-        html2canvas: {
-          useCORS: true,
-          scrollX: 0,
-          scrollY: 0,
-          onclone: async (element) => {
-            const wrapper = element.getElementById('wrapper')
-            wrapper.classList.remove('shadow')
-            wrapper.style.borderRadius = 0
-            wrapper.style.margin = 0
-            wrapper.style.padding = 0
-            
-            wrapper
-              .querySelectorAll('.d-print-none')
-              .forEach((item) => item.remove())
-
-            wrapper
-              .querySelectorAll('.header, .content, .left, .right')
-              .forEach((item) => (item.style.borderRadius = 0))
-          },
-        },
-        jsPDF: {
-          format: 'ledger',
-          floatPrecision: 'smart',
-          orientation: 'portrait',
-        },
-        }
+        
 	}),
 	components: {
         VueHtml2pdf, 
-        DxColumn,
-		DxColumnChooser,
-		DxDataGrid,
-		DxFilterRow,
-		DxGrouping,
-		DxGroupItem,
-		DxGroupPanel,
-		DxLoadPanel,
-		DxPager,
-		DxPaging,
-		DxSearchPanel,
-		DxSorting,
-		DxSummary,
+        ProcesoFormacion: () => import("@/modules/plan_accion/forms/proceso_formacion"),
+        ProductosTransferencia: () => import("@/modules/plan_accion/forms/productos_transferencia"),  
+		RedesAcademicas: () => import("@/modules/plan_accion/forms/redes_academicas"),  
+		ProyectoInvestigacion: () => import("@/modules/plan_accion/forms/proyecto_investigacion"),
+		ProductosResultados: () => import("@/modules/plan_accion/forms/productos_resultado"),  
+        RecursosGrupo: () => import("@/modules/plan_accion/forms/recursos_grupo")
     },
     computed: {
         datax(){
             const d = new Date();
             return "Paln_accion_"+d.getTime();
         },
-        dataSource: function() {
-			// if (typeof root.$route.params.planId === "undefined") return null;
-			console.log("root.group", this.group);
-			return DxStore({
-				key: ["id"],
-				// ids: ["dw_type_id=1"],
-				// stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
-				stringParam: 'filter=[["plan_type_id","=","781", "and", "active","=","true"]]',
-				endPoint: `action_plans/${root.$route.params.planId}/form_a_act_plans/`,
-                onLoaded: function(results, baseEntity) {
-					// console.clear();
-					console.log("results", results);
-					root.totaCount = results.totalCount;
-					root.loaderHide();
-				},
-			});
-		},
 
-        dataSource2: function() {
-			// if (typeof root.$route.params.planId === "undefined") return null;
-			console.log("root.group", this.group);
-			return DxStore({
-				key: ["id"],
-				// ids: ["dw_type_id=1"],
-				// stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
-				stringParam: 'filter=[["active","=","true"]]',
-				endPoint: `action_plans/${root.$route.params.planId}/form_b_act_plans/`,
-                onLoaded: function(results, baseEntity) {
-					// console.clear();
-					console.log("results", results);
-					root.totaCount = results.totalCount;
-					root.loaderHide();
-				},
-			});
-		},
-
-        dataSource3: function() {
-			// if (typeof root.$route.params.planId === "undefined") return null;
-			console.log("root.group", this.group);
-			return DxStore({
-				key: ["id"],
-				// ids: ["dw_type_id=1"],
-				// stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
-				stringParam: 'filter=[["plan_type_id","=","782", "and", "active","=","true"]]',
-				endPoint: `action_plans/${root.$route.params.planId}/form_a_act_plans/`,
-                onLoaded: function(results, baseEntity) {
-					// console.clear();
-					console.log("results", results);
-					root.totaCount = results.totalCount;
-					root.loaderHide();
-				},
-			});
-		},
-
-        dataSource4: function() {
-			// if (typeof root.$route.params.planId === "undefined") return null;
-			console.log("root.group", this.group);
-			return DxStore({
-				key: ["id"],
-				// ids: ["dw_type_id=1"],
-				// stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
-				//stringParam: 'filter=[["plan_type_id","=","782", "and", "active","=","true"]]',
-                stringParam: 'filter=[["active","=","true"]]',
-				endPoint: `action_plans/${root.$route.params.planId}/form_c_act_plans/`,
-                onLoaded: function(results, baseEntity) {
-					// console.clear();
-					console.log("results", results);
-					root.totaCount = results.totalCount;
-					root.loaderHide();
-				},
-			});
-		},
-
-        dataSource5: function() {
-			// if (typeof root.$route.params.planId === "undefined") return null;
-			console.log("root.group", this.group);
-			return DxStore({
-				key: ["id"],
-				// ids: ["dw_type_id=1"],
-				// stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
-				//stringParam: 'filter=[["plan_type_id","=","782", "and", "active","=","true"]]',
-                stringParam: 'filter=[["active","=","true"]]',
-				endPoint: `action_plans/${root.$route.params.planId}/form_e_act_plans/`,
-                onLoaded: function(results, baseEntity) {
-					// console.clear();
-					console.log("results", results);
-					root.totaCount = results.totalCount;
-					root.loaderHide();
-				},
-			});
-		},
     },
 	methods: {
-		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
-		loadMembers() {
-			console.log("members", root.group.member_ids);
-		},
+		...mapActions("unidad", ["getUnit", "getResearchers"]),
+		// loadMembers() {
+		// 	console.log("members", root.group.member_ids);
+		// },
 		estadoEntrega(cellInfo) {
 			return cellInfo.value ? "Terminado" : "Editando...";
 		},	
@@ -1068,9 +591,9 @@ export default {
             this.$refs.html2Pdf.generatePdf()
         },
 
-        gridInit(e) {
-			this.grid = e.component;
-		},
+        // gridInit(e) {
+		// 	this.grid = e.component;
+		// },
         
 
 	},

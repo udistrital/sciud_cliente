@@ -26,6 +26,7 @@
 		"retinajs": "^2.1.3",
 		"sass-loader": "^10.0.4",
 		"vue": "^2.6.12",
+		"vue-html2pdf": "^1.8.0",
 		"vue-retina": "^0.1.11",
 		"vue-router": "^3.4.8",
 		"vuex": "^3.5.1",

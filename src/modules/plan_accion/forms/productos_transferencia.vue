@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
-					<div class="page-header header-elements-md-inline mb-2">
+					<div class="page-header header-elements-md-inline mb-2"  v-if="!validateImp">
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
@@ -194,8 +194,8 @@
 						<!-- <DxColumn data-field="dw_observation" caption="Anotaciones" data-type="text" alignment="center" :visible="false" :allow-grouping="false" /> -->
 
 						<!-- <DxColumn data-field="dw_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
-						<DxColumn  data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-						<DxColumn :width="110" alignment="center" cell-template="tpl" caption="" />
+						<DxColumn data-field="active" v-if="!validateImp" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
+						<DxColumn :width="110" v-if="!validateImp" alignment="center" cell-template="tpl" caption="" />
 
 						<template #tplObs="{ data }">
 							<a
@@ -340,6 +340,10 @@ export default {
 			type: String,
 			default: null,
 		},
+		validateImp:{
+			type: Boolean,
+			default: false,
+		},
 	},
 	data: () => ({
 		popupObs: false,
@@ -354,7 +358,7 @@ export default {
 		mode: null,
 		unidad: null,
 		section: null,
-		tipos: 166,
+		tipos: 826,
 		totalCount: 0,
 		isValid: false,
 		panelData: null,
@@ -404,10 +408,13 @@ export default {
 		dataSource: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
+			let datat="";
+			if(root.validateImp) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
+			else datat='filter=[["plan_type_id","=","'+ root.tipos+'"]]';
 			return DxStore({
 				key: ["id"],
 				// ids: ["dw_type_id=1"],
-				// stringParam: "dw_type_id=" + root.tipos,
+				stringParam: datat,
 				endPoint: `action_plans/${root.action_panel_id}/form_c_act_plans/`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-plan_accion .card-body");
@@ -495,7 +502,7 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.baseObj.created_by = root.user_id;
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-				root.baseObj.dw_type_id = root.tipos;
+				root.baseObj.plan_type_id = root.tipos;
 				root.baseObj.action_plan_id=root.action_panel_id;
 				let obj = root.baseObj;
 				let dto = {
