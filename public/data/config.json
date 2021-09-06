@@ -1,5 +1,5 @@
 {
-    "debug":  false,
+    "debug":  true,
     "pageSize":  20,
     "pageSizes":  [
                       10,
@@ -15,7 +15,7 @@
                          },
                 "oas":  {
                             "token_name":  "oas_token",
-                            "token_value":  "033e15e4-2ce9-3e7a-a0bb-e2bc9c8f1f0e",
+                            "token_value":  "b85cf401-a146-3c66-89af-efbf6d0627a4",
                             "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
                         }
             },

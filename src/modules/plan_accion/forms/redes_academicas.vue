@@ -38,8 +38,8 @@
         </div>
       </div>
     </div>
-    <!-- <Documentos id="paneltrabajosP-documentos" end-point="form_a_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
-    <!-- <Participantes id="paneltrabajosP-participantes" end-point="form_a_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
+    <!-- <Documentos id="paneltrabajosP-documentos" end-point="form_d_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
+    <!-- <Participantes id="paneltrabajosP-participantes" end-point="form_d_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
     <DxValidationGroup ref="basicGroup">
       <div class="row data slide">
         <div class="col">
@@ -79,7 +79,7 @@
                       :data-source="alldata"
                       :grouped="true"
                       display-expr="name"
-                      :value.sync="baseObj.product_type_id"
+                      :value.sync="baseObj.research_focus_ids"
                       value-expr="id"
                       class="form-control"
                       :wrapItemText="true"
@@ -99,7 +99,7 @@
                       :grouped="false"
                       :search-enabled="false"
                       placeholder="Seleccione..."
-                      :value.sync="baseObj.product_type_idx"
+                      :value.sync="baseObj.goal_state_id"
                       class="form-control"
                       :data-source="tipoproceso"
                       display-expr="st_name"
@@ -130,7 +130,7 @@
                             class="form-control"
                             :read-only="!editMode"
                             display-expr="name"
-                            :value.sync="baseObj.oecd_knowledge_subarea_idx"
+                            :value.sync="baseObj.oecd_knowledge_subarea_ids"
                             placeholder="Busque y/o seleccione..."
                             value-expr="id"
                             ref="sbOcdeArea"
@@ -179,10 +179,10 @@
                             :read-only="!editMode"
                             :search-enabled="true"
                             :show-selection-controls="true"
-                            :value.sync="baseObj.snies_id"
+                            :value.sync="baseObj.snies_ids"
                             placeholder="Busque y/o seleccione..."
                             :disabled="false"
-                            :data-source="cineDetallados"
+                            :data-source="sniesItem"
                             :wrapItemText="true"
                           >
                             <DxValidator>
@@ -204,7 +204,7 @@
                             :data-source="cineEspecificos"
                             @value-changed="cineChange"
                             :show-selection-controls="true"
-                            :value.sync="baseObj.cine_specific_area_idx"
+                            :value.sync="baseObj.cine_specific_area_ids"
                             ref="tbCine"
                             class="form-control"
                             display-expr="name"
@@ -339,7 +339,7 @@
               :allow-grouping="false"
             />
             <DxColumn
-              data-field="indicator_product_type_name"
+              data-field="name"
               caption="Nombre "
               data-type="String"
               alignment="left"
@@ -363,7 +363,7 @@
               :allow-grouping="false"
             />
             <DxColumn
-              data-field="goal"
+              data-field="goal_state_name"
               caption="Estado estimado"
               data-type="String"
               alignment="center"
@@ -531,51 +531,7 @@
 /* eslint-disable vue/no-unused-components */
 let root = null;
 let $ = window.jQuery;
-// let dataSource={
-//     data= [
-//             {
-//                 id: 5,
-//                 action_plan_id: 1,
-//                 advanced_total: null,
-//                 goal: 4,
-//                 indicator_id: 1,
-//                 indicator_description: "Acta de Consejo curricular aprobacion del trabajo",
-//                 indicator_product_type_id: 759,
-//                 indicator_product_type_name: "Trabajo de Grado de pregrado Modalidad Investigación-Innovación",
-//                 order: null,
-//                 plan_type_id: 7,
-//                 plan_type_name: "Desarrollo Tecnólogico e Innovación",
-//                 product_type_id: 760,
-//                 product_type_name: "Trabajo de Grado de pregrado Modalidad Creación o Interpretación",
-//                 active: true,
-//                 created_by: 1,
-//                 updated_by: 1,
-//                 created_at: "2021-08-06T21: 09: 57.197-05: 00",
-//                 updated_at: "2021-08-08T19: 36: 55.253-05: 00"
-//             },
-//             {
-//                 id: 14,
-//                 action_plan_id: 1,
-//                 advanced_total: null,
-//                 goal: 1,
-//                 indicator_id: 16,
-//                 indicator_description:  "Certificación de la empresa o entidad sobre el objeto y la calidad de la consultoría prestada",
-//                 indicator_product_type_id: 780,
-//                 indicator_product_type_name: "Consultorías científicas- tecnologías y de investigación- creación en arte, arquitectura y diseño",
-//                 order: null,
-//                 plan_type_id: 782,
-//                 plan_type_name: "Productos Resultado de Procesos de Investigacion Creacion e Innovación a Generar para el Periodo Anual",
-//                 product_type_id: 780,
-//                 product_type_name: "Consultorías científicas- tecnologías y de investigación- creación en arte, arquitectura y diseño",
-//                 active: true,
-//                 created_by: 1,
-//                 updated_by: null,
-//                 created_at: "2021-08-12T20: 53: 41.504-05: 00",
-//                 updated_at: "2021-08-12T20: 53: 41.504-05: 00"
-//             }
-//         ]
-//     };
-    
+
     
 import DxStore from "@/store/dx";
 import {
@@ -667,6 +623,7 @@ export default {
 			default: false,
 		},
   },
+
   data: () => ({
     cineDetallados: [],
     ocdeDetallado: [],
@@ -684,7 +641,7 @@ export default {
     mode: null,
     unidad: null,
     section: null,
-    tipos: 781,
+    tipos: 828,
     totalCount: 0,
     isValid: false,
     panelData: null,
@@ -701,26 +658,27 @@ export default {
     urlPattern: /^(http|https):\/\/[^ "]+$/,
     phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
     baseObj: {
-      action_plan_id: null,
-      advanced_total: null,
-      goal: null,
-      indicator_id: null,
-      order: null,
-      plan_type_id: null,
-      product_type_id: null,
-      oecd_discipline_ids: null,
-      cine_specific_area_idx: [],
-      cine_detailed_area_ids: [],
+      name:null,
+      description:null,
+      goal_state_id:0,
+      goal_achieved:true,
+      order:0,
+      plan_type_id:0,
+      active:true,
+      cine_detailed_area_ids:[],
+      cine_specific_area_ids:[],
+      oecd_discipline_ids:[],
+      oecd_knowledge_subarea_ids:[],
+      research_focus_ids:[],
+      snies_ids:[],
     },
   }),
-  created() {
+ 
+ created() {
     root = this;
     root.baseEnt = this.$clone(this.baseObj);
-    // console.warn("indicador", root.indicador);
-    // root.indicador=[];
     root.loadLineasInv();
-    // root.loadLineasInvB();
-
+    root.getSnies();
     root.tipoproceso = root.subtypesByType("planaccion_form6_estado_tipos");
 
     root.getUnit({
@@ -741,7 +699,8 @@ export default {
     root.getOcde();
     root.getCine(root.getFacultades());
   },
-  mounted() {
+ 
+ mounted() {
     // console.log("root.tipos", root.tipos);
     root.panelData = $("#paneltrabajosP .data");
     root.panelGrid = $("#paneltrabajosP .grid");
@@ -751,9 +710,10 @@ export default {
     root.loaderMessage = "Cargando elementos";
     root.loaderElement = "#paneltrabajosP .grid";
   },
-  computed: {
+ 
+ computed: {
     ...mapGetters("core/tipo", ["subtypesByType"]),
-    // ...mapState("unidad/indicadores", { indicador: "items" }),
+    ...mapState("unidad/snies", { sniesItem : "items" }),
 
     ...mapGetters("unidad/cine", {
       cEspecificos: "specific",
@@ -774,7 +734,7 @@ export default {
         // stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
         stringParam: 'filter=[["plan_type_id","=","' + root.tipos + '"]]',
 
-        endPoint: `action_plans/${root.action_panel_id}/form_a_act_plans/`,
+        endPoint: `action_plans/${root.action_panel_id}/form_d_act_plans/`,
         onLoading: function (loadOptions) {
           root.loaderShow(
             "Cargando elementos",
@@ -854,16 +814,15 @@ export default {
       });
     },
   },
-  watch: {},
-  methods: {
+ 
+ methods: {
     // ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
     ...mapActions("unidad", ["getUnit", "saveUnit", "setDocument"]),
     ...mapActions("unidad/oas", { getFacultades: "facultades" }),
-    ...mapActions("unidad/indicadores", {
-      LineasInvConocimiento: "getAreasKnow",
-    }),
+    ...mapActions("unidad/indicadores", { LineasInvConocimiento: "getAreasKnow" }),
     ...mapActions("unidad/ocde", { getOcde: "getAll" }),
     ...mapActions("unidad/cine", { getCine: "all" }),
+    ...mapActions("unidad/snies", { getSnies: "getSnies" }),
 
     //...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
     ...mapActions("unidad/producto/universalSentUpAct", {
@@ -1015,21 +974,6 @@ export default {
       
     },
 
-    loadLineasInvB() {
-      //if (e.value === null) return null;
-      // setTimeout(function () {
-      //   root.LineasInvConocimiento({
-      //     parent_id: 159,
-      //     cb: function (results) {
-      //       root.listb = results;
-      //     },
-      //   });
-      // }, 1000);
-      // root.loadLineasInv();
-      // root.listb=root.totalLineasInv;
-      // return =  employees.filter(employee => employee.department == "IT");
-    },
-
     loadIndicators(e) {
       // root.indicador = [];
       if (e.value === null) return null;
@@ -1092,9 +1036,9 @@ export default {
         let dto = {
           rute: "action_plans",
           unidadId: root.action_panel_id,
-          stringEP: "form_a_act_plans",
+          stringEP: "form_d_act_plans",
           mod: obj.id,
-          objectSend: { form_a_act_plan: obj },
+          objectSend: { form_d_act_plan: obj },
           cb: function (item) {
             console.log("item", item);
             root.grid.refresh();
@@ -1122,17 +1066,22 @@ export default {
       root.totalLineasInv=[];
       //root.loadLineasInv();
       root.totalLineasInv=root.selectorLineas(root.totalLineasInv);
-
-
-
       root.mode = "edit";
+
       console.log("data", data);
       root.baseObj = data;
+
+      // descompocicion para actualizacion
+
+
+
       // root.baseObj.observation = root.baseObj.dw_observation;
+
       root.panelCmds.fadeOut();
       root.panelGrid.fadeOut(function (params) {
         root.panelData.fadeIn(function (params) {});
       });
+      
       //root.listb=root.totalLineasInv;
     },
 
@@ -1191,8 +1140,8 @@ export default {
 
           var dto = {
             newFormat: true,
-            url: `action_plans/${root.action_panel_id}/form_a_act_plans/${data.data.id}`,
-            data: { form_a_act_plan: { active: state, updated_by: 1 } },
+            url: `action_plans/${root.action_panel_id}/form_d_act_plans/${data.data.id}`,
+            data: { form_d_act_plan: { active: state, updated_by: 1 } },
             cb: function (result) {
               console.log("Result", result);
               root.grid.refresh();
