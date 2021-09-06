@@ -11,10 +11,30 @@ const store = {
 		items: [],
 	},
 	actions: {
+
+		getAll({ commit, state }, args) {
+			//console.warn("store subtipos",args.id_subtipos);
+			api()
+				.get(args.url+'?filter=[["active","=","true"]]')
+				.then((r) => {
+					args.cb(r.data.data);
+					commit("SetData", r.data.data);
+				});
+		},
+
+
+		get({ commit, state }, args) {
+			api()
+				.get(args.url)
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+
 		save({ commit, state, dispatch }, args) {
 			let ruta = null;
 			if (args.rute === null) args.rute = "research_units";
-			if (typeof args.rute == "undefined") args.rute = "research_units"; 
+			if (typeof args.rute == "undefined") args.rute = "research_units";
 
 			console.log("CREATE!");
 			api()
@@ -25,15 +45,15 @@ const store = {
 		},
 
 		update({ commit, state, dispatch }, args) {
-			let ruta=null;
+			let ruta = null;
 
 			if (args.rute === null) args.rute = "research_units";
 			if (typeof args.rute == "undefined") args.rute = "research_units";
-			
-			if(typeof args.newFormat !== 'undefined' && args.newFormat===true)
-				ruta=`/${args.stringEP}/${args.mod}`;
-			else 
-				ruta=`${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`;
+
+			if (typeof args.newFormat !== 'undefined' && args.newFormat === true)
+				ruta = `/${args.stringEP}/${args.mod}`;
+			else
+				ruta = `${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`;
 
 			console.log("UPDATE!");
 			api()
@@ -46,34 +66,30 @@ const store = {
 		active({ commit, state, dispatch }, args) {
 			console.log("Activa o desactiva elemento", args);
 			console.log("args.paper", args.data);
-			if(typeof args.newFormat !== 'undefined' && args.newFormat===true){
+			if (typeof args.newFormat !== 'undefined' && args.newFormat === true) {
 				console.info("Actualizado mediante patch");
 				api()
-				.patch(args.url, args.data)
-				.then((r) => {
-					console.info("Actualizado mediante patch", r.data);
-					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
-				});
-			}else{
+					.patch(args.url, args.data)
+					.then((r) => {
+						console.info("Actualizado mediante patch", r.data);
+						return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
+					});
+			} else {
 				api()
-				.put(args.url, args.data)
-				.then((r) => {
-					console.log("Actualizado mediante put", r.data);
-					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
-				});
-			}			
+					.put(args.url, args.data)
+					.then((r) => {
+						console.log("Actualizado mediante put", r.data);
+						return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
+					});
+			}
 		},
-	
-	
+
+
 	},
 
 
 	mutations: {
 		SetData(state, data) {
-			// for (let x = 0; x < data.length; x++) {
-			// 	let o = data[x];
-			// 	if (o.avance !== null) o.avance = o.avance.toString().replace(".", ",") + "%";
-			// }
 			state.items = data;
 		},
 	},
@@ -81,6 +97,8 @@ const store = {
 		items: (state, getters) => {
 			return state.items;
 		},
+
+
 		item: (state, getters) => (id) => {
 			if (state.items.length > 0) {
 				let item = state.items.find((o) => o.id.toString() === id.toString());

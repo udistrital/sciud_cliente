@@ -264,7 +264,7 @@
 										<a
 											title="Observar Plan Accion..."
 											href="#"
-											@click.prevent="go(data.value, `unidad/${data.value}/plan_accion`, 'Cargando Cargando Plan Accion')"
+											@click.prevent="go(data.value, `unidad/${data.value}/plan_accion`, 'Cargando Plan Acción...')"
 											class="cmd-item color-main-600"
 										>
 											<i class="icon-clipboard"></i>

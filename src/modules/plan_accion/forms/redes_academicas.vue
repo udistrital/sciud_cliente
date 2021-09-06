@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <div class="p-0">
-          <div class="page-header header-elements-md-inline mb-2">
+          <div class="page-header header-elements-md-inline mb-2"  v-if="!validateImp">
             <div class="page-title p-0 m-0">
               <h1>
                 <i class="icon-grid3 mr-1 color-main-600"></i>
@@ -337,6 +337,7 @@
               alignment="center"
               :visible="true"
               :allow-grouping="false"
+              v-if="!validateImp"
             />
             <DxColumn
               data-field="name"
@@ -346,22 +347,56 @@
               :visible="true"
               :allow-grouping="false"
             />
-            <DxColumn
+            <!-- <DxColumn
               data-field="goal"
               caption="Áreas de conocimiento (CINE, OCDE, SNIES)"
               data-type="String"
               alignment="left"
               :visible="true"
               :allow-grouping="false"
-            />
+            /> -->
+
             <DxColumn
-              data-field="goal"
-              caption="Lineas de Investigación asociadas"
+									data-type="number"
+									:allow-filtering="false"
+									:allow-sorting="true"
+									:customize-text="nullText"
+									alignment="center"
+									caption="Áreas de conocimiento (CINE, OCDE, SNIES)"
+									data-field="total_know_areas"
+									cell-template="tpl-total_know_areas"
+								/>
+								<template #tpl-total_know_areas="{ data }">
+									
+										<a
+											href="#"
+											class="color-main-600"
+											@click.prevent="loadInformation(data.data)"
+											@mouseover="tooltip($event, data.data, true)"
+											@mouseleave="tooltip($event, data.data, false)"
+										>
+											CINE:{{ data.data.total_cine_detailed_areas }} / OCDE:{{ data.data.total_oecd_disciplines }} / SNIES:{{ data.data.total_snies }}
+										</a>
+									
+									
+								</template>
+
+
+
+            <!-- <DxColumn
+              data-field="research_focuses"
+              caption="Linea de Investigación asociada"
               data-type="String"
               alignment="center"
               :visible="true"
               :allow-grouping="false"
+              cell-template="tpl-line-invest"
             />
+
+            <template #tpl-line-invest="{ data }">
+								<span>leyendo {{data.data.id}}</span>
+						</template> -->
+
             <DxColumn
               data-field="goal_state_name"
               caption="Estado estimado"
@@ -393,12 +428,14 @@
               :visible="true"
               :customize-text="yesNo"
               width="70"
+              v-if="!validateImp" 
             />
             <DxColumn
               :width="110"
               alignment="center"
               cell-template="tpl"
               caption=""
+              v-if="!validateImp"
             />
 
             <template #tplObs="{ data }">
@@ -455,6 +492,7 @@
                   class="cmd-item color-main-600 mr-2"
                   @click.prevent="active(data, true)"
                   href="#"
+
                 >
                   <i class="icon-database-check"></i>
                 </a>
@@ -477,6 +515,8 @@
         {{ JSON.stringify(listb, null, "\t") }}
       </div> -->
     </div>
+    
+    
     <DxPopup
       :visible="popupObs"
       :drag-enabled="false"
@@ -514,6 +554,96 @@
       </div>
     </DxPopup>
 
+
+    <DxPopup
+			:drag-enabled="false"
+			:close-on-outside-click="false"
+			:show-title="true"
+			width="80%"
+			height="80%"
+			:title="areasObj.title"
+			:visible="popupVisible"
+			@hidden="popupVisible = false"
+		>
+    <DxScrollView
+        id="scrollview"
+        ref="scrollViewWidget"
+      >
+      <span class="font-weight-semibold">Listado de áreas del conocimiento asociadas a Linea de Investigación: <strong>{{ areasObj2.line }}</strong>, para la red academica creada con el nombre: <strong>{{areasObj2.name}}</strong></span>
+      <div class="card-body">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="card">
+              
+              <div class="card-body">
+                <h5 class="card-title">CINE:</h5>
+                
+                <p class="card-text">
+                  <ul>
+                    <li v-for="areacine in  areasObj2.cine" :key="areacine.idx">{{areacine.cine_specific_area_name}} 
+                      <ul v-for="areacinedetalle in  areacine.cine_detailed_area_ids" :key="areacinedetalle.idx">
+                        <li>{{areacinedetalle.name}}</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </p>
+              </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">OCDE: </h5>
+                <p class="card-text">
+                  <ul>
+                    <li v-for="areaocde in  areasObj2.oecd" :key="areaocde.idx">{{areaocde.oecd_knowledge_subarea_name}} 
+                      <ul v-for="areaocdedetalle in  areaocde.oecd_discipline_ids" :key="areaocdedetalle.idx">
+                        <li>{{areaocdedetalle.name}}</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </p>
+              </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">SNIES</h5>
+                <p class="card-text">
+                  <ul>
+                    <li v-for="areasnies in  areasObj2.snies" :key="areasnies.idx">{{areasnies.snies_name}} 
+                    </li>
+                  </ul>
+                </p>
+              </div>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+
+    
+    </DxScrollView>
+		</DxPopup>
+
+
+    <DxTooltip ref="ttip" position="top">
+			<template>
+				<span>
+					<span class="font-weight-semibold color-main-600">CINE Detallado:</span> {{ areasObj.total_cine_detailed_areas }}<br />
+					<span class="font-weight-semibold color-main-600">CINE Específico:</span> {{ areasObj.total_cine_specific_areas }}<br />
+					<span class="font-weight-semibold color-main-600">OCDE Disciplinas:</span> {{ areasObj.total_oecd_disciplines }}<br />
+          <span class="font-weight-semibold color-main-600">OCDE Sub-Areas:</span> {{ areasObj.total_oecd_knowledge_subareas }}<br />
+          <span class="font-weight-semibold color-main-600">SNIES:</span> {{ areasObj.total_snies }}<br />
+					<small class="font-weight-semibold"><i>(Clic para observar)</i></small>
+				</span>
+			</template>
+		</DxTooltip>
+
+
     <div class="row" v-if="is_dev && debug">
       <div class="col">
         <div class="card">
@@ -532,7 +662,7 @@
 let root = null;
 let $ = window.jQuery;
 
-    
+import api from "@/store/api";    
 import DxStore from "@/store/dx";
 import {
   DxColumn,
@@ -566,16 +696,20 @@ import {
   DxTextArea,
   DxValidationGroup,
   DxPopup,
+  DxTooltip,
 } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 import DataSource from "devextreme/data/data_source";
+import { DxScrollView } from 'devextreme-vue/scroll-view';
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/ research_focus_ids
 export default {
-  name: "plan_accion_formacion",
+  name: "plan_accion_redes_academicas",
   components: {
     // Commands,
+    DxScrollView,
     DxTagBox,
+    DxTooltip,
     DxPopup,
     DxButton,
     DxColumn,
@@ -625,6 +759,13 @@ export default {
   },
 
   data: () => ({
+    areasObj: {
+			title: "Áreas de Conocimiento",
+		},
+    areasObj2:{},
+    popupVisible:false,
+    ttip: null,
+    dataForm:{},
     cineDetallados: [],
     ocdeDetallado: [],
     ocdeDisabled: true,
@@ -690,7 +831,7 @@ export default {
           root.ocdeChange({ value: root.baseObj.oecd_knowledge_subarea_id });
           root.cineChange({ value: root.baseObj.cine_specific_area_id });
           // // root.facultadChange({ value: root.baseObj.faculty_ids });
-          root.mode = "edit";
+          // root.mode = "edit";
           root.loaderHide();
         }, 500);
       },
@@ -702,6 +843,7 @@ export default {
  
  mounted() {
     // console.log("root.tipos", root.tipos);
+    root.ttip = root.$refs.ttip.instance;
     root.panelData = $("#paneltrabajosP .data");
     root.panelGrid = $("#paneltrabajosP .grid");
     root.panelCmds = $("#paneltrabajosP .cmds");
@@ -714,6 +856,7 @@ export default {
  computed: {
     ...mapGetters("core/tipo", ["subtypesByType"]),
     ...mapState("unidad/snies", { sniesItem : "items" }),
+    // ...mapState("unidad/producto/universalSentUpAct", { formGetData : "getData" }),
 
     ...mapGetters("unidad/cine", {
       cEspecificos: "specific",
@@ -726,14 +869,17 @@ export default {
 
 
     dataSource: function () {
+      let datat="";
       if (typeof this.action_panel_id === "undefined") return null;
+      if(root.validateImp) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
+			else datat='filter=[["plan_type_id","=","'+ root.tipos+'"]]';
       console.log("root.group", this.group);
       return DxStore({
         key: ["id"],
         // ids: ["dw_type_id=1"],
         // stringParam: "plan_type_id=" + root.tipos+'& filter=[["active","=","true"]]',
-        stringParam: 'filter=[["plan_type_id","=","' + root.tipos + '"]]',
-
+        //stringParam: 'filter=[["plan_type_id","=","' + root.tipos + '"]]',
+        stringParam: datat,
         endPoint: `action_plans/${root.action_panel_id}/form_d_act_plans/`,
         onLoading: function (loadOptions) {
           root.loaderShow(
@@ -829,7 +975,42 @@ export default {
       objSave: "save",
       objUpdate: "update",
       elementoActive: "active",
+      getForm: "get",
     }),
+
+
+    loadInformation(data) {
+			root.loaderShow(`Listando Areas...`, "#panel-plan_accion .card-body");
+      setTimeout(function() {
+				root.getForm({
+					url: "form_d_act_plans/"+data.id,
+					cb: function(results) {
+						//root.dataForm = results;
+            root.areasObj2=results;
+            root.areasObj2.line=root.areasObj2.research_focuses[0].research_focus_name
+						root.loaderHide();
+            root.popupVisible = true;
+					},
+				});
+			}, 1000);
+		},
+
+    tooltip(e, data, show) {
+			// console.clear();
+			let el = e.target || e.srcElement;
+			// console.log("el =>", el);
+			// console.log("ttip =>", root.ttip);
+			// console.log("show =>", show);
+			// console.log("data =>", data);
+			if (show) {
+				root.areasObj = data;
+				root.ttip.option("target", el);
+				root.ttip.show();
+			} else {
+				root.ttip.hide();
+			}
+		},
+    
     operacion(datos, grupo){
         // root.LineasInvConocimiento({
         let limpio=[];
@@ -1032,6 +1213,7 @@ export default {
         if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
         root.baseObj.plan_type_id = root.tipos;
         root.baseObj.action_plan_id = root.action_panel_id;
+        root.baseObj.research_focus_ids=[root.baseObj.research_focus_ids];
         let obj = root.baseObj;
         let dto = {
           rute: "action_plans",
@@ -1062,28 +1244,92 @@ export default {
       return limpio;
     },
 
-    edit(data) {
-      root.totalLineasInv=[];
-      //root.loadLineasInv();
-      root.totalLineasInv=root.selectorLineas(root.totalLineasInv);
-      root.mode = "edit";
-
-      console.log("data", data);
-      root.baseObj = data;
-
-      // descompocicion para actualizacion
 
 
-
-      // root.baseObj.observation = root.baseObj.dw_observation;
-
-      root.panelCmds.fadeOut();
-      root.panelGrid.fadeOut(function (params) {
-        root.panelData.fadeIn(function (params) {});
-      });
+    convert2array(objeto,vectorPadre,name_id_padre, name_id_hijo){
+      let arreglo=[], dataPadre=[], dataHijo=[];
+      let hijo;
+      let vector=objeto[vectorPadre]
+      console.warn("vector padre", vector);
       
-      //root.listb=root.totalLineasInv;
+      //console.warn("", vectorPadre);
+
+      for(let i=0; i<vector.length; i++){
+        console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
+        dataPadre.push(vector[i][name_id_padre]);
+        hijo = vector[i][name_id_hijo];
+        console.warn("Vector hijo "+i+":  ",hijo);
+        for(let p=0; p<hijo.length; p++){
+            dataHijo.push(hijo[p].id);
+        }
+      }
+      arreglo=[dataPadre,dataHijo];
+      return arreglo;
     },
+
+    arrayObjeto2vectorSnies(vectorPadre){
+      let vector=[];
+      for(let i=0; i<vectorPadre.length; i++){
+        vector.push(vectorPadre[i].snies_id);
+        // console.warn("vector ", vector);
+      }
+      return vector;
+    },
+   
+
+    edit(data) {
+			root.mode = "edit";
+      root.baseObj = root.$clone(root.baseEnt);
+			// console.log("data", data);
+      // console.warn("data id: ",data.id);
+      //root.baseObj = data;
+      root.loaderShow(`Abriendo Formulario`, "#panel-plan_accion .card-body");
+      setTimeout(function() {
+				root.getForm({
+					url: "form_d_act_plans/"+data.id,
+					cb: function(results) {
+						root.dataForm = results;
+            // console.clear();
+            // console.warn("dataForm",  root.dataForm);
+            // 
+            root.baseObj.id= root.dataForm.id;
+            root.baseObj.name= root.dataForm.name;
+            root.baseObj.goal_state_id=root.dataForm.goal_state_id;
+            root.baseObj.goal_achieved= root.dataForm.goal_achieved;
+            root.baseObj.order= root.dataForm.order;
+            root.baseObj.plan_type_id= root.dataForm.plan_type_id;
+            root.baseObj.active= root.dataForm.active;
+            root.baseObj.research_focus_ids= root.dataForm.research_focuses[0].research_focus_id;
+            let cine=root.convert2array(root.dataForm, 'cine', 'cine_specific_area_id', 'cine_detailed_area_ids');
+            root.baseObj.cine_specific_area_ids=cine[0];
+            root.baseObj.cine_detailed_area_ids=cine[1];
+            let oecd=root.convert2array(root.dataForm, 'oecd', 'oecd_knowledge_subarea_id', 'oecd_discipline_ids');
+            root.baseObj.oecd_knowledge_subarea_ids=oecd[0];
+            root.baseObj.oecd_discipline_ids=oecd[1];
+            root.baseObj.snies_ids=root.arrayObjeto2vectorSnies(root.dataForm.snies);
+
+						root.loaderHide();
+					},
+				});
+			}, 1000);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelData.fadeIn(function(params) {});
+			});
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     add_valit(){
       console.log("ADD");

@@ -278,7 +278,7 @@ export default {
 		root.panelCmds = $("#" + this.namePanel + " .cmds");
 		root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
 		// root.panelDocs = $("#" + this.namePanel + "-documentos");
-		root.loaderMessage = "Cargando PLan Accion";
+		root.loaderMessage = "Plan Acción...";
 		root.loaderElement = "#" + this.namePanel + " .grid";
 	},
 	computed: {

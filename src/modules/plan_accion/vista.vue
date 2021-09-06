@@ -211,76 +211,15 @@
                                                              <legend><small>Redes Académicas de Promoción Científica y/o Artística </small></legend>
                                                           
 
-                                                          <div class="card text-dark bg-light mb-12">
-<div class="card-header dx-button-text" >Información</div>
-  <div class="card-body">
-
-  <div class="col-sm-12">
-    <div class="card">
-      <div class="card-body">
-        <p class="card-text"><b>Nombre: </b>Ejemplo Nombre Proyecto</p>
-        <p class="card-text"><b>Lineas de Investigación asociadas: </b>Sin datos</p>
-        <p class="card-text"><b>Estado Estimado: </b>Presentado</p>
-      </div>
-    </div>
-  </div>
-
-
-</div>
-
-  <div class="card-header dx-button-text">Areas del Conocimiento</div>
-  <div class="card-body">
-
-
-<div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Discipinas OCDE:</h5>
-        <p class="card-text">
-            <ul>
-                <li>Arte
-                    <ul>
-                        <li>Diseño </li>
-                        <li>Otras Artes</li>
-                    </ul>
-                </li>
-
-                <li>Historia y Arqueología
-                    <ul>
-                        <li>Arqueología </li>
-                        <li>Historia de Colombia</li>
-                    </ul>
-                </li>
-            </ul>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">CINE</h5>
-        <p class="card-text">Sin Datos.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">SNIES</h5>
-        <p class="card-text">Sin Datos.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-  </div>
-</div>
-
+                                                <!-- <RedesAcademicas
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)"  
+													:editMode="editMode" 
+													title="Listado de Redes Académicas de Promoción Cientifica"													
+                                                    :validateImp="true"
+													titleBtn="Agregar Rede Academica"	
+													titlecolum="title"
+												/> -->
 
 
                                                         </fieldset>
@@ -417,7 +356,7 @@
 													title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"
 													titleBtn="Agregar Recurso"	
 													titlecolum="title"
-                          :validateImp="true"
+                                                    :validateImp="true"
 												/>                                                          
                                         </fieldset>
                                     </div>
@@ -429,81 +368,15 @@
                                     <div class="col-md-12">
                                         <fieldset>
                                              <legend><small>Redes Académicas de Promoción Científica y/o Artística </small></legend>
-                                            
-                                            
-<div class="card text-dark bg-light mb-12">
-<div class="card-header dx-button-text">Información</div>
-  <div class="card-body">
-
-  <div class="col-sm-12">
-    <div class="card">
-      <div class="card-body">
-        <p class="card-text"><b>Nombre: </b>Ejemplo Nombre Proyecto</p>
-        <p class="card-text"><b>Lineas de Investigación asociadas: </b>Sin datos</p>
-        <p class="card-text"><b>Estado Estimado: </b>Presentado</p>
-      </div>
-    </div>
-  </div>
-
-
-</div>
-
-  <div class="card-header dx-button-text">Areas del Conocimiento</div>
-  <div class="card-body">
-
-
-<div class="row">
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Discipinas OCDE:</h5>
-        <p class="card-text">
-            <ul>
-                <li>Arte
-                    <ul>
-                        <li>Diseño </li>
-                        <li>Otras Artes</li>
-                    </ul>
-                </li>
-
-                <li>Historia y Arqueología
-                    <ul>
-                        <li>Arqueología </li>
-                        <li>Historia de Colombia</li>
-                    </ul>
-                </li>
-            </ul>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">CINE</h5>
-        <p class="card-text">Sin Datos.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-4">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">SNIES</h5>
-        <p class="card-text">Sin Datos.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-  </div>
-</div>
-
-
-
-
-                                            
-
+                                            <RedesAcademicas
+													:group="group"
+													:action_panel_id="parseInt($route.params.planId)"  
+													:editMode="editMode" 
+													title="Listado de Redes Académicas de Promoción Cientifica"													
+                                                     :validateImp="true"
+													titleBtn="Agregar Rede Academica"	
+													titlecolum="title"
+												/>
                                          </fieldset>   
                                     </div>
                                 </div>
@@ -570,7 +443,8 @@ export default {
 		RedesAcademicas: () => import("@/modules/plan_accion/forms/redes_academicas"),  
 		ProyectoInvestigacion: () => import("@/modules/plan_accion/forms/proyecto_investigacion"),
 		ProductosResultados: () => import("@/modules/plan_accion/forms/productos_resultado"),  
-        RecursosGrupo: () => import("@/modules/plan_accion/forms/recursos_grupo")
+        RecursosGrupo: () => import("@/modules/plan_accion/forms/recursos_grupo"),
+        VistaRedesAcademicas: () => import("@/modules/plan_accion/forms/vista_redes_academicas"),  
     },
     computed: {
         datax(){
