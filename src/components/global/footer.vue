@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210830 - ©{{ year }}
+				SICIUD v2.0.20210906 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -81,13 +81,19 @@ export default {
 				text: "Gestor",
 			},
 			{
-				cc: "1655467973",
-				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-				text: "Gestor Facultad",
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
 			},
+			//
+			// {
+			// 	cc: "1655467973",
+			// 	title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
+			// 	text: "Gestor Facultad",
+			// },
 			{
-				cc: "51722992",
-				title: "Marta Esperanza Ospina Espitia (Líder Semillero)",
+				cc: "53009619",
+				title: "Luzangela Piñeros Botero (Líder Semillero)",
 				text: "Líder Semillero",
 			},
 			{
