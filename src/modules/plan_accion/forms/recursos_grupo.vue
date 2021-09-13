@@ -74,7 +74,7 @@
 <div class='col-md-12'>
 	<div class='form-group'>
 	<label>Descripción : </label>
-	<DxTextArea :height='100' :max-length='400' :value.sync='baseObj.description' placeholder='Descripción ' class='form-control'>
+	<DxTextArea :height='100' :max-length='2500' :value.sync='baseObj.description' placeholder='Descripción ' class='form-control'>
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -154,10 +154,10 @@
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
 						<DxColumn :width="110" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<DxColumn data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="100" />
-						<DxColumn data-field='inventory_plate'  caption='Placa' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn :width="200" data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn :width="500" data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn :width="90" data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
+						<DxColumn :width="110" data-field='inventory_plate'  caption='Placa' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<!-- <DxColumn data-field='dw_type_id'  caption='Tipo de Trabajo' data-type='text' alignment='center' :visible='true' :allow-grouping='false' />  -->
 						<!-- <DxColumn data-field="dw_recognition" caption="Reconocimientos" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn
@@ -323,6 +323,7 @@ export default {
 		},
 	},
 	data: () => ({
+		// indicador2:[],
 		popupObs: false,
 		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -360,8 +361,8 @@ export default {
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-		console.warn("indicador", root.indicador);
-		root.indicador=[];
+		// console.warn("indicador", root.indicador);
+		// root.indicador=[];
 		root.tipoproceso = root.subtypesByType("planaccion_form1_tipos");
 		
 	},
@@ -377,7 +378,7 @@ export default {
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
-		...mapState("unidad/indicadores", { indicador : "items" }),
+		// ...mapState("unidad/indicadores", { indicador : "items" }),
 		dataSource: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
@@ -406,23 +407,23 @@ export default {
 	watch: {},
 	methods: {
 		// ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
+		// ...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
-		loadIndicators(e){
-			root.indicador=[];
-			if (e.value === null) return null;
-			setTimeout(function() {
-				root.getIndicadores({
-					id_subtipos: e.value,
-					cb: function(results) {
-						root.indicador = results;
-						root.loaderHide();
-					},
-				});
-			}, 1000);
-		},
+		// loadIndicators(e){
+		// 	root.indicador=[];
+		// 	if (e.value === null) return null;
+		// 	setTimeout(function() {
+		// 		root.getIndicadores({
+		// 			id_subtipos: e.value,
+		// 			cb: function(results) {
+		// 				root.indicador = results;
+		// 				root.loaderHide();
+		// 			},
+		// 		});
+		// 	}, 1000);
+		// },
 		verObservar(data) {
 			root.observarData = data.dw_observation;
 			root.baseObj[root.titlecolum] = data[root.titlecolum];

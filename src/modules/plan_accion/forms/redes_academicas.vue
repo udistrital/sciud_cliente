@@ -337,7 +337,6 @@
               alignment="center"
               :visible="true"
               :allow-grouping="false"
-              v-if="!validateImp"
             />
             <DxColumn
               data-field="name"
@@ -1255,10 +1254,10 @@ export default {
       //console.warn("", vectorPadre);
 
       for(let i=0; i<vector.length; i++){
-        console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
+        // console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
         dataPadre.push(vector[i][name_id_padre]);
         hijo = vector[i][name_id_hijo];
-        console.warn("Vector hijo "+i+":  ",hijo);
+        // console.warn("Vector hijo "+i+":  ",hijo);
         for(let p=0; p<hijo.length; p++){
             dataHijo.push(hijo[p].id);
         }

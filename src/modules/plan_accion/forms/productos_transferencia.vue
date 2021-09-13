@@ -100,7 +100,7 @@
 <div class='col-md-12'>
 	<div class='form-group'>
 	<label>Descripción: </label>
-	<DxTextArea :height='100' :max-length='400' :value.sync='baseObj.description' placeholder='Descripción' class='form-control'>
+	<DxTextArea :height='100' :max-length='2500' :value.sync='baseObj.description' placeholder='Descripción' class='form-control'>
 	<DxValidator><DxRequiredRule /></DxValidator>
 	</DxTextArea>
 	</div>

@@ -71,11 +71,11 @@
 		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="true"
-		:disabled="indicador2.length <= 0"
+		:disabled="indicator2.length <= 0"
 		placeholder="Seleccione..."
 		:value.sync="baseObj.indicator_id" 
 		class="form-control"
-		:data-source="indicador2" 
+		:data-source="indicator2" 
 		display-expr="ind_description"
 		value-expr="id"
 		item-template="item"
@@ -334,6 +334,7 @@ export default {
 		},
 	},
 	data: () => ({
+		indicator2:[],
 		popupObs: false,
 		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -372,8 +373,8 @@ export default {
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-		console.warn("indicador2", root.indicador2);
-		root.indicador2=[];
+		console.warn("indicator2", root.indicator2);
+		root.indicator2=[];
 		root.tipoproceso = root.subtypesByType("planaccion_form3_estado_tipos");
 		console.warn(root.tipoproceso.length)
 	},
@@ -389,7 +390,7 @@ export default {
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
-		...mapState("unidad/indicadores", { indicador2 : "items" }),
+		...mapState("unidad/indicadores", { indicador : "items" }),
 		dataSource: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
@@ -422,13 +423,14 @@ export default {
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
 		loadIndicators(e){
-			root.indicador2=[];
+			root.indicator2=[];
 			if (e.value === null) return null;
 			setTimeout(function() {
 				root.getIndicadores({
 					id_subtipos: e.value,
 					cb: function(results) {
-						root.indicador2 = results;
+						root.indicator2 = results;
+						console.warn("indicator2 ", root.indicator2)
 						root.loaderHide();
 					},
 				});
@@ -512,7 +514,7 @@ export default {
 		add() {
 			console.log("ADD");
 			root.mode = "add";
-			root.indicador2=[];
+			root.indicator2=[];
 			root.baseObj = this.$clone(this.baseEnt);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {

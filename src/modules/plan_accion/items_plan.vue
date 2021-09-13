@@ -49,7 +49,7 @@
 													:group="group"
 													:action_panel_id="parseInt($route.params.planId)" 
 													:editMode="editMode" 
-													title="Listado de Procesos de Formacion" 
+													title="Listado de Procesos de Formación" 
 															
 													titleBtn="Agregar Proceso"	
 													titlecolum="title"

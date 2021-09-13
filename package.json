@@ -21,6 +21,7 @@
 		"exceljs": "^4.2.1",
 		"file-saver": "^2.0.5",
 		"idle-vue": "^2.0.5",
+		"jspdf": "^2.3.1",
 		"node-sass": "^4.14.1",
 		"nuxeo": "^3.17.0",
 		"retinajs": "^2.1.3",

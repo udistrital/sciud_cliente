@@ -1,71 +1,25 @@
 <template>
-                                              
-<div class="card text-dark bg-light mb-12">
-	<div class="card-header dx-button-text">Información</div>
-	<div class="card-body">
-		<div class="col-sm-12">
-			<div class="card">
-			<div class="card-body">
-				<p class="card-text"><b>Nombre: </b>{{root.datalist}}</p>
-				<p class="card-text"><b>Lineas de Investigación asociadas: </b>Sin datos</p>
-				<p class="card-text"><b>Estado Estimado: </b>datalist</p>
-			</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="card-header dx-button-text">Areas del Conocimiento</div>
-	<div class="card-body">
-
-
-		<div class="row">
-			<div class="col-sm-4">
-				<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">Discipinas OCDE:</h5>
-					<p class="card-text">
-						<ul>
-							<li>Arte
-								<ul>
-									<li>Diseño </li>
-									<li>Otras Artes</li>
-								</ul>
-							</li>
-
-							<li>Historia y Arqueología
-								<ul>
-									<li>Arqueología </li>
-									<li>Historia de Colombia</li>
-								</ul>
-							</li>
-						</ul>
-					</p>
-				</div>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">CINE</h5>
-					<p class="card-text">Sin Datos.</p>
-				</div>
-				</div>
-			</div>
-
-			<div class="col-sm-4">
-				<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">SNIES</h5>
-					<p class="card-text">Sin Datos.</p>
-				</div>
-				</div>
-			</div>
-		</div>
-	
-	</div>
-</div>
-
+<div>
+ <button
+                  type="button"
+                  @click.prevent="add()"
+                  v-if="editMode"
+                  title="Nuevo Elemento.."
+                  class="btn btn-main btn-labeled btn-labeled-left"
+                >
+                  <b><i class="icon-database-add"></i></b> Nuevo
+                </button>
+  Relacion vista de impresion
+  <div  v-for="datos in dataForm" :key="datos">
+  <h3><smll>nombre: {{datos.name}}</smll></h3>
+  <p>meta: {{datos.goal_state_name}}</p>
+  <p>Linea de investigacion: {{datos.research_focuses[0]}}</p>
+  </div>
+  <hr />
+  nuevo
+  {{ JSON.stringify(dataForm, null, "\t") }}
+  {{ JSON.stringify(datalist, null, "\t") }}
+</div>  
 
 </template>
 
@@ -77,83 +31,83 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   data: () => ({
-    datalist: {},
-    dataForm: {},
+    datalist: [],
+    dataForm: [],
     listaGeneral: [],
   }),
   created() {
     root = this;
     root.listaRedes();
+    this.dataForm=root.dataForm
   },
-  props: {
-    group: {
-      type: Object,
-      default: null,
-    },
-
-    action_panel_id: {
-      type: Number,
-      default: 0,
-    },
-
-    editMode: {
-      type: Boolean,
-      default: false,
-    },
-
-    alidateImp: {
-      type: Boolean,
-      default: true,
-    },
-
-    validateImp: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  props: {},
   computed: {
-    // ...mapGetters("core/tipo", ["subtypesByType"]),
-    // ...mapState("unidad/snies", { sniesItem : "items" }),
     ...mapState("unidad/producto/universalSentUpAct", { data: "items" }),
   },
   methods: {
-    // ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-    // ...mapActions("unidad", ["getUnit", "saveUnit", "setDocument"]),
-    // ...mapActions("unidad/oas", { getFacultades: "facultades" }),
-    // ...mapActions("unidad/indicadores", { LineasInvConocimiento: "getAreasKnow" }),
-    // ...mapActions("unidad/ocde", { getOcde: "getAll" }),
-    // ...mapActions("unidad/cine", { getCine: "all" }),
-    // ...mapActions("unidad/snies", { getSnies: "getSnies" }),
     ...mapActions("unidad/producto/universalSentUpAct", {
       getDataAll: "getAll",
       getForm: "get",
     }),
-    vista(id) {
-      //root.loaderShow(`Completando Formulario`, "#panel-plan_accion .card-body");
+    vista(id, i, obj) {
       setTimeout(function () {
         root.getForm({
           url: "form_d_act_plans/" + id,
           cb: function (results) {
-            root.dataForm =results;
-            root.loaderHide();
+            obj.dataForm[i] = results;
+            console.warn("dataForm: ",obj.dataForm);
+            // root.loaderHide();
           },
+          
         });
       }, 10);
     },
 
-    listaRedes() {
+
+   listaRedes() {
       setTimeout(function () {
         root.getDataAll({
-          url:"/action_plans/" + root.$route.params.planId + "/form_d_act_plans",
+          url:
+            "/action_plans/" + root.$route.params.planId + '/form_d_act_plans',
           cb: function (results) {
             console.clear();
+            // root.dataForm =[];
             root.datalist = results;
-			console.warn(root.datalist);
+            for(let i=0; i<=root.datalist.length; i++){
+              root.vista(root.datalist[i].id, i, root);
+            }
             root.loaderHide();
           },
         });
-      }, 1000);
+      }, 100);
+
     },
+
+
+
+    listaRedes2() {
+      setTimeout(function () {
+        root.getDataAll({
+          url:
+            "/action_plans/" + root.$route.params.planId + '/form_d_act_plans',
+          cb: function (results) {
+            console.clear();
+            // root.dataForm =[];
+            root.datalist = results;
+            for(let i=0; i<=root.datalist.length; i++){
+              root.vista(root.datalist[i].id, i, root);
+            }
+            root.loaderHide();
+          },
+        });
+      }, 100);
+
+    },
+
+    add(){
+      this.dataForm=root.dataForm;
+      console.warn("data:", this.dataForm);
+    }
   },
 };
 </script>

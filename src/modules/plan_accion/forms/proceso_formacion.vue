@@ -71,11 +71,11 @@
 		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
-		:disabled="indicador.length <= 0"
+		:disabled="indicator2.length <= 0"
 		placeholder="Seleccione..."
 		:value.sync="baseObj.indicator_id" 
 		class="form-control"
-		:data-source="indicador" 
+		:data-source="indicator2" 
 		display-expr="ind_description"
 		value-expr="id"
 		item-template="item"
@@ -335,6 +335,7 @@ export default {
 		},
 	},
 	data: () => ({
+		indicator2:[],
 		popupObs: false,
 		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -373,8 +374,8 @@ export default {
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-		console.warn("indicador", root.indicador);
-		root.indicador=[];
+		//console.warn("indicador", root.indicador);
+		root.indicator2=[];
 		root.tipoproceso = root.subtypesByType("planaccion_form1_tipos");
 	},
 	mounted() {
@@ -423,13 +424,14 @@ export default {
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
 		loadIndicators(e){
-			root.indicador=[];
+			root.indicator2=[];
 			if (e.value === null) return null;
 			setTimeout(function() {
 				root.getIndicadores({
 					id_subtipos: e.value,
 					cb: function(results) {
-						root.indicador = results;
+						root.indicator2 = results;
+						console.warn("indicator2 ", root.indicator2)
 						root.loaderHide();
 					},
 				});
@@ -513,7 +515,7 @@ export default {
 		add() {
 			console.log("ADD");
 			root.mode = "add";
-			// root.indicador=[];
+			// root.indicator2=[];
 			root.baseObj = this.$clone(this.baseEnt);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
