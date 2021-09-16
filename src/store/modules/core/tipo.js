@@ -84,7 +84,8 @@ const store = {
 		},
 		subtypeEnable({ commit, state, dispatch }, args) {
 			api()
-				.put(`types/${args.typeId}/subtypes/${args.subtypeId}/active`, args.subtype)
+				// .put(`types/${args.typeId}/subtypes/${args.subtypeId}/active`, args.subtype)
+				.put(`subtypes/${args.subtypeId}`, args.subtype)
 				.then((r) => {
 					return this._vm.$isFunction(args.cb) ? args.cb(r.data) : null;
 				});
@@ -111,14 +112,7 @@ const store = {
 		},
 		subtypesByType: (state, getters) => (id) => {
 			console.log("window.clasificador", window.clasificador);
-			if (typeof id === "string")
-				id = window.clasificador.subtipo.find(
-					(o) =>
-						o.name
-							.toString()
-							.toLowerCase()
-							.trim() === id.toLowerCase().trim()
-				).id;
+			if (typeof id === "string") id = window.clasificador.subtipo.find((o) => o.name.toString().toLowerCase().trim() === id.toLowerCase().trim()).id;
 			return state.subtypes.filter((o) => o.type_id.toString() === id.toString());
 		},
 		subtypesByParent: (state, getters) => (id) => {
