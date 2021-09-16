@@ -497,6 +497,8 @@
 					<div class="card-body">
 						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
 						<hr class="sep" />
+						<span class="font-weight-semibold">app_user:</span> {{ JSON.stringify(app_user, null, 3) }}
+						<hr class="sep" />
 						<span class="font-weight-semibold">group_member:</span> {{ JSON.stringify(group_member, null, 3) }}
 						<hr class="sep" />
 						<span class="font-weight-semibold">researcher:</span> {{ JSON.stringify(researcher, null, 3) }}
@@ -510,6 +512,7 @@
 </template>
 
 <script>
+/* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
 /* eslint-disable vue/no-unused-components */
 // https://vuejs.org/v2/guide/single-file-components.html#What-About-Separation-of-Concerns
@@ -609,6 +612,7 @@ export default {
 		Header: () => import("./_header"),
 	},
 	data: () => ({
+		app_user: null,
 		chkActive: null,
 		periods: null,
 		accept: "*.",
@@ -819,7 +823,7 @@ export default {
 			"updatePeriod",
 			"updateResearcher",
 		]),
-		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
+		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
 		activeChanged(e) {
 			const previousValue = e.previousValue;
 			const is_active = e.value;
@@ -1015,6 +1019,26 @@ export default {
 			if (result.isValid) {
 				root.loaderShow("Guardando usuario", "#panel-integrantes-data .card");
 
+				// 202109160428: Verifica que el usuario exista localmente
+				let usrs = await root.getUser(root.researcher.identification_number);
+				// El usuario no existe, lo crear con rol 'Integrante'
+				if (usrs.length <= 0) {
+					let to_send = {
+						identification_number: root.researcher.identification_number.toString(),
+						oas_user_id: root.researcher.oas_researcher_id,
+						user_role_id: root.get_role_id("integrante"),
+						faculties_ids: [],
+						created_by: root.user_id,
+					};
+					console.log("to_send =>", to_send);
+					root.app_user = await root.saveUserAsync(to_send);
+					console.log("created =>", root.app_user);
+				} else {
+					root.app_user = usrs[0];
+					console.log(root._sep);
+					console.log("root.app_user =>", root.app_user);
+				}
+
 				// 202106010400: Investigador
 				let r = null;
 				root.researcher.created_by = root.user_id;
@@ -1130,12 +1154,6 @@ export default {
 						if (root.grid.getVisibleRows().length > 0) root.grid.expandRow(root.grid.getKeyByRowIndex(0));
 					});
 				});
-				// let msg = root.group_member.id === null ? "asoció" : "actualizó";
-				// root.$info(`El usuario con el documento "${root.researcher.identification_number}" se ${msg} exitosamente!`, function() {
-				// root.loaderShow("Recargando usuarios", "#panel-integrantes-data .card");
-				// window.location.reload();
-
-				// });
 			}
 		},
 		userCancel(loaderHide = false, cb) {

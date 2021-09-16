@@ -149,6 +149,16 @@ const store = {
 				});
 		},
 
+		// 202109160440: Función de guardado asíncrona
+		async saveUserAsync({ commit, state, dispatch }, user) {
+			console.log("saveUser =>", user);
+			return await api()
+				.post(`users`, { user: user })
+				.then((r) => {
+					return r.data;
+				});
+		},
+
 		// 202105280506: Activa o desactiva un usuario
 		activeUser({ commit, state, dispatch }, args) {
 			console.log("activeUser =>", args);
@@ -239,7 +249,7 @@ const store = {
 			console.log("state.roles", state.roles);
 		},
 		setGroupRoles(state, data) {
-			state.groupRoles = data;
+			state.groupRoles = window.vm.$objectSort(data, "name");
 			// console.log(window.vm._sep);
 			console.log("state.groupRoles", state.groupRoles);
 		},
