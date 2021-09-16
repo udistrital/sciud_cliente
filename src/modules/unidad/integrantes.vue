@@ -1035,7 +1035,6 @@ export default {
 					console.log("created =>", root.app_user);
 				} else {
 					root.app_user = usrs[0];
-					console.log(root._sep);
 					console.log("root.app_user =>", root.app_user);
 				}
 
