@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210825 - ©{{ year }}
+				SICIUD v2.0.20210916 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -49,16 +49,16 @@ export default {
 		console.log("ttip", this.ttip);
 		let links = $("a.ttip");
 		console.log("links", links);
-		links.each(function() {
+		links.each(function () {
 			var el = $(this);
-			el.mouseenter(function() {
+			el.mouseenter(function () {
 				var title = el.data("title");
 				$("#ttip-msg").text(title);
 				console.log("mouseenter");
 				root.ttip.option("target", el);
 				root.ttip.show();
 			});
-			el.mouseleave(function() {
+			el.mouseleave(function () {
 				console.log("mouseleave");
 				root.ttip.hide();
 			});
@@ -144,10 +144,10 @@ export default {
 		token() {
 			return window.config.api.oas.token_value;
 		},
-		year: function() {
+		year: function () {
 			return new Date().getFullYear();
 		},
-		env: function() {
+		env: function () {
 			return this.$capitalize(process.env.NODE_ENV);
 			// return this.$baseUrl();
 		},
