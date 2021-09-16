@@ -93,7 +93,7 @@ docker stop siciud-v2-front
 
 | Develop                                                                                                                                                                                                        | Release 0.0.2                                                                                                                                                                     | Master |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg?ref=refs/heads/release/0.0.2)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) |
+| [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg?ref=refs/heads/release/0.0.2)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) | [![Build Status](https://hubci.portaloas.udistrital.edu.co/api/badges/udistrital/siciud_cliente/status.svg)](https://hubci.portaloas.udistrital.edu.co/udistrital/siciud_cliente) | Some   |
 
 ### Licencia
 
