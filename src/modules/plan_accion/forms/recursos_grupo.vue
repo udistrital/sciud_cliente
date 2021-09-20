@@ -174,6 +174,7 @@
 						<!-- <DxColumn data-field="dw_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" v-if="!validateImp" alignment="center" cell-template="tpl" caption="" />
+						<DxColumn :width="110" v-if="validateImp" alignment="center" cell-template="tpl2" caption="" />
 
 						<template #tplObs="{ data }">
 							<a
@@ -206,6 +207,26 @@
 								<a v-else title="Activar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
 								</a>
+							</span>
+						</template>
+
+						<template #tpl2="{ data }">
+							<span class="cmds">
+								<!-- <a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
+									<i class="icon-file-pdf"></i>
+								</a>
+								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
+									<i class="icon-users"></i>
+								</a> -->
+								<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+									<i class="icon-database-edit"></i>
+								</a>
+								<!-- <a v-if="data.data.active" title="Desactivar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+									<i class="icon-database-remove"></i>
+								</a>
+								<a v-else title="Activar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+									<i class="icon-database-check"></i>
+								</a> -->
 							</span>
 						</template>
 					</DxDataGrid>
