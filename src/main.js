@@ -254,8 +254,8 @@ vue.mixin({
 					console.log("groupId =>", groupId);
 					console.log("user =>", window.vm.user);
 					// 202106162157: Filtra el grupo actual de los grupos seleccionados
+					console.log("groups =>", window.vm.user.groups);
 					if (typeof window.vm.user.groups !== "undefined") {
-						console.log("groups =>", window.vm.user.groups);
 						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
 						if (typeof g !== "undefined") {
 							console.log("current_group =>", g);

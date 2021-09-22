@@ -13,6 +13,14 @@ const store = {
 		baseEntity: null,
 	},
 	actions: {
+		// 202109200723: Carga la plantilla de convocatorias
+		async getTemplate({ commit, state, dispatch }) {
+			return await api("local")
+				.get("convocatoria")
+				.then((r) => {
+					return r.data;
+				});
+		},
 		// 202107140044: Crea
 		async getItem({ commit, state, dispatch }, id) {
 			return await api()

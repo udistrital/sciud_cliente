@@ -20,7 +20,7 @@
 							<div class="col-3">
 								<DxSortable
 									group="shared"
-									data="driveC"
+									data="document_items"
 									filter=".dx-treeview-item"
 									:allow-drop-inside-item="true"
 									:allow-reordering="true"
@@ -32,8 +32,8 @@
 										data-structure="tree"
 										:expand-nodes-recursive="false"
 										ref="treeview"
-										:items="itemsDriveC"
-										display-expr="name"
+										:items="document_items"
+										display-expr="title"
 										show-check-boxes-mode="none"
 										selection-mode="single"
 										:select-nodes-recursive="false"
@@ -41,19 +41,17 @@
 										@selection-changed="treeViewSelectionChanged"
 									>
 										<!-- show-check-boxes-mode="selectAll, normal, none" -->
-										<template #item="item">
-											{{ item.data.name + " (" + item.data.id + ")" }}
-										</template>
+										<template #item="item"> {{ item.data.id }}. {{ item.data.title }} </template>
 									</DxTreeView>
 								</DxSortable>
 							</div>
 							<div class="col" v-if="selectedItem">
 								<div class="row">
-									<div class="col sub-title color-main-600 mb-3">{{ selectedItem.name }} ({{ selectedItem.id }})</div>
+									<div class="col sub-title color-main-600 mb-3">{{ selectedItem.id }}. {{ selectedItem.title }}</div>
 								</div>
 								<div class="row">
 									<div class="col">
-										<Contenido :height="600" />
+										<Contenido :height="600" :syncValue.sync="baseObj" />
 									</div>
 								</div>
 							</div>
@@ -118,6 +116,10 @@ export default {
 	},
 	data: () => ({
 		item: null,
+		baseObj: {
+			observation: null,
+		},
+		document_items: [],
 		id: "panel-convocatoria-documentos",
 		selectedItem: null,
 		menuItems: [
@@ -130,165 +132,10 @@ export default {
 		fontValues: ["Arial", "Courier New", "Georgia", "Impact", "Lucida Console", "Tahoma", "Times New Roman", "Verdana"],
 		headerValues: [false, 1, 2, 3, 4, 5],
 		isMultiline: false,
-		markup: `<h2>
-        <img src="./logo.png" alt="HtmlEditor">
-        Formatted Text Editor (HTML Editor)
-    </h2>
-    <br>
-    <p>DevExtreme JavaScript HTML Editor is a client-side WYSIWYG text editor that allows its users to format textual and visual content and store it as HTML or Markdown.</p>
-    <p>Supported features:</p>
-    <ul>
-        <li>Inline formats:
-            <ul>
-                <li><strong>Bold</strong>, <em>italic</em>, <s>strikethrough</s> text formatting</li>
-                <li>Font, size, color changes (HTML only)</li>
-            </ul>
-        </li>
-        <li>Block formats:
-            <ul>
-                <li>Headers</li>
-                <li>Text alignment</li>
-                <li>Lists (ordered and unordered)</li>
-                <li>Code blocks</li>
-                <li>Quotes</li>
-            </ul>
-        </li>
-        <li>Custom formats</li>
-        <li>HTML and Markdown support</li>
-        <li>Mail-merge placeholders (for example, %username%)</li>
-        <li>Adaptive toolbar for working images, links, and color formats</li>
-        <li>Insert images as a link or base64 (drag and drop images to convert them to base64)</li>
-        <li>Copy-paste rich content (unsupported formats are removed)</li>
-        <li>Tables support</li>
-    </ul>
-    <br>
-    <p>Supported frameworks and libraries</p>
-    <table>
-        <tr>
-            <td><strong>jQuery</strong></td>
-            <td style="text-align: right;">v2.1 - v2.2 and v3.x</td>
-        </tr>
-        <tr>
-            <td><strong>Angular</strong></td>
-            <td style="text-align: right;">v7.0.x - v10.0.x</td>
-        </tr>
-        <tr>
-            <td><strong>React</strong></td>
-            <td style="text-align: right;">v16.2+</td>
-        </tr>
-        <tr>
-            <td><strong>Vue</strong></td>
-            <td style="text-align: right;">v2.6.3+</td>
-        </tr>
-    </table>`,
 		itemsDriveD: [],
-		itemsDriveC: [
-			{
-				id: "1",
-				name: "Documents",
-				icon: "activefolder",
-				isDirectory: true,
-				expanded: true,
-				items: [
-					{
-						id: "2",
-						name: "Projects",
-						icon: "activefolder",
-						isDirectory: true,
-						expanded: true,
-						items: [
-							{
-								id: "3",
-								name: "About.rtf",
-								icon: "file",
-								isDirectory: false,
-							},
-							{
-								id: "4",
-								name: "Passwords.rtf",
-								icon: "file",
-								isDirectory: false,
-							},
-						],
-					},
-					{
-						id: "5",
-						name: "About.xml",
-						icon: "file",
-						isDirectory: false,
-					},
-					{
-						id: "6",
-						name: "Proceso de verificación, selección y evaluación de las propuestas",
-						icon: "file",
-						isDirectory: false,
-					},
-					{
-						id: "7",
-						name: "ToDo.txt",
-						icon: "file",
-						isDirectory: false,
-					},
-				],
-			},
-			{
-				id: "8",
-				name: "Images",
-				icon: "activefolder",
-				isDirectory: true,
-				expanded: true,
-				items: [
-					{
-						id: "9",
-						name: "logo.png",
-						icon: "file",
-						isDirectory: false,
-					},
-					{
-						id: "10",
-						name: "banner.gif",
-						icon: "file",
-						isDirectory: false,
-					},
-				],
-			},
-			{
-				id: "11",
-				name: "System",
-				isDirectory: true,
-				icon: "activefolder",
-				expanded: true,
-				items: [
-					{
-						id: "12",
-						name: "Employees.txt",
-						icon: "file",
-						isDirectory: false,
-					},
-					{
-						id: "13",
-						name: "PasswordList.txt",
-						icon: "file",
-						isDirectory: false,
-					},
-				],
-			},
-			{
-				id: "14",
-				name: "Description.rtf",
-				icon: "activefolder",
-				isDirectory: false,
-			},
-			{
-				id: "15",
-				name: "Description.txt",
-				icon: "activefolder",
-				isDirectory: false,
-			},
-		],
 	}),
 	methods: {
-		...mapActions("convocatoria", ["getItem"]),
+		...mapActions("convocatoria", ["getItem", "getTemplate"]),
 		contextMenuItemClick(e) {
 			let logEntry = "";
 			switch (e.itemData.id) {
@@ -315,6 +162,7 @@ export default {
 		},
 		treeViewSelectionChanged(e) {
 			root.selectedItem = e.component.getSelectedNodes().map((node) => node.itemData)[0];
+			root.baseObj.observation = root.selectedItem.content;
 			console.log("selectedItem =>", root.selectedItem);
 		},
 		treeViewContentReady(e) {
@@ -441,6 +289,23 @@ export default {
 	created: async function() {
 		root = this;
 		console.log(root.$sep);
+		// 202109200731: Carga la plantilla y personaliza
+		let items = await root.getTemplate();
+		items.forEach((item) => {
+			item["expanded"] = true;
+			item["icon"] = "activefolder";
+			item["isDirectory"] = false;
+			if (typeof item.items !== "undefined" && item.items.length > 0) {
+				item["isDirectory"] = true;
+			}
+		});
+		root.document_items = items;
+
+		// icon: "activefolder",
+		// 	isDirectory: true,
+		// 	expanded: true,
+
+		console.log("root.template =>", root.template);
 		root.tiposDocumento = root.subtypesByType("convocatoria_doc_emitir");
 		console.log("root.tiposDocumento =>", root.tiposDocumento);
 		let uId = root.$route.params.itemId;

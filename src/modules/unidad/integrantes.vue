@@ -1021,7 +1021,7 @@ export default {
 
 				// 202109160428: Verifica que el usuario exista localmente
 				let usrs = await root.getUser(root.researcher.identification_number);
-				// El usuario no existe, lo crear con rol 'Integrante'
+				// El usuario no existe, lo crea con rol 'Integrante'
 				if (usrs.length <= 0) {
 					let to_send = {
 						identification_number: root.researcher.identification_number.toString(),

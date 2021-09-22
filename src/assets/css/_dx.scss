@@ -1399,3 +1399,18 @@ tr.hovered {
 .dx-sortable-placeholder {
 	border-color: $main-color-500 !important;
 }
+
+.dx-htmleditor-content {
+	color: $text;
+	a {
+		color: $main-color-500;
+	}
+	b {
+		font-weight: 500;
+	}
+	p {
+		margin-bottom: 0.5rem;
+	}
+}
+.dx-state-selected {
+}

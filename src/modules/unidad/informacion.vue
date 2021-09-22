@@ -870,6 +870,9 @@ export default {
 								}
 							}
 							root.saveDo();
+						} else {
+							root.group.group_state_id = 1;
+							root.loaderHide();
 						}
 					});
 				} else root.saveDo();

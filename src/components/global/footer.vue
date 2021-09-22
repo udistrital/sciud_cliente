@@ -76,10 +76,16 @@ export default {
 				text: "Administrador",
 			},
 			{
-				cc: "1111111108",
+				cc: "1023867324",
+				title: "Gestor Facultad",
+				text: "Gestor Facultad",
+			},
+			{
+				cc: "1111111104",
 				title: "Prueba Usuario",
 				text: "Docente Tutor",
 			},
+
 			// {
 			// 	cc: "65432123",
 			// 	title: "Prueba Estudiante Siciud (Gestor)",
