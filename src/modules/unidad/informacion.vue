@@ -788,6 +788,30 @@ export default {
 			console.log("document", doc);
 			return doc !== null ? `https://documental.portaloas.udistrital.edu.co/nuxeo/nxfile/default/${doc.id}/file:content/${doc.path}` : null;
 		},
+		saveDo() {
+			// 202105311349: Redirecciona si se creó La estructura
+			// 202109160649: Se independiza en función
+			root.saveUnit({
+				unidad: root.group,
+				callback: function(result) {
+					console.log("result", result);
+					if (root.mode == "add") {
+						root.loaderHide();
+						root.$info(`La estructura "${result.name}" se creó exitosamente!`, function() {
+							root.loaderShow(`Cargando "${result.name}"`, "#group-panel");
+							setTimeout(function() {
+								window.location.href = window.location.href.replace("/crear", `/${result.id}`);
+							}, 1000);
+							// https://support.nemedi.com/udistrital/siciud-v2/unidad/crear
+							// root.$router.push(`/unidad`);
+						});
+					} else {
+						root.loaderHide();
+						root.$info(`La estructura "${result.name}" se actualizó exitosamente!`);
+					}
+				},
+			});
+		},
 		save() {
 			console.log(root.$sep);
 			// console.clear();
@@ -808,27 +832,49 @@ export default {
 				root.group.faculty_act_number = root.group.faculty_act_number.toUpperCase();
 				if (root.mode == "add") root.group.created_by = root.user_id;
 				if (root.mode == "edit") root.group.updated_by = root.user_id;
-				root.saveUnit({
-					unidad: root.group,
-					callback: function(result) {
-						console.log("result", result);
-						// 202105311349: Redirecciona si se creó La estructura
-						if (root.mode == "add") {
-							root.loaderHide();
-							root.$info(`La estructura "${result.name}" se creó exitosamente!`, function() {
-								root.loaderShow(`Cargando "${result.name}"`, "#group-panel");
-								setTimeout(function() {
-									window.location.href = window.location.href.replace("/crear", `/${result.id}`);
-								}, 1000);
-								// https://support.nemedi.com/udistrital/siciud-v2/unidad/crear
-								// root.$router.push(`/unidad`);
-							});
+
+				// 202109160622: Inactivar grupo
+				if (root.mode == "edit" && root.group.group_state_id == "2") {
+					let msg = `¿Realmente desea desinstitucionalizar el ${root.group.group_type_name} "${root.group.name}"?`;
+					msg += `<span class="font-weight-semibold mt-1 d-block red">Los integrantes ya no tendrán acceso al mismo.</span>`;
+					root.$confirm(msg, async function(si_no) {
+						console.log("result", si_no);
+						if (si_no) {
+							// 202109160653: Inactiva integrantes activos
+							let members = await root.getMembers(root.group.id);
+							console.log("members =>", members);
+							if (members.length > 0) {
+								let active_members = members.filter((o) => o.gm_state_id === 1);
+								console.log("active_members =>", active_members);
+								// 202109160748: NOTE: 'for' es requerido para un loop con instrucciones 'async'
+								for (let x = 0; x < active_members.length; x++) {
+									// 202109160746: Desactiva el integrante
+									const member = active_members[x];
+									member.gm_state_id = 2;
+									member.updated_by = root.user_id;
+									let updated_member = await root.updateGroupMember({ group_id: root.group.id, item: member });
+									console.log(root.$sep);
+									console.log("updated_member =>", updated_member);
+									// Obtiene los periodos abiertos si los hay
+									let periods = member.gm_periods.filter((o) => o.final_date === null);
+									if (periods.length > 0) {
+										// 202109160747: Cierra el periodo
+										let period = periods[0];
+										period.is_current = false;
+										period.final_date = new Date().getFormatted();
+										period.updated_by = root.user_id;
+										let updated_period = await root.updatePeriod(period);
+										console.log("updated_period =>", updated_period);
+									}
+								}
+							}
+							root.saveDo();
 						} else {
+							root.group.group_state_id = 1;
 							root.loaderHide();
-							root.$info(`La estructura "${result.name}" se actualizó exitosamente!`);
 						}
-					},
-				});
+					});
+				} else root.saveDo();
 			}
 		},
 		facultadChange(e) {
