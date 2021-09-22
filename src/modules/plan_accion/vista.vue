@@ -46,26 +46,17 @@
       </div>
     </div>
 
-    <div class="row">
+
+
+
+
+
+
+    <div class="row" id="panel-plan-accion">
+
       <div class="col">
-        <vue-html2pdf
-          :show-layout="false"
-          :float-layout="true"
-          :enable-download="false"
-          :preview-modal="true"
-          :paginate-elements-by-height="1400"
-          :filename="datax"
-          :pdf-quality="2"
-          :manual-pagination="false"
-          pdf-format="legal"
-          pdf-orientation="portrait"
-          pdf-content-width="98%"
-          ref="html2Pdf"
-        >
-          <!--                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       -->
-          <section slot="pdf-content">
-            <div class="row">
-              <div class="col-md-12 mt-3">
+        <div class="card" >
+          <div id="head-ud">
                 <table width="100%" border="0">
                   <thead>
                     <tr>
@@ -102,194 +93,11 @@
                     </tr>
                   </thead>
                 </table>
-              </div>
+              
             </div>
-
-            <br />
-            <div class="card-body group-detail mh">
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend><small>1.0 Información Básica </small></legend>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="row">
-                          <div class="col-md-12">
-                            <strong>Grupo de Investigación o Semillero: </strong
-                            >{{ group.name }}
-                          </div>
-                          <div class="col-md-12">
-                            <strong>Fecha de Registro Grupo:</strong>
-                            {{ group.cidc_registration_date }}
-                          </div>
-                          <div class="col-md-12">
-                            <strong>Codigo Colciencias: </strong
-                            >{{ group.colciencias_code }}
-                          </div>
-                          <div class="col-md-12">
-                            <strong>Enlace GrupLac (SIENTI):</strong>
-                            <a :href="group.gruplac" target="_blank">{{
-                              group.gruplac
-                            }}</a>
-                          </div>
-
-                          <div class="col-md-12">
-                            <strong>Correo de Contácto:</strong>
-                            <a
-                              :href="'mailto:' + group.email"
-                              target="_blank"
-                              >{{ group.email }}</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </fieldset>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend>
-                      <small
-                        >Proceso de Formación para la
-                        Investigación/Investigación Formativa
-                      </small>
-                    </legend>
-
-                    <ProcesoFormacion
-                      :group="group"
-                      :action_panel_id="parseInt($route.params.planId)"
-                      :editMode="editMode"
-                      title="Listado de Procesos de Formacion"
-                      titleBtn="Agregar Proceso"
-                      titlecolum="title"
-                      :validateImp="true"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend>
-                      <small
-                        >Proyecto de Investigación en el Periodo Anual
-                      </small>
-                    </legend>
-                    <ProyectoInvestigacion
-                      :group="group"
-                      :action_panel_id="parseInt($route.params.planId)"
-                      :editMode="editMode"
-                      title="Listado de Proyectos de Investigación"
-                      titleBtn="Agregar Proyecto"
-                      titlecolum="title"
-                      :validateImp="true"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend>
-                      <small
-                        >Productos Resultado de Procesos de Investigación
-                        Creacion e Innovación a Generar para el Periodo Anual
-                      </small>
-                    </legend>
-                    <ProductosResultados
-                      :group="group"
-                      :action_panel_id="parseInt($route.params.planId)"
-                      :editMode="editMode"
-                      title="Listado de Productos Resultado de Investigación Creacion"
-                      titleBtn="Agregar Producto"
-                      titlecolum="title"
-                      :validateImp="true"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend>
-                      <small
-                        >Productos Con Potencialidad de Transferencia a prestar
-                        a la OTRI-Bogotá en el Periodo Anual
-                      </small>
-                    </legend>
-                    <ProductosTransferencia
-                      :group="group"
-                      :action_panel_id="parseInt($route.params.planId)"
-                      :editMode="editMode"
-                      title="Listado de Productos Con Potencialidad  de Transferencia"
-                      titleBtn="Agregar Producto"
-                      titlecolum="title"
-                      :validateImp="true"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend>
-                      <small
-                        >Recursos con que cuenta el Grupo para el Desarrollo de
-                        las Actividades de Investigación
-                      </small>
-                    </legend>
-                    <RecursosGrupo
-                      :group="group"
-                      :action_panel_id="parseInt($route.params.planId)"
-                      :editMode="editMode"
-                      title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"
-                      titleBtn="Agregar Recurso"
-                      titlecolum="title"
-                      :validateImp="true"
-                    />
-                  </fieldset>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-12 mt-3">
-                  <fieldset>
-                    <legend>
-                      <small
-                        >Redes Académicas de Promoción Científica y/o Artística
-                      </small>
-                    </legend>
-
-                    <!-- <RedesAcademicas
-													:group="group"
-													:action_panel_id="parseInt($route.params.planId)"  
-													:editMode="editMode" 
-													title="Listado de Redes Académicas de Promoción Cientifica"													
-                                                    :validateImp="true"
-													titleBtn="Agregar Rede Academica"	
-													titlecolum="title"
-												/> -->
-                  </fieldset>
-                </div>
-              </div>
-            </div>
-          </section>
-        </vue-html2pdf>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <div class="card" id="panel-plan-accion">
           <div class="card-body group-detail mh">
             <div class="row">
+
               <div class="col-md-12 mt-3">
                 <fieldset>
                   <legend><small>Información Básica </small></legend>
@@ -450,7 +258,9 @@
                       >Redes Académicas de Promoción Científica y/o Artística
                     </small>
                   </legend>
-                  <RedesAcademicas
+
+                  <!-- <div id="non-printable">
+                   <RedesAcademicas
                     :group="group"
                     :action_panel_id="parseInt($route.params.planId)"
                     :editMode="editMode"
@@ -459,7 +269,9 @@
                     titleBtn="Agregar Rede Academica"
                     titlecolum="title"
                   />
-                  <!-- <VistaRedesAcademicas :group="group"/> -->
+                  </div> -->
+
+                  <VistaRedesAcademicas :group="group" :arreglos="dataForm" :name="group.name"/>
                 </fieldset>
               </div>
             </div>
@@ -481,6 +293,11 @@ import VueHtml2pdf from "vue-html2pdf";
 export default {
   created: function () {
     root = this;
+    this.listaRedes();
+    this.datasys.data=this.dataForm;
+    console.warn("console datasys", this.datasys);
+
+
     root.getUnit({
       id: root.$route.params.unidadId,
       cb: function (result) {
@@ -511,6 +328,11 @@ export default {
     docLink: null,
     firstLoad: true,
     group: null,
+    // datasys:{data:[]},
+    datalist: [],
+    dataForm: [],
+    listaGeneral: [],
+    datasys:[],
     // dataSource: data,
   }),
   components: {
@@ -529,26 +351,93 @@ export default {
     VistaRedesAcademicas: () =>
       import("@/modules/plan_accion/forms/vista_redes_academicas"),
   },
+  // created() {
+    
+  //   //this.dataForm=root.dataForm
+  // },
+
   computed: {
     datax() {
       const d = new Date();
       return "Paln_accion_" + d.getTime();
     },
+
+    cams(){
+      return this.dataForm;
+
+    }
+
   },
   methods: {
     ...mapActions("unidad", ["getUnit", "getResearchers"]),
     // loadMembers() {
     // 	console.log("members", root.group.member_ids);
     // },
+
+    ...mapActions("unidad/producto/universalSentUpAct", {
+      getDataAll: "getAll",
+      getForm: "get",
+    }),
+    vista(id, i, obj) {
+      
+        root.getForm({
+          url: "form_d_act_plans/" + id.id,
+          cb: function (results) {
+            obj.dataForm[i] = results;
+            console.warn("dataForm: ",root.dataForm);
+            // root.loaderHide();
+          },
+        });
+    },
+
+
+   listaRedes() {
+      
+        root.getDataAll({
+          url:
+            "/action_plans/" + root.$route.params.planId + '/form_d_act_plans',
+          cb: function (results) {
+            console.clear();
+            // root.dataForm =[];
+            root.datalist = results;
+            for(let i=0; i<=root.datalist.length; i++){
+              root.vista(root.datalist[i], i, root);
+            }
+            root.loaderHide();
+          },
+        });
+
+    },
+
+
+
+    
+    
     estadoEntrega(cellInfo) {
       return cellInfo.value ? "Terminado" : "Editando...";
     },
-    download() {
+
+
+    download2() {
       this.$refs.html2Pdf.generatePdf();
 
       //this.$refs.html2Pdf.save();
     },
 
+
+
+
+    download() {
+      
+        let printContents = document.getElementById('panel-plan-accion').innerHTML;
+        let originalContents = document.body.innerHTML;
+
+         document.body.innerHTML = printContents;
+         window.print();
+
+         document.body.innerHTML = originalContents;
+         location.reload();
+    }
     // gridInit(e) {
     // 	this.grid = e.component;
     // },
@@ -557,4 +446,13 @@ export default {
 </script>
 
 <style>
+    #head-ud{
+      display: none;
+    }
+    @media print
+    {
+      #head-ud{ display: block; }
+      #non-printable { display: none; }
+      #printable { display: block; }
+    }
 </style>
