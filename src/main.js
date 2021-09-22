@@ -254,8 +254,8 @@ vue.mixin({
 					console.log("groupId =>", groupId);
 					console.log("user =>", window.vm.user);
 					// 202106162157: Filtra el grupo actual de los grupos seleccionados
+					console.log("groups =>", window.vm.user.groups);
 					if (typeof window.vm.user.groups !== "undefined") {
-						console.log("groups =>", window.vm.user.groups);
 						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
 						if (typeof g !== "undefined") {
 							console.log("current_group =>", g);
@@ -263,7 +263,12 @@ vue.mixin({
 							// 202106170127: Si es director en el grupo actual
 							if (g.role_id === root.get_group_role_id("director")) result = true;
 							// 202108250019: Si el grupo es semillero y el rol es lider semillero
-							if (g.group_type_id === root.get_group_type_id("semillero") && g.role_id === root.get_group_role_id("lider_semillero")) result = true;
+							// 202109160520: Si el grupo es semillero y el rol es docente_tutor
+							if (
+								g.group_type_id === root.get_group_type_id("semillero") &&
+								(g.role_id === root.get_group_role_id("lider_semillero") || g.role_id === root.get_group_role_id("docente_tutor"))
+							)
+								result = true;
 						}
 					}
 				}

@@ -680,3 +680,11 @@ hr.sep {
 		background: none !important;
 	}
 }
+
+.bb {
+	border-bottom: 1px solid $color-gray-10;
+}
+
+.red {
+	color: $error;
+}

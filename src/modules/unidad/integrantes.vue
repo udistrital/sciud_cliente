@@ -819,7 +819,7 @@ export default {
 			"updatePeriod",
 			"updateResearcher",
 		]),
-		...mapActions("auth/usuario", ["getUser", "getOasUsers", "getOasUser"]),
+		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
 		activeChanged(e) {
 			const previousValue = e.previousValue;
 			const is_active = e.value;
@@ -1014,6 +1014,25 @@ export default {
 			console.log("result", result);
 			if (result.isValid) {
 				root.loaderShow("Guardando usuario", "#panel-integrantes-data .card");
+
+				// 202109160428: Verifica que el usuario exista localmente
+				let usrs = await root.getUser(root.researcher.identification_number);
+				// El usuario no existe, lo crea con rol 'Integrante'
+				if (usrs.length <= 0) {
+					let to_send = {
+						identification_number: root.researcher.identification_number.toString(),
+						oas_user_id: root.researcher.oas_researcher_id,
+						user_role_id: root.get_role_id("integrante"),
+						faculties_ids: [],
+						created_by: root.user_id,
+					};
+					console.log("to_send =>", to_send);
+					root.app_user = await root.saveUserAsync(to_send);
+					console.log("created =>", root.app_user);
+				} else {
+					root.app_user = usrs[0];
+					console.log("root.app_user =>", root.app_user);
+				}
 
 				// 202106010400: Investigador
 				let r = null;
