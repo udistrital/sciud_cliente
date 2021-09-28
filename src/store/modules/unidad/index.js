@@ -90,13 +90,12 @@ const store = {
 					args.cb(o);
 				});
 		},
-		getMembers({ commit, dispatch, state }, args) {
+		async getMembers({ commit, dispatch, state }, group_id) {
 			state.loading = true;
-			api()
-				.get(`research_units/${args.unidadId}/group_member`)
+			return await api()
+				.get(`research_units/${group_id}/group_member`)
 				.then((r) => {
-					args["data"] = r.data;
-					dispatch("getMembersOas", args);
+					return r.data;
 				});
 		},
 		// 202105280535: Obtiene un investigador
