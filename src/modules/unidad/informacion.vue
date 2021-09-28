@@ -743,7 +743,7 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("unidad", ["getUnit", "saveUnit", "setDocument"]),
+		...mapActions("unidad", ["getUnit", "saveUnit", "setDocument", "getMembers", "updateGroupMember", "activatePeriod", "updatePeriod"]),
 		...mapActions("unidad/cine", { getCine: "all" }),
 		...mapActions("unidad/oas", { getFacultades: "facultades" }),
 		...mapActions("unidad/ocde", { getOcde: "getAll" }),
