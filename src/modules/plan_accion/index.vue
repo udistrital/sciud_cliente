@@ -178,6 +178,14 @@
 																	href="#">
 																	<i class="icon-pencil"></i>
 																	</a>
+
+																	<a v-if="!data.data.is_draft && editMode"
+																	title="Completar Informe... " 
+																	class="cmd-item color-main-600"
+																	@click.prevent="go(data.data.id, `/unidad/${$route.params.unidadId}/plan_accion/${data.data.id}/datos`, 'Cargando Ingreso de Datos')"
+																	href="#">
+																	<i class="icon-clipboard5"></i>
+																	</a>
 																	
 																	<a 
 																	title="Vista Impresion... " 
@@ -329,8 +337,8 @@ export default {
 		DxValidationGroup,
 	},
 	computed: {
-		...mapGetters("core/tipo", ["subtypesByType"]),
-		...mapState("unidad/colciencias", { convocatorias: "items" }),
+		// ...mapGetters("core/tipo", ["subtypesByType"]),
+		// ...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
 			console.log("root.group", this.group);
@@ -441,6 +449,7 @@ export default {
 				if (si_no) {
 					root.loaderShow("Activando formularios");
 					root.baseObj.update_by = root.user_id;
+					root.baseObj.updated_by= root.user_id;
 					root.baseObj.is_draft = state;
 					root.baseObj.active = true;
 					let obj = root.baseObj;
