@@ -73,7 +73,7 @@
 	{
 		"id": 11,
 		"ch_parent_id": null,
-		"ch_order": 9,
+		"ch_order": "9",
 		"ch_title": "Presentación de Informe de Divulgación",
 		"ch_description": "<p>El docente investigador favorecido deberá diligenciar el formato 'Formato de presentación de Resultados de Ponencia de Evento Nacional e Internacional' que se encuentra en el siguiente link <a href='http://cidc.udistrital.edu.co/web/documentos/formatos/Formato_Presentacion_Resultados_Ponencia.docx' target='_blank'>http://cidc.udistrital.edu.co/web/documentos/formatos/Formato_Presentacion_Resultados_Ponencia.docx</a> como máximo quince (15) días hábiles después de la fecha de participación en el evento.</p><p><b>NOTA: Si el docente incumple con la presentación del informe de actividades anteriormente descrito dentro del plazo estipulado, el grupo de investigación al que pertenece y en nombre del cual presentó la propuesta será inhabilitado en el sistema por el término de un semestre; lo anterior implica que ninguno de sus miembros podrá participar en las convocatorias que realice el CIDC en el semestre.</b></p>"
 	},
@@ -81,14 +81,28 @@
 		"id": 12,
 		"ch_parent_id": null,
 		"numeral": "10",
-		"ch_title": "Información Adicional",
+		"ch_title": "Documentos solicitados",
 		"ch_description": "<p>El CIDC se reserva el derecho de hacer ajustes mediante el mecanismo de adendas a los términos de referencia durante el desarrollo de la convocatoria de acuerdo con las necesidades institucionales y la disponibilidad presupuestal.</p><p>El trámite administrativo de los apoyos está sujeto a los tiempos administrativos de cada una de las dependencias que participan en todo el proceso.</p>"
 	},
 	{
 		"id": 13,
 		"ch_parent_id": null,
 		"numeral": "11",
+		"ch_title": "Información Adicional",
+		"ch_description": "<p>El CIDC se reserva el derecho de hacer ajustes mediante el mecanismo de adendas a los términos de referencia durante el desarrollo de la convocatoria de acuerdo con las necesidades institucionales y la disponibilidad presupuestal.</p><p>El trámite administrativo de los apoyos está sujeto a los tiempos administrativos de cada una de las dependencias que participan en todo el proceso.</p>"
+	},
+	{
+		"id": 14,
+		"ch_parent_id": null,
+		"numeral": "12",
 		"ch_title": "Asesoría Técnica en el SICIUD",
 		"ch_description": "<p>Para cualquier duda o comentario relativo a la Convocatoria, favor comunicarse al correo electrónico <a href='mailto:planeacion-cidc@correo.udistrital.edu.co' target='_blank'>planeacion-cidc@correo.udistrital.edu.co</a></p>"
+	},
+	{
+		"id": 15,
+		"ch_parent_id": 9,
+		"ch_order": 8,
+		"ch_title": "Rubros a financiar",
+		"ch_description": "<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar para evento internacional (inscripción)</p></td><td><p>$4'000.000 (Cuatro millones pesos)</p></td></tr><tr><td><p>Monto máximo a financiar para evento nacional (Inscripción)</p></td><td><p>$2'000.000 (Dos millones de pesos)</p></td></tr><tr><td><p>Monto total a financiar en la convocatoria</p></td><td><p><b>$90.000.000</b> (Noventa millones de pesos)</p></td></tr></table>"
 	}
 ]

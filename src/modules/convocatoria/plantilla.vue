@@ -5,7 +5,7 @@
 			<div class="col">
 				<div class="card" id="panel-documentos">
 					<div class="card-body group-detail mh">
-						<div class="row pb-3 mb-3 bb">
+						<div class="row pb-3 mb-2 bb">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
 									<div>
@@ -18,39 +18,64 @@
 						</div>
 						<div class="row">
 							<div class="col-3">
-								<DxSortable
-									group="shared"
-									data="document_items"
-									filter=".dx-treeview-item"
-									:allow-drop-inside-item="true"
-									:allow-reordering="true"
-									@drag-change="onDragChange"
-									@drag-end="onDragEnd"
-								>
-									<DxTreeView
-										:expand-nodes-recursive="false"
-										:items="document_items"
-										:select-by-click="true"
-										:select-nodes-recursive="false"
-										@item-context-menu="treeViewItemContextMenu"
-										@selection-changed="treeViewSelectionChanged"
-										data-structure="plain"
-										parent-id-expr="ch_parent_id"
-										key-expr="id"
-										display-expr="ch_title"
-										id="treeview"
-										ref="treeviewRef"
-										selection-mode="single"
-										show-check-boxes-mode="none"
-									>
-										<!-- show-check-boxes-mode="selectAll, normal, none" -->
-										<template #item="item">
-											<span class="list-item">
-												<span class="numeral">{{ item.data.numeral }}.</span><span>{{ item.data.ch_title }}</span>
-											</span>
-										</template>
-									</DxTreeView>
-								</DxSortable>
+								<div class="row pb-2 mb-2 bb">
+									<div class="col font-weight-semibold color-main-500">
+										ESTRUCTURA DE DOCUMENTO
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<DxSortable
+											group="shared"
+											data="document_items"
+											filter=".dx-treeview-item"
+											:allow-drop-inside-item="true"
+											:allow-reordering="true"
+											@drag-change="onDragChange"
+											@drag-end="onDragEnd"
+										>
+											<DxTreeView
+												:expand-nodes-recursive="false"
+												:items="document_items"
+												:select-by-click="true"
+												:select-nodes-recursive="false"
+												@item-context-menu="treeViewItemContextMenu"
+												@selection-changed="treeViewSelectionChanged"
+												data-structure="plain"
+												parent-id-expr="ch_parent_id"
+												key-expr="id"
+												display-expr="ch_title"
+												id="treeview"
+												ref="treeviewRef"
+												selection-mode="single"
+												show-check-boxes-mode="none"
+											>
+												<!-- show-check-boxes-mode="selectAll, normal, none" -->
+												<template #item="item">
+													<span class="list-item">
+														<span class="numeral">{{ item.data.numeral }}.</span><span>{{ item.data.ch_title }}</span>
+													</span>
+												</template>
+											</DxTreeView>
+										</DxSortable>
+									</div>
+								</div>
+								<div class="row pt-2 pb-2 mt-2 mb-2 bt bb">
+									<div class="col">
+										<a
+											href="#"
+											@click.prevent="renderDoc"
+											title="Exportar Plantilla a MS Word..."
+											class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple w-100"
+											><b><i class="icon-file-word"></i></b>&nbsp;Exportar</a
+										>
+									</div>
+									<div class="col">
+										<a href="#" title="Guardar Plantilla..." class="btn btn-sm btn-main btn-labeled btn-labeled-right legitRipple w-100"
+											><b><i class="icon-floppy-disk"></i></b>&nbsp;Guardar</a
+										>
+									</div>
+								</div>
 							</div>
 							<div class="col" v-if="selectedItem">
 								<div class="row">
@@ -77,7 +102,26 @@
 				</div>
 			</div>
 		</div>
-		<DxContextMenu ref="contextMenu" :data-source="menuItems" target="#treeview .dx-treeview-item" @item-click="contextMenuItemClick" />
+		<DxContextMenu ref="contextMenu" :data-source="contextMenuItems" target="#treeview .dx-treeview-item" @item-click="contextMenuItemClick" />
+		<!-- <DxPopup
+			:on-hidden="popupHidden"
+			:visible="popupVisible"
+			:drag-enabled="false"
+			:close-on-outside-click="false"
+			:show-title="true"
+			width="90%"
+			height="90%"
+			:title="tituloDocumento"
+		>
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec urna eros, lacinia eu ullamcorper a, egestas porta nulla. Donec nec est nibh, rhoncus
+						lobortis magna.
+					</div>
+				</div>
+			</div>
+		</DxPopup> -->
 		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
@@ -96,24 +140,39 @@
 </template>
 <script>
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-inner-declarations */
 /* eslint-disable vue/no-unused-components */
 // 202108180553: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropHierarchicalDataStructure/Vue
 // 202108180602: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ItemSelectionAndCustomization/Vue
 // 202109240240: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ContextMenuIntegration/Vue
 // 202109240601: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropPlainDataStructure/Vue
+// 202110052332: https://github.com/guigrpa/docx-templates
 let $ = window.jQuery,
 	root = null;
+import * as TextBox from "devextreme/ui/text_box";
 import { mapActions, mapGetters } from "vuex";
 import DxTreeView from "devextreme-vue/tree-view";
 import DxSortable from "devextreme-vue/sortable";
 import { DxCheckBox } from "devextreme-vue/check-box";
 import DxContextMenu from "devextreme-vue/context-menu";
 import { DxHtmlEditor, DxToolbar, DxMediaResizing, DxItem } from "devextreme-vue/html-editor";
+import Docxtemplater from "docxtemplater";
+// const TableModule = require("docxtemplater-table-module");
+import PizZip from "pizzip";
+import PizZipUtils from "pizzip/utils/index.js";
+import { saveAs } from "file-saver";
+// var HTMLModule = require("docxtemplater-html-module");
+// var htmlModule = new HTMLModule({});
+function loadFile(url, callback) {
+	PizZipUtils.getBinaryContent(url, callback);
+}
 
 export default {
 	name: "datosBasicos",
 	components: {
+		// DxTextBox,
 		DxTreeView,
+		// DxButton,
 		DxSortable,
 		DxHtmlEditor,
 		DxMediaResizing,
@@ -125,6 +184,46 @@ export default {
 		Contenido: () => import("@/components/element/html_editor"),
 	},
 	data: () => ({
+		treeAction: null,
+		textboxId: "tb-container",
+		currentName: null,
+		currentItem: null,
+		currentItemEl: null,
+		textBoxElHtml: null,
+		criteria: null,
+		financing: null,
+		activities: null,
+		documents: null,
+		items: null,
+		clearButton: {
+			icon: "clear",
+			name: "saveBtn",
+			location: "after",
+			stylingMode: "text",
+			// width: 24,
+			elementAttr: {
+				class: "currency",
+			},
+			onClick: (e) => {
+				console.clear();
+				console.log("e", e.component.option("text"));
+			},
+		},
+		saveButton: {
+			icon: "save",
+			name: "saveBtn",
+			location: "after",
+			stylingMode: "text",
+			// width: 24,
+			elementAttr: {
+				class: "currency",
+			},
+			onClick: (e) => {
+				console.clear();
+				console.log("e", e.component.option("text"));
+			},
+		},
+		textBox: null,
 		treeView: null,
 		item: null,
 		baseObj: {
@@ -133,14 +232,14 @@ export default {
 		document_items: [],
 		id: "panel-convocatoria-documentos",
 		selectedItem: null,
-		menuItems: [
-			{ id: "rename", text: "Renombrar" },
-			{ id: "add", text: "Agregar" },
-			{ id: "delete", text: "Eliminar" },
+		contextMenuItems: [
+			{ id: "rename", text: "Renombrar", icon: "rename" },
+			{ id: "add", text: "Agregar", icon: "add" },
+			{ id: "delete", text: "Eliminar", icon: "close" },
 		],
 	}),
 	methods: {
-		...mapActions("convocatoria", ["getItem", "getTemplate"]),
+		...mapActions("convocatoria", ["getItem", "getTemplate", "getCriteria", "getFinancingItems", "getActivities", "getDocuments", "getItems"]),
 		setNumerals(parent_id) {
 			if (typeof parent_id === "undefined") parent_id = null;
 			root.document_items
@@ -153,40 +252,192 @@ export default {
 					root.setNumerals(item.id);
 				});
 		},
-		treeViewItemContextMenu(e) {
-			root.selectedItem = e.itemData;
-			// const isProduct = e.itemData.price !== undefined;
-			// root.contextMenu.option("items[0].visible", !isProduct);
-			// root.contextMenu.option("items[1].visible", !isProduct);
-			// root.contextMenu.option("items[2].visible", isProduct);
-			// root.contextMenu.option("items[3].visible", isProduct);
-			// root.contextMenu.option("items[0].disabled", e.node.expanded);
-			// root.contextMenu.option("items[1].disabled", !e.node.expanded);
-		},
-		contextMenuItemClick(e) {
+		saveItem: (e) => {
 			console.clear();
 			console.log("e =>", e);
-			console.log("root.selectedItem =>", root.selectedItem);
+			let n = e.component.option("value");
+			console.log("n =>", n);
+			if (n.length > 0)
+				if (root.treeAction === "rename") {
+					root.selectedItem.itemData.ch_title = n;
+					root.treeView.selectItem(root.selectedItem.itemData.id);
+				} else if (root.treeAction === "add") {
+					let n_id = root.document_items.length + 1;
+					// 202110051249: Find index https://stackoverflow.com/a/39529049
+					var index = root.document_items.findIndex((o) => o.id == root.selectedItem.itemData.id) + 1;
+					console.log("index =>", index);
+					let ni = {
+						id: n_id,
+						ch_parent_id: null,
+						numeral: "XX",
+						ch_title: n,
+						ch_description: null,
+					};
+					// 202110051246: Add item to specific index https://stackoverflow.com/a/586189
+					root.document_items.splice(index, 0, ni);
+					console.log("Agregar =>", ni);
+					root.setNumerals();
+					setTimeout(function() {
+						root.treeView.selectItem(n_id);
+						root.treeViewSelectionChanged(e);
+					}, 200);
+				}
+			root.cancelItem(e);
+		},
+		cancelItem: (e) => {
+			try {
+				root.selectedItem = null;
+				root.currentItemEl.show();
+				$("#" + root.textboxId).remove();
+				setTimeout(function() {
+					root.treeViewSelectionChanged(e);
+				}, 100);
+				console.log("cancelItem e =>", e);
+			} catch (error) {
+				console.log("error =>", error);
+			}
+		},
+		loadContent(item) {},
+		treeViewItemContextMenu(e) {
+			console.clear();
+			root.selectedItem = e;
+			console.log("root.selectedItem =>", root.selectedItem.itemData.ch_title);
+		},
+		contextMenuItemClick(e) {
+			console.log(root.$sep);
+			console.log("e =>", e);
+			root.currentItemEl = $(root.selectedItem.itemElement);
+			$("#" + root.textboxId).remove();
+			$("body").append(`<div id="${root.textboxId}" class="slide"></div>`);
+			let instance = new TextBox("#" + root.textboxId, {
+				id: "txt-field",
+				value: root.selectedItem.itemData.ch_title,
+				showClearButton: true,
+				placeholder: "Nombre",
+				onEnterKey: root.saveItem,
+				onFocusOut: root.cancelItem,
+				blur: root.cancelItem,
+				deferRendering: false,
+				visible: true,
+			});
 			switch (e.itemData.id) {
 				case "rename": {
-					root.treeView.expandItem(root.selectedItem.id);
+					root.treeAction = "rename";
+					root.currentItemEl.after(instance.element()).focus();
+					instance
+						.element()
+						.querySelector(".dx-texteditor-input")
+						.select();
+					root.currentItemEl.hide();
 					break;
 				}
 				case "add": {
-					root.treeView.collapseItem(root.selectedItem.id);
+					root.treeAction = "add";
+					root.currentItemEl.after(instance.element());
+					instance.option({ value: "", placeholder: "Título para el nuevo ítem" });
+					instance.focus();
 					break;
 				}
 				case "delete": {
+					root.treeAction = null;
+					root.$confirm(`¿Realmente desea eliminar el ítem "${root.selectedItem.itemData.ch_title}"?`, function(si) {
+						console.log("result", si);
+						if (si) {
+							console.clear();
+							console.log("DELETE!");
+							root.document_items = root.document_items.filter((o) => o.id !== root.selectedItem.itemData.id);
+							root.setNumerals();
+						}
+					});
 					break;
 				}
 			}
 		},
 		treeViewSelectionChanged(e) {
-			console.clear();
-			let se = e.component.getSelectedNodes().map((node) => node.itemData)[0];
+			// console.clear();
+			console.log("e =>", e);
+			let se = root.treeView.getSelectedNodes().map((node) => node.itemData)[0];
 			if (typeof se !== "undefined") {
-				root.selectedItem = e.component.getSelectedNodes().map((node) => node.itemData)[0];
-				console.log("selectedItem =>", root.selectedItem);
+				root.selectedItem = root.treeView.getSelectedNodes().map((node) => node.itemData)[0];
+				if (root.selectedItem.id == 1) {
+					root.selectedItem.ch_description = root.item.call_directed_towards;
+				} else if (root.selectedItem.id == 3) {
+					root.selectedItem.ch_description = root.item.call_objective;
+				} else if (root.selectedItem.id == 8) {
+					// Cronograma
+					console.log("activities =>", root.activities);
+					if (root.activities.filter((o) => o.active).length > 0) {
+						let html = `<table><tr><td width="40%">Actividad</td><td width="30%">Responsable</td><td>Fecha inicio</td><td>Fecha cierre</td></tr><tbody>`;
+						root.activities
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<tr><td>${o.sa_description}</td><td>${o.sa_responsible}</td><td>${o.sa_start_date}</td><td>${o.sa_end_date}</td></tr>`;
+							});
+						html += `</tbody></table>`;
+						console.log("html =>", html);
+						root.selectedItem.ch_description = html;
+					}
+				} else if (root.selectedItem.id == 9) {
+					// Cuantía
+					let html = `<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar por proyecto:</p></td><td><p>$${root.$format(
+						root.item.call_max_budget_per_project
+					)}</p></td></tr><tr><td><p>Monto total a financiar en la convocatoria</p></td><td><p><b>$${root.$format(
+						root.item.call_global_budget
+					)}</b></p></td></tr></table>`;
+					root.selectedItem.ch_description = html;
+				} else if (root.selectedItem.id == 10) {
+					// Criterios
+					console.log("criteria =>", root.criteria);
+					if (root.criteria.filter((o) => o.active).length > 0) {
+						let html = `<table><tr><td width="40%">Criterio</td><td width="30%">Porcentaje</td></tr><tbody>`;
+						root.criteria
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<tr><td>${o.eval_criterion_name}</td><td>${root.$format(o.cec_percentage)}%</td></tr>`;
+							});
+						html += `</tbody></table>`;
+						console.log("html =>", html);
+						root.selectedItem.ch_description = html;
+					}
+					// root.selectedItem.ch_description = root.item.call_objective;
+					// } else if (root.selectedItem.id == 3) {
+					// 	root.selectedItem.ch_description = root.item.call_objective;
+				} else if (root.selectedItem.id == 12) {
+					// Documentos
+					console.log("documents =>", root.documents);
+					if (root.documents.filter((o) => o.active).length > 0) {
+						let html = `<p>Los documentos solicitados para la convocatoria son:</p><ol>`;
+						root.documents
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<li>${o.document_name}</li>`;
+							});
+						html += `</ol>`;
+						console.log("html =>", html);
+						root.selectedItem.ch_description = html;
+					}
+				} else if (root.selectedItem.id == 15) {
+					// Rubros
+					console.log("rubros =>", root.items);
+					if (root.items.filter((o) => o.active).length > 0) {
+						let html = `<table><tr><td width="40%">Rubro a financiar</td><td width="30%">Porcentaje</td><td width="30%">Monto máximo</td><td width="30%">% máximo</td></tr><tbody>`;
+						root.items
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<tr><td>${o.item_name}</td><td>${root.$format(o.ci_percentage)}%</td><td>$${root.$getAmmount(
+									root.item.call_max_budget_per_project,
+									o.ci_maximum_percentage,
+									true
+								)}</td><td>${root.$format(o.ci_maximum_percentage)}%</td></tr>`;
+							});
+						html += `</tbody></table>`;
+						console.log("html =>", html);
+						root.selectedItem.ch_description = html;
+					}
+					// root.selectedItem.ch_description = root.item.call_objective;
+					// } else if (root.selectedItem.id == 3) {
+					// 	root.selectedItem.ch_description = root.item.call_objective;
+				}
 				root.baseObj.observation = root.selectedItem.ch_description;
 				console.log("selectedItem =>", root.selectedItem);
 			}
@@ -275,9 +526,117 @@ export default {
 			}
 			return false;
 		},
+		// 202110051053: https://docxtemplater.com/docs/faq/#docxtemplater-in-a-vuejs-project
+		renderDoc() {
+			loadFile(root.baseUrl + "data/convocatoria.docx", function(error, content) {
+				if (error) throw error;
+				const zip = new PizZip(content);
+				// https://docxtemplater.com/docs/configuration/
+				const doc = new Docxtemplater(zip, {
+					paragraphLoop: true,
+					linebreaks: true,
+					// modules: [new ImageModule(imageOpts)],
+					delimiters: {
+						start: "<",
+						end: ">",
+					},
+				});
+				try {
+					// render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+					let o = {
+						chapters: root.$objectSort(root.document_items, "numeral"),
+						item: root.item,
+						table1: {
+							fixedColumns: [null, "Example 1", null, "Example 2"],
+							widths: [100, 150, 320, 100],
+							header: ["Source", "Hazard", "Handling", "Protection"],
+							subheader: ["The source", "The Hazard", "The Handling", "The Protection"],
+							chunkSize: 6,
+							data: [
+								[
+									"A1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"B1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"C1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"A1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"B1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"B1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"C1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"A1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"B1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+								[
+									"D1",
+									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+								],
+							],
+						},
+					};
+					console.log("render =>", o);
+					doc.render(o);
+				} catch (error) {
+					// The error thrown here contains additional information when logged with JSON.stringify (it contains a properties object containing all suberrors).
+					function replaceErrors(key, value) {
+						if (value instanceof Error) {
+							return Object.getOwnPropertyNames(value).reduce(function(error, key) {
+								error[key] = value[key];
+								return error;
+							}, {});
+						}
+						return value;
+					}
+					console.log(JSON.stringify({ error: error }, replaceErrors));
+					if (error.properties && error.properties.errors instanceof Array) {
+						const errorMessages = error.properties.errors
+							.map(function(error) {
+								return error.properties.explanation;
+							})
+							.join("\n");
+						console.log("errorMessages", errorMessages);
+						// errorMessages is a humanly readable message looking like this:
+						// 'The tag beginning with "foobar" is unopened'
+					}
+					throw error;
+				}
+				console.log("doc =>", doc);
+				const out = doc.getZip().generate({
+					type: "blob",
+					mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+				});
+				// Output the document using Data-URI
+				let fn = root.$getTS(new Date(), true) + "-convocatoria.docx";
+				console.log("fn =>", fn);
+				saveAs(out, fn);
+			});
+		},
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
+		...mapGetters("convocatoria", ["getAmmount"]),
 	},
 	created: async function() {
 		root = this;
@@ -289,8 +648,15 @@ export default {
 		root.item = await root.getItem(uId);
 		console.log("item =>", root.item);
 		document.title += ` Convocatoria ${root.item.call_code}`;
-		setTimeout(function() {
+		setTimeout(async function() {
+			// root.textBox = root.$refs.textboxRef.instance;
+			// root.textBoxElHtml = root.textBox.element().outerHTML;
 			root.treeView = root.$refs.treeviewRef.instance;
+			root.criteria = await root.getCriteria(uId);
+			root.financing = await root.getFinancingItems(uId);
+			root.activities = await root.getActivities(uId);
+			root.documents = await root.getDocuments(uId);
+			root.items = await root.getItems(uId);
 			console.log("root.treeView =>", root.treeView);
 		}, 500);
 	},
@@ -298,7 +664,7 @@ export default {
 		console.log(root.$sep);
 		console.log("documentos Updated");
 	},
-	mounted() {
+	mounted: () => {
 		// setTimeout(function() {
 		// 	let id = `#${root.id}`;
 		// 	console.log("id", id);

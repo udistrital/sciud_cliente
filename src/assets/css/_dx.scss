@@ -1430,6 +1430,16 @@ tr.hovered {
 			}
 		}
 	}
+	&.dx-state-selected {
+		.dx-treeview-item {
+			&.dx-state-hover {
+				background-color: #ccc;
+				.dx-treeview-item-content {
+					color: #333;
+				}
+			}
+		}
+	}
 }
 
 .dx-treeview-item-content {

@@ -20,7 +20,7 @@
 									<div class="card-body mb-0 pb-0 pt-3">
 										<DxValidationGroup ref="vGroup">
 											<div class="row">
-												<div class="col-md-3">
+												<div class="col-md-2">
 													<div class="form-group">
 														<label>Documento de identidad:</label>
 														<DxNumberBox
@@ -28,7 +28,7 @@
 															class="form-control"
 															:show-clear-button="true"
 															:value.sync="researcher.identification_number"
-															placeholder="Documento de identidad"
+															placeholder="Documento"
 														>
 															<DxValidator>
 																<DxRequiredRule />
@@ -67,15 +67,15 @@
 														</DxTextBox>
 													</div>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-5">
 													<div class="row">
-														<div class="col-md-6">
+														<div class="col-md-4">
 															<div class="form-group">
 																<label>Investigador ID:</label>
 																<DxTextBox :value.sync="researcher.id" placeholder="Investigador ID" class="form-control" :read-only="true" />
 															</div>
 														</div>
-														<div class="col-md-4">
+														<div class="col-md-3">
 															<div class="form-group">
 																<label>OAS ID:</label>
 																<DxTextBox :value.sync="researcher.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
@@ -96,6 +96,12 @@
 																	switched-off-text="NO"
 																	@valueChanged="activeChanged"
 																/>
+															</div>
+														</div>
+														<div class="col-md-3">
+															<div class="form-group">
+																<label>CVLAC:</label>
+																<DxTextBox :value.sync="researcher.cvlac" placeholder="CVLAC" class="form-control" />
 															</div>
 														</div>
 													</div>
@@ -674,7 +680,7 @@ export default {
 			}),
 		}),
 		searchButton: {
-			text: "Buscar",
+			icon: "find",
 			onClick: async () => {
 				// console.clear();
 				let id = root.researcher.identification_number;
