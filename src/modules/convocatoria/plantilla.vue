@@ -429,12 +429,13 @@ export default {
 		renderDoc: async () => {
 			console.clear();
 			const template = await fetch(`${root.baseUrl}data/convocatoria.docx`).then((res) => res.arrayBuffer());
-			// console.log("template =>", template);
+			let item = root.$clone(root.item);
+			item.call_name = item.call_name.toUpperCase();
 			root.document_items.forEach((item) => {
 				item.ch_description = `<meta charset="UTF-8">
 					<body>
 					<style>
-						html, body, td, p { font-family:Calibri,sans-serif; font-size:13px; text-align:justify; }
+						html, body, td, p { font-family:Calibri,sans-serif; font-size:12.5px; text-align:justify; }
 						table tr:first-child td { font-weight: 600 !important; }
 						table { width:100%; }
 					</style>
@@ -445,7 +446,7 @@ export default {
 				template,
 				cmdDelimiter: ["{", "}"],
 				data: {
-					item: root.item,
+					item: item,
 					chapters: root.document_items,
 					// chapters: root.$objectSort(root.document_items, "numeral"),
 				},
