@@ -257,8 +257,10 @@ export default {
 					// console.log("index =>", index);
 					let ni = {
 						id: n_id,
+						ch_field: null,
 						ch_parent_id: null,
 						numeral: "XX",
+						ch_order: 0,
 						ch_title: n,
 						ch_description: null,
 					};
@@ -478,15 +480,15 @@ export default {
 		},
 		setContents: () => {
 			root.document_items.forEach((item) => {
-				if (item.id == 1) {
+				// 202110070101: Se usa 'item.ch_order' para la verificación de los campos
+				if (item.ch_order == 1) {
 					// Dirigida a
 					item.ch_description = root.item.call_directed_towards;
-				} else if (item.id == 3) {
+				} else if (item.ch_order == 3) {
 					// Objetivos
 					item.ch_description = root.item.call_objective;
-				} else if (item.id == 8) {
+				} else if (item.ch_order == 8) {
 					// Cronograma
-					// console.log("activities =>", root.activities);
 					if (root.activities.filter((o) => o.active).length > 0) {
 						let html = `<table><tr><td width="40%">Actividad</td><td width="30%">Responsable</td><td>Fecha inicio</td><td>Fecha cierre</td></tr><tbody>`;
 						root.activities
@@ -495,10 +497,9 @@ export default {
 								html += `<tr><td>${o.sa_description}</td><td>${o.sa_responsible}</td><td>${o.sa_start_date}</td><td>${o.sa_end_date}</td></tr>`;
 							});
 						html += `</tbody></table>`;
-						// console.log("html =>", html);
 						item.ch_description = html;
 					}
-				} else if (item.id == 9) {
+				} else if (item.ch_order == 9) {
 					// Cuantía
 					let html = `<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar por proyecto:</p></td><td><p>$${root.$format(
 						root.item.call_max_budget_per_project
@@ -506,9 +507,8 @@ export default {
 						root.item.call_global_budget
 					)}</b></p></td></tr></table>`;
 					item.ch_description = html;
-				} else if (item.id == 10) {
+				} else if (item.ch_order == 10) {
 					// Criterios
-					// console.log("criteria =>", root.criteria);
 					if (root.criteria.filter((o) => o.active).length > 0) {
 						let html = `<table><tr><td width="40%">Criterio</td><td width="30%">Porcentaje</td></tr><tbody>`;
 						root.criteria
@@ -517,12 +517,10 @@ export default {
 								html += `<tr><td>${o.eval_criterion_name}</td><td>${root.$format(o.cec_percentage)}%</td></tr>`;
 							});
 						html += `</tbody></table>`;
-						// console.log("html =>", html);
 						item.ch_description = html;
 					}
-				} else if (item.id == 12) {
+				} else if (item.ch_order == 12) {
 					// Documentos
-					// console.log("documents =>", root.documents);
 					if (root.documents.filter((o) => o.active).length > 0) {
 						let html = `<p>Los documentos solicitados para la convocatoria son:</p><ol>`;
 						root.documents
@@ -531,12 +529,10 @@ export default {
 								html += `<li>${o.document_name}</li>`;
 							});
 						html += `</ol>`;
-						// console.log("html =>", html);
 						item.ch_description = html;
 					}
-				} else if (item.id == 15) {
+				} else if (item.ch_order == 15) {
 					// Rubros
-					// console.log("rubros =>", root.items);
 					if (root.items.filter((o) => o.active).length > 0) {
 						let html = `<table><tr><td width="40%">Rubro a financiar</td><td width="30%">Porcentaje</td><td width="30%">Monto máximo</td><td width="30%">% máximo</td></tr><tbody>`;
 						root.items
@@ -549,36 +545,32 @@ export default {
 								)}</td><td>${root.$format(o.ci_maximum_percentage)}%</td></tr>`;
 							});
 						html += `</tbody></table>`;
-						// console.log("html =>", html);
 						item.ch_description = html;
 					}
-					// item.ch_description = root.item.call_objective;
-					// } else if (item.id == 3) {
-					// 	item.ch_description = root.item.call_objective;
 				}
 			});
 		},
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
-		...mapGetters("convocatoria", ["getAmmount"]),
 	},
 	created: async function() {
 		root = this;
-		root.tiposDocumento = root.subtypesByType("convocatoria_doc_emitir");
 		let uId = root.$route.params.itemId;
 		root.item = await root.getItem(uId);
+		console.log("root.item =>", root.item);
 		root.document_items = await root.getTemplate();
 		root.setNumerals();
 		document.title += ` Convocatoria ${root.item.call_code}`;
 		setTimeout(async function() {
+			console.log("CARGAR!!");
 			root.treeView = root.$refs.treeviewRef.instance;
 			root.criteria = await root.getCriteria(uId);
 			root.financing = await root.getFinancingItems(uId);
 			root.activities = await root.getActivities(uId);
 			root.documents = await root.getDocuments(uId);
 			root.items = await root.getItems(uId);
-			// root.setContents();
+			root.setContents();
 		}, 500);
 	},
 	updated: () => {
@@ -586,6 +578,7 @@ export default {
 		// console.log("documentos Updated");
 	},
 	mounted: () => {
+		console.clear();
 		// setTimeout(function() {
 		// 	let id = `#${root.id}`;
 		// 	// console.log("id", id);
