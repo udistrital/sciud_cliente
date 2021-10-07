@@ -386,7 +386,7 @@ export default {
 		root.panelCmdBack = $("#paneltrabajosP .cmds-back");
 		root.panelDocs = $("#paneltrabajosP-documentos");
 		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#paneltrabajosP .grid";
+		root.loaderElement = "#paneltrabajosP .grid"
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
