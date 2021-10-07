@@ -140,8 +140,6 @@
 </template>
 <script>
 /* eslint-disable no-unused-vars */
-/* eslint-disable no-inner-declarations */
-/* eslint-disable vue/no-unused-components */
 // 202108180553: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropHierarchicalDataStructure/Vue
 // 202108180602: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ItemSelectionAndCustomization/Vue
 // 202109240240: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ContextMenuIntegration/Vue
@@ -149,37 +147,19 @@
 // 202110052332: https://github.com/guigrpa/docx-templates
 let $ = window.jQuery,
 	root = null;
+import createReport from "docx-templates";
 import * as TextBox from "devextreme/ui/text_box";
 import { mapActions, mapGetters } from "vuex";
 import DxTreeView from "devextreme-vue/tree-view";
 import DxSortable from "devextreme-vue/sortable";
-import { DxCheckBox } from "devextreme-vue/check-box";
 import DxContextMenu from "devextreme-vue/context-menu";
-import { DxHtmlEditor, DxToolbar, DxMediaResizing, DxItem } from "devextreme-vue/html-editor";
-import Docxtemplater from "docxtemplater";
-// const TableModule = require("docxtemplater-table-module");
-import PizZip from "pizzip";
-import PizZipUtils from "pizzip/utils/index.js";
-import { saveAs } from "file-saver";
-// var HTMLModule = require("docxtemplater-html-module");
-// var htmlModule = new HTMLModule({});
-function loadFile(url, callback) {
-	PizZipUtils.getBinaryContent(url, callback);
-}
 
 export default {
 	name: "datosBasicos",
 	components: {
-		// DxTextBox,
 		DxTreeView,
-		// DxButton,
 		DxSortable,
-		DxHtmlEditor,
-		DxMediaResizing,
 		DxContextMenu,
-		DxToolbar,
-		DxItem,
-		DxCheckBox,
 		Header: () => import("./_header"),
 		Contenido: () => import("@/components/element/html_editor"),
 	},
@@ -200,13 +180,12 @@ export default {
 			name: "saveBtn",
 			location: "after",
 			stylingMode: "text",
-			// width: 24,
 			elementAttr: {
 				class: "currency",
 			},
 			onClick: (e) => {
 				console.clear();
-				console.log("e", e.component.option("text"));
+				// console.log("e", e.component.option("text"));
 			},
 		},
 		saveButton: {
@@ -214,13 +193,12 @@ export default {
 			name: "saveBtn",
 			location: "after",
 			stylingMode: "text",
-			// width: 24,
 			elementAttr: {
 				class: "currency",
 			},
 			onClick: (e) => {
 				console.clear();
-				console.log("e", e.component.option("text"));
+				// console.log("e", e.component.option("text"));
 			},
 		},
 		textBox: null,
@@ -254,9 +232,9 @@ export default {
 		},
 		saveItem: (e) => {
 			console.clear();
-			console.log("e =>", e);
+			// console.log("e =>", e);
 			let n = e.component.option("value");
-			console.log("n =>", n);
+			// console.log("n =>", n);
 			if (n.length > 0)
 				if (root.treeAction === "rename") {
 					root.selectedItem.itemData.ch_title = n;
@@ -265,7 +243,7 @@ export default {
 					let n_id = root.document_items.length + 1;
 					// 202110051249: Find index https://stackoverflow.com/a/39529049
 					var index = root.document_items.findIndex((o) => o.id == root.selectedItem.itemData.id) + 1;
-					console.log("index =>", index);
+					// console.log("index =>", index);
 					let ni = {
 						id: n_id,
 						ch_parent_id: null,
@@ -275,7 +253,7 @@ export default {
 					};
 					// 202110051246: Add item to specific index https://stackoverflow.com/a/586189
 					root.document_items.splice(index, 0, ni);
-					console.log("Agregar =>", ni);
+					// console.log("Agregar =>", ni);
 					root.setNumerals();
 					setTimeout(function() {
 						root.treeView.selectItem(n_id);
@@ -292,20 +270,19 @@ export default {
 				setTimeout(function() {
 					root.treeViewSelectionChanged(e);
 				}, 100);
-				console.log("cancelItem e =>", e);
+				// console.log("cancelItem e =>", e);
 			} catch (error) {
-				console.log("error =>", error);
+				// console.log("error =>", error);
 			}
 		},
-		loadContent(item) {},
 		treeViewItemContextMenu(e) {
 			console.clear();
 			root.selectedItem = e;
-			console.log("root.selectedItem =>", root.selectedItem.itemData.ch_title);
+			// console.log("root.selectedItem =>", root.selectedItem.itemData.ch_title);
 		},
 		contextMenuItemClick(e) {
-			console.log(root.$sep);
-			console.log("e =>", e);
+			// console.log(root.$sep);
+			// console.log("e =>", e);
 			root.currentItemEl = $(root.selectedItem.itemElement);
 			$("#" + root.textboxId).remove();
 			$("body").append(`<div id="${root.textboxId}" class="slide"></div>`);
@@ -341,10 +318,10 @@ export default {
 				case "delete": {
 					root.treeAction = null;
 					root.$confirm(`¿Realmente desea eliminar el ítem "${root.selectedItem.itemData.ch_title}"?`, function(si) {
-						console.log("result", si);
+						// console.log("result", si);
 						if (si) {
 							console.clear();
-							console.log("DELETE!");
+							// console.log("DELETE!");
 							root.document_items = root.document_items.filter((o) => o.id !== root.selectedItem.itemData.id);
 							root.setNumerals();
 						}
@@ -359,92 +336,13 @@ export default {
 			let se = root.treeView.getSelectedNodes().map((node) => node.itemData)[0];
 			if (typeof se !== "undefined") {
 				root.selectedItem = root.treeView.getSelectedNodes().map((node) => node.itemData)[0];
-				if (root.selectedItem.id == 1) {
-					root.selectedItem.ch_description = root.item.call_directed_towards;
-				} else if (root.selectedItem.id == 3) {
-					root.selectedItem.ch_description = root.item.call_objective;
-				} else if (root.selectedItem.id == 8) {
-					// Cronograma
-					console.log("activities =>", root.activities);
-					if (root.activities.filter((o) => o.active).length > 0) {
-						let html = `<table><tr><td width="40%">Actividad</td><td width="30%">Responsable</td><td>Fecha inicio</td><td>Fecha cierre</td></tr><tbody>`;
-						root.activities
-							.filter((o) => o.active)
-							.forEach((o) => {
-								html += `<tr><td>${o.sa_description}</td><td>${o.sa_responsible}</td><td>${o.sa_start_date}</td><td>${o.sa_end_date}</td></tr>`;
-							});
-						html += `</tbody></table>`;
-						console.log("html =>", html);
-						root.selectedItem.ch_description = html;
-					}
-				} else if (root.selectedItem.id == 9) {
-					// Cuantía
-					let html = `<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar por proyecto:</p></td><td><p>$${root.$format(
-						root.item.call_max_budget_per_project
-					)}</p></td></tr><tr><td><p>Monto total a financiar en la convocatoria</p></td><td><p><b>$${root.$format(
-						root.item.call_global_budget
-					)}</b></p></td></tr></table>`;
-					root.selectedItem.ch_description = html;
-				} else if (root.selectedItem.id == 10) {
-					// Criterios
-					console.log("criteria =>", root.criteria);
-					if (root.criteria.filter((o) => o.active).length > 0) {
-						let html = `<table><tr><td width="40%">Criterio</td><td width="30%">Porcentaje</td></tr><tbody>`;
-						root.criteria
-							.filter((o) => o.active)
-							.forEach((o) => {
-								html += `<tr><td>${o.eval_criterion_name}</td><td>${root.$format(o.cec_percentage)}%</td></tr>`;
-							});
-						html += `</tbody></table>`;
-						console.log("html =>", html);
-						root.selectedItem.ch_description = html;
-					}
-					// root.selectedItem.ch_description = root.item.call_objective;
-					// } else if (root.selectedItem.id == 3) {
-					// 	root.selectedItem.ch_description = root.item.call_objective;
-				} else if (root.selectedItem.id == 12) {
-					// Documentos
-					console.log("documents =>", root.documents);
-					if (root.documents.filter((o) => o.active).length > 0) {
-						let html = `<p>Los documentos solicitados para la convocatoria son:</p><ol>`;
-						root.documents
-							.filter((o) => o.active)
-							.forEach((o) => {
-								html += `<li>${o.document_name}</li>`;
-							});
-						html += `</ol>`;
-						console.log("html =>", html);
-						root.selectedItem.ch_description = html;
-					}
-				} else if (root.selectedItem.id == 15) {
-					// Rubros
-					console.log("rubros =>", root.items);
-					if (root.items.filter((o) => o.active).length > 0) {
-						let html = `<table><tr><td width="40%">Rubro a financiar</td><td width="30%">Porcentaje</td><td width="30%">Monto máximo</td><td width="30%">% máximo</td></tr><tbody>`;
-						root.items
-							.filter((o) => o.active)
-							.forEach((o) => {
-								html += `<tr><td>${o.item_name}</td><td>${root.$format(o.ci_percentage)}%</td><td>$${root.$getAmmount(
-									root.item.call_max_budget_per_project,
-									o.ci_maximum_percentage,
-									true
-								)}</td><td>${root.$format(o.ci_maximum_percentage)}%</td></tr>`;
-							});
-						html += `</tbody></table>`;
-						console.log("html =>", html);
-						root.selectedItem.ch_description = html;
-					}
-					// root.selectedItem.ch_description = root.item.call_objective;
-					// } else if (root.selectedItem.id == 3) {
-					// 	root.selectedItem.ch_description = root.item.call_objective;
-				}
 				root.baseObj.observation = root.selectedItem.ch_description;
-				console.log("selectedItem =>", root.selectedItem);
+				// console.log("selectedItem =>", root.selectedItem);
 			}
 		},
 		treeViewContentReady(e) {
 			root.selectedItem = e.component.getSelectedNodes().map((node) => node.itemData);
-			console.log("root.selectedItem =>", root.selectedItem);
+			// console.log("root.selectedItem =>", root.selectedItem);
 		},
 		move(arr, old_index, new_index) {
 			if (new_index >= arr.length) {
@@ -457,6 +355,7 @@ export default {
 			// return arr; // for testing
 		},
 		onDragChange(e) {
+			// console.log("e =>", e);
 			// if (e.fromComponent === e.toComponent) {
 			// 	const fromNode = root.findNode(root.getTreeView(e.fromData), e.fromIndex);
 			// 	const toNode = root.findNode(root.getTreeView(e.toData), root.calculateToIndex(e));
@@ -526,111 +425,125 @@ export default {
 			}
 			return false;
 		},
-		// 202110051053: https://docxtemplater.com/docs/faq/#docxtemplater-in-a-vuejs-project
-		renderDoc() {
-			loadFile(root.baseUrl + "data/convocatoria.docx", function(error, content) {
-				if (error) throw error;
-				const zip = new PizZip(content);
-				// https://docxtemplater.com/docs/configuration/
-				const doc = new Docxtemplater(zip, {
-					paragraphLoop: true,
-					linebreaks: true,
-					// modules: [new ImageModule(imageOpts)],
-					delimiters: {
-						start: "<",
-						end: ">",
-					},
-				});
-				try {
-					// render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-					let o = {
-						chapters: root.$objectSort(root.document_items, "numeral"),
-						item: root.item,
-						table1: {
-							fixedColumns: [null, "Example 1", null, "Example 2"],
-							widths: [100, 150, 320, 100],
-							header: ["Source", "Hazard", "Handling", "Protection"],
-							subheader: ["The source", "The Hazard", "The Handling", "The Protection"],
-							chunkSize: 6,
-							data: [
-								[
-									"A1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"B1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"C1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"A1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"B1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"B1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"C1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"A1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"B1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-								[
-									"D1",
-									"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-								],
-							],
-						},
-					};
-					console.log("render =>", o);
-					doc.render(o);
-				} catch (error) {
-					// The error thrown here contains additional information when logged with JSON.stringify (it contains a properties object containing all suberrors).
-					function replaceErrors(key, value) {
-						if (value instanceof Error) {
-							return Object.getOwnPropertyNames(value).reduce(function(error, key) {
-								error[key] = value[key];
-								return error;
-							}, {});
-						}
-						return value;
+		// 202110061902: https://github.com/guigrpa/docx-templates/tree/d978ff7a294a9c9516f19fe5c030ab84a1a8cbbc#browser-usage
+		renderDoc: async () => {
+			console.clear();
+			const template = await fetch(`${root.baseUrl}data/convocatoria.docx`).then((res) => res.arrayBuffer());
+			// console.log("template =>", template);
+			root.document_items.forEach((item) => {
+				item.ch_description = `<meta charset="UTF-8">
+					<body>
+					<style>
+						html, body, td, p { font-family:Calibri,sans-serif; font-size:13px; text-align:justify; }
+						table tr:first-child td { font-weight: 600 !important; }
+						table { width:100%; }
+					</style>
+					${item.ch_description}
+				</body>`;
+			});
+			const document = await createReport({
+				template,
+				cmdDelimiter: ["{", "}"],
+				data: {
+					item: root.item,
+					chapters: root.document_items,
+					// chapters: root.$objectSort(root.document_items, "numeral"),
+				},
+			});
+			// console.log("document =>", document);
+			let blob = new Blob([document], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+			let url = window.URL.createObjectURL(blob);
+			root.downloadURL(url, root.$getTS(new Date(), true) + "-convocatoria.docx");
+		},
+		downloadURL: (data, fileName) => {
+			const a = document.createElement("a");
+			a.href = data;
+			a.download = fileName;
+			document.body.appendChild(a);
+			a.style = "display: none";
+			a.click();
+			a.remove();
+		},
+		setContents: () => {
+			root.document_items.forEach((item) => {
+				if (item.id == 1) {
+					// Dirigida a
+					item.ch_description = root.item.call_directed_towards;
+				} else if (item.id == 3) {
+					// Objetivos
+					item.ch_description = root.item.call_objective;
+				} else if (item.id == 8) {
+					// Cronograma
+					// console.log("activities =>", root.activities);
+					if (root.activities.filter((o) => o.active).length > 0) {
+						let html = `<table><tr><td width="40%">Actividad</td><td width="30%">Responsable</td><td>Fecha inicio</td><td>Fecha cierre</td></tr><tbody>`;
+						root.activities
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<tr><td>${o.sa_description}</td><td>${o.sa_responsible}</td><td>${o.sa_start_date}</td><td>${o.sa_end_date}</td></tr>`;
+							});
+						html += `</tbody></table>`;
+						// console.log("html =>", html);
+						item.ch_description = html;
 					}
-					console.log(JSON.stringify({ error: error }, replaceErrors));
-					if (error.properties && error.properties.errors instanceof Array) {
-						const errorMessages = error.properties.errors
-							.map(function(error) {
-								return error.properties.explanation;
-							})
-							.join("\n");
-						console.log("errorMessages", errorMessages);
-						// errorMessages is a humanly readable message looking like this:
-						// 'The tag beginning with "foobar" is unopened'
+				} else if (item.id == 9) {
+					// Cuantía
+					let html = `<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar por proyecto:</p></td><td><p>$${root.$format(
+						root.item.call_max_budget_per_project
+					)}</p></td></tr><tr><td><p>Monto total a financiar en la convocatoria</p></td><td><p><b>$${root.$format(
+						root.item.call_global_budget
+					)}</b></p></td></tr></table>`;
+					item.ch_description = html;
+				} else if (item.id == 10) {
+					// Criterios
+					// console.log("criteria =>", root.criteria);
+					if (root.criteria.filter((o) => o.active).length > 0) {
+						let html = `<table><tr><td width="40%">Criterio</td><td width="30%">Porcentaje</td></tr><tbody>`;
+						root.criteria
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<tr><td>${o.eval_criterion_name}</td><td>${root.$format(o.cec_percentage)}%</td></tr>`;
+							});
+						html += `</tbody></table>`;
+						// console.log("html =>", html);
+						item.ch_description = html;
 					}
-					throw error;
+				} else if (item.id == 12) {
+					// Documentos
+					// console.log("documents =>", root.documents);
+					if (root.documents.filter((o) => o.active).length > 0) {
+						let html = `<p>Los documentos solicitados para la convocatoria son:</p><ol>`;
+						root.documents
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<li>${o.document_name}</li>`;
+							});
+						html += `</ol>`;
+						// console.log("html =>", html);
+						item.ch_description = html;
+					}
+				} else if (item.id == 15) {
+					// Rubros
+					// console.log("rubros =>", root.items);
+					if (root.items.filter((o) => o.active).length > 0) {
+						let html = `<table><tr><td width="40%">Rubro a financiar</td><td width="30%">Porcentaje</td><td width="30%">Monto máximo</td><td width="30%">% máximo</td></tr><tbody>`;
+						root.items
+							.filter((o) => o.active)
+							.forEach((o) => {
+								html += `<tr><td>${o.item_name}</td><td>${root.$format(o.ci_percentage)}%</td><td>$${root.$getAmmount(
+									root.item.call_max_budget_per_project,
+									o.ci_maximum_percentage,
+									true
+								)}</td><td>${root.$format(o.ci_maximum_percentage)}%</td></tr>`;
+							});
+						html += `</tbody></table>`;
+						// console.log("html =>", html);
+						item.ch_description = html;
+					}
+					// item.ch_description = root.item.call_objective;
+					// } else if (item.id == 3) {
+					// 	item.ch_description = root.item.call_objective;
 				}
-				console.log("doc =>", doc);
-				const out = doc.getZip().generate({
-					type: "blob",
-					mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-				});
-				// Output the document using Data-URI
-				let fn = root.$getTS(new Date(), true) + "-convocatoria.docx";
-				console.log("fn =>", fn);
-				saveAs(out, fn);
 			});
 		},
 	},
@@ -640,34 +553,30 @@ export default {
 	},
 	created: async function() {
 		root = this;
-		root.document_items = await root.getTemplate();
-		root.setNumerals();
 		root.tiposDocumento = root.subtypesByType("convocatoria_doc_emitir");
-		console.log("root.tiposDocumento =>", root.tiposDocumento);
 		let uId = root.$route.params.itemId;
 		root.item = await root.getItem(uId);
-		console.log("item =>", root.item);
+		root.document_items = await root.getTemplate();
+		root.setNumerals();
 		document.title += ` Convocatoria ${root.item.call_code}`;
 		setTimeout(async function() {
-			// root.textBox = root.$refs.textboxRef.instance;
-			// root.textBoxElHtml = root.textBox.element().outerHTML;
 			root.treeView = root.$refs.treeviewRef.instance;
 			root.criteria = await root.getCriteria(uId);
 			root.financing = await root.getFinancingItems(uId);
 			root.activities = await root.getActivities(uId);
 			root.documents = await root.getDocuments(uId);
 			root.items = await root.getItems(uId);
-			console.log("root.treeView =>", root.treeView);
+			root.setContents();
 		}, 500);
 	},
 	updated: () => {
-		console.log(root.$sep);
-		console.log("documentos Updated");
+		// console.log(root.$sep);
+		// console.log("documentos Updated");
 	},
 	mounted: () => {
 		// setTimeout(function() {
 		// 	let id = `#${root.id}`;
-		// 	console.log("id", id);
+		// 	// console.log("id", id);
 		// 	$(id).fadeIn();
 		// }, 700);
 		root.loaderHide();
