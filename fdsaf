@@ -1,0 +1,253 @@
+[33mcommit 584359556e92bc363835ed343c3d716bd77b5ae5[m[33m ([m[1;31morigin/test[m[33m)[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Wed Oct 6 22:40:04 2021 -0500
+
+    fix: rama test de plan de accion y convocatoria
+
+[33mcommit 03561ee085164c0ba25f376ba59a7ab84734ec75[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 21:59:43 2021 -0500
+
+    feat: Plantilla Convocatoria
+
+[33mcommit 7efa66519c3da22eba05376fe7620e89f818a59f[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 21:59:16 2021 -0500
+
+    feat: Plantilla Convocatoria
+
+[33mcommit f48e25bf36f79ceac8a8eb07a223bdc09a0646d7[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 21:58:59 2021 -0500
+
+    feat: Plantilla Convocatoria
+
+[33mcommit c744e8da6ad8f9f54801f716898b5a4e5f447108[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 21:26:13 2021 -0500
+
+    feat: Plantilla Convocatoria
+
+[33mcommit b3def4b4e72e64431156af75a27952419230f485[m[33m ([m[1;35mrefs/stash[m[33m)[m
+Merge: 9264636 199b635
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 17:07:19 2021 -0500
+
+    WIP on develop: 9264636 feat: Plantilla Convocatoria
+
+[33mcommit 199b635528d3855a15216d068a5c89c757bdf3e1[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 17:07:19 2021 -0500
+
+    index on develop: 9264636 feat: Plantilla Convocatoria
+
+[33mcommit 6153200c9f46613e21e29f68799a1dadba53742c[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Wed Oct 6 16:31:16 2021 -0500
+
+    feat: creacion de nuevos elementos en el plan de accion, carga del boton del informe de gestion
+
+[33mcommit 9264636180f592c9272bb9aa6ce439ebb536f474[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Wed Oct 6 11:59:35 2021 -0500
+
+    feat: Plantilla Convocatoria
+
+[33mcommit 180432ce548da0b40abf0c45c239268a9a64a757[m[33m ([m[1;31morigin/entidades[m[33m)[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Tue Oct 5 13:06:42 2021 -0500
+
+    feat: creacion de fireros red investigacion, modificacion de entidades y archivos de aut/ususario e integrantes dentro de la red. se modifica falla de storeApi universal
+
+[33mcommit ebb60a14c7e06de726e0380ce936cbf1fb25e10a[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Fri Sep 24 07:20:33 2021 -0500
+
+    feat: Plantilla Convocatoria
+
+[33mcommit 475bf2bf2487260b86fecdfaccbd04f355754273[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 23 20:07:28 2021 -0500
+
+    feat: Verificación de Ambiente
+
+[33mcommit 8e2c18088dcefecb5da53bcbfaa7d6547ba50eb9[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 23 19:51:42 2021 -0500
+
+    feat: Usuario en Array y Version
+
+[33mcommit 2d0c62c8acc73512c8e263b18111c757fd3c9706[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Thu Sep 23 10:51:38 2021 -0500
+
+    feat: creacion nueva rama para entidades asociadad a redes de investigacion.
+
+[33mcommit 158dda5e63b721bec7a54c2cd7e006087d980234[m
+Merge: e7d0e2d 657497e
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Tue Sep 21 21:36:34 2021 -0500
+
+    feat: Conciliación Producción
+
+[33mcommit e7d0e2d0c06684f1582f191fd2fb51d93359f455[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Tue Sep 21 21:35:42 2021 -0500
+
+    feat: Conciliación Producción
+
+[33mcommit 657497e1a52f15b74de654f0538c6365c7d5e5ce[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Mon Sep 20 11:37:21 2021 -0500
+
+    fix: terminacion y actualizacion del plan de accion
+
+[33mcommit 731e4de5e265e9ae0fe7aa5138474e927c941368[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 07:54:19 2021 -0500
+
+    feat: Desactivación de usuarios y periodos en cascada
+
+[33mcommit 048597a0e695ac364078f8374caff73185166715[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 05:14:23 2021 -0500
+
+    feat: Readme
+
+[33mcommit 72e82d2c4f27b32dab49d58fafec2998a3f4dcf2[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 05:12:08 2021 -0500
+
+    feat: Readme
+
+[33mcommit 0989e634ca912c946123721449efb2feaf2dd9d4[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 05:10:53 2021 -0500
+
+    feat: Readme
+
+[33mcommit 53f8cf976bd2b2fe7efa511eee789638d61f9d32[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 05:09:48 2021 -0500
+
+    feat: Creación de usuario desde integrante y Rol Tutor
+
+[33mcommit f076712e569e359f9f22497e3bea35f90d1d93a0[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 05:08:28 2021 -0500
+
+    feat: Creación automática de usuario desde integrante
+
+[33mcommit 23fd7128eedd1ffe9a9409a99a9478d13c4fa91c[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 01:28:23 2021 -0500
+
+    feat: Activación desactivación subtipos
+
+[33mcommit 57670d858486365a66b164ba5fe3ebc7e5a372a3[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Thu Sep 16 01:28:03 2021 -0500
+
+    feat: Activación desactivación subtipos
+
+[33mcommit fa60ba4b1deb8fdd864be30a91153b6dfff4716b[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Mon Sep 13 09:47:18 2021 -0500
+
+    fix modificaciones de de cosntruccion de variables y vista de plan de accion
+
+[33mcommit 305ce252f569c7d5c1f85313609b80a1878d1e82[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Sep 6 13:18:07 2021 -0500
+
+    feat: Vesión y Plan de Acción
+
+[33mcommit bcb4ea07d4cd6812befb365c36db343c5c6933e0[m[33m ([m[1;31morigin/componente_otri[m[33m)[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Mon Sep 6 09:58:37 2021 -0500
+
+    feat: actualizaciones de formulario redes academicas y modificacion del store universal
+
+[33mcommit 8bffa1072bdc30db3faa61f7882d6920412c921f[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Sun Sep 5 21:00:11 2021 -0500
+
+    Feat: vista y gestion de datos el formulario de redes academicas
+
+[33mcommit 78cd8f0ca87f8b658b91e1b4000c4ba4993d3413[m
+Author: Carlos Arturo Moreno Susatama <mrcamssys@gmail.com>
+Date:   Mon Aug 30 17:17:55 2021 -0500
+
+    fix: actualizacion de recursos de plan de accion
+
+[33mcommit 9f0531d3d58ccc4ec90ce1750936e1d2fa68a26b[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Aug 30 13:06:33 2021 -0500
+
+    feat: Plan de Acción y Convocatoria
+
+[33mcommit 37df0a6a650dc704496d08e204df1da993f42a3c[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Aug 30 13:01:28 2021 -0500
+
+    feat: Plan de Acción y Convocatoria
+
+[33mcommit 3e6079c0da60dab332a70a764437eb8656d1a028[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Aug 30 13:00:48 2021 -0500
+
+    feat: Plan de Acción y Convocatoria
+
+[33mcommit bb028bce4b8c566074a698eda7a8c8318f895a20[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Tue Jul 13 13:46:43 2021 -0500
+
+    feat: Subtipos convocatoria, nvm y paquetes
+
+[33mcommit a81965641842bd657928c8270499cba850b3a90f[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Tue Jul 13 13:44:07 2021 -0500
+
+    feat: Subtipos convocatoria, nvm y paquetes
+
+[33mcommit 41669c55a2e20f9892afcd051fd67fe8ef97e97b[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Tue Jul 6 12:52:40 2021 -0500
+
+    feat: Versión y Base Url
+
+[33mcommit 7abdb2dda73f2b41ac30e7a54a3e4517fe6f8cb1[m
+Author: mrcamssys <dte_cmoreno639@pedagogica.edu.co>
+Date:   Tue Jul 6 11:27:16 2021 -0500
+
+    fix actualizcion correccion error
+
+[33mcommit e7fd00dea319d054596afceac9e61a488e265053[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Jul 5 21:59:30 2021 -0500
+
+    feat: Estructuras de Usuario y Roles
+
+[33mcommit a732b3bbf4adf36101740eb697d03f135c1dadbb[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Jul 5 21:13:06 2021 -0500
+
+    feat: Estructuras de Usuario y Roles
+
+[33mcommit 4dc06a9b02e39fb2eb8a2b5d47fe27d02ba270b1[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Mon Jul 5 20:06:06 2021 -0500
+
+    feat: Estructuras de Usuario y Roles
+
+[33mcommit 8b21f86fcdb119a93dd587be8cb9a224a5b21dbb[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Sun Jul 4 12:45:16 2021 -0500
+
+    feat: Estructuras de Usuario
+
+[33mcommit 16491195e4ea8662e43fac8667e58bf772430a28[m
+Author: Diego Vargas <dev@nemedi.com>
+Date:   Sun Jul 4 12:44:56 2021 -0500
+
+   

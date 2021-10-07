@@ -122,10 +122,9 @@ let routes = new router({
 			name: "convocatoria-plantilla",
 			path: "/convocatoria/:itemId/plantilla",
 			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/convocatoria/plantilla"),
+			// component: () => import("@/modules/convocatoria/plantilla"),
 		},
 
-		
 		//-----------------------------------------
 		//   Comienzo de rutas plan de accion
 		//-----------------------------------------
@@ -156,8 +155,6 @@ let routes = new router({
 		//--------------------------------------------
 		//			Fin plan de accion
 		//--------------------------------------------
-
-
 
 		{
 			// UserProfile will be rendered inside User's <router-view>
