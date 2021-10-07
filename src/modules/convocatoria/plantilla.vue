@@ -140,6 +140,8 @@
 </template>
 <script>
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-inner-declarations */
+/* eslint-disable vue/no-unused-components */
 // 202108180553: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropHierarchicalDataStructure/Vue
 // 202108180602: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ItemSelectionAndCustomization/Vue
 // 202109240240: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ContextMenuIntegration/Vue
@@ -152,14 +154,23 @@ import * as TextBox from "devextreme/ui/text_box";
 import { mapActions, mapGetters } from "vuex";
 import DxTreeView from "devextreme-vue/tree-view";
 import DxSortable from "devextreme-vue/sortable";
+import { DxCheckBox } from "devextreme-vue/check-box";
 import DxContextMenu from "devextreme-vue/context-menu";
+import { DxHtmlEditor, DxToolbar, DxMediaResizing, DxItem } from "devextreme-vue/html-editor";
 
 export default {
 	name: "datosBasicos",
 	components: {
+		// DxTextBox,
 		DxTreeView,
+		// DxButton,
 		DxSortable,
+		DxHtmlEditor,
+		DxMediaResizing,
 		DxContextMenu,
+		DxToolbar,
+		DxItem,
+		DxCheckBox,
 		Header: () => import("./_header"),
 		Contenido: () => import("@/components/element/html_editor"),
 	},
@@ -567,7 +578,7 @@ export default {
 			root.activities = await root.getActivities(uId);
 			root.documents = await root.getDocuments(uId);
 			root.items = await root.getItems(uId);
-			root.setContents();
+			// root.setContents();
 		}, 500);
 	},
 	updated: () => {
