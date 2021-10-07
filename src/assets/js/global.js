@@ -390,6 +390,12 @@ export default {
 			return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
 		};
 
+		// 202110070514: https://stackoverflow.com/a/979289
+		vue.prototype.$sort = function(object, field, reverse = false) {
+			if (!reverse) return object.sort((a, b) => a[field] - b[field]);
+			return object.sort((a, b) => b[field] - a[field]);
+		};
+
 		// 202009091217: Sorting an array of objects by property values
 		// https://stackoverflow.com/a/979325
 		vue.prototype.$objectSort = function(object, field, reverse = false) {

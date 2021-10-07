@@ -834,18 +834,6 @@
 	}
 }
 
-.dx-button-has-text {
-	background-color: $main-color-600 !important;
-	.dx-button-content {
-		.dx-button-text {
-			font-weight: 600 !important;
-			font-size: 0.94rem !important;
-			font-family: $font-family !important;
-			color: #fff !important;
-		}
-	}
-}
-
 .dx-scrollable-scrollbar {
 	&.dx-state-hover {
 		background-color: $main-color-200 !important;
@@ -1447,6 +1435,44 @@ tr.hovered {
 		font-weight: 600;
 		.numeral {
 			margin-right: 0.12rem;
+		}
+	}
+}
+
+.dx-button-has-text {
+	background-color: $main-color-600;
+	.dx-button-content {
+		.dx-button-text {
+			font-weight: 600;
+			font-size: 0.94rem;
+			font-family: $font-family;
+			color: #fff;
+		}
+	}
+}
+
+.html-editor {
+	.dx-htmleditor-toolbar-wrapper {
+		padding: 0;
+		.dx-toolbar-before {
+			.dx-toolbar-item {
+				background-color: none;
+				padding: 0;
+				.dx-toolbar-item-content {
+					.dx-button-has-text {
+						background-color: #fff;
+						margin: 0;
+						.dx-button-content {
+							.dx-icon {
+								&::before {
+									color: $text !important;
+								}
+							}
+							padding: 4px 6px;
+						}
+					}
+				}
+			}
 		}
 	}
 }

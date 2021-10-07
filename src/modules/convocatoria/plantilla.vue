@@ -42,9 +42,9 @@
 												@item-context-menu="treeViewItemContextMenu"
 												@selection-changed="treeViewSelectionChanged"
 												data-structure="plain"
-												parent-id-expr="ch_parent_id"
 												key-expr="id"
 												display-expr="ch_title"
+												parent-id-expr="ch_parent_id"
 												id="treeview"
 												ref="treeviewRef"
 												selection-mode="single"
@@ -71,7 +71,11 @@
 										>
 									</div>
 									<div class="col">
-										<a href="#" title="Guardar Plantilla..." class="btn btn-sm btn-main btn-labeled btn-labeled-right legitRipple w-100"
+										<a
+											href="#"
+											@click.prevent="saveDoc"
+											title="Guardar Plantilla..."
+											class="btn btn-sm btn-main btn-labeled btn-labeled-right legitRipple w-100"
 											><b><i class="icon-floppy-disk"></i></b>&nbsp;Guardar</a
 										>
 									</div>
@@ -83,7 +87,7 @@
 								</div>
 								<div class="row">
 									<div class="col">
-										<Contenido :height="600" :syncValue.sync="baseObj" />
+										<HtmlEditor :height="600" :sync-obj="selectedItem" sync-prop="ch_description" ref="HtmlEditorRef" />
 									</div>
 								</div>
 							</div>
@@ -147,6 +151,7 @@
 // 202109240240: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ContextMenuIntegration/Vue
 // 202109240601: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropPlainDataStructure/Vue
 // 202110052332: https://github.com/guigrpa/docx-templates
+// 202110070500: https://js.devexpress.com/Demos/WidgetsGallery/Demo/HtmlEditor/Tables/Vue/Light/
 let $ = window.jQuery,
 	root = null;
 import createReport from "docx-templates";
@@ -156,25 +161,23 @@ import DxTreeView from "devextreme-vue/tree-view";
 import DxSortable from "devextreme-vue/sortable";
 import { DxCheckBox } from "devextreme-vue/check-box";
 import DxContextMenu from "devextreme-vue/context-menu";
-import { DxHtmlEditor, DxToolbar, DxMediaResizing, DxItem } from "devextreme-vue/html-editor";
+import { DxHtmlEditor, DxToolbar, DxItem } from "devextreme-vue/html-editor";
 
 export default {
 	name: "datosBasicos",
 	components: {
-		// DxTextBox,
-		DxTreeView,
-		// DxButton,
-		DxSortable,
 		DxHtmlEditor,
-		DxMediaResizing,
-		DxContextMenu,
 		DxToolbar,
 		DxItem,
+		DxTreeView,
+		DxSortable,
+		DxContextMenu,
 		DxCheckBox,
 		Header: () => import("./_header"),
-		Contenido: () => import("@/components/element/html_editor"),
+		HtmlEditor: () => import("@/components/element/html_editor_v2"),
 	},
 	data: () => ({
+		htmlEditor: null,
 		treeAction: null,
 		textboxId: "tb-container",
 		currentName: null,
@@ -195,7 +198,7 @@ export default {
 				class: "currency",
 			},
 			onClick: (e) => {
-				console.clear();
+				// console.clear();
 				// console.log("e", e.component.option("text"));
 			},
 		},
@@ -208,7 +211,7 @@ export default {
 				class: "currency",
 			},
 			onClick: (e) => {
-				console.clear();
+				// console.clear();
 				// console.log("e", e.component.option("text"));
 			},
 		},
@@ -228,6 +231,7 @@ export default {
 		],
 	}),
 	methods: {
+		...mapActions("core/capitulo", { capitulos: "getAll", crearCapitulos: "createAll", guardarCapitulos: "updateAll" }),
 		...mapActions("convocatoria", ["getItem", "getTemplate", "getCriteria", "getFinancingItems", "getActivities", "getDocuments", "getItems"]),
 		setNumerals(parent_id) {
 			if (typeof parent_id === "undefined") parent_id = null;
@@ -242,7 +246,7 @@ export default {
 				});
 		},
 		saveItem: (e) => {
-			console.clear();
+			// console.clear();
 			// console.log("e =>", e);
 			let n = e.component.option("value");
 			// console.log("n =>", n);
@@ -251,7 +255,15 @@ export default {
 					root.selectedItem.itemData.ch_title = n;
 					root.treeView.selectItem(root.selectedItem.itemData.id);
 				} else if (root.treeAction === "add") {
-					let n_id = root.document_items.length + 1;
+					// console.clear();
+					// let ids = root.document_items.map((o) => o.id).sort()[0];
+					// console.log("id =>", ids);
+					// root.document_items.forEach((item) => {
+					// 	ids.push(item.id);
+					// });
+					let ids = root.document_items.map((o) => o.id).sort();
+					console.log("ids =>", ids);
+					let n_id = ids[ids.length - 1] + 1;
 					// 202110051249: Find index https://stackoverflow.com/a/39529049
 					var index = root.document_items.findIndex((o) => o.id == root.selectedItem.itemData.id) + 1;
 					// console.log("index =>", index);
@@ -262,8 +274,11 @@ export default {
 						numeral: "XX",
 						ch_order: 0,
 						ch_title: n,
-						ch_description: null,
+						ch_description: "--",
+						is_new: true,
+						created_by: root.user_id,
 					};
+					console.log("nuevo =>", ni);
 					// 202110051246: Add item to specific index https://stackoverflow.com/a/586189
 					root.document_items.splice(index, 0, ni);
 					// console.log("Agregar =>", ni);
@@ -289,7 +304,7 @@ export default {
 			}
 		},
 		treeViewItemContextMenu(e) {
-			console.clear();
+			// console.clear();
 			root.selectedItem = e;
 			// console.log("root.selectedItem =>", root.selectedItem.itemData.ch_title);
 		},
@@ -333,7 +348,7 @@ export default {
 					root.$confirm(`¿Realmente desea eliminar el ítem "${root.selectedItem.itemData.ch_title}"?`, function(si) {
 						// console.log("result", si);
 						if (si) {
-							console.clear();
+							// console.clear();
 							// console.log("DELETE!");
 							root.document_items = root.document_items.filter((o) => o.id !== root.selectedItem.itemData.id);
 							root.setNumerals();
@@ -349,8 +364,7 @@ export default {
 			let se = root.treeView.getSelectedNodes().map((node) => node.itemData)[0];
 			if (typeof se !== "undefined") {
 				root.selectedItem = root.treeView.getSelectedNodes().map((node) => node.itemData)[0];
-				root.baseObj.observation = root.selectedItem.ch_description;
-				// console.log("selectedItem =>", root.selectedItem);
+				if (root.htmlEditor !== null) root.htmlEditor.setMarkup(root.selectedItem.ch_description);
 			}
 		},
 		treeViewContentReady(e) {
@@ -378,7 +392,7 @@ export default {
 			// }
 		},
 		onDragEnd(e) {
-			console.clear();
+			// console.clear();
 			if (e.fromIndex === e.toIndex) return;
 			const fromNode = root.findNode(e.fromIndex);
 			const toNode = root.findNode(root.calculateToIndex(e));
@@ -438,14 +452,26 @@ export default {
 			}
 			return false;
 		},
+		// 202110070110: Guarda estructura
+		saveDoc: async () => {
+			root.loaderShow("Guardando Plantilla", "#panel-documentos .card-body");
+			const results = await root.guardarCapitulos({
+				id: root.item.id,
+				context: "calls",
+				items: root.document_items,
+			});
+			console.log("results =>", results);
+			root.loaderHide();
+		},
 		// 202110061902: https://github.com/guigrpa/docx-templates/tree/d978ff7a294a9c9516f19fe5c030ab84a1a8cbbc#browser-usage
 		renderDoc: async () => {
-			console.clear();
+			// console.clear();
+			root.loaderShow("Generando Documento", "#panel-documentos .card-body");
 			const template = await fetch(`${root.baseUrl}data/convocatoria.docx`).then((res) => res.arrayBuffer());
 			let item = root.$clone(root.item);
 			item.call_name = item.call_name.toUpperCase();
 			root.document_items.forEach((item) => {
-				item.ch_description = `<meta charset="UTF-8">
+				item["ch_description_html"] = `<meta charset="UTF-8">
 					<body>
 					<style>
 						html, body, td, p { font-family:Calibri,sans-serif; font-size:12.5px; text-align:justify; }
@@ -455,16 +481,15 @@ export default {
 					${item.ch_description}
 				</body>`;
 			});
+			console.log("root.document_items =>", root.document_items);
 			const document = await createReport({
 				template,
 				cmdDelimiter: ["{", "}"],
 				data: {
 					item: item,
 					chapters: root.document_items,
-					// chapters: root.$objectSort(root.document_items, "numeral"),
 				},
 			});
-			// console.log("document =>", document);
 			let blob = new Blob([document], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
 			let url = window.URL.createObjectURL(blob);
 			root.downloadURL(url, root.$getTS(new Date(), true) + "-convocatoria.docx");
@@ -477,9 +502,13 @@ export default {
 			a.style = "display: none";
 			a.click();
 			a.remove();
+			setTimeout(function() {
+				root.loaderHide();
+			}, 800);
 		},
-		setContents: () => {
-			root.document_items.forEach((item) => {
+		setContents: (items) => {
+			if (typeof items == "undefined") items = root.document_items;
+			items.forEach((item) => {
 				// 202110070101: Se usa 'item.ch_order' para la verificación de los campos
 				if (item.ch_order == 1) {
 					// Dirigida a
@@ -559,18 +588,57 @@ export default {
 		let uId = root.$route.params.itemId;
 		root.item = await root.getItem(uId);
 		console.log("root.item =>", root.item);
-		root.document_items = await root.getTemplate();
-		root.setNumerals();
 		document.title += ` Convocatoria ${root.item.call_code}`;
+		// 202110070204: Timeout para el 'root.$refs'
 		setTimeout(async function() {
-			console.log("CARGAR!!");
 			root.treeView = root.$refs.treeviewRef.instance;
 			root.criteria = await root.getCriteria(uId);
 			root.financing = await root.getFinancingItems(uId);
 			root.activities = await root.getActivities(uId);
 			root.documents = await root.getDocuments(uId);
 			root.items = await root.getItems(uId);
-			root.setContents();
+			// 202110070120: Carga capítulos guardados
+			// console.clear();
+			let caps = await root.capitulos({ context: "calls", id: uId });
+			console.log("CAPS EN BD =>", caps);
+			// Determina si ya se crearon capítulos
+			if (caps.length > 0) {
+				caps.forEach((item, idx) => {
+					if (item.updated_by == null) item.updated_by = root.user_id;
+					item.is_new = false;
+				});
+				root.document_items = caps;
+				root.setContents();
+			} else {
+				// 202110070201: Si no hay items creados los crea
+				caps = await root.getTemplate();
+				root.setContents(caps);
+				caps.forEach((item, idx) => {
+					// item.id = idx + 1;
+					item["created_by"] = root.user_id;
+					item["updated_by"] = root.user_id;
+					item["id_orig"] = item.id;
+					item["id_parent"] = item.ch_parent_id;
+				});
+				console.log("caps =>", caps);
+				root.document_items = await root.crearCapitulos({
+					id: root.item.id,
+					context: "calls",
+					items: caps,
+				});
+				console.log("caps creados =>", root.document_items);
+			}
+			root.setNumerals();
+			root.loaderHide();
+			setTimeout(function() {
+				root.treeView.selectItem(root.document_items[0].id);
+				root.treeViewSelectionChanged();
+				setTimeout(function() {
+					root.htmlEditor = root.$refs.HtmlEditorRef;
+					console.log("root.htmlEditor =>", root.htmlEditor);
+					root.htmlEditor.test();
+				}, 500);
+			}, 500);
 		}, 500);
 	},
 	updated: () => {
@@ -578,13 +646,13 @@ export default {
 		// console.log("documentos Updated");
 	},
 	mounted: () => {
-		console.clear();
+		// console.clear();
 		// setTimeout(function() {
 		// 	let id = `#${root.id}`;
 		// 	// console.log("id", id);
 		// 	$(id).fadeIn();
 		// }, 700);
-		root.loaderHide();
+		root.loaderShow("Cargando Plantilla");
 	},
 };
 </script>

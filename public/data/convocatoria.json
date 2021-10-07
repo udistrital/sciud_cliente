@@ -24,7 +24,7 @@
 		"id": 4,
 		"ch_parent_id": null,
 		"ch_order": 0,
-		"ch_description": "",
+		"ch_description": "--",
 		"ch_title": "Requisitos y Restricciones"
 	},
 	{
@@ -73,7 +73,7 @@
 		"id": 11,
 		"ch_parent_id": null,
 		"ch_order": 0,
-		"ch_title": "Presentación de Informe de Divulgación",
+		"ch_title": "Informe de Divulgación",
 		"ch_description": "<p>El docente investigador favorecido deberá diligenciar el formato 'Formato de presentación de Resultados de Ponencia de Evento Nacional e Internacional' que se encuentra en el siguiente link <a href='http://cidc.udistrital.edu.co/web/documentos/formatos/Formato_Presentacion_Resultados_Ponencia.docx' target='_blank'>http://cidc.udistrital.edu.co/web/documentos/formatos/Formato_Presentacion_Resultados_Ponencia.docx</a> como máximo quince (15) días hábiles después de la fecha de participación en el evento.</p><p><b>NOTA: Si el docente incumple con la presentación del informe de actividades anteriormente descrito dentro del plazo estipulado, el grupo de investigación al que pertenece y en nombre del cual presentó la propuesta será inhabilitado en el sistema por el término de un semestre; lo anterior implica que ninguno de sus miembros podrá participar en las convocatorias que realice el CIDC en el semestre.</b></p>"
 	},
 	{
