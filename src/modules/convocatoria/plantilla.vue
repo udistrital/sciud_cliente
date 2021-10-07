@@ -140,6 +140,8 @@
 </template>
 <script>
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-inner-declarations */
+/* eslint-disable vue/no-unused-components */
 // 202108180553: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/DragAndDropHierarchicalDataStructure/Vue
 // 202108180602: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ItemSelectionAndCustomization/Vue
 // 202109240240: https://js.devexpress.com/Demos/WidgetsGallery/Demo/TreeView/ContextMenuIntegration/Vue
@@ -147,19 +149,28 @@
 // 202110052332: https://github.com/guigrpa/docx-templates
 let $ = window.jQuery,
 	root = null;
-// import createReport from "docx-templates";
+import createReport from "docx-templates";
 import * as TextBox from "devextreme/ui/text_box";
 import { mapActions, mapGetters } from "vuex";
 import DxTreeView from "devextreme-vue/tree-view";
 import DxSortable from "devextreme-vue/sortable";
+import { DxCheckBox } from "devextreme-vue/check-box";
 import DxContextMenu from "devextreme-vue/context-menu";
+import { DxHtmlEditor, DxToolbar, DxMediaResizing, DxItem } from "devextreme-vue/html-editor";
 
 export default {
 	name: "datosBasicos",
 	components: {
+		// DxTextBox,
 		DxTreeView,
+		// DxButton,
 		DxSortable,
+		DxHtmlEditor,
+		DxMediaResizing,
 		DxContextMenu,
+		DxToolbar,
+		DxItem,
+		DxCheckBox,
 		Header: () => import("./_header"),
 		Contenido: () => import("@/components/element/html_editor"),
 	},
@@ -428,42 +439,42 @@ export default {
 		// 202110061902: https://github.com/guigrpa/docx-templates/tree/d978ff7a294a9c9516f19fe5c030ab84a1a8cbbc#browser-usage
 		renderDoc: async () => {
 			console.clear();
-			// const template = await fetch(`${root.baseUrl}data/convocatoria.docx`).then((res) => res.arrayBuffer());
-			// let item = root.$clone(root.item);
-			// item.call_name = item.call_name.toUpperCase();
-			// root.document_items.forEach((item) => {
-			// 	item.ch_description = `<meta charset="UTF-8">
-			// 		<body>
-			// 		<style>
-			// 			html, body, td, p { font-family:Calibri,sans-serif; font-size:12.5px; text-align:justify; }
-			// 			table tr:first-child td { font-weight: 600 !important; }
-			// 			table { width:100%; }
-			// 		</style>
-			// 		${item.ch_description}
-			// 	</body>`;
-			// });
-			// const document = await createReport({
-			// 	template,
-			// 	cmdDelimiter: ["{", "}"],
-			// 	data: {
-			// 		item: item,
-			// 		chapters: root.document_items,
-			// 		// chapters: root.$objectSort(root.document_items, "numeral"),
-			// 	},
-			// });
-			// // console.log("document =>", document);
-			// let blob = new Blob([document], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-			// let url = window.URL.createObjectURL(blob);
-			// root.downloadURL(url, root.$getTS(new Date(), true) + "-convocatoria.docx");
+			const template = await fetch(`${root.baseUrl}data/convocatoria.docx`).then((res) => res.arrayBuffer());
+			let item = root.$clone(root.item);
+			item.call_name = item.call_name.toUpperCase();
+			root.document_items.forEach((item) => {
+				item.ch_description = `<meta charset="UTF-8">
+					<body>
+					<style>
+						html, body, td, p { font-family:Calibri,sans-serif; font-size:12.5px; text-align:justify; }
+						table tr:first-child td { font-weight: 600 !important; }
+						table { width:100%; }
+					</style>
+					${item.ch_description}
+				</body>`;
+			});
+			const document = await createReport({
+				template,
+				cmdDelimiter: ["{", "}"],
+				data: {
+					item: item,
+					chapters: root.document_items,
+					// chapters: root.$objectSort(root.document_items, "numeral"),
+				},
+			});
+			// console.log("document =>", document);
+			let blob = new Blob([document], { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+			let url = window.URL.createObjectURL(blob);
+			root.downloadURL(url, root.$getTS(new Date(), true) + "-convocatoria.docx");
 		},
 		downloadURL: (data, fileName) => {
-			// const a = document.createElement("a");
-			// a.href = data;
-			// a.download = fileName;
-			// document.body.appendChild(a);
-			// a.style = "display: none";
-			// a.click();
-			// a.remove();
+			const a = document.createElement("a");
+			a.href = data;
+			a.download = fileName;
+			document.body.appendChild(a);
+			a.style = "display: none";
+			a.click();
+			a.remove();
 		},
 		setContents: () => {
 			root.document_items.forEach((item) => {
@@ -567,7 +578,7 @@ export default {
 			root.activities = await root.getActivities(uId);
 			root.documents = await root.getDocuments(uId);
 			root.items = await root.getItems(uId);
-			root.setContents();
+			// root.setContents();
 		}, 500);
 	},
 	updated: () => {
