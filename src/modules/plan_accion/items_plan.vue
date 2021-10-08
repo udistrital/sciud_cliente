@@ -148,8 +148,7 @@
 													:action_panel_id="parseInt($route.params.planId)"  
 													:editMode="editMode" 
 													title="Listado de Redes Académicas de Promoción Cientifica"													
- 
-															
+													:totalLineasInv="listlines"
 													titleBtn="Agregar Rede Academica"	
 													titlecolum="title"
 												/>
@@ -183,6 +182,44 @@ export default {
 	created: function() {
 		root = this;
 		// document.title += ` ${root.$titleCase(root.group.name)}`;
+
+		root.LineasInvConocimiento({
+          parent_id: 159,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 511,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 512,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 513,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 514,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+
+
 		root.getUnit({
 			id: root.$route.params.unidadId,
 			cb: function(result) {
@@ -197,6 +234,7 @@ export default {
 	data() {
 		return {
 			dateplansys:{},
+			listlines:[],
 			tp: null,
 			group: null,
 			baseObjx: {
@@ -210,8 +248,11 @@ export default {
 		console.clear();
 		console.log("Ingresando a plan de accion...");
 		root = this;
+		root.loadLineasInv()
 		let args={url:null, cb:{}};
 		args.url=`action_plans/${root.$route.params.planId}`;
+
+
 		args.cb = function(item) {
 						console.warn("date planaction", item);
 						root.dateplansys=item;
@@ -236,9 +277,20 @@ export default {
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
 		...mapActions("unidad/producto/universalSentUpAct", { getplan: "get", objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/indicadores", { LineasInvConocimiento: "getAreasKnow" }),
 		loadMembers() {
 		// console.log("members", root.group.member_ids);
 		},
+
+
+
+	loadLineasInv() {
+        
+      
+    },
+
+
+
 
 		nuevoPlan(){
 			let msg = "Guardando Plan de Acción";
