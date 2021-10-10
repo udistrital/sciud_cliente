@@ -29,7 +29,7 @@ const store = {
 			console.warn("store subtipos",args.parent_id);
 			if(args.parent_id!=0 || args.parent_id!=null){
 				api()
-					.get('types_all?filter=[["parent_id","=", "'+args.parent_id+'", "and", "active","=","true"]]')
+					.get('types_all?filter=[["parent_id","=", "'+args.parent_id+'"]]&take=200')
 					.then((r) => {
 						args.cb(r.data.data);
 						commit("SetDataAreas", r.data.data);

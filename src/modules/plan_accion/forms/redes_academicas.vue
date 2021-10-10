@@ -739,6 +739,10 @@ export default {
       type: String,
       default: () => "dw_title",
     },
+    totalLineasInv: {
+      type: Array,
+      default: () => [],
+    },
     action_panel_id: {
       type: Number,
       default: 0,
@@ -771,7 +775,7 @@ export default {
     tbEspecificoDisabled:true,
     // tipoprocesox:[{id:1,st_name:"Presentado"},{id:2,st_name:"Vinculado"}],
     popupObs: false,
-    totalLineasInv: [],
+    // totalLineasInv: [],
     totalLineasInvlist: [],
     observarData: "",
     editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -817,10 +821,10 @@ export default {
  created() {
     root = this;
     root.baseEnt = this.$clone(this.baseObj);
-    root.loadLineasInv();
+    // root.loadLineasInv();
     root.getSnies();
     root.tipoproceso = root.subtypesByType("planaccion_form6_estado_tipos");
-
+    console.warn("list lineas => ", root.totalLineasInv);
     root.getUnit({
       id: root.$route.params.unidadId,
       cb: function (result) {
@@ -1113,7 +1117,7 @@ export default {
         root.tbEspecificoDisabled = true;
       }
     },
-
+/*
     loadLineasInv() {
         
         root.LineasInvConocimiento({
@@ -1153,6 +1157,8 @@ export default {
         });
       
     },
+*/
+
 
     loadIndicators(e) {
       // root.indicador = [];
@@ -1234,12 +1240,34 @@ export default {
       }
     },
 
+    filtrarPorID(obj) {
+      if ('id' in obj && typeof(obj.id) === 'number' && !isNaN(obj.id) ) {
+        return true;
+      } else {
+        // entradasInvalidas++;
+        return false;
+      }
+    },
+
     selectorLineas(results){
       let limpio = [];
       let datax = results;
-      for (let i = 0; i <= root.group.research_focus_ids.length; i++) {
-        limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ===  parseInt(root.group.research_focus_ids[i]) ) );
+      console.warn("elementos", root.group.research_focus_ids);
+      for (let i = 0; i < root.group.research_focus_ids.length; i++) {
+        // console.warn("=========research_focus_ids ", root.group.research_focus_ids[i]);
+        // for (let i2 = 0; i2 < datax.length; i2++) {
+        limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ==  parseInt(root.group.research_focus_ids[i]) ) );
+         //limpio=datax;
+         //let dat = datax.filter(root.filtrarPorID);
+          //limpio[i]=dat;
+          
+          // if(datax[i2]['id']===root.group.research_focus_ids[i]) console.warn("lineas del plan: ", datax[i]);
+          
+          // console.warn("datax.id ",datax[i2]['id']);
+          //console.warn("datax value", datax[i]['id']);
+        // }
       }
+      console.warn("datax limpio", limpio);
       return limpio;
     },
 
