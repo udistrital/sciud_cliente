@@ -261,9 +261,13 @@ export default {
 					// root.document_items.forEach((item) => {
 					// 	ids.push(item.id);
 					// });
-					let ids = root.document_items.map((o) => o.id).sort();
+					let n_id = 0;
+					let ids = root.document_items.map((o) => parseInt(o.id));
 					console.log("ids =>", ids);
-					let n_id = ids[ids.length - 1] + 1;
+					ids.forEach((id) => {
+						if (id >= n_id) n_id = id + 1;
+					});
+					// let n_id = ids[ids.length - 1] + 1;
 					// 202110051249: Find index https://stackoverflow.com/a/39529049
 					var index = root.document_items.findIndex((o) => o.id == root.selectedItem.itemData.id) + 1;
 					// console.log("index =>", index);
