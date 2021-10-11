@@ -84,8 +84,8 @@ export default {
 	},
 	methods: {
 		test() {
-			console.clear();
-			console.log("TEST!");
+			// console.clear();
+			// console.log("TEST!");
 		},
 		setMarkup(html) {
 			// root.syncObj[root.syncProp] = html;

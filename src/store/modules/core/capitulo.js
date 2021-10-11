@@ -11,7 +11,7 @@ const store = {
 		item: null,
 	},
 	actions: {
-		// 202110070113: Carga todos los capitulos de un objeto
+		// 202110102052: Actualiza un capítulo
 		async update({ commit, state, dispatch }, args) {
 			return await api()
 				.put(`${args.context}/${args.id}/chapters/${args.item.id}`, { chapter: args.item })
