@@ -136,7 +136,8 @@
 														<DxColumn data-field="updated_at" caption="Fecha Actualización" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
 
 														<!-- <DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/>  -->
-														<DxColumn data-field="is_draft" caption="Estado" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="is_draft" caption="Plan Acción" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="management_report_is_draft" caption="Informe Gestion" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 														<DxColumn :width="100" alignment="center" cell-template="tpl" caption="" />
 

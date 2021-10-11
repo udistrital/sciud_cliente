@@ -1,5 +1,5 @@
 <template>
-  <div class="col mt-3 pl-1 pr-1" id="paneltrabajosP">
+  <div class="col mt-3 pl-1 pr-1" id="paneltrabajosD">
     <div class="row">
       <div class="col">
         <div class="p-0">
@@ -16,7 +16,7 @@
                 <button
                   type="button"
                   @click.prevent="add()"
-                  v-if="editMode"
+                  v-if="editMode  && !actInfor"
                   title="Nuevo Elemento.."
                   class="btn btn-main btn-labeled btn-labeled-left"
                 >
@@ -38,8 +38,8 @@
         </div>
       </div>
     </div>
-    <!-- <Documentos id="paneltrabajosP-documentos" end-point="form_d_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
-    <!-- <Participantes id="paneltrabajosP-participantes" end-point="form_d_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
+    <Documentos id="paneltrabajosD-documentos" end-point="form_d_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+    <!-- <Participantes id="paneltrabajosD-participantes" end-point="form_d_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
     <DxValidationGroup ref="basicGroup">
       <div class="row data slide">
         <div class="col">
@@ -60,7 +60,8 @@
                     <DxTextBox
                       placeholder="Nombre "
                       class="form-control"
-                      :value.sync="baseObj.name"
+                      :value.sync="baseObj.name" 
+                      :disabled="actInfor"
                     >
                       <DxValidator>
                         <DxRequiredRule />
@@ -83,6 +84,7 @@
                       value-expr="id"
                       class="form-control"
                       :wrapItemText="true"
+                      :disabled="actInfor"
                     >
                       <DxValidator>
                         <DxRequiredRule />
@@ -105,6 +107,7 @@
                       display-expr="st_name"
                       value-expr="id"
                       :wrapItemText="true"
+                      :disabled="actInfor"
                     >
                       <DxValidator>
                         <DxRequiredRule />
@@ -135,6 +138,7 @@
                             value-expr="id"
                             ref="sbOcdeArea"
                             :show-selection-controls="true"
+                            :disabled="actInfor"
                           >
                             <DxValidator>
                               <DxRequiredRule />
@@ -150,7 +154,7 @@
                           :show-clear-button="true"
                             @value-changed="ocdeDiscChange"
                             :data-source="ocdeDetallado2"
-                            :disabled="ocdeDisabled"
+                            :disabled="ocdeDisabled && actInfor"
                             :grouped="true"
                             :search-enabled="true"
                             :show-selection-controls="true"
@@ -181,9 +185,9 @@
                             :show-selection-controls="true"
                             :value.sync="baseObj.snies_ids"
                             placeholder="Busque y/o seleccione..."
-                            :disabled="false"
                             :data-source="sniesItem"
                             :wrapItemText="true"
+                            :disabled="actInfor"
                           >
                             <DxValidator>
                               <DxRequiredRule />
@@ -210,6 +214,7 @@
                             display-expr="name"
                             value-expr="id"
                             :wrapItemText="true"
+                            :disabled="actInfor"
                           >
                             <DxValidator>
                               <DxRequiredRule />
@@ -405,6 +410,10 @@
               :allow-grouping="false"
             />
 
+
+
+
+
             <!-- <DxColumn data-field='dw_type_id'  caption='Tipo de Trabajo' data-type='text' alignment='center' :visible='true' :allow-grouping='false' />  -->
             <!-- <DxColumn data-field="dw_recognition" caption="Reconocimientos" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
 						<DxColumn
@@ -420,6 +429,17 @@
 
             <!-- <DxColumn data-field="dw_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
             <DxColumn
+              data-field="goal_achieved"
+              caption="Cumplido"
+              data-type="date"
+              alignment="center"
+              :visible="true"
+              :customize-text="yesNo"
+              width="80"
+              v-if="!validateImp" 
+            />
+            
+            <DxColumn
               data-field="active"
               caption="Activo"
               data-type="date"
@@ -429,6 +449,7 @@
               width="70"
               v-if="!validateImp" 
             />
+
             <DxColumn
               :width="110"
               alignment="center"
@@ -462,39 +483,62 @@
 
             <template #tpl="{ data }">
               <span class="cmds">
-                <!-- <a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
+                  <a v-if="actInfor" title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
-								</a>
-								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
-									<i class="icon-users"></i>
-								</a> -->
-                <a
-                  title="Editar elemento..."
-                  class="cmd-item color-main-600"
-                  @click.prevent="edit(data.data)"
-                  href="#"
-                >
-                  <i class="icon-database-edit"></i>
-                </a>
-                <a
-                  v-if="data.data.active"
-                  title="Desactivar Trabajos..."
-                  class="cmd-item color-main-600 mr-2"
-                  @click.prevent="active(data, false)"
-                  href="#"
-                >
-                  <i class="icon-database-remove"></i>
-                </a>
-                <a
-                  v-else
-                  title="Activar Trabajos..."
-                  class="cmd-item color-main-600 mr-2"
-                  @click.prevent="active(data, true)"
-                  href="#"
-
-                >
-                  <i class="icon-database-check"></i>
-                </a>
+                  </a>
+                  <template v-if="editing">  
+                    <a
+                      v-if="data.data.goal_achieved"
+                      title="Quitar Cumplimiento..."
+                      class="cmd-item color-main-600 mr-2"
+                      @click.prevent="activeCum(data, false)"
+                      href="#"
+                    >
+                      <i class="icon-cross"></i>
+                    </a>
+                    
+                    <a
+                      v-else
+                      title="Activar Cumplimento..."
+                      class="cmd-item color-main-600 mr-2"
+                      @click.prevent="activeCum(data, true)"
+                      href="#"
+                    >
+                      <i class="icon-checkmark"></i>
+                    </a>
+                </template>
+                
+                <template v-if="!actInfor">
+                    <a
+                      title="Editar elemento..."
+                      class="cmd-item color-main-600"
+                      @click.prevent="edit(data.data)"
+                      href="#"
+                    >
+                      <i class="icon-database-edit"></i>
+                    </a>
+                
+                
+                    <a
+                      v-if="data.data.active"
+                      title="Desactivar Trabajos..."
+                      class="cmd-item color-main-600 mr-2"
+                      @click.prevent="active(data, false)"
+                      href="#"
+                    >
+                      <i class="icon-database-remove"></i>
+                    </a>
+                    
+                    <a
+                      v-else
+                      title="Activar Trabajos..."
+                      class="cmd-item color-main-600 mr-2"
+                      @click.prevent="active(data, true)"
+                      href="#"
+                    >
+                      <i class="icon-database-check"></i>
+                    </a>
+                </template>
               </span>
             </template>
           </DxDataGrid>
@@ -648,6 +692,8 @@
         <div class="card">
           <div class="card-body">
             <span class="font-weight-semibold">editMode:</span> {{ group }}
+            <hr />
+            <span class="font-weight-semibold">ActInfor:</span> {{actInfor}}
           </div>
         </div>
       </div>
@@ -733,15 +779,24 @@ export default {
     DxTextBox,
     DxValidator,
     DxValidationGroup,
+    Documentos: () => import("@/components/element/documentos"),
   },
   props: {
     titlecolum: {
       type: String,
       default: () => "dw_title",
     },
+    editing:{
+      type:Boolean,
+      default: false
+    },
     totalLineasInv: {
       type: Array,
       default: () => [],
+    },
+    actInfor:{
+      type: Boolean,
+      default: false
     },
     action_panel_id: {
       type: Number,
@@ -765,6 +820,7 @@ export default {
     areasObj: {
 			title: "Áreas de Conocimiento",
 		},
+    tiposDocumento:[],
     areasObj2:{},
     popupVisible:false,
     ttip: null,
@@ -805,7 +861,7 @@ export default {
       name:null,
       description:null,
       goal_state_id:0,
-      goal_achieved:true,
+      goal_achieved:false,
       order:0,
       plan_type_id:0,
       active:true,
@@ -824,6 +880,7 @@ export default {
     // root.loadLineasInv();
     root.getSnies();
     root.tipoproceso = root.subtypesByType("planaccion_form6_estado_tipos");
+    root.tiposDocumento = root.subtypesByType("planaccion_form6_estado_documentos");
     console.warn("list lineas => ", root.totalLineasInv);
     root.getUnit({
       id: root.$route.params.unidadId,
@@ -847,13 +904,13 @@ export default {
  mounted() {
     // console.log("root.tipos", root.tipos);
     root.ttip = root.$refs.ttip.instance;
-    root.panelData = $("#paneltrabajosP .data");
-    root.panelGrid = $("#paneltrabajosP .grid");
-    root.panelCmds = $("#paneltrabajosP .cmds");
-    root.panelCmdBack = $("#paneltrabajosP .cmds-back");
-    root.panelDocs = $("#paneltrabajosP-documentos");
+    root.panelData = $("#paneltrabajosD .data");
+    root.panelGrid = $("#paneltrabajosD .grid");
+    root.panelCmds = $("#paneltrabajosD .cmds");
+    root.panelCmdBack = $("#paneltrabajosD .cmds-back");
+    root.panelDocs = $("#paneltrabajosD-documentos");
     root.loaderMessage = "Cargando elementos";
-    root.loaderElement = "#paneltrabajosP .grid";
+    root.loaderElement = "#paneltrabajosD .grid";
   },
  
  computed: {
@@ -874,7 +931,7 @@ export default {
     dataSource: function () {
       let datat="";
       if (typeof this.action_panel_id === "undefined") return null;
-      if(root.validateImp) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
+      if(root.validateImp || root.actInfor) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
 			else datat='filter=[["plan_type_id","=","'+ root.tipos+'"]]';
       console.log("root.group", this.group);
       return DxStore({
@@ -981,6 +1038,23 @@ export default {
       getForm: "get",
     }),
 
+    documentos(data) {
+			// console.clear();
+			console.log("documentos", data.row.data);
+			root.section = "documentos";
+			// 202104111513: Error
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			let rd = data.row.data;
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
+			root.baseObj = rd;
+			$("#paneltrabajosD .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.name}`);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelCmdBack.fadeIn();
+				$("#paneltrabajosD-documentos").fadeIn(function(params) {});
+			});
+		},
 
     loadInformation(data) {
 			root.loaderShow(`Listando Areas...`, "#panel-plan_accion .card-body");
@@ -999,12 +1073,7 @@ export default {
 		},
 
     tooltip(e, data, show) {
-			// console.clear();
 			let el = e.target || e.srcElement;
-			// console.log("el =>", el);
-			// console.log("ttip =>", root.ttip);
-			// console.log("show =>", show);
-			// console.log("data =>", data);
 			if (show) {
 				root.areasObj = data;
 				root.ttip.option("target", el);
@@ -1117,47 +1186,6 @@ export default {
         root.tbEspecificoDisabled = true;
       }
     },
-/*
-    loadLineasInv() {
-        
-        root.LineasInvConocimiento({
-          parent_id: 159,
-          cb: function (results) {
-            root.totalLineasInv=[];
-            root.totalLineasInv = root.totalLineasInv.concat(results);
-          },
-        });
-
-        root.LineasInvConocimiento({
-          parent_id: 511,
-          cb: function (results) {
-            root.totalLineasInv = root.totalLineasInv.concat(results);
-          },
-        });
-
-        root.LineasInvConocimiento({
-          parent_id: 512,
-          cb: function (results) {
-            root.totalLineasInv = root.totalLineasInv.concat(results);
-          },
-        });
-
-        root.LineasInvConocimiento({
-          parent_id: 513,
-          cb: function (results) {
-            root.totalLineasInv = root.totalLineasInv.concat(results);
-          },
-        });
-
-        root.LineasInvConocimiento({
-          parent_id: 514,
-          cb: function (results) {
-            root.totalLineasInv = root.totalLineasInv.concat(results);
-          },
-        });
-      
-    },
-*/
 
 
     loadIndicators(e) {
@@ -1190,12 +1218,12 @@ export default {
       } else {
         console.log("Regresar!");
         console.log("root.panelDocs", root.panelDocs);
-        $("#paneltrabajosP-documentos").fadeOut(function (params) {
+        $("#paneltrabajosD-documentos").fadeOut(function (params) {
           root.panelCmds.fadeIn();
           root.panelGrid.fadeIn(function (params) {});
         });
       }
-      $("#paneltrabajosP .item-title").html("");
+      $("#paneltrabajosD .item-title").html("");
       root.baseObj = this.$clone(root.baseEnt);
       root.section = null;
     },
@@ -1254,18 +1282,7 @@ export default {
       let datax = results;
       console.warn("elementos", root.group.research_focus_ids);
       for (let i = 0; i < root.group.research_focus_ids.length; i++) {
-        // console.warn("=========research_focus_ids ", root.group.research_focus_ids[i]);
-        // for (let i2 = 0; i2 < datax.length; i2++) {
         limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ==  parseInt(root.group.research_focus_ids[i]) ) );
-         //limpio=datax;
-         //let dat = datax.filter(root.filtrarPorID);
-          //limpio[i]=dat;
-          
-          // if(datax[i2]['id']===root.group.research_focus_ids[i]) console.warn("lineas del plan: ", datax[i]);
-          
-          // console.warn("datax.id ",datax[i2]['id']);
-          //console.warn("datax value", datax[i]['id']);
-        // }
       }
       console.warn("datax limpio", limpio);
       return limpio;
@@ -1293,6 +1310,7 @@ export default {
       arreglo=[dataPadre,dataHijo];
       return arreglo;
     },
+
 
     arrayObjeto2vectorSnies(vectorPadre){
       let vector=[];
@@ -1345,19 +1363,6 @@ export default {
 			});
 		},
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     add_valit(){
       console.log("ADD");
       root.mode = "add";
@@ -1375,11 +1380,12 @@ export default {
       if(root.group.research_focus_ids.length!=0){
         root.add_valit();
       }else{
-        let msg = `La estructura de investigacion llamada: <i><strong>${root.group.name}</strong></i>, no cuenta con lineas de investigación.<br /> ¿Desea continuar?`;
+        let msg = `La estructura de investigacion llamada: <i><strong>${root.group.name}</strong></i>, no cuenta con lineas de investigación.<br /> ¿Desea ingresar lineas en informacion de la red?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
-					root.add_valit();
+          root.go(root.group.id, '/unidad/'+root.group.id, `Cargando Estructuras`)
+					// root.add_valit();
 				}
 			});
       }
@@ -1415,6 +1421,41 @@ export default {
             newFormat: true,
             url: `action_plans/${root.action_panel_id}/form_d_act_plans/${data.data.id}`,
             data: { form_d_act_plan: { active: state, updated_by: 1 } },
+            cb: function (result) {
+              console.log("Result", result);
+              root.grid.refresh();
+              root.loaderHide();
+            },
+          };
+          console.log("dto", dto);
+          root.elementoActive(dto);
+          root.loaderHide();
+        }
+      });
+    },
+
+    activeCum(data, state) {
+      // // console.clear();
+      console.log("active", data);
+      console.log("state", state);
+      let a = state ? "Presentar" : "No Presentar";
+      let am = state ? "Presentando" : "Deteniendo";
+      let msg = `¿Realmente desea ${a} el Cumplimento para <span class='text-sb'>"${
+        data.data[root.titlecolum]
+      } </span>?`;
+      this.$confirm(msg, function (si_no) {
+        console.log("result", si_no);
+        if (si_no) {
+          root.loaderShow(`${am}`, root.panelGrid);
+          let active = JSON.stringify({
+            active: state,
+            updated_by: root.user_id,
+          });
+
+          var dto = {
+            newFormat: false,
+            url: `action_plans/${root.action_panel_id}/form_d_act_plans/${data.data.id}`,
+            data: { form_d_act_plan: { goal_achieved: state, updated_by: 1 } },
             cb: function (result) {
               console.log("Result", result);
               root.grid.refresh();

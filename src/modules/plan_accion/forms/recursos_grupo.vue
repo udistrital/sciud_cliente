@@ -1,5 +1,5 @@
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="paneltrabajosP">
+	<div class="col mt-3 pl-1 pr-1" id="paneltrabajosE">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -13,7 +13,7 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode && !actInfor" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nuevo {{ title }}
 								</button>
 							</span>
@@ -27,8 +27,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- <Documentos id="paneltrabajosP-documentos" end-point="form_e_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
-		<!-- <Participantes id="paneltrabajosP-participantes" end-point="form_e_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
+		<!-- <Documentos id="paneltrabajosE-documentos" end-point="form_e_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
+		<!-- <Participantes id="paneltrabajosE-participantes" end-point="form_e_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -153,28 +153,15 @@
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-						<DxColumn :width="110" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn :width="200" data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<DxColumn :width="500" data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<DxColumn :width="90" data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
+						<DxColumn :width="100" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn  data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn  data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn :width="93" data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 						<DxColumn :width="110" data-field='inventory_plate'  caption='Placa' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<!-- <DxColumn data-field='dw_type_id'  caption='Tipo de Trabajo' data-type='text' alignment='center' :visible='true' :allow-grouping='false' />  -->
-						<!-- <DxColumn data-field="dw_recognition" caption="Reconocimientos" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn
-							data-field="colciencias_call_name"
-							caption="Categoría Minciencias"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="true"
-						/> -->
-						<!-- <DxColumn data-field='category_id'  caption='Categoría' data-type='text' alignment='center' :visible='false' :allow-grouping='false' />  -->
-						<!-- <DxColumn data-field="dw_observation" caption="Anotaciones" data-type="text" alignment="center" :visible="false" :allow-grouping="false" /> -->
 
-						<!-- <DxColumn data-field="dw_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" v-if="!validateImp" alignment="center" cell-template="tpl" caption="" />
-						<DxColumn :width="110" v-if="validateImp" alignment="center" cell-template="tpl2" caption="" />
+						<!-- <DxColumn :width="110" v-if="validateImp" alignment="center" cell-template="tpl2" caption="" /> -->
 
 						<template #tplObs="{ data }">
 							<a
@@ -192,43 +179,70 @@
 
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<!-- <a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
+								<!-- <a v-if="actInfor" title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
-								</a>
+								</a> -->
+								<!--
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a> -->
-								<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-									<i class="icon-database-edit"></i>
-								</a>
-								<a v-if="data.data.active" title="Desactivar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
-									<i class="icon-database-remove"></i>
-								</a>
-								<a v-else title="Activar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-									<i class="icon-database-check"></i>
-								</a>
+								
+								
+				<template v-if="!actInfor">
+                    <a
+                      title="Editar elemento..."
+                      class="cmd-item color-main-600"
+                      @click.prevent="edit(data.data)"
+                      href="#"
+                    >
+                      <i class="icon-database-edit"></i>
+                    </a>
+                
+                
+                    <a
+                      v-if="data.data.active"
+                      title="Desactivar Trabajos..."
+                      class="cmd-item color-main-600 mr-2"
+                      @click.prevent="active(data, false)"
+                      href="#"
+                    >
+                      <i class="icon-database-remove"></i>
+                    </a>
+                    
+                    <a
+                      v-else
+                      title="Activar Trabajos..."
+                      class="cmd-item color-main-600 mr-2"
+                      @click.prevent="active(data, true)"
+                      href="#"
+                    >
+                      <i class="icon-database-check"></i>
+                    </a>
+                </template>
+
+
 							</span>
 						</template>
 
-						<template #tpl2="{ data }">
-							<span class="cmds">
+						<!-- <template #tpl2="{ data }"> -->
+							<!-- <span class="cmds"> -->
 								<!-- <a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a> -->
-								<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+								<!-- <a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 									<i class="icon-database-edit"></i>
-								</a>
+								</a> -->
 								<!-- <a v-if="data.data.active" title="Desactivar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 									<i class="icon-database-remove"></i>
 								</a>
 								<a v-else title="Activar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
 								</a> -->
-							</span>
-						</template>
+							<!-- </span> -->
+						<!-- </template> -->
 					</DxDataGrid>
 				</div>
 			</div>
@@ -292,7 +306,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "plan_accion_formacion",
+	name: "plan_accion_recursos",
 	components: {
 		// Commands,
 		DxPopup,
@@ -319,12 +333,17 @@ export default {
 		DxTextBox,
 		DxValidator,
 		DxValidationGroup,
-		DxSwitch
+		DxSwitch,
+		// Documentos: () => import("@/components/element/documentos"),
 	},
 	props: {
 		titlecolum: {
 			type: String,
 			default: () => "dw_title",
+		},
+		actInfor:{
+			type: Boolean,
+			default: false
 		},
 		action_panel_id: {
 			type: Number,
@@ -347,6 +366,7 @@ export default {
 		// indicador2:[],
 		popupObs: false,
 		observarData: "",
+		tiposDocumento:[],
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
 		tipoproceso:[],
 		totaCount: 0,
@@ -385,17 +405,17 @@ export default {
 		// console.warn("indicador", root.indicador);
 		// root.indicador=[];
 		root.tipoproceso = root.subtypesByType("planaccion_form1_tipos");
-		
+		// root.tiposDocumento = root.subtypesByType("planaccion_formE_documentos");
 	},
 	mounted() {
 		// console.log("root.tipos", root.tipos);
-		root.panelData = $("#paneltrabajosP .data");
-		root.panelGrid = $("#paneltrabajosP .grid");
-		root.panelCmds = $("#paneltrabajosP .cmds");
-		root.panelCmdBack = $("#paneltrabajosP .cmds-back");
-		root.panelDocs = $("#paneltrabajosP-documentos");
+		root.panelData = $("#paneltrabajosE .data");
+		root.panelGrid = $("#paneltrabajosE .grid");
+		root.panelCmds = $("#paneltrabajosE .cmds");
+		root.panelCmdBack = $("#paneltrabajosE .cmds-back");
+		root.panelDocs = $("#paneltrabajosE-documentos");
 		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#paneltrabajosP .grid";
+		root.loaderElement = "#paneltrabajosE .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -404,7 +424,7 @@ export default {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
-			if(root.validateImp) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
+			if(root.validateImp || root.actInfor) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
 			else datat='filter=[["plan_type_id","=","'+ root.tipos+'"]]';
 			return DxStore({
 				key: ["id"],
@@ -431,7 +451,24 @@ export default {
 		// ...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-
+		
+		documentos(data) {
+			// console.clear();
+			console.log("documentos", data.row.data);
+			root.section = "documentos";
+			// 202104111513: Error
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			let rd = data.row.data;
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
+			root.baseObj = rd;
+			$("#paneltrabajosE .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.type_description}`);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelCmdBack.fadeIn();
+				$("#paneltrabajosE-documentos").fadeIn(function(params) {});
+			});
+		},
 		// loadIndicators(e){
 		// 	root.indicador=[];
 		// 	if (e.value === null) return null;
@@ -466,12 +503,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#paneltrabajosP-documentos").fadeOut(function(params) {
+				$("#paneltrabajosE-documentos").fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#paneltrabajosP .item-title").html("");
+			$("#paneltrabajosE .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
