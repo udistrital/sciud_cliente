@@ -206,19 +206,19 @@
 		{ "name": "variedad_vegetal_estado_peticion", "id": 64 },
 
 		{ "name": "planaccion_form1_tipos", "id": 201 },
-		{ "name": "planaccion_form1_documentos", "id": 218 },
+		{ "name": "planaccion_form1_documentos", "id": 222 },
 
 		{ "name": "planaccion_form2_tipos", "id": 202 },
 		{ "name": "planaccion_form2_estado_tipos", "id": 203 },
-		{ "name": "planaccion_form2_estado_documentos", "id": 219 },
+		{ "name": "planaccion_form2_estado_documentos", "id": 222 },
 		
 		{ "name": "planaccion_productos_resultado_tipos", "id": 204 },
 		{ "name": "planaccion_productos_resultado_documentos", "id": 220 },
 		
-		{ "name": "planaccion_productos_transferencia_documentos", "id": 221 },
+		{ "name": "planaccion_productos_transferencia_documentos", "id": 222 },
 
 		{ "name": "planaccion_form6_estado_tipos", "id": 207 },
-		{ "name": "planaccion_form6_estado_documentos", "id": 216 }
+		{ "name": "planaccion_form6_estado_documentos", "id": 222 }
 
 		
 	]
