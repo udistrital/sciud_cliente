@@ -16,6 +16,76 @@
 			</div>
 		</div>
 
+		<div class="filter slide">
+			<div class="form-group row">
+				<label class="col-2 col-form-label text-right">FILTRAR POR:</label>
+				<div class="col">
+					<DxSelectBox
+						:show-clear-button="true"
+						:grouped="false"
+						:search-enabled="false"
+						placeholder="Elija un criterio..."
+						:data-source="filterCategories"
+						:value.sync="filter.category"
+						@value-changed="filterCategoryChange"
+						ref="filterCategoryRef"
+						class="form-control"
+						display-expr="name"
+						value-expr="key"
+					/>
+				</div>
+				<div class="col-5 filter-select" v-if="filter.category != 'members'">
+					<DxSelectBox
+						:show-clear-button="true"
+						:grouped="false"
+						:search-enabled="false"
+						:disabled="filter.category == null"
+						placeholder="Seleccione"
+						:data-source="filterCriteria"
+						:value.sync="filter.value"
+						ref="filterCriteriaRef"
+						class="form-control"
+						display-expr="Nombre"
+						value-expr="Id"
+					/>
+				</div>
+				<div class="col-4 filter-doc" v-if="filter.category == 'members'">
+					<DxNumberBox
+						ref="nbCedulaRef"
+						class="form-control"
+						value-change-event="keyup"
+						:show-clear-button="true"
+						:value.sync="filter.value"
+						placeholder="Documento de identidad"
+					/>
+				</div>
+				<div class="col-5 filter-select" v-if="filter.category == 'faculty_idsx'">
+					<DxTagBox
+						name="faculties"
+						id="faculties"
+						:read-only="!es_admin"
+						value-expr="Id"
+						display-expr="Nombre"
+						class="form-control"
+						:search-enabled="true"
+						:show-selection-controls="true"
+						:value.sync="filter.value"
+						placeholder="Seleccione una facultad"
+						:data-source="facultades"
+					/>
+				</div>
+				<div class="col-2">
+					<DxButton @click="filterDo($event)" title="Filtrar Estructuras..." class="nb" :disabled="filter.value == null">
+						<template #default>
+							<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+								Filtrar <b><i class="icon-search"></i></b>
+							</span>
+						</template>
+					</DxButton>
+				</div>
+			</div>
+		</div>
+
 		<div class="row" id="panel-unidades">
 			<div class="col">
 				<div class="card">
@@ -122,7 +192,7 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
-									data-field="faculty_ids.length"
+									data-field="faculties.length"
 									caption="Facultades"
 									data-type="number"
 									alignment="center"
@@ -320,7 +390,11 @@
 		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
-					<div class="card-body"><span class="font-weight-semibold">editMode:</span> {{ editMode }}</div>
+					<div class="card-body">
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">filter:</span> {{ JSON.stringify(filter, null, 3) }}
+					</div>
 				</div>
 			</div>
 		</div>
@@ -333,7 +407,8 @@
 let root = null;
 let $ = window.jQuery;
 import DxStore from "@/store/dx";
-import DxDropDownButton from "devextreme-vue/drop-down-button";
+import { mapActions, mapState, mapGetters } from "vuex";
+import { DxTagBox, DxSelectBox, DxNumberBox, DxButton, DxTextBox, DxDropDownButton } from "devextreme-vue";
 // import Commands from "@/components/element/commands.vue";
 // {{url}}/research_group?page=1&per_page=5&group_type_id=1
 import {
@@ -355,12 +430,16 @@ import {
 	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
-import { mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
 	name: "inicio",
 	components: {
+		DxTagBox,
+		DxButton,
+		DxSelectBox,
+		DxNumberBox,
+		DxTextBox,
 		DxStateStoring,
 		DxDropDownButton,
 		DxColumn,
@@ -382,6 +461,12 @@ export default {
 		// Tabs,
 	},
 	data: () => ({
+		faculties: null,
+		members: null,
+		cine: null,
+		curricular: null,
+		oecd: null,
+		research: null,
 		items: [],
 		grid: null,
 		mode: null,
@@ -391,6 +476,38 @@ export default {
 		baseEntity: {},
 		docLink: null,
 		firstLoad: true,
+		filter: {
+			current: null,
+			category: null,
+			value: null,
+		},
+		filterCriteria: [],
+		filterCategories: [
+			{
+				key: "members",
+				name: "Cédula de Integrante",
+			},
+			// {
+			// 	key: "cine_detailed_area_ids",
+			// 	name: "CINE",
+			// },
+			{
+				key: "faculties",
+				name: "Facultad",
+			},
+			// {
+			// 	key: "research_focus_ids",
+			// 	name: "Línea de Investigación",
+			// },
+			// {
+			// 	key: "oecd_discipline_ids",
+			// 	name: "OCDE",
+			// },
+			// {
+			// 	key: "curricular_project_ids",
+			// 	name: "Proyecto Curricular",
+			// },
+		],
 	}),
 	created() {
 		root = this;
@@ -402,10 +519,12 @@ export default {
 		root.loaderShow();
 		root.unidad = window.vm.$clone(root.baseEntity);
 		root.getGroupRoles();
+		root.getFacultades();
 		root.loaderHide();
 		console.log("editMode", root.editMode);
 	},
 	computed: {
+		...mapState("unidad/oas", ["facultades"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapGetters("unidad", ["documents", "states", "types"]),
 		tiposUnidad() {
@@ -431,18 +550,22 @@ export default {
 				});
 			}
 			// 202107040621: Determina las facultades si el usuario tiene rol Gestor facultad
-			let faculties = [];
 			if (root.user_role_id === root.get_role_id("gestor_facultad")) {
 				console.clear();
 				console.log("ES GESTOR FACULTAD!");
 				console.log("root.user =>", root.user);
-				faculties = root.user.local.faculties_ids;
-				console.log("faculties =>", faculties);
+				root.faculties = root.user.local.faculties_ids;
+				console.log("root.faculties =>", root.faculties);
 			}
 			return DxStore({
 				ids: ids,
 				key: ["id"],
-				faculties: faculties,
+				faculties: root.faculties,
+				members: root.members,
+				cine: root.cine,
+				curricular: root.curricular,
+				oecd: root.oecd,
+				research: root.research,
 				loadBaseEntity: true,
 				endPoint: "research_units",
 				// 202107040725: Determina si debe mostrar solo los grupos activos
@@ -473,6 +596,13 @@ export default {
 						console.log("root.baseEntity", root.baseEntity);
 					}
 					$("#btn-add").fadeIn();
+
+					// 202110102158: Filtros!
+					if ($(".dx-toolbar-center .filter").length <= 0) {
+						$(".dx-toolbar-center").append($(".filter.slide"));
+						$(".dx-toolbar-center .filter").fadeIn();
+					}
+
 					root.loaderHide();
 				},
 			});
@@ -489,6 +619,39 @@ export default {
 		...mapActions("auth/usuario", ["getGroupRoles"]),
 		...mapActions("unidad", ["getResearchers", "setUnit", "saveUnit"]),
 		...mapActions("unidad/documentos", { getDocs: "get" }),
+		...mapActions("unidad/cine", { getCine: "all" }),
+		...mapActions("unidad/oas", { getFacultades: "facultades" }),
+		...mapActions("unidad/ocde", { getOcde: "getAll" }),
+		filterDo(e) {
+			// e.preventDefault();
+			console.clear();
+			console.log("e =>", e);
+			console.log("filter =>", JSON.stringify(root.filter));
+			root.filter.current = root.filter.category;
+			root[root.filter.category] = [root.filter.value];
+			console.log("filtered =>", `root.${root.filter.category}`);
+			root.loaderShow("Filtrando Estructuras");
+		},
+		filterCategoryChange(e) {
+			root.filter.value = null;
+			console.clear();
+			console.log("e =>", e);
+			if (e.value == "faculties") {
+				console.log("root.facultades =>", root.facultades);
+				root.filterCriteria = root.facultades;
+			} else if (e.value == "members") {
+				setTimeout(function() {
+					$(".filter-doc input").focus();
+				}, 500);
+			} else {
+				console.log("root.filter.category =>", root.filter.category);
+				root[root.filter.category] = null;
+				root[root.filter.current] = null;
+				root.filter.category = null;
+				root.filter.current = null;
+				root.grid.refresh();
+			}
+		},
 		cmdClick(e) {
 			console.log("e.itemData", e.itemData);
 			root.go(e.itemData.text, e.itemData.command, `Cargando ${e.itemData.text}`);
@@ -532,10 +695,8 @@ export default {
 			root.unidad.faculty_act_number = root.unidad.faculty_act_number.toUpperCase();
 			if (root.mode == "add") root.unidad.created_by = root.user_id;
 			if (root.mode == "edit") root.unidad.updated_by = root.user_id;
-
 			// TODO: 202010281221 Arreglar para obtener 'oecd_knowledge_area_id' en '_integrantes.vue'
 			root.unidad.oecd_knowledge_area_id = 1;
-
 			root.saveUnit({
 				unidad: root.unidad,
 				callback: function(gResponse) {
@@ -646,7 +807,9 @@ export default {
 		gridInit(e) {
 			root.grid = e.component;
 			root.grid.beginUpdate = () => {};
-			root.grid.endUpdate = () => {};
+			root.grid.endUpdate = () => {
+				// $(".dx-toolbar-center").append("Diego!");
+			};
 		},
 		onContentReady() {
 			// // root.loadingVisible = false;

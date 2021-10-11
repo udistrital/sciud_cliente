@@ -222,16 +222,17 @@ export default {
 			observation: null,
 		},
 		document_items: [],
+		document_items_all: [],
 		id: "panel-convocatoria-documentos",
 		selectedItem: null,
 		contextMenuItems: [
 			{ id: "rename", text: "Renombrar", icon: "rename" },
 			{ id: "add", text: "Agregar", icon: "add" },
-			{ id: "delete", text: "Eliminar", icon: "close" },
+			{ id: "delete", text: "Desactivar", icon: "close" },
 		],
 	}),
 	methods: {
-		...mapActions("core/capitulo", { capitulos: "getAll", crearCapitulos: "createAll", guardarCapitulos: "updateAll" }),
+		...mapActions("core/capitulo", { capitulos: "getAll", crearCapitulos: "createAll", guardarCapitulos: "updateAll", guardarCapitulo: "update" }),
 		...mapActions("convocatoria", ["getItem", "getTemplate", "getCriteria", "getFinancingItems", "getActivities", "getDocuments", "getItems"]),
 		setNumerals(parent_id) {
 			if (typeof parent_id === "undefined") parent_id = null;
@@ -312,7 +313,7 @@ export default {
 			root.selectedItem = e;
 			// console.log("root.selectedItem =>", root.selectedItem.itemData.ch_title);
 		},
-		contextMenuItemClick(e) {
+		contextMenuItemClick: async (e) => {
 			// console.log(root.$sep);
 			// console.log("e =>", e);
 			root.currentItemEl = $(root.selectedItem.itemElement);
@@ -349,13 +350,26 @@ export default {
 				}
 				case "delete": {
 					root.treeAction = null;
-					root.$confirm(`¿Realmente desea eliminar el ítem "${root.selectedItem.itemData.ch_title}"?`, function(si) {
+					root.$confirm(`¿Realmente desea desactivar el ítem "${root.selectedItem.itemData.ch_title}"?`, async function(si) {
 						// console.log("result", si);
 						if (si) {
-							// console.clear();
-							// console.log("DELETE!");
+							root.loaderShow("Desactivando ítem", "#panel-documentos .card-body");
+							console.clear();
+							console.log("DELETE!");
+							let to_send = root.selectedItem.itemData;
+							to_send["active"] = false;
+							to_send["udpated_by"] = root.user_id;
+							let res = await root.guardarCapitulo({
+								id: root.item.id,
+								context: "calls",
+								item: to_send,
+							});
+							console.log("res =>", res);
 							root.document_items = root.document_items.filter((o) => o.id !== root.selectedItem.itemData.id);
 							root.setNumerals();
+							setTimeout(function() {
+								root.loaderHide();
+							}, 1000);
 						}
 					});
 					break;
@@ -611,7 +625,9 @@ export default {
 					if (item.updated_by == null) item.updated_by = root.user_id;
 					item.is_new = false;
 				});
-				root.document_items = caps;
+				root.document_items_all = caps;
+				// 202110102133: Solo los activos
+				root.document_items = caps.filter((o) => o.active);
 				root.setContents();
 			} else {
 				// 202110070201: Si no hay items creados los crea
