@@ -139,7 +139,7 @@
 														<DxColumn data-field="is_draft" caption="Plan Acción" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="management_report_is_draft" caption="Informe Gestion" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-														<DxColumn :width="100" alignment="center" cell-template="tpl" caption="" />
+														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 
 														<!-- <template #tplWeb="{ data }">
 															<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
@@ -219,6 +219,17 @@
 																		color-main-600 mr-2" 
 																		@click.prevent="activePlan(data, true)" href="#">
 																			<i class="icon-unlocked"></i>
+																		</a>
+
+																		<a title="Desactivar Guardado informe Gestion"  v-if="data.data.management_report_is_draft" class="cmd-item color-main-600 mr-2" @click.prevent="activeInfo(data, false)" href="#">
+																			<i class="icon-file-locked2"></i>
+																		</a>
+																		<a v-else 
+																		title="Habilitar Guardado informe Gestion" 
+																		class="cmd-item 
+																		color-main-600 mr-2" 
+																		@click.prevent="activeInfo(data, true)" href="#">
+																			<i class="icon-file-spreadsheet2"></i>
 																		</a>
 																	</template>
 																</span>
@@ -434,6 +445,41 @@ export default {
 					console.log("dto", dto);
 					root.elementoActive(dto);
 					root.loaderHide();
+				}
+			});
+		},
+
+		activeInfo(data, state) {
+			// // console.clear();
+			console.log("active", data);
+			console.log("state", state);
+			let a = state ? "activar" : "desactivar";
+			let am = state ? "Activando" : "Desactivando";
+			let msg = `¿Realmente desea ${a} el guardado de datos en plan de acción con id: <span class='text-sb'>"${data.data.id}"</span>?`;
+			this.$confirm(msg, function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					let baseObjx={};
+					root.loaderShow(state+" Informe");
+					baseObjx.update_by = root.user_id;
+					baseObjx.updated_by= root.user_id;
+					baseObjx.management_report_is_draft = state;
+					let obj = baseObjx;
+					let dto = {
+						unidadId: root.group.id,
+						stringEP: "ap_management_reports",
+						mod: data.data.id,
+						newFormat:true,
+						objectSend: { ap_management_report: obj },
+						cb: function(item) {
+							console.log("dato", item);
+							root.grid.refresh();
+							// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
+							//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+							root.loaderHide();
+						},
+					};
+					root.objUpdate(dto);
 				}
 			});
 		},

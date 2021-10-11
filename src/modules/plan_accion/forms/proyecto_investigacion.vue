@@ -169,7 +169,17 @@
 						<DxColumn data-field='financing_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn :width="500" data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn data-field='goal_state_name'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+			<DxColumn
+              data-field="goal_achieved"
+              caption="Culminado"
+              data-type="date"
+              alignment="center"
+              :visible="true"
+              :customize-text="yesNo"
+              width="80"
+            />
 
+            
 						<DxColumn data-field="active" v-if="!validateImp" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" v-if="!validateImp" alignment="center" cell-template="tpl" caption="" />
 
@@ -207,6 +217,28 @@
 								<a v-if="actInfor" title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>
+
+								<template v-if="editing">  
+									<a
+									v-if="data.data.goal_achieved"
+									title="Quitar Cumplimiento..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="activeCum(data, false)"
+									href="#"
+									>
+									<i class="icon-cross"></i>
+									</a>
+									
+									<a
+									v-else
+									title="Activar Cumplimento..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="activeCum(data, true)"
+									href="#"
+									>
+									<i class="icon-checkmark"></i>
+									</a>
+								</template>
 
 								<template v-if="!actInfor">
 									<a
@@ -339,6 +371,10 @@ export default {
 			type: String,
 			default: () => "dw_title",
 		},
+		editing:{
+			type:Boolean,
+			default: false
+		},
 		actInfor:{type: Boolean,default: false},
 		action_panel_id: {
 			type: Number,
@@ -444,6 +480,40 @@ export default {
 		// ...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
 		// ...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		activeCum(data, state) {
+		// // console.clear();
+		console.log("active", data);
+		console.log("state", state);
+		let a = state ? "Presentar" : "No Presentar";
+		let am = state ? "Presentando" : "Deteniendo";
+		let msg = `¿Realmente desea ${a} el Cumplimento para <span class='text-sb'>"${
+			data.data.financing_type_name
+		} </span>?`;
+		this.$confirm(msg, function (si_no) {
+			console.log("result", si_no);
+			if (si_no) {
+			root.loaderShow(`${am}`, root.panelGrid);
+			let active = JSON.stringify({
+				active: state,
+				updated_by: root.user_id,
+			});
+
+			var dto = {
+				newFormat: false,
+				url: `action_plans/${root.action_panel_id}/form_b_act_plans/${data.data.id}`,
+				data: { form_b_act_plan: { goal_achieved: state, updated_by: 1 } },
+				cb: function (result) {
+				console.log("Result", result);
+				root.grid.refresh();
+				root.loaderHide();
+				},
+			};
+			console.log("dto", dto);
+			root.elementoActive(dto);
+			root.loaderHide();
+			}
+		});
+		},
 
 		// loadIndicators(e){
 		// 	root.indicador=[];
@@ -577,7 +647,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.financing_type_name} del usuario ${root.user_role_id}</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
