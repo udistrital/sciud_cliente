@@ -152,14 +152,6 @@ export default {
 			return newObj;
 		};
 
-		// 202110051423: obtiene un valor de acuerdo al porcentaje
-		// https://stackoverflow.com/a/6394014
-		vue.prototype.$getAmmount = function(total, percent, format = false) {
-			if (percent !== null && typeof percent === "string") percent = parseFloat(percent);
-			let r = (total * percent) / 100;
-			return format ? r.format() : r;
-		};
-
 		// 202009301411: Convert yyyy-mm-dd string to date
 		// https://stackoverflow.com/a/7151607
 		vue.prototype.$getDate = function(date) {
@@ -192,14 +184,6 @@ export default {
 				.call(obj)
 				.match(/\s([a-zA-Z]+)/)[1]
 				.toLowerCase();
-		};
-
-		vue.prototype.$format = function(number) {
-			return parseFloat(number).format();
-		};
-
-		vue.prototype.$format2 = function(number, decimals = 0, dec_point = ",", thousands_sep = ".") {
-			return parseFloat(number).format2(decimals, dec_point, thousands_sep);
 		};
 
 		//202103201537 creacion de una nueva alerta Carlos A. M
@@ -568,16 +552,6 @@ export default {
 		vue.prototype.$formatDate = function(e) {
 			console.log("$formatDate", e);
 			return e;
-		};
-
-		// 202104110402: Formatea la fecha
-		vue.prototype.$getTS = function(date = new Date(), show_time = false, show_seconds = false) {
-			let ts = date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2);
-			if (show_time) {
-				ts += ("0" + date.getHours()).slice(-2) + ("0" + date.getMinutes()).slice(-2);
-				if (show_seconds) ts += ("0" + date.getSeconds()).slice(-2);
-			}
-			return ts;
 		};
 
 		// 201906121015: Obtiene la fecha formateada

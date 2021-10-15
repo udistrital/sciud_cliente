@@ -27,16 +27,9 @@
 								<div class="col">
 									<div class="col d-flex justify-content-between align-items-end">
 										<div class="sub-title"><i class="icon-trophy"></i>{{$titleCase(group.name)}}</div>
-										
-										<div class="header-elements" v-if="!dateplansys.is_draft">
-											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-warning btn-labeled btn-labeled-left ">
-												<b><i class="icon-database-add"></i></b> Concluir Informe de Gestion 
-											</button>
-										</div>
-
-										<div class="header-elements" v-if="dateplansys.is_draft">
-											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-warning btn-labeled btn-labeled-left ">
-												<b><i class="icon-database-add"></i></b> Concluir Plan de Accion
+										<div class="header-elements" v-if="true">
+											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-main btn-labeled btn-labeled-left ">
+												<b><i class="icon-database-add"></i></b> Guardar y Cerrar 
 											</button>
 										</div>
 									</div>
@@ -196,7 +189,6 @@ export default {
 
 	data() {
 		return {
-			dateplansys:{},
 			tp: null,
 			group: null,
 			baseObjx: {
@@ -210,15 +202,6 @@ export default {
 		console.clear();
 		console.log("Ingresando a plan de accion...");
 		root = this;
-		let args={url:null, cb:{}};
-		args.url=`action_plans/${root.$route.params.planId}`;
-		args.cb = function(item) {
-						console.warn("date planaction", item);
-						root.dateplansys=item;
-						root.loaderHide();
-					};
-		let dataplan = root.getplan(args);
-		console.warn("datos del plan", root.dateplansys);
 		console.log("obheto grupo", root.group);
 	},
 
@@ -235,7 +218,7 @@ export default {
 	},
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
-		...mapActions("unidad/producto/universalSentUpAct", { getplan: "get", objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		loadMembers() {
 		// console.log("members", root.group.member_ids);
 		},

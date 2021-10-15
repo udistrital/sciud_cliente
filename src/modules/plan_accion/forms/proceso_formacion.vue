@@ -156,6 +156,8 @@
 						<DxSummary>
 							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
 						</DxSummary>
+					
+					
 						<DxPager
 							:show-info="true"
 							:show-page-size-selector="true"
@@ -386,7 +388,7 @@ export default {
 		root.panelCmdBack = $("#paneltrabajosP .cmds-back");
 		root.panelDocs = $("#paneltrabajosP-documentos");
 		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#paneltrabajosP .grid"
+		root.loaderElement = "#paneltrabajosP .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),

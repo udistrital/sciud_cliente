@@ -68,8 +68,7 @@ const store = {
 					return await api("oas")
 						.get("terceros_crud/v1/datos_identificacion?query=Numero:" + args.doc)
 						.then((r) => {
-							// 202109231949: Se actualiza para que obtenga el último del array
-							user_oas_details = r.data[r.data.length - 1];
+							user_oas_details = r.data[0];
 							// 202104020819: Se almacena el documento pues será el
 							// usado para buscar si no hay respuesta de la OAS
 							user_oas_details["doc"] = args.doc;
@@ -85,6 +84,21 @@ const store = {
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
 			}
 		},
+
+		async getOasUserData({ commit, getters }, args) {
+			try {
+				console.log("getOasUser => ", args);
+					console.log("Consultando API OAS => ", args.doc);
+					return await api()
+						.get("researcher_research_units?identification_number=" + args.doc+"&role_ids=2,1")
+						.then((r) => {
+							return r.data;
+						});
+			} catch (error) {
+				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+			}
+		},
+
 
 		async getOasStudent({ commit, state, dispatch }, args) {
 			console.log("getOasStudent", args);
@@ -259,6 +273,11 @@ const store = {
 		getUserOasDetails: (state, getters) => (doc) => {
 			var u = state.userOasDetails.find((o) => o.doc.toString() === doc.toString());
 			console.log("getters.getUserOasDetails(" + doc + ") => ", u);
+			return u;
+		},
+		getUserOasDetailslist: (state, getters) => (doc) => {
+			var u = state.userOasDetails;
+			console.log("getters.getUserOasDetailsList(" + doc + ") => ", u);
 			return u;
 		},
 		loadingRoles: (state, getters) => {

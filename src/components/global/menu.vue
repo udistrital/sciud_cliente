@@ -27,6 +27,12 @@
 						Convocatorias
 					</router-link>
 				</li>
+				<!-- <li class="nav-item" v-if="es_admin">
+					<router-link to="/red" tag="a" class="navbar-nav-link legitRipple" title="Red de Investigación...">
+						<i class="icon-collaboration"></i>
+						Red de Investigación
+					</router-link>
+				</li> -->
 			</ul>
 			<ul class="navbar-nav navbar-nav-highlight ml-md-auto">
 				<li class="nav-item dropdown" v-if="es_admin">
@@ -48,6 +54,12 @@
 							<i class="icon-list"></i>
 							Indicadores
 						</router-link>
+						<router-link to="/admin/entidades" tag="a" class="dropdown-item" title="Entidades...">
+							<i class="icon-office"></i>
+							Entidades
+						</router-link>
+
+						
 					</div>
 				</li>
 				<li class="nav-item">

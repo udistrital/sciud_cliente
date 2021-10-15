@@ -212,6 +212,7 @@ const store = {
 				}
 			}
 		},
+		
 		async saveUnit({ commit, dispatch, state }, args) {
 			state.loading = true;
 
@@ -256,6 +257,7 @@ const store = {
 					});
 			}
 		},
+
 		setDocument({ commit, state }, doc) {
 			// console.clear();
 			// 202010211606: Establece un documento en la colección

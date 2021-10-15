@@ -1412,41 +1412,5 @@ tr.hovered {
 		margin-bottom: 0.5rem;
 	}
 }
-.dx-treeview-node {
-	&.dx-state-selected,
-	&.dx-state-focused {
-		& > .dx-treeview-item {
-			background-color: $main-color-500;
-			.dx-treeview-item-content {
-				color: #fff;
-			}
-		}
-	}
-	&.dx-state-hover {
-		& > .dx-treeview-item {
-			background-color: #ccc;
-			.dx-treeview-item-content {
-				color: #333;
-			}
-		}
-	}
-	&.dx-state-selected {
-		.dx-treeview-item {
-			&.dx-state-hover {
-				background-color: #ccc;
-				.dx-treeview-item-content {
-					color: #333;
-				}
-			}
-		}
-	}
-}
-
-.dx-treeview-item-content {
-	&.list-item {
-		font-weight: 600;
-		.numeral {
-			margin-right: 0.12rem;
-		}
-	}
+.dx-state-selected {
 }

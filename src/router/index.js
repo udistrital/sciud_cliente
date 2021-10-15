@@ -40,18 +40,22 @@ let routes = new router({
 			meta: { title: "Estructuras de Investigación", requiresAuth: true },
 			component: () => import("@/modules/unidad/"),
 		},
+		
 		{
 			name: "unidad-crear",
 			path: "/unidad/crear",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/informacion"),
 		},
+
 		{
 			name: "unidad-info",
 			path: "/unidad/:unidadId",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/informacion"),
 		},
+		
+		
 		{
 			name: "unidad-documentos",
 			path: "/unidad/:unidadId/documentos",
@@ -70,6 +74,45 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/produccion"),
 		},
+
+//constitucion de la red de conocimiento
+		{
+			name: "red",
+			path: "/red",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/index.vue"),
+		},
+
+		{
+			name: "red-crear",
+			path: "/red/crear",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+
+
+		{
+			name: "red-info",
+			path: "/red/:unidadId",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+		{
+			name: "red-documentos",
+			path: "/red/:unidadId/documentos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/documentos"),
+		},
+		{
+			name: "red-grupos",
+			path: "/red/:unidadId/grupos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/grupos"),
+		},
+		
+
+
+
 		{
 			name: "convocatoria",
 			path: "/convocatoria",
@@ -122,7 +165,7 @@ let routes = new router({
 			name: "convocatoria-plantilla",
 			path: "/convocatoria/:itemId/plantilla",
 			meta: { title: "", requiresAuth: true },
-			// component: () => import("@/modules/convocatoria/plantilla"),
+			component: () => import("@/modules/convocatoria/plantilla"),
 		},
 
 		
@@ -179,6 +222,15 @@ let routes = new router({
 			component: () => import("@/modules/admin/indicadores"),
 			meta: { title: "Administración » Indicadores", requiresAuth: true },
 		},
+
+		//Entrada de entidades 
+		{
+			name: "entidades",
+			path: "/admin/entidades",
+			component: () => import("@/modules/admin/entidades"),
+			meta: { title: "Administración » Entidades", requiresAuth: true },
+		},
+
 		{
 			path: "*",
 			redirect: { name: DEFAULT_ROUTE },

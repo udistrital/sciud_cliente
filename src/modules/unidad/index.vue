@@ -10,9 +10,12 @@
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 			<div class="header-elements" v-if="es_admin">
-				<router-link tag="a" to="/unidad/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva Estructura de Investigación...">
+				<router-link tag="a" to="/unidad/crear" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Estructura de Investigación...">
 					<b><i class="icon-database-add"></i></b> Nueva Estructura
 				</router-link>
+				<router-link tag="a" to="/red" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Red de Investigación...">
+					<b><i class="icon-collaboration"></i></b> Redes Investicación
+				</router-link> 
 			</div>
 		</div>
 

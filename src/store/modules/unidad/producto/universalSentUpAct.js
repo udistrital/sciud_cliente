@@ -22,7 +22,19 @@ const store = {
 		// 			return r.data;
 		// 		});
 		// },
-
+		async searchEstructure({ commit, getters }, args) {
+			try {
+				console.log("getEstructuras => ", args);
+				return await api()
+					.get('research_units?faculties='+args.facults+'&filter=[["name","contains","'+args.nameEstruc+'"],"and",["group_state_id","=",2]]')
+					.then((r) => {
+						return r.data.data;
+				});
+			} catch (error) {
+				//verifica si dentro del argumento existe una funccion callback
+				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+			}
+		},
 
 		getresearchersID({ commit, state }, group_id) {
 			api()
@@ -79,14 +91,6 @@ const store = {
 				});
 		},
 
-		getExperimental({ commit, state }, args) {
-			api()
-				.get(args.url)
-				.then((r) => {
-					// args.cb(r.data);
-					return r.data.data;
-				});
-		},
 
 		save({ commit, state, dispatch }, args) {
 			let ruta = null;

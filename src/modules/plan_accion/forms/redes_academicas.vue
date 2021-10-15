@@ -139,7 +139,8 @@
                             <DxValidator>
                               <DxRequiredRule />
                             </DxValidator>
-                          </DxTagBox>
+                  
+                  t        </DxTagBox>
                         </div>
                       </div>
 
@@ -285,6 +286,9 @@
         </div>
       </div>
     </DxValidationGroup>
+
+
+    
     <div class="row grid">
       <div class="col">
         <div class="p-0">
@@ -439,6 +443,7 @@
 
             <template #tplObs="{ data }">
               <a
+              
                 v-if="
                   data.data.dw_observation != '' &&
                   data.data.dw_observation != null
