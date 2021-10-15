@@ -207,19 +207,22 @@
 
 		{ "name": "planaccion_form1_tipos", "id": 201 },
 		{ "name": "planaccion_form1_documentos", "id": 222 },
-
 		{ "name": "planaccion_form2_tipos", "id": 202 },
 		{ "name": "planaccion_form2_estado_tipos", "id": 203 },
 		{ "name": "planaccion_form2_estado_documentos", "id": 222 },
-		
 		{ "name": "planaccion_productos_resultado_tipos", "id": 204 },
 		{ "name": "planaccion_productos_resultado_documentos", "id": 220 },
-		
 		{ "name": "planaccion_productos_transferencia_documentos", "id": 222 },
-
 		{ "name": "planaccion_form6_estado_tipos", "id": 207 },
-		{ "name": "planaccion_form6_estado_documentos", "id": 222 }
+		{ "name": "planaccion_form6_estado_documentos", "id": 222 },
 
+		{ "name": "redes_investigacion_tipo", "id": 213 },
+		{ "name": "redes_investigacion_tipo_estrusturas_academicas", "id": 214 },
+		{ "name": "redes_investigacion_documentos", "id": 215 },
+
+		{ "name": "entidades_naturaleza", "id": 208 },
+		{ "name": "entidades_tipos", "id": 209 },
+		{ "name": "entidades_documento", "id": 210 }
 		
 	]
 }

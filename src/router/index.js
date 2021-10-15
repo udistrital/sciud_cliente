@@ -125,8 +125,47 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/plantilla"),
 		},
 
+
+		//----------------------------------------------------------
+		//		constitucion de la red de investigación
+		//----------------------------------------------------------
+		{
+			name: "red",
+			path: "/red",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/index.vue"),
+		},
+
+		{
+			name: "red-crear",
+			path: "/red/crear",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+
+
+		{
+			name: "red-info",
+			path: "/red/:unidadId",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+		{
+			name: "red-documentos",
+			path: "/red/:unidadId/documentos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/documentos"),
+		},
+		{
+			name: "red-grupos",
+			path: "/red/:unidadId/grupos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/grupos"),
+		},
+
+
 		//-----------------------------------------
-		//   Comienzo de rutas plan de accion
+		//   Comienzo de rutas plan de accion: camorenos
 		//-----------------------------------------
 		{
 			path: "/unidad/:unidadId/plan_accion",
@@ -152,8 +191,23 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/plan_accion/vista"),
 		},
+
+		//---------------------------------------------------
+		//				Entrada de entidades: camorenos
+		//---------------------------------------------------
+		{
+			name: "entidades",
+			path: "/admin/entidades",
+			component: () => import("@/modules/admin/entidades"),
+			meta: { title: "Administración » Entidades", requiresAuth: true },
+		},
+
+		{
+			path: "*",
+			redirect: { name: DEFAULT_ROUTE },
+		},
 		//--------------------------------------------
-		//			Fin plan de accion
+		//			Fin plan de accion: camorenos
 		//--------------------------------------------
 
 		{
