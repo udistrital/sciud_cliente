@@ -210,7 +210,7 @@
 </div>
 
 
-
+<!-- 
 <div class="col-md-3">
 	<div class="form-group">
 		<label>Documento de identidad:</label>
@@ -258,7 +258,7 @@
 		value-expr="id">
 	</DxSelectBox>
 	</div>
-</div> 
+</div>  -->
 
 <!-- <div class="col-md-3">
 	<div class="form-group">
