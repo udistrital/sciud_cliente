@@ -149,7 +149,7 @@
 
                       <div class="col-md-4">
                         <div class="form-group">
-                          <label>Discipinas OCDE:</label>
+                          <label>Discipina OCDE:</label>
                           <DxTagBox
                           :show-clear-button="true"
                             @value-changed="ocdeDiscChange"

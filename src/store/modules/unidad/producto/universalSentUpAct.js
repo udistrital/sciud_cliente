@@ -14,14 +14,77 @@ const store = {
 	},
 	actions: {
 		
-		// async getresearchersID({ commit, dispatch, state }, group_id) {
-		// 	api()
-		// 		.get(`researchers/${group_id}`)
-		// 		.then((r) => {
-		// 			console.warn("store id user", r.data);
-		// 			return r.data;
-		// 		});
-		// },
+		async universalgetOas({ commit, getters }, args) {
+			try {
+				let user_oas_details=[];
+				console.log("get=> ", args);
+				return await api("oas")
+					.get("terceros_crud/v1/datos_identificacion?query=Numero:" + args.doc)
+					.then((r) => {
+						// 202109231949: Se actualiza para que obtenga el último del array
+						user_oas_details = r.data[r.data.length - 1];
+						// 202104020819: Se almacena el documento pues será el
+						// usado para buscar si no hay respuesta de la OAS
+						user_oas_details["doc"] = args.doc;
+						console.warn("user_oas_details ",user_oas_details)
+						// commit("setOasDetails", user_oas_details);
+						if (this._vm.$isFunction(args.cb)) {
+							return args.cb(user_oas_details);
+						} else {
+							return user_oas_details;
+						}
+				});
+			} catch (error) {
+				//verifica si dentro del argumento existe una funccion callback
+				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+			}
+		},
+
+		async getOasUserData({ commit, getters }, args) {
+			try {
+				console.log("getOasUser => ", args);
+					console.log("Consultando API OAS => ", args.doc);
+					return await api()
+						.get("researcher_research_units?identification_number=" + args.doc+"&role_ids=2,1")
+						.then((r) => {
+							return r.data;
+						});
+			} catch (error) {
+				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+			}
+		},
+		
+		async univerdalID({ commit, getters }, args) {
+			try {
+				console.log("get=> ", args);
+				return await api()
+					.get(args.url)
+					.then((r) => {
+						console.log("getUniversalID => ", r.data);
+						return r.data;
+				});
+			} catch (error) {
+				//verifica si dentro del argumento existe una funccion callback
+				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+			}
+		},
+
+		async univerdalGet({ commit, getters }, args) {
+			try {
+				console.log("get=> ", args);
+				return await api()
+					.get(args.url)
+					.then((r) => {
+						console.log("getUniversal => ", r.data.data);
+						return r.data.data;
+				});
+			} catch (error) {
+				//verifica si dentro del argumento existe una funccion callback
+				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+			}
+		},
+
+
 		async searchEstructure({ commit, getters }, args) {
 			try {
 				console.log("getEstructuras => ", args);

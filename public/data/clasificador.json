@@ -219,10 +219,12 @@
 		{ "name": "redes_investigacion_tipo", "id": 213 },
 		{ "name": "redes_investigacion_tipo_estrusturas_academicas", "id": 214 },
 		{ "name": "redes_investigacion_documentos", "id": 215 },
+		{ "name": "redes_investigacion_grupos_documento", "id": 232 },
 
 		{ "name": "entidades_naturaleza", "id": 208 },
 		{ "name": "entidades_tipos", "id": 209 },
 		{ "name": "entidades_documento", "id": 210 }
+		
 		
 	]
 }

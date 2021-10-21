@@ -201,11 +201,24 @@ let routes = new router({
 			component: () => import("@/modules/admin/entidades"),
 			meta: { title: "Administración » Entidades", requiresAuth: true },
 		},
-
 		{
-			path: "*",
-			redirect: { name: DEFAULT_ROUTE },
+			name: "entidades-dep-represent",
+			path: "/admin/entidades/:idEnt/",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/admin/form_entidades/index"),
 		},
+		{
+			name: "dependencias",
+			path: "/admin/entidades/:idEnt/dependencias",
+			component: () => import("@/modules/admin/dependencias"),
+			meta: { title: "Administración » Dependencias", requiresAuth: true },
+		},
+		
+
+		// {
+		// 	path: "*",
+		// 	redirect: { name: DEFAULT_ROUTE },
+		// },
 		//--------------------------------------------
 		//			Fin plan de accion: camorenos
 		//--------------------------------------------

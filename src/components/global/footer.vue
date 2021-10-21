@@ -86,37 +86,44 @@ export default {
 				text: "Docente Tutor",
 			},
 
-			// {
-			// 	cc: "65432123",
-			// 	title: "Prueba Estudiante Siciud (Gestor)",
-			// 	text: "Gestor",
-			// },
-			// {
-			// 	cc: "52899935",
-			// 	title: "Prueba Estudiante Siciud (Directora)",
-			// 	text: "Directora",
-			// },
-			//
-			// {
-			// 	cc: "1655467973",
-			// 	title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-			// 	text: "Gestor Facultad",
-			// },
-			// {
-			// 	cc: "53009619",
-			// 	title: "Luzangela Piñeros Botero (Líder Semillero)",
-			// 	text: "Líder Semillero",
-			// },
-			// {
-			// 	cc: "43105248",
-			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-			// 	text: "Int. Semillero",
-			// },
-			// {
-			// 	cc: "19296014",
-			// 	title: "German Arturo Lopez Martinez (Integrante)",
-			// 	text: "Integrante",
-			// },
+			{
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
+			},
+/*
+			{
+				cc: "65432123",
+				title: "Prueba Estudiante Siciud (Gestor)",
+				text: "Gestor",
+			},
+			{
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
+			},
+			
+			{
+				cc: "1655467973",
+				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
+				text: "Gestor Facultad",
+			},
+			{
+				cc: "53009619",
+				title: "Luzangela Piñeros Botero (Líder Semillero)",
+				text: "Líder Semillero",
+			},
+			{
+				cc: "43105248",
+				title: "Edis Aleida Villa Martinez (Integrante Semillero)",
+				text: "Int. Semillero",
+			},
+			{
+				cc: "19296014",
+				title: "German Arturo Lopez Martinez (Integrante)",
+				text: "Integrante",
+			},
+*/
 		],
 	}),
 	watch: {

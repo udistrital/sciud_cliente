@@ -210,15 +210,23 @@
 </div>
 
 
-<!-- 
+
+									</div>
+								</div>
+
+Datos Basicos del Representante Legal:
+<div class="col-12">
+<div class="row">
+	
 <div class="col-md-3">
 	<div class="form-group">
 		<label>Documento de identidad:</label>
 		<DxNumberBox
 		class="form-control"
 		:show-clear-button="true"
-		:value.sync="representante.tipoDocumento"
+		:value.sync="representante.identification_number"
 		placeholder="Documento de identidad"
+		:read-only="modeEdit"
 		>
 		<DxValidator>
 			<DxRequiredRule />
@@ -228,21 +236,6 @@
 	</div>
 </div>
 
-
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Nombre Representante: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.nameofinstitution">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-
-
-
 <div class="col-md-3">
 	<div class="form-group">
 	<label>Tipo Documento: </label>
@@ -251,42 +244,47 @@
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."
-		:value.sync="baseObj.type" 
+		:value.sync="representante.identification_type_id" 
 		class="form-control"
-		:data-source="representante.tipoDocumento" 
+		:data-source="tipoDocumento" 
 		display-expr="st_name"
+		:read-only="modeEdit"
 		value-expr="id">
 	</DxSelectBox>
 	</div>
-</div>  -->
+</div>
 
-<!-- <div class="col-md-3">
+
+
+<div class="col-md-3">
 	<div class="form-group">
-	<label>Numero Documento: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="baseObj.nameofinstitution">
+	<label>Nombre Representante: </label>
+	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.name" :read-only="modeEdit">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
 	</DxTextBox>
 	</div>
-</div> -->
+</div> 
 
-<!-- <div class="col-md-3">
+
+<div class="col-md-3">
 	<div class="form-group">
 	<label>Email: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.nameofinstitution">
+	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.email" :read-only="modeEdit">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
 	</DxTextBox>
 	</div>
-</div> -->
+</div>
+
+</div>
+</div> 
 
 
 
-									</div>
-								</div>
-                                
+
 						</DxValidationGroup>
 					</div>
 					<div class="card-footer">
@@ -314,9 +312,6 @@
 				</div>
 			</div>
 		</div>
-
-
-
 
 		<div class="row" id="panel-entidades-grid">
 			<div class="col">
@@ -458,7 +453,7 @@
 						<!-- <DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						
-						<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
+						<DxColumn :width="100" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
 
 						<template #tplUrl="{ data }">
 							<a v-if="data.data.web_page != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.web_page" Target="_blank">
@@ -486,6 +481,23 @@
 
 						<template #tpl="{ data }">
 							<span class="cmds">
+								<a
+									title="Dependencias..."
+									href="#"
+									@click.prevent="go(data.value, `/admin/entidades/${data.data.id}/dependencias`, 'Cargando Datos')"
+									class="cmd-item color-main-600"
+								>
+									<i class="icon-tree5"></i>
+								</a>
+								<a
+									title="Representacion y Contactos..."
+									href="#"
+									@click.prevent="go(data.value, `/admin/entidades/${data.data.id}`, 'Cargando Datos')"
+									class="cmd-item color-main-600"
+								>
+									<i class="icon-vcard"></i>
+								</a>
+
 								<span v-if="editMode">
 									<a title="Modificar Entidad..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
@@ -512,6 +524,9 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body"><strong>baseObj:</strong> {{ JSON.stringify(baseObj, null, 3) }}</div>
+				</div>
+				<div class="card">
+					<div class="card-body"><strong>representante:</strong> {{ JSON.stringify(representante, null, 3) }}</div>
 				</div>
 			</div>
 		</div>
@@ -601,70 +616,27 @@ export default {
         Geo: () => import("@/components/element/geo"),
 	},
 	data: () => ({
+		modeEdit:false,
 		searchButton: {
-			text: "Buscar",
+			icon: "find",
+			// text: "Buscar",
 			onClick: async () => {
-				// console.clear();
-				let id = root.representante.identification_number;
-				console.log("Documento", id);
-				if (id !== null && id.toString().length > 0) {
-					root.loaderShow("Buscando usuario");
-
-					// 202103171618: Verifica que no exista en el grupo actual ->  80192128 1000136995
-					let current_user = null;
-					root.grouprepresentantes.forEach((item) => {
-						// console.log(`${item.representante.identification_number} === ${id}`);
-						if (item.representante.identification_number.toString() === id.toString()) {
-							current_user = item;
-							return;
-						}
-					});
-					if (current_user !== null) {
-						console.log(root.$sep);
-						console.log("current_user =>", current_user);
-						let rol = current_user.role_name;
-						let det = current_user.oas_details;
-						let nombre = typeof det !== "undefined" ? `"${det.TerceroId.NombreCompleto}"` : `con el documento "${id}"`;
-						root.$info(`El usuario ${nombre} ya se<br>encuentra registrado como "${rol}" en el grupo.`);
-						root.loaderHide();
-						return false;
-					}
-
-					// 202103171645: Verifica que el usuario exista en la OAS
-					let oas_user = await root.getOasUser({ doc: id });
-					if (!("TerceroId" in oas_user)) {
-						let m = `El documento "${id}" no se encuentra registrado<br>en el `;
-						m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
-						m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
-						root.$info(m);
-						root.loaderHide();
-						return false;
-					}
-					console.log(root.$sep);
-					console.log("await root.getOasUser =>", oas_user);
-					let t = oas_user.TerceroId;
-					root.group_member.name = t.NombreCompleto;
-					root.representante.oas_representante_id = t.Id.toString();
-
-					// 202103171630: Obtiene el investigador
-					console.log(root.$sep);
-					let representante = await root.getrepresentante(id);
-					console.log("await root.getrepresentante =>", representante);
-					if (representante.length > 0) {
-						representante[0].id = representante[0].id.toString();
-						representante[0].identification_number = parseInt(representante[0].identification_number);
-						root.representante = representante[0];
-						root.representante.oas_representante_id = t.Id.toString();
-						root.group_member.representante_id = root.representante.id;
-					} else {
-						console.log("");
-					}
-					root.loaderHide();
+				let doc=root.representante.identification_number;
+				console.clear();
+				console.warn("Boton buscar tocado", doc);
+				root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + doc});
+				root.representante = root.baseEnt2;
+				root.representante.identification_number=doc;
+				if(root.datosDoc.length > 0){
+					root.representante=root.datosDoc[0];
+					root.modeRep = "edit";
+					root.baseObj.legal_representative_id=root.representante.id;
+				}else{
+					root.$info("Complete los datos del Formulario para anexar nuevo representante legal");
+					root.modeRep = "add";
 				}
 			},
 		},
-
-
 
 		endPointRute:"entities",
 		objEpdata: "entity",
@@ -719,11 +691,17 @@ export default {
 			id: null,
 			identification_type_name: null,
 		},
+		baseObjhist:{
+			legal_representative_id: null,
+			is_current: true,
+			active: true,
+		},
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
+		root.baseEnt2 = this.$clone(this.representante);
 		root.naturaleza = root.subtypesByType("entidades_naturaleza");
 		root.tipoEntidad = root.subtypesByType("entidades_tipos");
 		root.tipoDocumento = root.subtypesByType("entidades_documento");
@@ -734,6 +712,9 @@ export default {
 		root.validator = root.$refs.basicGroup.instance;
 		root.baseObj.created_by = root.user_id;
 		root.baseObj.updated_by = root.user_id;
+
+
+
 		root.baseObjBk = root.$clone(root.baseObj);
 		let root_id = "#panel-entidades";
 		root.panelCmd = $(`${root_id}-cmds`);
@@ -744,31 +725,6 @@ export default {
 	computed: {
 		...mapState("core/tipo", ["types", "subtypes"]),
 		...mapGetters("core/tipo", ["subtypesByType", "subtypesByParent"]),
-	
-	// dataSource: function() {
-	// 		return DxStore({
-	// 			key: ["id"],
-	// 			endPoint: "entities",
-	// 			onLoading: function(loadOptions) {
-	// 				console.log("loadOptions", loadOptions);
-	// 				console.log(root._sep);
-	// 				console.log("onLoading");
-	// 				// root.loaderElement = root.panelGrid.find(".card-body");
-	// 				// root.loaderMessage = "Cargando indicadores";
-	// 				// root.loaderShow("Cargando indicadores");
-	// 				setTimeout(function() {
-	// 					console.log("SCROLL!");
-	// 					root.scrollTop();
-	// 				}, 300);
-	// 			},
-	// 			onLoaded: function(results, baseEntity) {
-	// 				console.log(root._sep);
-	// 				console.log("results", results);
-	// 				console.log("baseEntity", baseEntity);
-	// 				// root.loaderHide();
-	// 			},
-	// 		});
-	// 	},
 	
 	dataSource: function() {
 			// if (typeof this.group.id === "undefined") return null;
@@ -794,7 +750,7 @@ export default {
 
 	methods: {
 		
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet"}),
 		validarTipo(e) {
 			// 202104272101: Disable_Validation_Dynamically
 			// https://js.devexpress.com/Documentation/Guide/UI_Components/Common/UI_Widgets/Data_Validation/#Disable_Validation_Dynamically
@@ -806,16 +762,73 @@ export default {
 			} else return true;
 		},
 		
-		// getSubtypes(e, a) {
-		// 	// console.clear();
-		// 	console.log("e =>", e);
-		// 	console.log("a =>", a);
-		// 	if (root !== null && e.selectedItem !== null && typeof root.subtypes !== "undefined") {
-		// 		console.log("root.subtypes =>", root.subtypes);
-		// 		root.subtypes_current = root.subtypesByType(e.selectedItem.id);
-		// 	}
-		// },
+		editComp: async (entidad) =>{
+			//let doc=root.baseObj.legal_representative_identification;
+			let datauser= await root.getSerarchDoc({url: 'entities/'+entidad+'/hist_legal_representatives?filter=["is_current","=",true]'});
+			let documet=datauser[0].legal_representative_identification;
+			root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + documet});
+			root.representante.identification_number=documet;
+			root.representante=root.datosDoc[0];
+			root.baseObj.legal_representative_id=root.representante.id;
+			// root.representante=root.datosDoc[0];
+			root.modeRep = "edit";
+		},
+		
+		saveRepresentante() {
+			// if (result.isValid) {
+				// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
+				if (root.modeRep == "add") root.representante.created_by = root.user_id;
+				if (root.modeRep == "edit") root.representante.updated_by = root.user_id;
+				let obj = root.representante;
+				let dto = {
+					newFormat: true,
+					// unidadId: root.$route.params.idEnt,
+					stringEP: "legal_representatives",
+					rute2: "legal_representatives",
+					mod: obj.id,
+					objectSend: { legal_representative: obj },
+					cb: function(item) {
+						console.log("item", item);
+						root.baseObjhist.legal_representative_id=item.id;
+						root.baseObj.legal_representative_id=item.id;
+					},
+				};
+				if (root.modeRep == "edit") root.objUpdate(dto);
+				else root.objSave(dto);
+		},
 
+
+		saveHistory(id) {
+			// console.log("VALID!");
+			// root.scrollTop();
+			// root.panelCmds.fadeOut();
+			// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
+			// root.loaderShow(msg, root.panelData);
+			// if (root.mode == "add") 
+			root.baseObjhist.created_by = root.user_id;
+			// if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
+			
+			// root.baseObjhist.is_current=true;
+			let obj = root.baseObjhist;
+			let dto = {
+				newFormat: true,
+				// unidadId: root.$route.params.idEnt,
+				stringEP: root.ruta,
+				rute2: `entities/${id}/hist_legal_representatives/`,
+				mod: obj.id,
+				objectSend: { hist_legal_representative: obj },
+				cb: function(item) {
+					console.log("item", item);
+					// root.grid.refresh();
+					// root.loaderHide();
+					// root.cancel();
+				},
+			};
+			// console.log("root.mode", root.mode);
+			// if (root.mode == "edit") root.objUpdate(dto);
+			root.objSave(dto);
+			// root.cancel();
+		},
 
 		save() {
 			console.clear();
@@ -835,9 +848,12 @@ export default {
 				// root.loaderElement = ;
 				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Elemento";
 				root.loaderShow(msg, root.panelData);
-				if (root.mode == "add") root.baseObj.created_by = root.user_id;
+				if (root.mode == "add") {
+					root.baseObj.created_by = root.user_id;
+					root.saveRepresentante();
+				}
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-				root.baseObj.legal_representative_id=1;
+				// root.baseObj.legal_representative_id=root.representante.identification_type_id;
 
 				// root.baseObj.product_type_id = root.codEP;
 				// root.baseObj.research_group_id = root.group.id;
@@ -854,6 +870,7 @@ export default {
 					cb: function(item) {
 						console.log(root.$sep);
 						console.log("result =>", result);
+						root.saveHistory(item.id);
 						root.grid.refresh();
 						root.loaderHide();
 						root.cancel();
@@ -866,52 +883,11 @@ export default {
 			}
 		},
 
-
-		savez() {
-			console.clear();
-			console.log(root.$sep);
-			root.loaderElement = root.panelData.find(".card");
-			console.log("validator =>", root.validator);
-			var result = root.validator.validate();
-			console.log("result =>", result);
-			
-			
-			if (result.isValid) {
-				root.loaderShow("Guardando Entidad");
-				root.baseObj[root.mode == "add" ? "created_by" : "updated_by"] = root.user_id;
-				console.log("baseObj =>", root.baseObj);
-				root.set({
-					mode: root.mode,
-					obj: root.baseObj,
-					cb: function(result) {
-						console.log(root.$sep);
-						console.log("result =>", result);
-						root.grid.refresh();
-						root.cancel();
-					},
-				});
-			}
-		},
-
-
-
-
-
-
-		// edit(data) {
-		// 	root.mode = "edit";
-		// 	console.log("data", data);
-		// 	root.baseObj = data;
-		// 	//root.panelCmdBack.fadeOut();
-		// 	root.panelCmds.fadeOut();
-		// 	root.panelGrid.fadeOut(function(params) {
-		// 		root.panelData.fadeIn(function(params) {});
-		// 	});
-		// },
-
 		edit(data) {
 			root.mode = "edit";
+			root.modeEdit=true,
 			root.type_id = null;
+			root.editComp(data.id);
 			// console.clear();
 			console.log("data", data);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);
@@ -922,27 +898,6 @@ export default {
 				root.panelData.fadeIn();
 			});
 		},
-
-		// add() {
-		// 	console.log("ADD");
-		// 	root.mode = "add";
-		// 	root.baseObj = this.$clone(this.baseEnt);
-		// 	//root.panelCmdBack.fadeOut();
-		// 	root.panelCmds.fadeOut();
-		// 	console.warn("clase padre: ", this.padre);
-		// 	console.warn("name panel: ", root.namePanel);
-		// 	root.panelGrid.fadeOut(function(params) {
-		// 		root.panelData.fadeIn(function(params) {});
-		// 	});
-		// },
-
-		// cancel() {
-		// 	console.log("CANCEL!");
-		// 	root.panelData.fadeOut(function(params) {
-		// 		root.panelCmds.fadeIn();
-		// 		root.panelGrid.fadeIn(function(params) {});
-		// 	});
-		// },
 
 		active(data, state) {
 			// console.clear();
@@ -976,39 +931,11 @@ export default {
 
 
 
-		// enable(state, data) {
-		// 	// console.clear();
-		// 	console.log("data", data);
-		// 	console.log("state", state);
-		// 	let a = state ? "activar" : "desactivar";
-		// 	let msg = `¿Realmente desea ${a} el subtipo "${data.name}"?`;
-		// 	this.$confirm(msg, function(si_no) {
-		// 		console.log("result", si_no);
-		// 		if (si_no) {
-		// 			let item = data;
-		// 			item.active = state;
-		// 			root.loaderMessage = `${state ? "Activando" : "Desactivando"} subtipo`;
-		// 			root.loaderShow();
-		// 			root.subtypeEnable({
-		// 				typeId: data.type_id,
-		// 				subtypeId: data.id,
-		// 				subtype: {
-		// 					active: state,
-		// 					updated_by: root.user_id,
-		// 				},
-		// 				cb: function(result) {
-		// 					console.log("Result", result);
-		// 					root.grid.refresh();
-		// 				},
-		// 			});
-		// 		}
-		// 	});
-		// },
-
 
 		add(what) {
 			root.mode = "add";
 			root.type_id = null;
+			root.modeEdit=false,
 			// console.clear();
 			console.log("root.panelGrid", root.panelGrid);
 			console.log("root.panelData", root.panelData);
@@ -1038,63 +965,6 @@ export default {
 			});
 		},
 				
-
-
-
-
-		// enable(state, data) {
-		// 	// console.clear();
-		// 	console.log("data", data);
-		// 	console.log("state", state);
-		// 	let a = state ? "activar" : "desactivar";
-		// 	let msg = `¿Realmente desea ${a} el subtipo "${data.name}"?`;
-		// 	this.$confirm(msg, function(si_no) {
-		// 		console.log("result", si_no);
-		// 		if (si_no) {
-		// 			let item = data;
-		// 			item.active = state;
-		// 			root.loaderMessage = `${state ? "Activando" : "Desactivando"} subtipo`;
-		// 			root.loaderShow();
-		// 			root.subtypeEnable({
-		// 				typeId: data.type_id,
-		// 				subtypeId: data.id,
-		// 				subtype: {
-		// 					active: state,
-		// 					updated_by: root.user_id,
-		// 				},
-		// 				cb: function(result) {
-		// 					console.log("Result", result);
-		// 					root.grid.refresh();
-		// 				},
-		// 			});
-		// 		}
-		// 	});
-		// },
-
-		
-		// gridInit(e) {
-		// 	let root = this;
-		// 	root.grid = e.component;
-		// 	// 202103311458: https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Events/
-		// 	root.grid.on({
-		// 		contentReady: (e) => {
-		// 			console.log("contentReady", e);
-		// 			if (root.mode == null) root.loaderHide();
-		// 		},
-		// 		optionChanged: (e) => {
-		// 			if (e.fullName == "paging.pageIndex") {
-		// 				console.log("optionChanged", e);
-		// 				root.loaderShow("Cargando Entidades");
-		// 			}
-		// 		},
-		// 		editorPreparing: (e) => {
-		// 			if (e.dataField === "LastName" && e.parentType === "dataRow") {
-		// 				e.editorOptions.disabled = e.row.data && e.row.data.FirstName === "";
-		// 			}
-		// 		},
-		// 	});
-		// },
-
 		gridInit(e) {
 			this.grid = e.component;
 		},

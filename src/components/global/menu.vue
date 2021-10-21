@@ -48,6 +48,10 @@
 							<i class="icon-list"></i>
 							Indicadores
 						</router-link>
+						<!-- <router-link to="/admin/dependencias" tag="a" class="dropdown-item" title="dependencias...">
+							<i class="icon-tree5"></i>
+							Dependencias
+						</router-link> -->
 						<router-link to="/admin/entidades" tag="a" class="dropdown-item" title="Entidades...">
 							<i class="icon-office"></i>
 							Entidades

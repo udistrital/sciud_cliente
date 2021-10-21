@@ -382,39 +382,8 @@ export default {
         let id = root.researcher.identification_number;
         console.warn("Documento", id);
         if (id !== null) {
-          root.loaderShow("Buscando usuario");
-
-          // 202103171618: Verifica que no exista en el grupo actual ->  80192128 1000136995
-          let current_user = null;
-          root.groupResearchers.forEach((item) => {
-            // console.log(`${item.researcher.identification_number} === ${id}`);
-            if (
-              item.researcher.identification_number.toString() === id.toString()
-            ) {
-              current_user = item;
-              return;
-            }
-          });
-
-          if (current_user !== null) {
-            console.log(root.$sep);
-            console.log("current_user =>", current_user);
-            let rol = current_user.role_name;
-            let det = current_user.oas_details;
-            let nombre =
-              typeof det !== "undefined"
-                ? `"${det.TerceroId.NombreCompleto}"`
-                : `con el documento "${id}"`;
-            root.$info(
-              `El usuario ${nombre} ya se<br>encuentra registrado como "${rol}" en el grupo.`
-            );
-            root.loaderHide();
-            return false;
-          }
-
-          // 202103171645: Verifica que el usuario exista en la OAS
-
-          let oas_user = await root.getOasUser({ doc: id });
+ 
+          let oas_user = await root.universalgetOas({ doc: id });
 
           if (!("TerceroId" in oas_user)) {
             let m = `El documento "${id}" no se encuentra registrado<br>en el `;
@@ -585,6 +554,8 @@ export default {
     ...mapActions("unidad/producto/universalSentUpAct", {
       getuserID: "getresearchersID",
       getresearchersDoc: "getresearchersDoc",
+      universalgetOas: "universalgetOas",
+      getOasUserData:"getOasUserData",
     }),
     ...mapActions("unidad", [
       "addGroupMember",
@@ -605,7 +576,6 @@ export default {
       "saveUserAsync",
       "getOasUsers",
       "getOasUser",
-      "getOasUserData",
     ]),
 
     gUserID(e) {
@@ -614,91 +584,78 @@ export default {
     },
 
     async datauser() {
-      // console.clear();
-      let id = root.researcher.identification_number;
-      console.warn("Documento", id);
-      if (id !== null) {
-        // root.loaderShow("Buscando usuario");
 
-        // 202103171618: Verifica que no exista en el grupo actual ->  80192128 1000136995
-        let current_user = null;
-        // root.groupResearchers.forEach((item) => {
-        // 	// console.log(`${item.researcher.identification_number} === ${id}`);
-        // 	if (item.researcher.identification_number.toString() === id.toString()) {
-        // 		current_user = item;
-        // 		return;
-        // 	}
-        // });
+let id = root.researcher.identification_number;
+        console.warn("Documento", id);
+        if (id !== null) {
+ 
+          let oas_user = await root.universalgetOas({ doc: id });
 
-        // if (current_user !== null) {
-        //   console.log(root.$sep);
-        //   console.log("current_user =>", current_user);
-        //   let rol = current_user.role_name;
-        //   let det = current_user.oas_details;
-        //   let nombre =
-        //     typeof det !== "undefined"
-        //       ? `"${det.TerceroId.NombreCompleto}"`
-        //       : `con el documento "${id}"`;
-        //   root.$info(
-        //     `El usuario ${nombre} ya se<br>encuentra registrado como "${rol}" en el grupo.`
-        //   );
-        //   root.loaderHide();
-        //   return false;
-        // }
+          if (!("TerceroId" in oas_user)) {
+            let m = `El documento "${id}" no se encuentra registrado<br>en el `;
+            m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
+            m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
+            root.$info(m);
+            root.loaderHide();
+            return false;
+          }
 
-        // 202103171645: Verifica que el usuario exista en la OAS
+          console.log(root.$sep);
+          console.log("await root.getOasUser =>", oas_user);
+          console.log("await root.getOasUserList =>", oas_user_list);
+          let t = oas_user.TerceroId;
+          root.group_member.name = t.NombreCompleto;
+          // root.researcher.oas_researcher_id = t.Id.toString();
 
-        let oas_user = await root.getOasUser({ doc: id });
-        let oas_user_list = await root.getOasUserData({ doc: id });
-        let group_inv = [],
-          obj = {};
-        for (let datalistp = 0; datalistp < oas_user_list.length; datalistp++) {
-          obj.id = oas_user_list[datalistp]["research_group_id"];
-          obj.name =
-            oas_user_list[datalistp]["research_group_name"] +
-            " - " +
-            oas_user_list[datalistp]["role_name"];
-          obj.relac = datalistp;
-          group_inv.push(obj);
-          obj = {};
-        }
-        root.getOasUser2 = group_inv;
+          // 202103171630: Obtiene el investigador
+          console.log(root.$sep);
+          let researcher = await root.getResearcher(id);
+          console.log("await root.getResearcher =>", researcher);
+          if (researcher.length > 0) {
+            researcher[0].id = researcher[0].id.toString();
+            researcher[0].identification_number = parseInt(
+              researcher[0].identification_number
+            );
+            root.researcher = researcher[0];
+            root.researcher.oas_researcher_id = t.Id.toString();
+            root.group_member.researcher_id = root.researcher.id;
+          } else {
+            console.log("");
+          }
 
-        if (!("TerceroId" in oas_user)) {
-          let m = `El documento "${id}" no se encuentra registrado<br>en el `;
-          m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
-          m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
-          root.$info(m);
+          let oas_user_list = await root.getOasUserData({ doc: id });
+          let group_inv = [],
+            obj = {};
+          if (oas_user_list.length != 0) {
+            for (
+              let datalistp = 0;
+              datalistp < oas_user_list.length;
+              datalistp++
+            ) {
+              obj.id = oas_user_list[datalistp]["research_group_id"];
+              obj.name =
+                oas_user_list[datalistp]["research_group_name"] +
+                " - " +
+                oas_user_list[datalistp]["role_name"];
+              obj.relac = datalistp;
+              group_inv.push(obj);
+              obj = {};
+            }
+            root.getOasUser2 = group_inv;
+          } else {
+            if (root.group_member.name != null || root.group_member.name != "")
+              root.$info(
+                `El usuario ${root.group_member.name} Esta  registrado. <br> Pero no se encuentra como Docente o Director en alguna Estructura de Investigación.`
+              );
+            root.group_member.name = null;
+            root.researcher = root.researcher_bk;
+          }
+
+          root.syncObject.researcher_id = root.group_member.researcher_id;
           root.loaderHide();
-          return false;
         }
 
-        console.log(root.$sep);
-        console.log("await root.getOasUser =>", oas_user);
-        console.log("await root.getOasUserList =>", oas_user_list);
-        let t = oas_user.TerceroId;
-        root.group_member.name = t.NombreCompleto;
-        // root.researcher.oas_researcher_id = t.Id.toString();
 
-        // 202103171630: Obtiene el investigador
-        console.log(root.$sep);
-        let researcher = await root.getResearcher(id);
-        console.log("await root.getResearcher =>", researcher);
-
-        if (researcher.length > 0) {
-          researcher[0].id = researcher[0].id.toString();
-          researcher[0].identification_number = parseInt(
-            researcher[0].identification_number
-          );
-          root.researcher = researcher[0];
-          root.researcher.oas_researcher_id = t.Id.toString();
-          root.group_member.researcher_id = root.researcher.id;
-        } else {
-          console.log("");
-        }
-
-        root.loaderHide();
-      }
     },
 
     activeChanged(e) {

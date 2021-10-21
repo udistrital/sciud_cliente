@@ -467,7 +467,7 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Discipinas OCDE:</label>
+															<label>Discipina OCDE:</label>
 															<DxTagBox
 																@value-changed="ocdeDiscChange"
 																:data-source="ocdeDetallado"

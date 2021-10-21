@@ -10,7 +10,7 @@
 				<h1>
 					<i class="icon-books mr-1 color-main-600"></i>
 					<span class="font-weight-semibold" id="title">Estructuras de Investigación</span>
-					<span> &raquo; Plan de Acción</span>
+					<span> &raquo; Plan de Acción e Informe de Gestión</span>
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
@@ -49,7 +49,7 @@
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
-									<div class="title"><i class="icon-clipboard"></i><small> <i>Plan de Acción </i>  &raquo; {{ $titleCase(group.name) }}</small></div>
+									<div class="title"><i class="icon-clipboard"></i><small> <i>Plan de Acción e Informe de Gestión</i>  &raquo; {{ $titleCase(group.name) }}</small></div>
 									<!-- <div class="sub-title"><i class="icon-history"></i>Gestion de Informacion</div> -->
 								</div>
 							</div>

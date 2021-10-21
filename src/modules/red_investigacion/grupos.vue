@@ -752,7 +752,7 @@ export default {
     root.baseEnt = this.$clone(this.baseObj);
     // root.naturaleza = root.subtypesByType("gupos-redes_naturaleza");
     // root.tipoGrupos = root.subtypesByType("gupos-redes_tipos");
-    root.tipoDocumento = root.subtypesByType("entidades_documento");
+    root.tipoDocumento = root.subtypesByType("redes_investigacion_grupos_documento");
   },
   mounted() {
     root = this;
@@ -1029,49 +1029,14 @@ export default {
       }
     },
 
-    savez() {
-      console.clear();
-      console.log(root.$sep);
-      root.loaderElement = root.panelData.find(".card");
-      console.log("validator =>", root.validator);
-      var result = root.validator.validate();
-      console.log("result =>", result);
-
-      if (result.isValid) {
-        root.loaderShow("Guardando Grupos");
-        root.baseObj[root.mode == "add" ? "created_by" : "updated_by"] =
-          root.user_id;
-        console.log("baseObj =>", root.baseObj);
-        root.set({
-          mode: root.mode,
-          obj: root.baseObj,
-          cb: function (result) {
-            console.log(root.$sep);
-            console.log("result =>", result);
-            root.grid.refresh();
-            root.cancel();
-          },
-        });
-      }
-    },
-
-    // edit(data) {
-    // 	root.mode = "edit";
-    // 	console.log("data", data);
-    // 	root.baseObj = data;
-    // 	//root.panelCmd.fadeOut();
-    // 	root.panelCmd.fadeOut();
-    // 	root.panelGrid.fadeOut(function(params) {
-    // 		root.panelData.fadeIn(function(params) {});
-    // 	});
-    // },
-
     edit(data) {
       root.mode = "edit";
       root.type_id = null;
       // console.clear();
       console.log("data", data);
+      root.endPointRute=root.endPointRute2;
       root.subtypes_current = root.subtypes.filter((o) => o.active);
+      root.listEstructure=[{id:data.research_group_id, name: data.research_group_name}];
       root.baseObj = root.$clone(data);
       root.panelData
         .find(".card-header")
@@ -1082,26 +1047,6 @@ export default {
       });
     },
 
-    // add() {
-    // 	console.log("ADD");
-    // 	root.mode = "add";
-    // 	root.baseObj = this.$clone(this.baseEnt);
-    // 	//root.panelCmd.fadeOut();
-    // 	root.panelCmd.fadeOut();
-    // 	console.warn("clase padre: ", this.padre);
-    // 	console.warn("name panel: ", root.namePanel);
-    // 	root.panelGrid.fadeOut(function(params) {
-    // 		root.panelData.fadeIn(function(params) {});
-    // 	});
-    // },
-
-    // cancel() {
-    // 	console.log("CANCEL!");
-    // 	root.panelData.fadeOut(function(params) {
-    // 		root.panelCmd.fadeIn();
-    // 		root.panelGrid.fadeIn(function(params) {});
-    // 	});
-    // },
 
     active(data, state) {
       // console.clear();
@@ -1168,6 +1113,7 @@ export default {
     add(what) {
       root.mode = "add";
       root.type_id = null;
+      root.endPointRute = "research_networks/" + root.$route.params.unidadId + "/research_groups_research_networks"
       // console.clear();
       console.log("root.panelGrid", root.panelGrid);
       console.log("root.panelData", root.panelData);
