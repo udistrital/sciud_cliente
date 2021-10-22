@@ -176,7 +176,7 @@
               alignment="center"
               :visible="true"
               :customize-text="yesNo"
-              width="80"
+              width="90"
             />
 
             
