@@ -55,8 +55,7 @@
                         <p> </p>
                         <div v-if="$route.params.idDep!=0 && $route.params.idDep!=null" class="row">
 							<div class="col-md-12">
-								<fieldset>
-									<legend>Contactos</legend>
+								
 										<div class="row grid">
 											<div class="col">
 												<h2></h2>
@@ -73,13 +72,10 @@
 												</div>
 											</div>
 										</div>
-								</fieldset>
 							</div>
 						</div>
 						<div v-else class="row">
 							<div class="col-md-12">
-								<fieldset>
-									<legend>Representante Legal</legend>
 										<div class="row grid">
 											<div class="col">
 												<h2></h2>
@@ -98,7 +94,7 @@
 												</div>
 											</div>
 										</div>
-								</fieldset>
+								
 							</div>
 						</div>
 
