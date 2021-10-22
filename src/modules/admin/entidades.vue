@@ -214,7 +214,7 @@
 									</div>
 								</div>
 
-Datos Basicos del Representante Legal:
+
 <!--
 <div class="col-12">
 <div class="row">
