@@ -203,7 +203,13 @@ let routes = new router({
 		},
 		{
 			name: "entidades-dep-represent",
-			path: "/admin/entidades/:idEnt/",
+			path: "/admin/entidades/:idEnt/dependencias/:idDep",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/admin/form_entidades/index"),
+		},
+		{
+			name: "entidades-dep-represent",
+			path: "/admin/entidades/:idEnt",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/admin/form_entidades/index"),
 		},

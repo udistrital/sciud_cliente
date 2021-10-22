@@ -1,5 +1,5 @@
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="contactosForm">
+	<div class="col mt-3 pl-1 pr-1" id="contactsForm">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -7,14 +7,14 @@
 						<div class="page-title p-0 m-0">
 							<h1>
 								<i class="icon-grid3 mr-1 color-main-600"></i>
-								<span class="font-weight-semibold">{{ title }}</span>
+								<span class="font-weight-semibold">{{ title }}. <br>  Dependencia: {{ subtitulo }}</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
 								<button type="button" @click.prevent="add()" v-if="editMode" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
-									<b><i class="icon-database-add"></i></b> Nuevo Contanto
+									<b><i class="icon-database-add"></i></b> Nuevo Contacto
 								</button>
 							</span>
 							<span class="cmds-back slide">
@@ -27,20 +27,20 @@
 				</div>
 			</div>
 		</div>
-		<!-- <Documentos id="contactosForm-documentos" end-point="hist_contacts" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
-		<!-- <Participantes id="contactosForm-participantes" end-point="hist_contacts" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
+		<!-- <Documentos id="contactsForm-documentos" end-point="hist_legal_representatives" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
+		<!-- <Participantes id="contactsForm-participantes" end-point="hist_legal_representatives" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 mr-1"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Contanto</span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Contacto</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="form-group">
 		<label>Documento de identidad:</label>
 		<DxNumberBox
@@ -57,7 +57,7 @@
 	</div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="form-group">
 	<label>Tipo Documento: </label>
 	<DxSelectBox
@@ -77,10 +77,12 @@
 	</div>
 </div>
 
-<div class="col-md-3">
+
+
+<div class="col-md-4">
 	<div class="form-group">
-	<label>Nombre Contanto: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="baseObj.name">
+	<label>Nombre Contacto: </label>
+	<DxTextBox placeholder="Nombre Contacto" class="form-control" :value.sync="baseObj.name">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>
@@ -88,7 +90,7 @@
 	</div>
 </div> 
 
-<div class="col-md-3">
+<div class="col-md-4">
 	<div class="form-group">
 	<label>Email: </label>
 	<DxTextBox placeholder="Email" class="form-control" :value.sync="baseObj.email">
@@ -101,7 +103,6 @@
 	</div>
 </div>
 
-
 <div class="col-md-4">
 	<div class="form-group">
 	<label>Teléfono: </label>
@@ -113,9 +114,7 @@
 	</div>
 </div>
 
-
-
-<div class="col-md-3">
+<!-- <div class="col-md-5">
 	<div class="form-group">
 	<label> Dependencia: </label>
 	<DxSelectBox
@@ -133,9 +132,9 @@
 		</DxValidator>
 	</DxSelectBox>
 	</div>
-</div>
+</div> -->
 
-<div class='col-md-1'>
+<div class='col-md-4'>
 	<div class='form-group'>
 	<label>Actual: </label>
 	<DxSwitch :value.sync='baseObjhist.is_current' switched-on-text='SI' switched-off-text='NO' />
@@ -206,18 +205,16 @@
 						/>
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-
 						<DxColumn data-field="id" caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" :width="100"/>
 						<DxColumn data-field="contact_name" caption="Nombre Completo" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn data-field="contact_identification" caption="Documento" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
+						<!-- <DxColumn data-field="contact_identification" caption="Documento" data-type="text" alignment="center" :visible="true" :allow-grouping="false" /> -->
 						<DxColumn data-field="contact_email" caption="Email" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field="contact_phone" caption="Telefono" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn data-field="dependency_id" caption="Dependencia" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
+						<!-- <DxColumn data-field="dependency_id" caption="Dependencia" data-type="text" alignment="center" :visible="true" :allow-grouping="false" /> -->
 
 						<DxColumn data-field="is_current" caption="Actual" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="100" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" />
-
 						<template #tplObs="{ data }">
 							<a
 								v-if="data.data.dw_observation != '' && data.data.dw_observation != null"
@@ -312,7 +309,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
-	name: "Contantos",
+	name: "Contactos",
 	components: {
 		// Commands,
 		DxNumberBoxButton,
@@ -364,8 +361,13 @@ export default {
 			type: String,
 			default: null,
 		},
+		id_contact: {
+			type: Number,
+			default: 0,
+		},
 	},
 	data: () => ({
+		subtitulo:"",
 		popupObs: false,
 		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -392,14 +394,15 @@ export default {
 		now: new Date(),
 		min: new Date(1950, 1, 1),
 		baseEnt: null,
+		baseEnt2: null,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
 			id:null,
 			name: null, 
+			phone:null,
 			identification_number: null,
 			email: null, 
-			phone: null, 
 			identification_type_id: null, 
 			active: true,
 		},
@@ -424,17 +427,18 @@ export default {
 					root.modeRep = "edit";
 					root.baseObjhist.contact_id=root.baseObj.id;
 				}else{
-					root.$info("Complete los datos del Formulario para anexar nuevo Contanto legal");
+					root.$info("Complete los datos del Formulario para anexar nuevo Contacto legal");
 					root.modeRep = "add";
 				}
 			},
 		},
-		ruta:null,
 		listDependencias:[],
+		ruta:null,
 	}),
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
+		root.baseEnt2 = this.$clone(this.baseObjhist);
 		// root.getConvocatorias();
 		//root.tipos = root.subtypesByType("articulo_tipo");
 		// root.subtipos = root.subtypesByType("trabajo_grado_p_categoria");
@@ -447,25 +451,25 @@ export default {
 		// root.tipos = root.subtypesByType(5);
 		// root.subtipos = root.subtypesByType(32);
 		console.log("root.tipos", root.tipos);
-		root.panelData = $("#contactosForm .data");
-		root.panelGrid = $("#contactosForm .grid");
-		root.panelCmds = $("#contactosForm .cmds");
-		root.panelCmdBack = $("#contactosForm .cmds-back");
-		root.panelDocs = $("#contactosForm-documentos");
+		root.panelData = $("#contactsForm .data");
+		root.panelGrid = $("#contactsForm .grid");
+		root.panelCmds = $("#contactsForm .cmds");
+		root.panelCmdBack = $("#contactsForm .cmds-back");
+		root.panelDocs = $("#contactsForm-documentos");
 		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#contactosForm .grid";
+		root.loaderElement = "#contactsForm .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
-			if (typeof this.$route.params.idEnt === "undefined") return null;
+			if (typeof this.$route.params.idDep === "undefined") return null;
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
 				// ids: ["dw_type_id=1"],
 				stringParam: "dw_type_id=" + root.tipos,
-				endPoint: `dependencies/${root.$route.params.idEnt}/hist_contacts/`,
+				endPoint: `dependencies/${root.$route.params.idDep}/hist_contacts/`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
@@ -477,24 +481,27 @@ export default {
 				},
 			});
 		},
-		editComp: async () =>{
-			let doc=root.baseObj.legal_representative_identification;
-			root.datosDoc= await root.getSerarchDoc({url: 'contacts?identification_number=' + doc});
-			root.baseObj.identification_number=doc;
-			root.baseObj=root.datosDoc[0];
-			root.modeRep = "edit";
-		},
+		
 		loadDependence: async () =>{
 			let dep=root.$route.params.idEnt;
 			root.listDependencias= await root.getSerarchDoc({url: 'entities/' + dep + '/dependencies'});
-			
+			root.subtitulo=root.listDependencias[root.$route.params.idDep].name;
+			console.warn("listado",root.listDependencias[1]);
 		}
 	},
 	watch: {},
 	methods: {
 		// ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet"}),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet", univerdalID: "univerdalID"}),
+		
+		editComp: async (doc) =>{
+			root.datosDoc= await root.univerdalID({url: 'contacts/' + doc});
+			root.baseObj.identification_number=root.datosDoc.identification_number;
+			root.baseObj=root.datosDoc;
+			root.baseObjhist.contact_id=root.datosDoc.id;
+			root.modeRep = "edit";
+		},
 
 		saveContanto() {
 			// if (result.isValid) {
@@ -510,7 +517,7 @@ export default {
 					mod: obj.id,
 					objectSend: { contact: obj },
 					cb: function(item) {
-						console.log("item", item);
+						console.warn("contac id=>", item);
 						root.baseObjhist.contact_id=item.id;
 						// root.grid.refresh();
 						// root.loaderHide();
@@ -519,20 +526,20 @@ export default {
 				};
 				if (root.modeRep == "edit") root.objUpdate(dto);
 				else root.objSave(dto);
+
+				console.warn("baseObjhist.contact_id=>", root.baseObjhist.contact_id);
 				// root.cancel();
 			// }
 		},
 
 		save() {
-			// root.saveContanto();
-			// root.cancel();
-			
 			console.log(this.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
-			// root.baseObj.dw_observation = root.baseObj.observation;
+			root.baseObj.dw_observation = root.baseObj.observation;
 			console.log("result", result);
 			if (result.isValid) {
 				root.saveContanto();
+
 				console.log("VALID!");
 				root.scrollTop();
 				root.panelCmds.fadeOut();
@@ -540,7 +547,7 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") {
 					root.baseObjhist.created_by = root.user_id;
-					root.ruta="dependencies/"+root.baseObjhist.dependence_id+"/hist_contacts"
+					root.ruta="dependencies/"+parseInt(root.$route.params.idDep)+"/hist_contacts"
 				}
 				if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
 				
@@ -554,7 +561,7 @@ export default {
 					mod: obj.id,
 					objectSend: { hist_contact: obj },
 					cb: function(item) {
-						console.log("item", item);
+						console.log("item contac", item);
 						root.grid.refresh();
 						root.loaderHide();
 						root.cancel();
@@ -564,7 +571,6 @@ export default {
 				if (root.mode == "edit") root.objUpdate(dto);
 				else root.objSave(dto);
 				root.cancel();
-				
 			}
 		},
 
@@ -572,10 +578,17 @@ export default {
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
+			
+			console.log("baseObj", root.baseObj);
+			console.log("baseObjhist", root.baseObjhist);
+
 			root.baseObjhist.id=data.id;
 			root.baseObjhist.dependence_id=data.dependency_id;
-			root.editComp;
+			root.baseObjhist.is_current=data.is_current;
+
+			root.editComp(data.contact_id);
 			root.ruta="hist_contacts"
+
 			// root.baseObj.observation = root.baseObj.dw_observation;
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
@@ -587,8 +600,10 @@ export default {
 		add() {
 			console.log("ADD");
 			root.mode = "add";
-			// root.baseObj = this.$clone(this.baseEnt);
-			root.baseObj = root.baseEnt;
+			//root.ruta="entities/"+root.$route.params.idEnt+"/hist_legal_representatives"
+
+			root.baseObj = this.$clone(this.baseEnt);
+			root.baseObjhist = this.$clone(this.baseEnt2);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});
@@ -615,7 +630,7 @@ export default {
 				if (si_no) {
 					root.loaderShow(`${am}`, root.panelGrid);
 					var dto = {
-						// newFormat:true,
+						newFormat:true,
 						url: `hist_contacts/${data.data.id}`,
 						data: {
 							hist_contact: {

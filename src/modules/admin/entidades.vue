@@ -215,6 +215,7 @@
 								</div>
 
 Datos Basicos del Representante Legal:
+<!--
 <div class="col-12">
 <div class="row">
 	
@@ -281,7 +282,7 @@ Datos Basicos del Representante Legal:
 
 </div>
 </div> 
-
+-->
 
 
 
@@ -762,17 +763,17 @@ export default {
 			} else return true;
 		},
 		
-		editComp: async (entidad) =>{
-			//let doc=root.baseObj.legal_representative_identification;
-			let datauser= await root.getSerarchDoc({url: 'entities/'+entidad+'/hist_legal_representatives?filter=["is_current","=",true]'});
-			let documet=datauser[0].legal_representative_identification;
-			root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + documet});
-			root.representante.identification_number=documet;
-			root.representante=root.datosDoc[0];
-			root.baseObj.legal_representative_id=root.representante.id;
-			// root.representante=root.datosDoc[0];
-			root.modeRep = "edit";
-		},
+		// editComp: async (entidad) =>{
+		// 	//let doc=root.baseObj.legal_representative_identification;
+		// 	let datauser= await root.getSerarchDoc({url: 'entities/'+entidad+'/hist_legal_representatives?filter=["is_current","=",true]'});
+		// 	let documet=datauser[0].legal_representative_identification;
+		// 	root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + documet});
+		// 	root.representante.identification_number=documet;
+		// 	root.representante=root.datosDoc[0];
+		// 	root.baseObj.legal_representative_id=root.representante.id;
+		// 	// root.representante=root.datosDoc[0];
+		// 	root.modeRep = "edit";
+		// },
 		
 		saveRepresentante() {
 			// if (result.isValid) {
@@ -798,37 +799,37 @@ export default {
 		},
 
 
-		saveHistory(id) {
-			// console.log("VALID!");
-			// root.scrollTop();
-			// root.panelCmds.fadeOut();
-			// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-			// root.loaderShow(msg, root.panelData);
-			// if (root.mode == "add") 
-			root.baseObjhist.created_by = root.user_id;
-			// if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
+		// saveHistory(id) {
+		// 	// console.log("VALID!");
+		// 	// root.scrollTop();
+		// 	// root.panelCmds.fadeOut();
+		// 	// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
+		// 	// root.loaderShow(msg, root.panelData);
+		// 	// if (root.mode == "add") 
+		// 	root.baseObjhist.created_by = root.user_id;
+		// 	// if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
 			
-			// root.baseObjhist.is_current=true;
-			let obj = root.baseObjhist;
-			let dto = {
-				newFormat: true,
-				// unidadId: root.$route.params.idEnt,
-				stringEP: root.ruta,
-				rute2: `entities/${id}/hist_legal_representatives/`,
-				mod: obj.id,
-				objectSend: { hist_legal_representative: obj },
-				cb: function(item) {
-					console.log("item", item);
-					// root.grid.refresh();
-					// root.loaderHide();
-					// root.cancel();
-				},
-			};
-			// console.log("root.mode", root.mode);
-			// if (root.mode == "edit") root.objUpdate(dto);
-			root.objSave(dto);
-			// root.cancel();
-		},
+		// 	// root.baseObjhist.is_current=true;
+		// 	let obj = root.baseObjhist;
+		// 	let dto = {
+		// 		newFormat: true,
+		// 		// unidadId: root.$route.params.idEnt,
+		// 		stringEP: root.ruta,
+		// 		rute2: `entities/${id}/hist_legal_representatives/`,
+		// 		mod: obj.id,
+		// 		objectSend: { hist_legal_representative: obj },
+		// 		cb: function(item) {
+		// 			console.log("item", item);
+		// 			// root.grid.refresh();
+		// 			// root.loaderHide();
+		// 			// root.cancel();
+		// 		},
+		// 	};
+		// 	// console.log("root.mode", root.mode);
+		// 	// if (root.mode == "edit") root.objUpdate(dto);
+		// 	root.objSave(dto);
+		// 	// root.cancel();
+		// },
 
 		save() {
 			console.clear();
@@ -850,7 +851,7 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") {
 					root.baseObj.created_by = root.user_id;
-					root.saveRepresentante();
+					// root.saveRepresentante();
 				}
 				if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
 				// root.baseObj.legal_representative_id=root.representante.identification_type_id;
@@ -870,7 +871,7 @@ export default {
 					cb: function(item) {
 						console.log(root.$sep);
 						console.log("result =>", result);
-						root.saveHistory(item.id);
+						// root.saveHistory(item.id);
 						root.grid.refresh();
 						root.loaderHide();
 						root.cancel();
@@ -887,7 +888,7 @@ export default {
 			root.mode = "edit";
 			root.modeEdit=true,
 			root.type_id = null;
-			root.editComp(data.id);
+			// root.editComp(data.id);
 			// console.clear();
 			console.log("data", data);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);

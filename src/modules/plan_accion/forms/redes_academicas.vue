@@ -178,7 +178,7 @@
                           <label>SNIES</label>
                           <DxTagBox
                             value-expr="id"
-                            display-expr="name"
+                            display-expr="st_name"
                             class="form-control"
                             :read-only="!editMode"
                             :search-enabled="true"
@@ -878,9 +878,10 @@ export default {
     root = this;
     root.baseEnt = this.$clone(this.baseObj);
     // root.loadLineasInv();
-    root.getSnies();
+    // root.getSnies();
     root.tipoproceso = root.subtypesByType("planaccion_form6_estado_tipos");
     root.tiposDocumento = root.subtypesByType("planaccion_form6_estado_documentos");
+    root.sniesItem = root.subtypesByType("snies_tipo");
     console.warn("list lineas => ", root.totalLineasInv);
     root.getUnit({
       id: root.$route.params.unidadId,
@@ -915,7 +916,7 @@ export default {
  
  computed: {
     ...mapGetters("core/tipo", ["subtypesByType"]),
-    ...mapState("unidad/snies", { sniesItem : "items" }),
+    // ...mapState("unidad/snies", { sniesItem : "items" }),
     // ...mapState("unidad/producto/universalSentUpAct", { formGetData : "getData" }),
 
     ...mapGetters("unidad/cine", {
@@ -1028,7 +1029,7 @@ export default {
     ...mapActions("unidad/indicadores", { LineasInvConocimiento: "getAreasKnow" }),
     ...mapActions("unidad/ocde", { getOcde: "getAll" }),
     ...mapActions("unidad/cine", { getCine: "all" }),
-    ...mapActions("unidad/snies", { getSnies: "getSnies" }),
+    // ...mapActions("unidad/snies", { getSnies: "getSnies" }),
 
     //...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
     ...mapActions("unidad/producto/universalSentUpAct", {

@@ -223,8 +223,8 @@
 
 		{ "name": "entidades_naturaleza", "id": 208 },
 		{ "name": "entidades_tipos", "id": 209 },
-		{ "name": "entidades_documento", "id": 210 }
-		
-		
+		{ "name": "entidades_documento", "id": 210 },
+		{ "name": "snies_tipo", "id": 233 }
+
 	]
 }

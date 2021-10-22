@@ -366,7 +366,7 @@
 													</DxTextBox>
 												</div>
 											</div>
-											<div class="col-md-2">
+											<!-- <div class="col-md-2">
 												<div class="form-group">
 													<label>Código SNIES:</label>
 													<DxTextBox
@@ -381,7 +381,30 @@
 														</DxValidator>
 													</DxTextBox>
 												</div>
+											</div> -->
+										
+										<!-- Editado por camorenos@udistrital.edu.co 22/10/2021,15:31 -->
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>SNIES</label>
+											<DxSelectBox
+												:show-clear-button="true"
+												:grouped="false"
+												:data-source="sniesItem"
+												:value.sync="group.snies_id"
+												:search-enabled="false"
+												placeholder="Seleccione..."
+												class="form-control"
+												display-expr="st_name"
+												value-expr="id"
+											>
+												<DxValidator>
+												<DxRequiredRule />
+												</DxValidator>
+											</DxSelectBox>
 											</div>
+										</div>
+
 											<div class="col-md-4">
 												<div class="form-group">
 													<label>
@@ -546,6 +569,7 @@ export default {
 	name: "datosBasicos",
 	created: function() {
 		root = this;
+
 		// 202106162214: 202106162214 Nuevo
 		console.log("router", root.$router);
 		// console.clear();
@@ -585,6 +609,7 @@ export default {
 	},
 	mounted() {
 		root.lineas = root.subtypesByType("unidad_linea_investigacion");
+		root.sniesItem = root.subtypesByType("snies_tipo"); //camorenos
 	},
 	beforeUpdate: () => {},
 	updated: () => {
@@ -609,6 +634,7 @@ export default {
 	},
 	data: () => ({
 		files: [],
+		sniesItem:null, //camorenos
 		mode: "edit",
 		group: null,
 		isValid: false,

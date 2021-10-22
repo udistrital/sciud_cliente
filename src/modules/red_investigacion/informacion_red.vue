@@ -204,11 +204,11 @@
                             :show-clear-button="true"
                             :grouped="false"
                             :data-source="sniesItem"
-                            :value.sync="group.snies_ids"
+                            :value.sync="group.snies_id"
                             :search-enabled="false"
                             placeholder="Seleccione..."
                             class="form-control"
-                            display-expr="name"
+                            display-expr="st_name"
                             value-expr="id"
                           >
                             <DxValidator>
@@ -574,7 +574,7 @@ export default {
 
   created: function () {
     root = this;
-    root.getSnies();
+        // // root.getSnies();
 
     // 202106162214: 202106162214 Nuevo
     console.log("router", root.$router);
@@ -593,7 +593,7 @@ export default {
         id: uId,
         cb: function (result) {
           root.group = result;
-          root.group.snies_ids=result.snies_ids[0]
+          root.group.snies_id=result.snies_id
           //console.log("group", root.group);
           console.warn("entrando al sistema", root.group);
           setTimeout(function () {
@@ -622,7 +622,11 @@ export default {
   mounted() {
     root.tipo_red = root.subtypesByType("redes_investigacion_tipo");
     root.lineas = root.subtypesByType("unidad_linea_investigacion");
+    
     root.tiposDocumento = root.subtypesByType("redes_investigacion_documentos");
+    root.sniesItem = root.subtypesByType("snies_tipo");
+
+
   },
   beforeUpdate: () => {},
   updated: () => {
@@ -732,7 +736,7 @@ export default {
       curricular_project_ids: null,
       faculty_ids: null,
       research_focus_ids: null,
-      snies_ids: null,
+      snies_id: null,
         
       created_by: null,
       updated_by: null,
@@ -755,7 +759,7 @@ export default {
       oDetallados: "disciplines",
     }),
 
-    ...mapState("unidad/snies", { sniesItem: "items" }),
+    // ...mapState("unidad/snies", { sniesItem: "items" }),
     ...mapGetters("auth/usuario", ["groupRoles"]),
 
     ocdeEspecificos() {
@@ -818,7 +822,7 @@ export default {
     ...mapActions("unidad/cine", { getCine: "all" }),
     ...mapActions("unidad/oas", { getFacultades: "facultades" }),
     ...mapActions("unidad/ocde", { getOcde: "getAll" }),
-    ...mapActions("unidad/snies", { getSnies: "getSnies" }),
+    // ...mapActions("unidad/snies", { getSnies: "getSnies" }),
 
     requisitoArchivo() {
       let tipos = root.tiposDocumento;
@@ -932,7 +936,7 @@ export default {
 				if (root.mode == "add") root.group.created_by = root.user_id;
 				if (root.mode == "edit") root.group.updated_by = root.user_id;
         root.group.research_network_id=root.group.id;
-        root.group.snies_ids=[root.group.snies_ids];
+        // root.group.snies_ids=[root.group.snies_ids];
 				let obj = root.group;
 				let dto = {
 					newFormat: true,

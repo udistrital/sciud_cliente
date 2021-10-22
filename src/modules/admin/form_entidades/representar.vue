@@ -82,7 +82,7 @@
 <div class="col-md-3">
 	<div class="form-group">
 	<label>Nombre Representante: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="baseObj.name">
+	<DxTextBox placeholder="Nombre Representante" class="form-control" :value.sync="baseObj.name">
 	<DxValidator>
 		<DxRequiredRule />
 	</DxValidator>

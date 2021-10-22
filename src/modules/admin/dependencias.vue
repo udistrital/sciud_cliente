@@ -155,10 +155,10 @@
 							:allow-filtering="false"
 						/>						
 
-						<!-- <DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
+						<!-- <DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplLis" /> -->
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						
-						<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
+						<DxColumn :width="90" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
 
 						<template #tplUrl="{ data }">
 							<a v-if="data.data.web_page != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.web_page" Target="_blank">
@@ -184,8 +184,28 @@
 							<span v-else> -- </span>
 						</template>
 
+						<template #tplLis="{ data }">
+							<a
+								:title="data.data.observation"
+								class="cmd-item color-main-600 mr-2"
+								@click.prevent="verObservar(data.data)"
+								href="#"
+								Target="_blank"
+							>
+								<i class="icon-info mr-1"></i> Contactos
+							</a>
+						</template>
+
 						<template #tpl="{ data }">
 							<span class="cmds">
+								<a
+									title="Contactos..."
+									href="#"
+									@click.prevent="go(data.value, `/admin/entidades/${data.data.entity_id}/dependencias/${data.data.id}`, 'Cargando Datos')"
+									class="cmd-item color-main-600"
+								>
+									<i class="icon-tree5"></i>
+								</a>
 								<span v-if="editMode">
 									<a title="Modificar Dependencia..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
@@ -208,6 +228,37 @@
 				</div>
 			</div>
 		</div>
+
+
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="70%" height="500" title="Historico Contactos:">
+			<div class="row" style="overflow-y: scroll; height:348px">
+				<Contactos
+					:group="{id: $route.params.idEnt}" 
+					:editMode="true" 
+					title="Listado de Contactos"
+					endPointRute="hist_legal_representatives"
+					objEpdata="hist_legal_representative"
+					titleBtn="Nueva"	
+					titlecolum="legal_representative_name"
+					:id_contacto="idcontac"
+                />
+			</div>
+			<div class="row">
+				<div class="col">
+					<hr />
+					<DxButton @click="popupObs = false" class="nb">
+						<template #default>
+							<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+								<b><i class="icon-database-remove"></i></b> Salir
+							</span>
+						</template>
+					</DxButton>
+				</div>
+			</div>
+		</DxPopup>
+
+
+
 		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
@@ -256,6 +307,7 @@ import {
 	DxTextArea,
 	DxTextBox,
 	DxValidationGroup,
+	DxPopup,
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import  {DxValidator, DxRequiredRule, DxCustomRule, DxEmailRule, DxStringLengthRule, DxPatternRule } from "devextreme-vue/validator";
@@ -264,6 +316,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 export default {
 	name: "inicio",
 	components: {
+		DxPopup,
 		DxButton,
 		DxColumn,
 		DxColumnChooser,
@@ -297,10 +350,15 @@ export default {
 		DxValidator,
 		DxStateStoring,
 		DxEmailRule, DxStringLengthRule, DxPatternRule,
-		Usuario: () => import("@/components/element/usuario"),
-        Geo: () => import("@/components/element/geo"),
+		// Usuario: () => import("@/components/element/usuario"),
+        // Geo: () => import("@/components/element/geo"),
+		Contactos: () => import("@/modules/admin/form_entidades/contactos"),
 	},
+
+
 	data: () => ({
+		idcontac:0,
+		popupObs:false,
 		searchButton: {
 			text: "Buscar",
 			onClick: async () => {
@@ -451,6 +509,14 @@ export default {
 			} else return true;
 		},
 		
+		verObservar(data) {
+			// root.observarData = data.observation;
+			// root.baseObj[root.title] = data[root.title];
+			root.idcontac = data.id;
+			root.popupObs = !root.popupObs ? true : false;
+			root.grid.refresh();
+		},
+
 		// getSubtypes(e, a) {
 		// 	// console.clear();
 		// 	console.log("e =>", e);

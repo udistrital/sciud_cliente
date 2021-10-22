@@ -19,6 +19,9 @@
 				<router-link tag="a" :to="'/admin/entidades'" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Entidades...">
                     <b><i class="icon-arrow-left2"></i></b> Regresar a Entidades
                 </router-link>
+				<router-link tag="a" :to="'/admin/entidades/'+$route.params.idEnt+'/dependencias'" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Entidades...">
+                    <b><i class="icon-info"></i></b>Listar Dependencias Entidad
+                </router-link>
 				<!-- <a
 					href="#"
 					@click.prevent="go(group.id, '/admin/entidades', `Cargando Entidades`)"
@@ -46,8 +49,34 @@
 						</div>
 
 						
-						<p> </p>
-						<div class="row">
+						
+						
+
+                        <p> </p>
+                        <div v-if="$route.params.idDep!=0 && $route.params.idDep!=null" class="row">
+							<div class="col-md-12">
+								<fieldset>
+									<legend>Contactos</legend>
+										<div class="row grid">
+											<div class="col">
+												<h2></h2>
+												<div class="p-0">
+													<Contactos
+                                                        :group="group" 
+                                                        :editMode="true" 
+                                                        title="Listado de Contactos"
+                                                        endPointRute="hist_legal_representatives"
+                                                        objEpdata="hist_legal_representative"
+                                                        titleBtn="Nueva"	
+                                                        titlecolum="legal_representative_name"
+                                                    />
+												</div>
+											</div>
+										</div>
+								</fieldset>
+							</div>
+						</div>
+						<div v-else class="row">
 							<div class="col-md-12">
 								<fieldset>
 									<legend>Representante Legal</legend>
@@ -72,32 +101,6 @@
 								</fieldset>
 							</div>
 						</div>
-
-                        <p> </p>
-                        <div class="row">
-							<div class="col-md-12">
-								<fieldset>
-									<legend>Contactos</legend>
-										<div class="row grid">
-											<div class="col">
-												<h2></h2>
-												<div class="p-0">
-													<Contactos
-                                                            :group="group" 
-                                                            :editMode="true" 
-                                                            title="Listado de Contactos"
-                                                            endPointRute="hist_legal_representatives"
-                                                            objEpdata="hist_legal_representative"
-                                                            titleBtn="Nueva"	
-                                                            titlecolum="legal_representative_name"
-                                                        />
-												</div>
-											</div>
-										</div>
-								</fieldset>
-							</div>
-						</div>
-
 
 
 					</div>

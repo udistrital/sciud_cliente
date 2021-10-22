@@ -388,7 +388,7 @@ export default {
 			let msg = "Creando nuevo Plan de Acción...";
 			root.loaderShow(msg);
 			root.baseObj.created_by = root.user_id;
-			root.baseObj.is_draft = false;
+			root.baseObj.is_draft = true;
 			root.baseObj.active = true;
 			let obj = root.baseObj;
 			let dto = {
