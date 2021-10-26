@@ -9,9 +9,9 @@
 			</div>
 			<div class="header-elements">
 				<span id="panel-usuarios-cmds">
-					<!-- <a href="#" @click.prevent="addOas" title="Crear usuario OAS..." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
+					<a href="#" @click.prevent="addOas" title="Crear usuario OAS..." class="btn btn-main btn-labeled btn-labeled-left legitRipple" v-if="is_dev">
 						<b><i class="icon-database-add"></i></b> CREAR USUARIO OAS
-					</a> -->
+					</a>
 					<a href="#" @click.prevent="add" title="Asociar usuario..." class="btn btn-main btn-labeled btn-labeled-left legitRipple ml-3">
 						<b><i class="icon-database-add"></i></b> ASOCIAR USUARIO
 					</a>
@@ -837,7 +837,6 @@ export default {
 			});
 		},
 		edit(data) {
-			console.clear();
 			root.mode = "edit";
 			console.log("data", data);
 			data["identification_number"] = parseInt(data["identification_number"]);

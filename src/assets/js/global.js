@@ -40,7 +40,14 @@ jQuery.fn.enable = function() {
 //#endregion
 
 //#region Number Extensions
-Number.prototype.format = function(decimals, dec_point, thousands_sep) {
+
+// 202107291218;: https://stackoverflow.com/a/2901298
+Number.prototype.format = function() {
+	var number = this;
+	return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+};
+
+Number.prototype.format2 = function(decimals, dec_point, thousands_sep) {
 	var number = this;
 	number = (number + "").replace(/[^0-9+-Ee.]/g, "");
 	var n = !isFinite(+number) ? 0 : +number,
@@ -64,10 +71,10 @@ Number.prototype.format = function(decimals, dec_point, thousands_sep) {
 
 Number.prototype.formatSize = function() {
 	var filesize = parseInt(this);
-	if (filesize >= 1073741824) filesize = (filesize / 1073741824).format(2, ",", ".") + " GB";
-	else if (filesize >= 1048576) filesize = (filesize / 1048576).format(2, ",", ".") + " MB";
-	else if (filesize >= 1024) filesize = (filesize / 1024).format(0) + " KB";
-	else filesize = filesize.format(0) + " Bytes";
+	if (filesize >= 1073741824) filesize = (filesize / 1073741824).format2(2, ",", ".") + " GB";
+	else if (filesize >= 1048576) filesize = (filesize / 1048576).format2(2, ",", ".") + " MB";
+	else if (filesize >= 1024) filesize = (filesize / 1024).format2(0) + " KB";
+	else filesize = filesize.format2(0) + " Bytes";
 	return filesize.replaceAll(",00", "");
 };
 
@@ -122,6 +129,16 @@ export default {
 			return is_different;
 		};
 
+		// 202107132347: Diferencia en meses
+		// https://stackoverflow.com/a/2536445
+		vue.prototype.$monthDiff = function(dateFrom, dateTo) {
+			var months;
+			months = (dateTo.getFullYear() - dateFrom.getFullYear()) * 12;
+			months -= dateFrom.getMonth();
+			months += dateTo.getMonth();
+			return months <= 0 ? 0 : months + 1;
+		};
+
 		// 202103090317: Get deep field value
 		// https://stackoverflow.com/a/6394014
 		vue.prototype.$getFieldValue = function(obj, string) {
@@ -133,6 +150,14 @@ export default {
 				return vue.prototype.$getFieldValue(newObj, newString);
 			}
 			return newObj;
+		};
+
+		// 202110051423: obtiene un valor de acuerdo al porcentaje
+		// https://stackoverflow.com/a/6394014
+		vue.prototype.$getAmmount = function(total, percent, format = false) {
+			if (percent !== null && typeof percent === "string") percent = parseFloat(percent);
+			let r = (total * percent) / 100;
+			return format ? r.format() : r;
 		};
 
 		// 202009301411: Convert yyyy-mm-dd string to date
@@ -167,6 +192,14 @@ export default {
 				.call(obj)
 				.match(/\s([a-zA-Z]+)/)[1]
 				.toLowerCase();
+		};
+
+		vue.prototype.$format = function(number) {
+			return parseFloat(number).format();
+		};
+
+		vue.prototype.$format2 = function(number, decimals = 0, dec_point = ",", thousands_sep = ".") {
+			return parseFloat(number).format2(decimals, dec_point, thousands_sep);
 		};
 
 		//202103201537 creacion de una nueva alerta Carlos A. M
@@ -357,6 +390,12 @@ export default {
 			return functionToCheck && {}.toString.call(functionToCheck) === "[object Function]";
 		};
 
+		// 202110070514: https://stackoverflow.com/a/979289
+		vue.prototype.$sort = function(object, field, reverse = false) {
+			if (!reverse) return object.sort((a, b) => a[field] - b[field]);
+			return object.sort((a, b) => b[field] - a[field]);
+		};
+
 		// 202009091217: Sorting an array of objects by property values
 		// https://stackoverflow.com/a/979325
 		vue.prototype.$objectSort = function(object, field, reverse = false) {
@@ -535,6 +574,16 @@ export default {
 		vue.prototype.$formatDate = function(e) {
 			console.log("$formatDate", e);
 			return e;
+		};
+
+		// 202104110402: Formatea la fecha
+		vue.prototype.$getTS = function(date = new Date(), show_time = false, show_seconds = false) {
+			let ts = date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) + ("0" + date.getDate()).slice(-2);
+			if (show_time) {
+				ts += ("0" + date.getHours()).slice(-2) + ("0" + date.getMinutes()).slice(-2);
+				if (show_seconds) ts += ("0" + date.getSeconds()).slice(-2);
+			}
+			return ts;
 		};
 
 		// 201906121015: Obtiene la fecha formateada

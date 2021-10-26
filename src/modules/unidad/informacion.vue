@@ -366,7 +366,7 @@
 													</DxTextBox>
 												</div>
 											</div>
-											<div class="col-md-2">
+											<!-- <div class="col-md-2">
 												<div class="form-group">
 													<label>Código SNIES:</label>
 													<DxTextBox
@@ -381,7 +381,30 @@
 														</DxValidator>
 													</DxTextBox>
 												</div>
+											</div> -->
+										
+										<!-- Editado por camorenos@udistrital.edu.co 22/10/2021,15:31 -->
+										<div class="col-md-2">
+											<div class="form-group">
+											<label>SNIES</label>
+											<DxSelectBox
+												:show-clear-button="true"
+												:grouped="false"
+												:data-source="sniesItem"
+												:value.sync="group.snies_id"
+												:search-enabled="false"
+												placeholder="Seleccione..."
+												class="form-control"
+												display-expr="st_name"
+												value-expr="id"
+											>
+												<DxValidator>
+												<DxRequiredRule />
+												</DxValidator>
+											</DxSelectBox>
 											</div>
+										</div>
+
 											<div class="col-md-4">
 												<div class="form-group">
 													<label>
@@ -467,7 +490,7 @@
 													</div>
 													<div class="col-md-6">
 														<div class="form-group">
-															<label>Discipinas OCDE:</label>
+															<label>Discipina OCDE:</label>
 															<DxTagBox
 																@value-changed="ocdeDiscChange"
 																:data-source="ocdeDetallado"
@@ -525,6 +548,7 @@
 </template>
 
 <script>
+/* eslint-disable no-unreachable */
 /* eslint-disable no-unused-vars */
 /* eslint-disable vue/no-unused-components */
 // https://vuejs.org/v2/guide/single-file-components.html#What-About-Separation-of-Concerns
@@ -545,6 +569,7 @@ export default {
 	name: "datosBasicos",
 	created: function() {
 		root = this;
+
 		// 202106162214: 202106162214 Nuevo
 		console.log("router", root.$router);
 		// console.clear();
@@ -584,6 +609,7 @@ export default {
 	},
 	mounted() {
 		root.lineas = root.subtypesByType("unidad_linea_investigacion");
+		root.sniesItem = root.subtypesByType("snies_tipo"); //camorenos
 	},
 	beforeUpdate: () => {},
 	updated: () => {
@@ -604,10 +630,11 @@ export default {
 		DxEmailRule,
 		DxTextBox,
 		DxValidationGroup,
-		Header: () => import("@/components/element/header"),
+		Header: () => import("./_header"),
 	},
 	data: () => ({
 		files: [],
+		sniesItem:null, //camorenos
 		mode: "edit",
 		group: null,
 		isValid: false,
@@ -812,15 +839,15 @@ export default {
 				},
 			});
 		},
-		save() {
-			console.log(root.$sep);
-			// console.clear();
+		save: async () => {
+			console.clear();
 			var result = root.$refs.basicGroup.instance.validate();
 			// root.loaderHide();
 			console.log("result", result);
 			// root.loaderMessage = "Rekiki";
 			// root.loaderShow();
 			if (result.isValid) {
+				console.log(root.$sep);
 				console.log("VALID!");
 				$("#btn-add").fadeOut();
 				let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " unidad";

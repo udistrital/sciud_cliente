@@ -92,7 +92,7 @@ export default {
 	components: {
 		DxItem,
 		DxAccordion,
-		Header: () => import("@/components/element/header"),
+		Header: () => import("./_header"),
 		NuevoConocimiento: () => import("@/modules/unidad/productos/nuevo_conocimiento"),
 		DesarrolloTecnologico: () => import("@/modules/unidad/productos/desarrollo_tecnologico"),
 		ApropiacionSocial: () => import("@/modules/unidad/productos/apropiacion_social"),

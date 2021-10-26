@@ -54,7 +54,7 @@ let hideErrors = () => {
 export default {
 	name: "datosBasicos",
 	components: {
-		Header: () => import("@/components/element/header"),
+		Header: () => import("./_header"),
 		Documentos: () => import("@/components/element/documentos"),
 	},
 	data: () => ({

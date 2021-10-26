@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20210928.p - ©{{ year }}
+				SICIUD v2.0.20211026 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -76,41 +76,54 @@ export default {
 				text: "Administrador",
 			},
 			{
+				cc: "1023867324",
+				title: "Gestor Facultad",
+				text: "Gestor Facultad",
+			},
+			{
 				cc: "1111111104",
-				title: "Usuario Pruebas (Docente Tutor)",
+				title: "Prueba Usuario",
 				text: "Docente Tutor",
 			},
-			// {
-			// 	cc: "65432123",
-			// 	title: "Prueba Estudiante Siciud (Gestor)",
-			// 	text: "Gestor",
-			// },
 
-			// {
-			// 	cc: "1655467973",
-			// 	title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-			// 	text: "Gestor Facultad",
-			// },
-			// {
-			// 	cc: "1023867324",
-			// 	title: "Karen Natalia (Gestor Facultad Artes)",
-			// 	text: "Gestor Facultad",
-			// },
-			// {
-			// 	cc: "51722992",
-			// 	title: "Marta Esperanza Ospina Espitia (Líder Semillero)",
-			// 	text: "Líder Semillero",
-			// },
-			// {
-			// 	cc: "43105248",
-			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-			// 	text: "Int. Semillero",
-			// },
-			// {
-			// 	cc: "19296014",
-			// 	title: "German Arturo Lopez Martinez (Integrante)",
-			// 	text: "Integrante",
-			// },
+			{
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
+			},
+			/*
+			{
+				cc: "65432123",
+				title: "Prueba Estudiante Siciud (Gestor)",
+				text: "Gestor",
+			},
+			{
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
+			},
+			
+			{
+				cc: "1655467973",
+				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
+				text: "Gestor Facultad",
+			},
+			{
+				cc: "53009619",
+				title: "Luzangela Piñeros Botero (Líder Semillero)",
+				text: "Líder Semillero",
+			},
+			{
+				cc: "43105248",
+				title: "Edis Aleida Villa Martinez (Integrante Semillero)",
+				text: "Int. Semillero",
+			},
+			{
+				cc: "19296014",
+				title: "German Arturo Lopez Martinez (Integrante)",
+				text: "Integrante",
+			},
+*/
 		],
 	}),
 	watch: {

@@ -511,8 +511,8 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		// root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
-		root.subtipos = root.subtypesByType("Consultorias_cientificas_categoria");
-		root.tiposDocumento = root.subtypesByType("Consultorias_cientificas_documento");
+		root.subtipos = root.subtypesByType("consultorias_cientificas_categoria");
+		root.tiposDocumento = root.subtypesByType("consultorias_cientificas_documento");
 		// root.participationid = root.subtypesByType("evento_participacion");
 	},
 	mounted() {

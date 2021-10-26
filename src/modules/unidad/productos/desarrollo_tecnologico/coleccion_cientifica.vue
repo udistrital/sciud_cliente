@@ -536,8 +536,8 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		root.getConvocatorias();
 		//root.tipos = root.subtypesByType(5);
-		root.subtipos = root.subtypesByType("coleccion_cientiica_categoria");
-		root.tiposDocumento = root.subtypesByType("coleccion_cientiica_documento");
+		root.subtipos = root.subtypesByType("coleccion_cientifica_categoria");
+		root.tiposDocumento = root.subtypesByType("coleccion_cientifica_documento");
 	},
 	mounted() {
 		console.log("root.tipos", root.tipos);

@@ -110,11 +110,16 @@ const store = {
 		subtypes: (state, getters) => {
 			return state.subtypes;
 		},
-		subtypesByType: (state, getters) => (id) => {
-			console.log("window.clasificador", window.clasificador);
-			if (typeof id === "string") id = window.clasificador.subtipo.find((o) => o.name.toString().toLowerCase().trim() === id.toLowerCase().trim()).id;
-			return state.subtypes.filter((o) => o.type_id.toString() === id.toString());
-		},
+		subtypesByType:
+			(state, getters) =>
+			(id, sortBy = null, only_active = true) => {
+				console.log("window.clasificador", window.clasificador);
+				if (typeof id === "string") id = window.clasificador.subtipo.find((o) => o.name.toString().toLowerCase().trim() === id.toLowerCase().trim()).id;
+				let res = state.subtypes.filter((o) => o.type_id.toString() === id.toString());
+				if (only_active) res = res.filter((o) => o.active);
+				if (sortBy !== null) res = window.vm.$objectSort(res, sortBy);
+				return res;
+			},
 		subtypesByParent: (state, getters) => (id) => {
 			return state.subtypes.filter((o) => o.parent_id.toString() === id.toString());
 		},
