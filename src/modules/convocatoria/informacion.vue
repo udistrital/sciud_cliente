@@ -41,6 +41,22 @@
 											</div>
 											<div class="col-3">
 												<div class="form-group">
+													<label>Código:</label>
+													<DxTextBox
+														:show-clear-button="true"
+														:read-only="!editModeConv"
+														:value.sync="item.call_code"
+														class="form-control"
+														placeholder="Código"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxTextBox>
+												</div>
+											</div>
+											<div class="col-3">
+												<div class="form-group">
 													<label>Estado:</label>
 													<DxSelectBox
 														:show-clear-button="true"
@@ -58,7 +74,7 @@
 													</DxSelectBox>
 												</div>
 											</div>
-											<div class="col-5">
+											<div class="col-3">
 												<div class="form-group">
 													<label>Tipo:</label>
 													<DxSelectBox
@@ -79,7 +95,7 @@
 													</DxSelectBox>
 												</div>
 											</div>
-											<div class="col-4">
+											<div class="col-3">
 												<div class="form-group">
 													<label>Beneficiarios:</label>
 													<DxSelectBox
@@ -438,7 +454,7 @@ export default {
 				root.loaderShow(msg);
 				if (root.mode == "add") root.item.created_by = root.user_id;
 				if (root.mode == "edit") root.item.updated_by = root.user_id;
-				let saved_item = (await root.mode) == "add" ? root.saveItem(root.item) : root.updateItem(root.item);
+				let saved_item = root.mode == "add" ? await root.saveItem(root.item) : await root.updateItem(root.item);
 				console.log("new_item =>", saved_item);
 				// 202107140052: Redirecciona si se creó La convocatoria
 				if (root.mode == "add") {
