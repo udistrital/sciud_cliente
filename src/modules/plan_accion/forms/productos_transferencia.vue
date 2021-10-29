@@ -41,7 +41,7 @@
 							<div class="row">
 								<!-- formulatio -->
 
-<div class="col-md-6">
+<div class="col-md-4">
 	<div class="form-group">
 		<label>Tipos Productos Colciencias:</label>
 		<DxSelectBox 
@@ -52,6 +52,7 @@
 			:grouped="true" 
 			display-expr="name" 
 			:value.sync="baseObj.product_type_id" 
+			@value-changed="listChange"
 			value-expr="id" 
 			class="form-control"
 			:disabled="actInfor"
@@ -63,8 +64,31 @@
 	</div>
 </div>
 
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Producto Específico: </label>
+	<DxSelectBox
+		:show-clear-button="true"
+		:grouped="false"
+		:search-enabled="false"
+		:disabled="alldata2.length <= 0"
+		placeholder="Seleccione..."
+		:value.sync="baseObj.child_prod_type_id" 
+		class="form-control"
+		:data-source="alldata2" 
+		display-expr="name"
+		value-expr="id"
+		item-template="item"
+		:wrapItemText="true">
+		<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator>
+	</DxSelectBox>
+	</div>
+</div>
 
-<div :class="'col-md-'+(actInfor?'3':'6')">
+
+<div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group">
 	<label>Meta : </label>
 	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" >
@@ -175,7 +199,8 @@
 
 						<DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field='product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<DxColumn width="55%" data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='child_prod_type_name'  caption='Tipo Espcifíco' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn :width="50" data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
 						<!-- <DxColumn :width="60" data-field='advanced_total'  caption='Avance' data-type='String' alignment='center' :visible='true' :allow-grouping='false' />  -->
 						<DxColumn
@@ -369,6 +394,7 @@ export default {
 		},
 	},
 	data: () => ({
+		alldata2:[],
 		val_porcentaje:0,
 		tiposDocumento:[],
 		popupObs: false,
@@ -406,6 +432,7 @@ export default {
 			order: null,
 			plan_type_id: 7,
 			product_type_id: null,
+			child_prod_type_id: null,
 			active: true,
 		},
 	}),
@@ -466,7 +493,18 @@ export default {
 		// ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		...mapActions("unidad/indicadores", {areasConocimiento: "getAreasKnow" }),
 		// ...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", univerdalGet: "univerdalGet" }),
+
+		async listChange(e) {
+			let arg={url:''};
+			arg.url='types_all?filter=[["parent_id","=","'+e.value+'"]]';
+			//root.$info("e=");
+			console.warn("listchange e= ", e);
+			root.alldata2=await root.univerdalGet(arg);
+			if(root.alldata2.length > 0) root.$info("Seleccione Producto Específico");
+			console.warn("aldata2 data = ", root.alldata2);
+
+		},
 
 		porcentaje(){
 			
