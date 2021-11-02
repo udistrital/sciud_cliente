@@ -526,12 +526,6 @@ span.cmds {
 	}
 }
 
-.slide {
-	display: none;
-	min-height: 5px;
-	zoom: 1;
-}
-
 #login {
 	h1 {
 		i {
@@ -757,4 +751,10 @@ hr.sep {
 
 .red {
 	color: $error;
+}
+
+.slide {
+	display: none;
+	min-height: 5px;
+	zoom: 1;
 }

@@ -40,22 +40,18 @@ let routes = new router({
 			meta: { title: "Estructuras de Investigación", requiresAuth: true },
 			component: () => import("@/modules/unidad/"),
 		},
-		
 		{
 			name: "unidad-crear",
 			path: "/unidad/crear",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/informacion"),
 		},
-
 		{
 			name: "unidad-info",
 			path: "/unidad/:unidadId",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/informacion"),
 		},
-		
-		
 		{
 			name: "unidad-documentos",
 			path: "/unidad/:unidadId/documentos",
@@ -74,45 +70,6 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/produccion"),
 		},
-
-//constitucion de la red de conocimiento
-		{
-			name: "red",
-			path: "/red",
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/red_investigacion/index.vue"),
-		},
-
-		{
-			name: "red-crear",
-			path: "/red/crear",
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/red_investigacion/informacion_red"),
-		},
-
-
-		{
-			name: "red-info",
-			path: "/red/:unidadId",
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/red_investigacion/informacion_red"),
-		},
-		{
-			name: "red-documentos",
-			path: "/red/:unidadId/documentos",
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/red_investigacion/documentos"),
-		},
-		{
-			name: "red-grupos",
-			path: "/red/:unidadId/grupos",
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/red_investigacion/grupos"),
-		},
-		
-
-
-
 		{
 			name: "convocatoria",
 			path: "/convocatoria",
@@ -168,9 +125,47 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/plantilla"),
 		},
 
-		
+
+		//----------------------------------------------------------
+		//		constitucion de la red de investigación
+		//----------------------------------------------------------
+		{
+			name: "red",
+			path: "/red",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/index.vue"),
+		},
+
+		{
+			name: "red-crear",
+			path: "/red/crear",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+
+
+		{
+			name: "red-info",
+			path: "/red/:unidadId",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+		{
+			name: "red-documentos",
+			path: "/red/:unidadId/documentos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/documentos"),
+		},
+		{
+			name: "red-grupos",
+			path: "/red/:unidadId/grupos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/grupos"),
+		},
+
+
 		//-----------------------------------------
-		//   Comienzo de rutas plan de accion
+		//   Comienzo de rutas plan de accion: camorenos
 		//-----------------------------------------
 		{
 			path: "/unidad/:unidadId/plan_accion",
@@ -196,11 +191,43 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/plan_accion/vista"),
 		},
-		//--------------------------------------------
-		//			Fin plan de accion
-		//--------------------------------------------
 
+		//---------------------------------------------------
+		//				Entrada de entidades: camorenos
+		//---------------------------------------------------
+		{
+			name: "entidades",
+			path: "/admin/entidades",
+			component: () => import("@/modules/admin/entidades"),
+			meta: { title: "Administración » Entidades", requiresAuth: true },
+		},
+		{
+			name: "entidades-dep-represent",
+			path: "/admin/entidades/:idEnt/dependencias/:idDep",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/admin/form_entidades/index"),
+		},
+		{
+			name: "entidades-dep-represent",
+			path: "/admin/entidades/:idEnt",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/admin/form_entidades/index"),
+		},
+		{
+			name: "dependencias",
+			path: "/admin/entidades/:idEnt/dependencias",
+			component: () => import("@/modules/admin/dependencias"),
+			meta: { title: "Administración » Dependencias", requiresAuth: true },
+		},
+		
 
+		// {
+		// 	path: "*",
+		// 	redirect: { name: DEFAULT_ROUTE },
+		// },
+		//--------------------------------------------
+		//			Fin plan de accion: camorenos
+		//--------------------------------------------
 
 		{
 			// UserProfile will be rendered inside User's <router-view>
@@ -222,15 +249,6 @@ let routes = new router({
 			component: () => import("@/modules/admin/indicadores"),
 			meta: { title: "Administración » Indicadores", requiresAuth: true },
 		},
-
-		//Entrada de entidades 
-		{
-			name: "entidades",
-			path: "/admin/entidades",
-			component: () => import("@/modules/admin/entidades"),
-			meta: { title: "Administración » Entidades", requiresAuth: true },
-		},
-
 		{
 			path: "*",
 			redirect: { name: DEFAULT_ROUTE },

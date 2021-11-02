@@ -402,9 +402,7 @@ export default {
 	methods: {
 		...mapActions("convocatoria", ["getItem", "saveFinancingItem", "updateFinancingItem"]),
 		getBudget(percent, format = false) {
-			if (percent !== null && typeof percent === "string") percent = parseFloat(percent);
-			let r = (root.item.call_max_budget_per_project * percent) / 100;
-			return format ? r.format() : r;
+			return root.$getAmmount(root.item.call_max_budget_per_project, percent, format);
 		},
 		active(data, state) {
 			console.clear();
@@ -531,6 +529,7 @@ export default {
 		},
 	},
 	computed: {
+		...mapGetters("convocatoria", ["getAmmount"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		dataSource: function() {
 			return DxStore({

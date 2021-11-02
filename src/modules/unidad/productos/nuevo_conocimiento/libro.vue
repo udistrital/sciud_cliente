@@ -461,7 +461,7 @@ export default {
 		baseEnt: null,
 		participationid: null,
 		id_panel_documentos: "documentos",
-		id_panel_participantes: "participantes", 
+		id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {

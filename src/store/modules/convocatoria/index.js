@@ -77,6 +77,46 @@ const store = {
 					return r.data;
 				});
 		},
+		// 202110040922: Obtiene las actividades
+		async getCriteria({ commit, state, dispatch }, id) {
+			return await api()
+				.get(`/calls/${id}/call_eval_criteria?take=1000`)
+				.then((r) => {
+					return r.data.data;
+				});
+		},
+		// 202110040922: Obtiene las actividades
+		async getFinancingItems({ commit, state, dispatch }, id) {
+			return await api()
+				.get(`/calls/${id}/call_items?take=1000`)
+				.then((r) => {
+					return r.data.data;
+				});
+		},
+		// 202110040922: Obtiene las actividades
+		async getActivities({ commit, state, dispatch }, id) {
+			return await api()
+				.get(`/calls/${id}/schedule_activities?take=1000`)
+				.then((r) => {
+					return r.data.data;
+				});
+		},
+		// 202110051340: Obtiene los documentos
+		async getDocuments({ commit, state, dispatch }, id) {
+			return await api()
+				.get(`/calls/${id}/call_documents?take=1000`)
+				.then((r) => {
+					return r.data.data;
+				});
+		},
+		// 202110051352: Obtiene los rubros
+		async getItems({ commit, state, dispatch }, id) {
+			return await api()
+				.get(`/calls/${id}/call_items?take=1000`)
+				.then((r) => {
+					return r.data.data;
+				});
+		},
 		// 202108171742: Crea
 		async saveActivity({ commit, state, dispatch }, item) {
 			return await api()

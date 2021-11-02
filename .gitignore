@@ -15,6 +15,7 @@ config/database.yml
 clsconfig.json
 public/data/config.json
 /public/data/config.json
+#/src/components/global/footer.vue
 
 # local env files
 .env.local

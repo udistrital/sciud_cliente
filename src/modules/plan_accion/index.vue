@@ -10,7 +10,7 @@
 				<h1>
 					<i class="icon-books mr-1 color-main-600"></i>
 					<span class="font-weight-semibold" id="title">Estructuras de Investigación</span>
-					<span> &raquo; Plan de Acción</span>
+					<span> &raquo; Plan de Acción e Informe de Gestión</span>
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
@@ -49,7 +49,7 @@
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
-									<div class="title"><i class="icon-clipboard"></i><small> <i>Plan de Acción </i>  &raquo; {{ $titleCase(group.name) }}</small></div>
+									<div class="title"><i class="icon-clipboard"></i><small> <i>Plan de Acción e Informe de Gestión</i>  &raquo; {{ $titleCase(group.name) }}</small></div>
 									<!-- <div class="sub-title"><i class="icon-history"></i>Gestion de Informacion</div> -->
 								</div>
 							</div>
@@ -91,7 +91,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<fieldset>
-									<legend>Lista de Planes</legend>
+									<legend>Lista de Planes y/o Informes</legend>
 										<div class="row grid">
 											<div class="col">
 												<h2></h2>
@@ -136,9 +136,10 @@
 														<DxColumn data-field="updated_at" caption="Fecha Actualización" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
 
 														<!-- <DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/>  -->
-														<DxColumn data-field="is_draft" caption="Estado" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="is_draft" caption="Plan Acción" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="management_report_is_draft" caption="Informe Gestion" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-														<DxColumn :width="100" alignment="center" cell-template="tpl" caption="" />
+														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
 
 														<!-- <template #tplWeb="{ data }">
 															<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
@@ -178,6 +179,14 @@
 																	href="#">
 																	<i class="icon-pencil"></i>
 																	</a>
+
+																	<a v-if="!data.data.is_draft && editMode"
+																	title="Completar Informe... " 
+																	class="cmd-item color-main-600"
+																	@click.prevent="go(data.data.id, `/unidad/${$route.params.unidadId}/plan_accion/${data.data.id}/datos`, 'Cargando Ingreso de Datos')"
+																	href="#">
+																	<i class="icon-clipboard5"></i>
+																	</a>
 																	
 																	<a 
 																	title="Vista Impresion... " 
@@ -202,14 +211,25 @@
 
 																	<template v-if="isAdmin">
 																		<a title="Desactivar Guardado Plan de Accion"  v-if="data.data.is_draft" class="cmd-item color-main-600 mr-2" @click.prevent="activePlan(data, false)" href="#">
-																			<i class="icon-unlocked"></i>
+																			<i class="icon-lock"></i>
 																		</a>
 																		<a v-else 
 																		title="Habilitar Guardado Plan de Accion" 
 																		class="cmd-item 
 																		color-main-600 mr-2" 
 																		@click.prevent="activePlan(data, true)" href="#">
-																			<i class="icon-lock"></i>
+																			<i class="icon-unlocked"></i>
+																		</a>
+
+																		<a title="Desactivar Guardado informe Gestion"  v-if="data.data.management_report_is_draft" class="cmd-item color-main-600 mr-2" @click.prevent="activeInfo(data, false)" href="#">
+																			<i class="icon-file-locked2"></i>
+																		</a>
+																		<a v-else 
+																		title="Habilitar Guardado informe Gestion" 
+																		class="cmd-item 
+																		color-main-600 mr-2" 
+																		@click.prevent="activeInfo(data, true)" href="#">
+																			<i class="icon-file-spreadsheet2"></i>
 																		</a>
 																	</template>
 																</span>
@@ -329,8 +349,8 @@ export default {
 		DxValidationGroup,
 	},
 	computed: {
-		...mapGetters("core/tipo", ["subtypesByType"]),
-		...mapState("unidad/colciencias", { convocatorias: "items" }),
+		// ...mapGetters("core/tipo", ["subtypesByType"]),
+		// ...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
 			if (typeof this.group.id === "undefined") return null;
 			console.log("root.group", this.group);
@@ -368,7 +388,7 @@ export default {
 			let msg = "Creando nuevo Plan de Acción...";
 			root.loaderShow(msg);
 			root.baseObj.created_by = root.user_id;
-			root.baseObj.is_draft = false;
+			root.baseObj.is_draft = true;
 			root.baseObj.active = true;
 			let obj = root.baseObj;
 			let dto = {
@@ -429,6 +449,41 @@ export default {
 			});
 		},
 
+		activeInfo(data, state) {
+			// // console.clear();
+			console.log("active", data);
+			console.log("state", state);
+			let a = state ? "activar" : "desactivar";
+			let am = state ? "Activando" : "Desactivando";
+			let msg = `¿Realmente desea ${a} el guardado de datos en plan de acción con id: <span class='text-sb'>"${data.data.id}"</span>?`;
+			this.$confirm(msg, function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					let baseObjx={};
+					root.loaderShow(state+" Informe");
+					baseObjx.update_by = root.user_id;
+					baseObjx.updated_by= root.user_id;
+					baseObjx.management_report_is_draft = state;
+					let obj = baseObjx;
+					let dto = {
+						unidadId: root.group.id,
+						stringEP: "ap_management_reports",
+						mod: data.data.id,
+						newFormat:true,
+						objectSend: { ap_management_report: obj },
+						cb: function(item) {
+							console.log("dato", item);
+							root.grid.refresh();
+							// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
+							//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+							root.loaderHide();
+						},
+					};
+					root.objUpdate(dto);
+				}
+			});
+		},
+
 		activePlan(data, state) {
 			// // console.clear();
 			console.log("active", data);
@@ -441,6 +496,7 @@ export default {
 				if (si_no) {
 					root.loaderShow("Activando formularios");
 					root.baseObj.update_by = root.user_id;
+					root.baseObj.updated_by= root.user_id;
 					root.baseObj.is_draft = state;
 					root.baseObj.active = true;
 					let obj = root.baseObj;

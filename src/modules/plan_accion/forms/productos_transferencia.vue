@@ -1,5 +1,5 @@
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="plan_accion_form3">
+	<div class="col mt-3 pl-1 pr-1" id="plan_accion_form4">
 		<div class="row">
 			<div class="col">
 				<div class="p-0">
@@ -13,7 +13,7 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode  && !actInfor" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nuevo {{ title }}
 								</button>
 							</span>
@@ -27,8 +27,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- <Documentos id="plan_accion_form3-documentos" end-point="form_c_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
-		<!-- <Participantes id="plan_accion_form3-participantes" end-point="form_c_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
+		<Documentos id="plan_accion_form4-documentos" end-point="form_c_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<!-- <Participantes id="plan_accion_form4-participantes" end-point="form_c_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -41,29 +41,7 @@
 							<div class="row">
 								<!-- formulatio -->
 
-<!-- <div class="col-md-6">
-	<div class="form-group">
-		<label>Productos </label>
-		<DxSelectBox
-			:show-clear-button="true"
-			:grouped="false"
-			:search-enabled="false"
-			placeholder="Seleccione..."
-			:value.sync="baseObj.tipo_product_type_id" 
-			class="form-control"
-			:data-source="totalAreas" 
-			display-expr="name"
-			value-expr="id"
-			:wrapItemText="true"
-			>
-			<DxValidator> 
-			<DxRequiredRule />
-		</DxValidator>
-		</DxSelectBox>
-	</div>
-</div> -->
-
-<div class="col-md-6">
+<div class="col-md-4">
 	<div class="form-group">
 		<label>Tipos Productos Colciencias:</label>
 		<DxSelectBox 
@@ -74,8 +52,10 @@
 			:grouped="true" 
 			display-expr="name" 
 			:value.sync="baseObj.product_type_id" 
+			@value-changed="listChange"
 			value-expr="id" 
 			class="form-control"
+			:disabled="actInfor"
 			:wrapItemText="true">
 			<DxValidator> 
 				<DxRequiredRule />
@@ -84,11 +64,34 @@
 	</div>
 </div>
 
+<div class="col-md-4">
+	<div class="form-group">
+	<label>Producto Específico: </label>
+	<DxSelectBox
+		:show-clear-button="true"
+		:grouped="false"
+		:search-enabled="false"
+		:disabled="alldata2.length <= 0"
+		placeholder="Seleccione..."
+		:value.sync="baseObj.child_prod_type_id" 
+		class="form-control"
+		:data-source="alldata2" 
+		display-expr="name"
+		value-expr="id"
+		item-template="item"
+		:wrapItemText="true">
+		<DxValidator> 
+		<DxRequiredRule />
+	</DxValidator>
+	</DxSelectBox>
+	</div>
+</div>
 
-<div class="col-md-6">
+
+<div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group">
 	<label>Meta : </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" >
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" >
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -96,11 +99,30 @@
 	</div>
 </div>
 
+<div v-if="actInfor" :class="'col-md'">
+	<div class="form-group">
+	<label>Avance: </label>
+	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje"/>
+	<DxValidator> 
+		<DxRequiredRule v-if="actInfor" />
+	</DxValidator> 
+	</div>
+</div>
+
+<div v-if="actInfor" :class="'col-md'">
+	<div class="form-group">
+	<label>Porcentaje: </label>
+	<h3>{{val_porcentaje}}%</h3>
+	<!-- <DxNumberBox placeholder="0" class="form-control" :value.sync="porcentaje" :disabled="actInfor"/> -->
+	</div>
+</div>
+
+
 
 <div class='col-md-12'>
 	<div class='form-group'>
 	<label>Descripción: </label>
-	<DxTextArea :height='100' :max-length='2500' :value.sync='baseObj.description' placeholder='Descripción' class='form-control'>
+	<DxTextArea :height='100' :max-length='2500' :value.sync='baseObj.description' placeholder='Descripción' class='form-control' :disabled="actInfor">
 	<DxValidator><DxRequiredRule /></DxValidator>
 	</DxTextArea>
 	</div>
@@ -177,8 +199,24 @@
 
 						<DxColumn :width="60" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
 						<DxColumn data-field='product_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
-						<DxColumn :width="600" data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='child_prod_type_name'  caption='Tipo Espcifíco' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn :width="50" data-field='goal'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+						<!-- <DxColumn :width="60" data-field='advanced_total'  caption='Avance' data-type='String' alignment='center' :visible='true' :allow-grouping='false' />  -->
+						<DxColumn
+							:width="70" 
+							data-type="string"
+							:allow-filtering="false"
+							:allow-sorting="true"
+							:customize-text="nullText"
+							alignment="center"
+							caption="Avance"
+							data-field="total_avance"
+							cell-template="tpl-total_avance"
+						/>
+						<template #tpl-total_avance="{ data }">
+							{{  (typeof data.data.advanced_total == 'number') ? (parseInt(data.data.advanced_total)*100/parseInt(data.data.goal)).toFixed(2) : '0.00'  }}%
+						</template>
 
 						<!-- <DxColumn data-field='dw_type_id'  caption='Tipo de Trabajo' data-type='text' alignment='center' :visible='true' :allow-grouping='false' />  -->
 						<!-- <DxColumn data-field="dw_recognition" caption="Reconocimientos" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
@@ -213,21 +251,25 @@
 
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<!-- <a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
+								<a v-if="actInfor" title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>
-								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
+
+								<!--<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a> -->
-								<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+								<a v-if="editing" title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 									<i class="icon-database-edit"></i>
 								</a>
+							<template v-if="!actInfor">
 								<a v-if="data.data.active" title="Desactivar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 									<i class="icon-database-remove"></i>
 								</a>
 								<a v-else title="Activar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
 								</a>
+							</template>
+
 							</span>
 						</template>
 					</DxDataGrid>
@@ -322,12 +364,18 @@ export default {
 		DxTextBox,
 		DxValidator,
 		DxValidationGroup,
+		Documentos: () => import("@/components/element/documentos"),
 	},
 	props: {
 		titlecolum: {
 			type: String,
 			default: () => "dw_title",
 		},
+		editing:{
+			type: Boolean,
+			default: true,
+		},
+		actInfor:{type: Boolean,default: false},
 		action_panel_id: {
 			type: Number,
 			default: 0,
@@ -346,6 +394,9 @@ export default {
 		},
 	},
 	data: () => ({
+		alldata2:[],
+		val_porcentaje:0,
+		tiposDocumento:[],
 		popupObs: false,
 		observarData: "",
 		editData: null, //sirve para dejar formulario en limpio o llenar datos
@@ -381,6 +432,7 @@ export default {
 			order: null,
 			plan_type_id: 7,
 			product_type_id: null,
+			child_prod_type_id: null,
 			active: true,
 		},
 	}),
@@ -390,17 +442,18 @@ export default {
 		// console.warn("indicador", root.indicador);
 		// root.tipo_areas = root.subtypesByType("planaccion_form2_tipos");
 		root.loadAreas();
-		root.estadoTipo= root.subtypesByType("planaccion_form2_tipos");
+		// root.estadoTipo= root.subtypesByType("planaccion_productos_transferencia_estado_tipos");
+		root.tiposDocumento=root.subtypesByType("planaccion_productos_transferencia_documentos");
 	},
 	mounted() {
 		// console.log("root.tipos", root.tipos);
-		root.panelData = $("#plan_accion_form3 .data");
-		root.panelGrid = $("#plan_accion_form3 .grid");
-		root.panelCmds = $("#plan_accion_form3 .cmds");
-		root.panelCmdBack = $("#plan_accion_form3 .cmds-back");
-		root.panelDocs = $("#plan_accion_form3-documentos");
+		root.panelData = $("#plan_accion_form4 .data");
+		root.panelGrid = $("#plan_accion_form4 .grid");
+		root.panelCmds = $("#plan_accion_form4 .cmds");
+		root.panelCmdBack = $("#plan_accion_form4 .cmds-back");
+		root.panelDocs = $("#plan_accion_form4-documentos");
 		root.loaderMessage = "Cargando elementos";
-		root.loaderElement = "#plan_accion_form3 .grid";
+		root.loaderElement = "#plan_accion_form4 .grid";
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
@@ -409,7 +462,7 @@ export default {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
-			if(root.validateImp) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
+			if(root.validateImp || root.actInfor) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
 			else datat='filter=[["plan_type_id","=","'+ root.tipos+'"]]';
 			return DxStore({
 				key: ["id"],
@@ -440,7 +493,38 @@ export default {
 		// ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
 		...mapActions("unidad/indicadores", {areasConocimiento: "getAreasKnow" }),
 		// ...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", univerdalGet: "univerdalGet" }),
+
+		async listChange(e) {
+			let arg={url:''};
+			arg.url='types_all?filter=[["parent_id","=","'+e.value+'"]]';
+			//root.$info("e=");
+			console.warn("listchange e= ", e);
+			root.alldata2=await root.univerdalGet(arg);
+			if(root.alldata2.length > 0) root.$info("Seleccione Producto Específico");
+			console.warn("aldata2 data = ", root.alldata2);
+
+		},
+
+		porcentaje(){
+			
+			if(root.baseObj.advanced_total<=root.baseObj.goal && root.baseObj.advanced_total>=0){
+				root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);
+			}else{
+				let msg="Esta Seguro que desea colocar el avance con valor: " + root.baseObj.advanced_total + "?";
+				root.$confirm(msg, function(si_no) {
+					console.log("result", si_no);
+					if (si_no) {
+						root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);
+					}else{
+						root.baseObj.advanced_total=0;
+						root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);
+					}
+				});
+			}
+
+		},
+
 
 		loadAreas(){
 
@@ -466,6 +550,24 @@ export default {
 			root.popupObs = !root.popupObs ? true : false;
 		},
 
+		documentos(data) {
+			// console.clear();
+			console.log("documentos", data.row.data);
+			root.section = "documentos";
+			// 202104111513: Error
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			let rd = data.row.data;
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
+			root.baseObj = rd;
+			$("#plan_accion_form4 .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.product_type_name}`);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelCmdBack.fadeIn();
+				$("#plan_accion_form4-documentos").fadeIn(function(params) {});
+			});
+		},
+
 		retorno() {
 			console.log(root.section);
 			root.panelCmdBack.fadeOut();
@@ -477,12 +579,12 @@ export default {
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#plan_accion_form3-documentos").fadeOut(function(params) {
+				$("#plan_accion_form4-documentos").fadeOut(function(params) {
 					root.panelCmds.fadeIn();
 					root.panelGrid.fadeIn(function(params) {});
 				});
 			}
-			$("#plan_accion_form3 .item-title").html("");
+			$("#plan_accion_form4 .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
 		},
@@ -530,6 +632,7 @@ export default {
 			console.log("data", data);
 			root.baseObj = data;
 			root.baseObj.observation = root.baseObj.dw_observation;
+			root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);
 			root.panelCmds.fadeOut();
 			root.panelGrid.fadeOut(function(params) {
 				root.panelData.fadeIn(function(params) {});

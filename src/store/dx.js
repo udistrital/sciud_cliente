@@ -32,6 +32,11 @@ export default (
 		ids: null,
 		state: null,
 		faculties: null,
+		members: null,
+		cine: null,
+		curricular: null,
+		oecd: null,
+		research: null,
 		stringParam: null,
 	}
 ) => {
@@ -45,8 +50,26 @@ export default (
 			if (typeof o.ids !== "undefined" && o.ids !== null && o.ids.length > 0) params += `ids=${o.ids.join(",")}&`;
 			// 202107040619: Se agrega el parámetro faculties
 			if (typeof o.faculties !== "undefined" && o.faculties !== null && o.faculties.length > 0) params += `faculties=${o.faculties.join(",")}&`;
+
+			// 202110110003: Se agrega el parámetro members
+			if (typeof o.members !== "undefined" && o.members !== null && o.members.length > 0) params += `member_documents=${o.members.join(",")}&`;
+
+			// 202110110003: Se agrega el parámetro cine
+			if (typeof o.cine !== "undefined" && o.cine !== null && o.cine.length > 0) params += `cine_detailed_area_ids=${o.cine.join(",")}&`;
+
+			// 202110110006: Se agrega el parámetro curricular
+			if (typeof o.curricular !== "undefined" && o.curricular !== null && o.curricular.length > 0)
+				params += `curricular_project_ids=${o.curricular.join(",")}&`;
+
+			// 202110110007: Se agrega el parámetro oecd
+			if (typeof o.oecd !== "undefined" && o.oecd !== null && o.oecd.length > 0) params += `oecd_discipline_ids=${o.oecd.join(",")}&`;
+
+			// 202110110003: Se agrega el parámetro research
+			if (typeof o.research !== "undefined" && o.research !== null && o.research.length > 0) params += `research_focus_ids=${o.research.join(",")}&`;
+
 			// 202107040729: Agrega un parametro state si se recibe
 			if (typeof o.state !== "undefined" && o.state !== null) params += `state=${o.state}&`;
+
 			if (typeof o.stringParam !== "undefined" && o.stringParam !== null) params += o.stringParam + "&";
 			args.forEach(function(i) {
 				if (i in loadOptions && isNotEmpty(loadOptions[i])) {

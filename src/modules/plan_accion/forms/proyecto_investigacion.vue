@@ -13,7 +13,7 @@
 						</div>
 						<div class="header-elements">
 							<span class="cmds">
-								<button type="button" @click.prevent="add()" v-if="editMode" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="add()" v-if="editMode  && !actInfor" title="Nuevo Elemento.." class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-database-add"></i></b> Nuevo {{ title }}
 								</button>
 							</span>
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- <Documentos id="plan_accion_form2-documentos" end-point="form_b_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> -->
+		<Documentos id="plan_accion_form2-documentos" end-point="form_b_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" /> 
 		<!-- <Participantes id="plan_accion_form2-participantes" end-point="form_b_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -169,21 +169,17 @@
 						<DxColumn data-field='financing_type_name'  caption='Tipo ' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn :width="500" data-field='description'  caption='Indicador de Existencia' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn data-field='goal_state_name'  caption='Meta' data-type='String' alignment='center' :visible='true' :allow-grouping='false' /> 
+			<DxColumn
+              data-field="goal_achieved"
+              caption="Culminado"
+              data-type="date"
+              alignment="center"
+              :visible="true"
+              :customize-text="yesNo"
+              width="90"
+            />
 
-						<!-- <DxColumn data-field='dw_type_id'  caption='Tipo de Trabajo' data-type='text' alignment='center' :visible='true' :allow-grouping='false' />  -->
-						<!-- <DxColumn data-field="dw_recognition" caption="Reconocimientos" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn
-							data-field="colciencias_call_name"
-							caption="Categoría Minciencias"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="true"
-						/> -->
-						<!-- <DxColumn data-field='category_id'  caption='Categoría' data-type='text' alignment='center' :visible='false' :allow-grouping='false' />  -->
-						<!-- <DxColumn data-field="dw_observation" caption="Anotaciones" data-type="text" alignment="center" :visible="false" :allow-grouping="false" /> -->
-
-						<!-- <DxColumn data-field="dw_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
+            
 						<DxColumn data-field="active" v-if="!validateImp" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="110" v-if="!validateImp" alignment="center" cell-template="tpl" caption="" />
 
@@ -209,15 +205,73 @@
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a> -->
-								<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+								<!-- <a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 									<i class="icon-database-edit"></i>
 								</a>
 								<a v-if="data.data.active" title="Desactivar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 									<i class="icon-database-remove"></i>
 								</a>
 								<a v-else title="Activar Trabajos..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-									<i class="icon-database-check"></i>
+									<i class="icon-database-check"></i> 
+								</a>-->
+								<a v-if="actInfor" title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
+									<i class="icon-file-pdf"></i>
 								</a>
+
+								<template v-if="editing">  
+									<a
+									v-if="data.data.goal_achieved"
+									title="Quitar Cumplimiento..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="activeCum(data, false)"
+									href="#"
+									>
+									<i class="icon-cross"></i>
+									</a>
+									
+									<a
+									v-else
+									title="Activar Cumplimento..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="activeCum(data, true)"
+									href="#"
+									>
+									<i class="icon-checkmark"></i>
+									</a>
+								</template>
+
+								<template v-if="!actInfor">
+									<a
+									title="Editar elemento..."
+									class="cmd-item color-main-600"
+									@click.prevent="edit(data.data)"
+									href="#"
+									>
+									<i class="icon-database-edit"></i>
+									</a>
+								
+								
+									<a
+									v-if="data.data.active"
+									title="Desactivar Trabajos..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="active(data, false)"
+									href="#"
+									>
+									<i class="icon-database-remove"></i>
+									</a>
+									
+									<a
+									v-else
+									title="Activar Trabajos..."
+									class="cmd-item color-main-600 mr-2"
+									@click.prevent="active(data, true)"
+									href="#"
+									>
+
+									<i class="icon-database-check"></i>
+									</a>
+								</template>
 							</span>
 						</template>
 					</DxDataGrid>
@@ -310,12 +364,18 @@ export default {
 		DxTextBox,
 		DxValidator,
 		DxValidationGroup,
+		Documentos: () => import("@/components/element/documentos"),
 	},
 	props: {
 		titlecolum: {
 			type: String,
 			default: () => "dw_title",
 		},
+		editing:{
+			type:Boolean,
+			default: false
+		},
+		actInfor:{type: Boolean,default: false},
 		action_panel_id: {
 			type: Number,
 			default: 0,
@@ -360,6 +420,7 @@ export default {
 		baseEnt: null,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
+		tiposDocumento:null,
 		baseObj: {
 			description: null,
 			financing_type_id: null,
@@ -375,6 +436,7 @@ export default {
 		console.warn("indicador", root.indicador);
 		root.tipoproceso = root.subtypesByType("planaccion_form2_tipos");
 		root.estadoTipo= root.subtypesByType("planaccion_form2_estado_tipos");
+		root.tiposDocumento=root.subtypesByType("planaccion_form2_estado_documentos");
 	},
 	mounted() {
 		// console.log("root.tipos", root.tipos);
@@ -393,7 +455,7 @@ export default {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
-			if(root.validateImp) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
+			if(root.validateImp || root.actInfor) datat='filter=[["plan_type_id","=","'+ root.tipos+'", "and", "active","=","true"]]';
 			else datat='filter=[["plan_type_id","=","'+ root.tipos+'"]]';
 			return DxStore({
 				key: ["id"],
@@ -418,6 +480,40 @@ export default {
 		// ...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
 		// ...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		activeCum(data, state) {
+		// // console.clear();
+		console.log("active", data);
+		console.log("state", state);
+		let a = state ? "Presentar" : "No Presentar";
+		let am = state ? "Presentando" : "Deteniendo";
+		let msg = `¿Realmente desea ${a} el Cumplimento para <span class='text-sb'>"${
+			data.data.financing_type_name
+		} </span>?`;
+		this.$confirm(msg, function (si_no) {
+			console.log("result", si_no);
+			if (si_no) {
+			root.loaderShow(`${am}`, root.panelGrid);
+			let active = JSON.stringify({
+				active: state,
+				updated_by: root.user_id,
+			});
+
+			var dto = {
+				newFormat: false,
+				url: `action_plans/${root.action_panel_id}/form_b_act_plans/${data.data.id}`,
+				data: { form_b_act_plan: { goal_achieved: state, updated_by: 1 } },
+				cb: function (result) {
+				console.log("Result", result);
+				root.grid.refresh();
+				root.loaderHide();
+				},
+			};
+			console.log("dto", dto);
+			root.elementoActive(dto);
+			root.loaderHide();
+			}
+		});
+		},
 
 		// loadIndicators(e){
 		// 	root.indicador=[];
@@ -432,6 +528,24 @@ export default {
 		// 		});
 		// 	}, 1000);
 		// },
+		documentos(data) {
+			// console.clear();
+			console.log("documentos", data.row.data);
+			root.section = "documentos";
+			// 202104111513: Error
+			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+			let rd = data.row.data;
+			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+			console.log("rd", rd);
+			root.baseObj = rd;
+			$("#plan_accion_form2 .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.financing_type_name}`);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelCmdBack.fadeIn();
+				$("#plan_accion_form2-documentos").fadeIn(function(params) {});
+			});
+		},
+
 		verObservar(data) {
 			root.observarData = data.dw_observation;
 			root.baseObj[root.titlecolum] = data[root.titlecolum];
@@ -533,7 +647,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.financing_type_name} del usuario ${root.user_role_id}</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

@@ -26,12 +26,24 @@
 							<div class="row mb-3">
 								<div class="col">
 									<div class="col d-flex justify-content-between align-items-end">
-										<div class="sub-title"><i class="icon-trophy"></i>{{$titleCase(group.name)}}</div>
-										<div class="header-elements" v-if="true">
-											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-main btn-labeled btn-labeled-left ">
-												<b><i class="icon-database-add"></i></b> Guardar y Cerrar 
+										<div class="sub-title"><i class="icon-books"></i>{{$titleCase(group.name)}}<br>
+										<small v-if="dateplansys.is_draft==true && dateplansys.management_report_is_draft==true">Editando Plan de Acción</small>
+										<small v-if="dateplansys.is_draft==false && dateplansys.management_report_is_draft==true">Editando Informe de Gestión</small>
+										<small v-if="dateplansys.is_draft==false && dateplansys.management_report_is_draft==false">Informe de Gestión</small>
+										</div>
+										
+										<div class="header-elements" v-if="dateplansys.is_draft==false && dateplansys.management_report_is_draft==true">
+											<button type="button" @click.prevent="retorno2()" title="Volver al trabajo.." class="btn btn-warning btn-labeled btn-labeled-left ">
+												<b><i class="icon-database-add"></i></b> Concluir Informe de Gestion 
 											</button>
 										</div>
+
+										<div class="header-elements" v-if="dateplansys.is_draft==true && dateplansys.management_report_is_draft==true">
+											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-warning btn-labeled btn-labeled-left ">
+												<b><i class="icon-database-add"></i></b> Concluir Plan de Accion
+											</button>
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -49,10 +61,11 @@
 													:group="group"
 													:action_panel_id="parseInt($route.params.planId)" 
 													:editMode="editMode" 
-													title="Listado de Procesos de Formación" 
-															
+													title="Listado de Procesos de Formación"
+													:actInfor="!dateplansys.is_draft"		
 													titleBtn="Agregar Proceso"	
 													titlecolum="title"
+													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 												/>
 											</template>
 										</DxItem>
@@ -64,7 +77,8 @@
 													:action_panel_id="parseInt($route.params.planId)"   
 													:editMode="editMode" 
 													title="Listado de Proyectos de Investigación" 
-															
+													:actInfor="!dateplansys.is_draft"
+													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Proyecto"	
 													titlecolum="title"
 												/>
@@ -78,7 +92,8 @@
 													:action_panel_id="parseInt($route.params.planId)"    
 													:editMode="editMode" 
 													title="Listado de Productos Resultado de Investigación Creacion" 
-															
+													:actInfor="!dateplansys.is_draft"
+													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Producto"	
 													titlecolum="title"
 												/>
@@ -92,7 +107,8 @@
 													:action_panel_id="parseInt($route.params.planId)"  
 													:editMode="editMode" 
 													title="Listado de Productos Con Potencialidad  de Transferencia" 
-															
+													:actInfor="!dateplansys.is_draft"
+													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Producto"	
 													titlecolum="title"
 												/> 
@@ -105,34 +121,14 @@
 													:group="group"
 													:action_panel_id="parseInt($route.params.planId)"   
 													:editMode="editMode" 
-													title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"													
- 
-															
+													title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"
+													:actInfor="!dateplansys.is_draft" 
+													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Recurso"	
 													titlecolum="title"
 												/>
 											</template>
 										</DxItem>
-<!-- 
-										<DxItem title="Recursos con que cuenta el Grupo para el Desarrollo de las Actividades de Investigación" icon="calculator" id="plan_accion" data-idx="1">
-											<template #default>
-												<div>
-												<h4>
-													Nota: Esta sección solamente debe ser diligenciado por los Grupos de Investigación-Creación e Innovación
-												</h4>
-												<RecursosGrupo
-													:group="group"
-													:action_panel_id="root.$route.params.planId"   
-													:editMode="editMode" 
-													title="Listado de Recursos con que cuenta el Grupo para el Desarrollo" 
-															
-													titleBtn="Agregar Recurso"	
-													titlecolum="title"
-												/></div>
-												<!- - <NuevoConocimiento :group="group"
-													:action_panel_id="root.$route.params.planId"   :editMode="editMode" /> - ->
-											</template>
-										</DxItem> -->
 
 										<DxItem title="Redes Académicas de Promoción Científica y/o Artística " icon="sphere" id="plan_accion" data-idx="1">
 											<template #default>
@@ -140,17 +136,15 @@
 													:group="group"
 													:action_panel_id="parseInt($route.params.planId)"  
 													:editMode="editMode" 
-													title="Listado de Redes Académicas de Promoción Cientifica"													
- 
-															
+													title="Listado de Redes Académicas de Promoción Cientifica"	
+													:actInfor="!dateplansys.is_draft"
+													:editing="dateplansys.management_report_is_draft==true"							
+													:totalLineasInv="listlines"
 													titleBtn="Agregar Rede Academica"	
 													titlecolum="title"
 												/>
 											</template>
 										</DxItem>
-
-
-										
 										
 									</DxAccordion>
 								</div>
@@ -160,6 +154,17 @@
 				</div>
 			</div>
 			
+			<div class="row" v-if="is_dev && debug">
+			<div class="col">
+				<div class="card">
+					<div class="card-body">
+						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(dateplansys, null, 3) }}
+					</div>
+				</div>
+			</div>
+		</div>
 		
 
 		</div>
@@ -176,6 +181,44 @@ export default {
 	created: function() {
 		root = this;
 		// document.title += ` ${root.$titleCase(root.group.name)}`;
+		
+		root.LineasInvConocimiento({
+          parent_id: 159,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 511,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 512,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 513,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+        root.LineasInvConocimiento({
+          parent_id: 514,
+          cb: function (results) {
+            root.listlines = root.listlines.concat(results);
+          },
+        });
+
+
+
 		root.getUnit({
 			id: root.$route.params.unidadId,
 			cb: function(result) {
@@ -184,17 +227,24 @@ export default {
 				root.loadMembers();
 			},
 		});
-		
+		// root.eval();
 	},
 
 	data() {
 		return {
+			editarInf:true,
+			dateplansys:{},
+			listlines:[],
 			tp: null,
 			group: null,
 			baseObjx: {
 				execution_validity: 0,
 				is_draft: true,
 				active: true,
+			},
+			baseObjc: {
+				management_report_is_draft: true,
+				updated_by: null,
 			}
 		};
 	},
@@ -202,7 +252,20 @@ export default {
 		console.clear();
 		console.log("Ingresando a plan de accion...");
 		root = this;
+		// root.loadLineasInv()
+		
+		let args={url:null, cb:{}};
+		args.url=`action_plans/${root.$route.params.planId}`;
+		args.cb = function(item) {
+						console.warn("date planaction", item);
+						root.dateplansys=item;
+						root.loaderHide();
+					};
+		let dataplan = root.getplan(args);
+		
+		console.warn("datos del plan", root.dateplansys);
 		console.log("obheto grupo", root.group);
+		root.eval(dataplan);
 	},
 
 	components: {
@@ -218,11 +281,43 @@ export default {
 	},
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { getplan: "get", objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/indicadores", { LineasInvConocimiento: "getAreasKnow" }),
 		loadMembers() {
 		// console.log("members", root.group.member_ids);
 		},
 
+		nuevoInfo(){
+			let msg = "Guardando Plan de Acción";
+			root.loaderShow(msg);
+			root.baseObjc.updated_by = root.user_id;
+			root.baseObjc.management_report_is_draft = false;
+			// root.baseObjc.active = true;
+			let obj = root.baseObjc;
+			if(root.baseObjc.updated_by!=null){
+				console.warn(root.baseObjx);
+				let dto = {
+					unidadId: root.group.id,
+					stringEP: "ap_management_reports",
+					mod: root.$route.params.planId,
+					newFormat:true,
+					objectSend: { ap_management_report: obj },
+					cb: function(item) {
+						console.log("dato", item);
+						//root.grid.refresh();
+						// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
+						root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+						root.loaderHide();
+					},
+				};
+				console.log("root.mode", this.user_role_id === this.get_role_id("administrador"));
+				root.objUpdate(dto);
+			}else{
+				root.loaderHide();
+			}	
+		},
+		
+		
 		nuevoPlan(){
 			let msg = "Guardando Plan de Acción";
 			root.loaderShow(msg);
@@ -253,7 +348,6 @@ export default {
 			}	
 		},
 
-
 		retorno() {
 			let msg = `¿Realmente desea guardar y terminar este plan de acción? <br>Recuerde que una vez finalizado no podrá editar información.`;
 			this.$confirm(msg, function(si_no) {
@@ -263,6 +357,17 @@ export default {
 				}
 			});
 		},
+
+		retorno2() {
+			let msg = `¿Realmente desea guardar y terminar este Informe de Gestion? <br>Recuerde que una vez finalizado no podrá editar información.`;
+			this.$confirm(msg, function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					root.nuevoInfo();
+				}
+			});
+		},
+
 	},
 };
 </script>

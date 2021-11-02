@@ -27,7 +27,9 @@
 				</div>
 			</div>
 		</div>
+		<keep-alive>
 		<Documentos id="panel-articulo-documentos" end-point="papers" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		</keep-alive>
 		<Participantes id="panel-articulo-participantes" end-point="papers" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
