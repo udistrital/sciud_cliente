@@ -1,0 +1,107 @@
+[
+	{
+		"id": 1,
+		"ch_parent_id": null,
+		"ch_order": 1,
+		"ch_title": "Dirigido a",
+		"ch_description": "<p>Todos los docentes de planta que pertenezcan a un Grupo de Investigación institucionalizado en la Universidad Distrital Francisco José de Caldas; que estén registrados en el Sistema de Información SICIUD y en el Sistema Nacional de Ciencia y Tecnología e Innovación (SNCyTI).</p>"
+	},
+	{
+		"id": 2,
+		"ch_parent_id": null,
+		"ch_order": 0,
+		"ch_title": "Alcance",
+		"ch_description": "<p>En el marco de la emergencia sanitaria y social declarada en el territorio nacional por el gobierno como consecuencia de la pandemia del coronavirus (COVID-19), este proceso apoyará la divulgación de resultados de investigación en eventos de tipo virtual.</p><p>Debe entenderse por ponencia virtual1, aquella presentada en formato digital, publicada en la web del evento y sobre la cual, los asistentes podrán leer y navegar interactivamente desde la web del evento, (una ponencia virtual admite información textual, gráfica, vídeo, audio, etc. y la posibilidad de interactuar sobre ella o acceder a las Web sugeridas en la ponencia).<p>"
+	},
+	{
+		"id": 3,
+		"ch_parent_id": null,
+		"ch_order": 3,
+		"ch_title": "Objetivo",
+		"ch_description": "<p>Promover la apropiación social del conocimiento mediante la socialización, divulgación y difusión de resultados de investigación o investigación-creación alcanzados por profesores de planta de la Universidad Distrital, a los que les han sido aprobadas la presentación de ponencias2 o muestras artísticas individuales en eventos virtuales, de carácter científico o artístico, nacionales o internacionales.</p>"
+	},
+	{
+		"id": 4,
+		"ch_parent_id": null,
+		"ch_order": 0,
+		"ch_description": "--",
+		"ch_title": "Requisitos y Restricciones"
+	},
+	{
+		"id": 5,
+		"ch_parent_id": 4,
+		"ch_order": 0,
+		"ch_title": "Requisitos",
+		"ch_description": "<p>Son requisitos para la participación de los docentes de planta en la convocatoria, los siguientes:</p><table cellspacing='0' class='tbl-conv'><tr><td>4.1</td><td>Estar registrado como integrante activo de un grupo de investigación institucionalizado en el Sistema de Información del SICIUD3; poseer un usuario (login) y clave (password) asignados por el director del grupo, y realizar el procedimiento de inscripción señalado en el punto 5 de este documento.</td></tr><tr><td>4.2</td><td>Estar al día4 en las obligaciones y compromisos con el CIDC y las Unidades de Investigación de las Facultades.</td></tr><tr><td>4.3</td><td>Estar realizando dirección de trabajos de grado de Trabajos de Grado de Pregrado, Investigación de Maestría o Tesis Doctoral. (Del último año académico) ó haber incluido en su plan de trabajo que incluya la preparación y presentación de ponencias5.</td></tr><tr><td>4.4</td><td>Plan de Acción anual del Grupo de investigación actualizado en la plataforma SICIUD.</td></tr><tr><td>4.5</td><td>CvLAC actualizado en la plataforma Scienti de Min Ciencias.</td></tr><tr><td>4.6</td><td>Estar registrado en Google Scholar.</td></tr><tr><td>4.7</td><td>Realizar el proceso de inscripción en el Sistema de Información SICIUD dentro de los plazos establecidos en el cronograma de la presente Convocatoria.</td></tr><tr><td>4.8</td><td>Los resultados de investigación o investigación-creación mencionadas anteriormente deberán presentarse a nombre de la Universidad Distrital Francisco José de Caldas, teniendo en cuenta lo establecido en las normas vigentes sobre propiedad intelectual6.</td></tr><tr><td>4.9</td><td>Quienes se encuentren en año sabático podrán ser beneficiarios de este apoyo siempre que la presentación de ponencias o resultados de investigación/creación haya sido incluida en su plan de trabajo aprobado, el cual deberá ser registrado en el proceso de inscripción.</td></tr><tr><td>4.10</td><td>Si el evento se desarrolla durante el periodo de vacaciones el docente deberá aplazar las mismas ante la División de Recursos Humanos según el procedimiento establecido.</td></tr><tr><td>4.11</td><td>Tener Aval del Consejo de Facultad de la respectiva facultad para la participación en el evento</td></tr></table>"
+	},
+	{
+		"id": 6,
+		"ch_parent_id": 4,
+		"ch_order": 0,
+		"ch_title": "Restricciones",
+		"ch_description": "<p>La participación de los docentes de planta en la convocatoria tiene las siguientes restricciones:</p><table cellspacing='0'><tr><td>4.12</td><td>De encontrarse en situación administrativa de comisión de estudios, los docentes de planta están impedidos para participar en la presente convocatoria, según lo establecido en el parágrafo 3º del artículo 1º del Acuerdo 05 del 1º de septiembre de 20117 proferido por el Consejo Superior Universitario, que modificó el artículo 84 del Acuerdo 011 de 2002.</td></tr><tr><td>4.13</td><td>Solamente se brindarán apoyos para eventos que se realicen dentro de los plazos establecidos en esta convocatoria.</td></tr><tr><td>4.14</td><td>Un docente podrá aplicar al apoyo de socialización de resultados de investigación de cualquiera de las convocatorias del CIDC hasta dos vez por semestre (calendario).</td></tr><tr><td>4.15</td><td>No se considerarán propuestas de apoyos económicos a solicitudes que sean consideradas hechos cumplidos o que no cumplan con todas las condiciones establecidas en la presente convocatoria.</td></tr><tr><td>4.16</td><td>No se concederán apoyos para docentes a los cuales se les haya aprobado apoyo para la presentación de resultados de investigación por otras dependencias de la Universidad para el mismo evento científico y/o artístico.</td></tr><tr><td>4.17</td><td>Se apoyará a una única persona (sea docente o estudiante) por ponencia ó póster. Para las muestras artísticas, debe entenderse que será un único apoyo por grupo.</td></tr></table>"
+	},
+	{
+		"id": 7,
+		"ch_parent_id": null,
+		"ch_order": 0,
+		"ch_title": "Procedimiento de Inscripción",
+		"ch_description": "<p>Antes de realizar este procedimiento, por favor consulte el Manual de Inscripción de Convocatorias de Movilidad que está disponible en la página Web del CIDC y que podrá consultar en el siguiente link: <a href='http://cidc.udistrital.edu.co/web/components/com_rseventspro/assets/images/files/ManualMovilidadDocentes.pdf' target='_blank' title='Manual Movilidad Docentes...'>Manual de Inscripción Convocatoria de Movilidad Docentes</a>.</p><p>El procedimiento de inscripción consiste en cargar en el sistema SICIUD en formato PDF los siguientes documentos:</p><table cellspacing='0'><tr><td> 5.1 </td><td> Carta suscrita por el Decano, como presidente del Consejo de Facultad, en donde conste el aval académico de dicha instancia para la participación del docente en el evento y se certifique que el docente no se encuentra en comisión de estudios al momento de presentarse a esta convocatoria, y que no tiene adjudicado ningún tipo de apoyo económico de otra dependencia de la universidad, ni que lo esté tramitando y que se encuentra a paz y salvo con la unidad de investigaciones de la facultad. </td></tr><tr><td> 5.2 </td><td> Plan de trabajo del año sabático aprobado por el consejo académico en caso de encontrarse en esta situación administrativa. </td></tr><tr><td> 5.3 </td><td> Certificación del proyecto curricular donde se constate que el docente incluyó en su plan de trabajo8 la dirección de Trabajos de Grado de Pregrado, Investigación de Maestría o Tesis Doctoral. (Del último año académico) o la preparación y presentación de ponencias. </td></tr><tr><td> 5.4 </td><td> Comunicación o certificación de aceptación de la ponencia por parte de la organización del evento. </td></tr><tr><td> 5.5 </td><td> Certificación del Decano de facultad donde conste la solicitud de aplazamiento de vacaciones del docente o acto administrativo de Recursos Humanos en donde conste el aplazamiento, en caso de que el evento se desarrolle durante el periodo de vacaciones. </td></tr></table>"
+	},
+	{
+		"id": 8,
+		"ch_parent_id": null,
+		"ch_order": 8,
+		"ch_title": "Cronograma de Actividades",
+		"ch_description": "<p>Las fechas de las actividades de la convocatoria serán las siguientes conforme con lo establecido en el Calendario Académico aprobado por el Consejo Académico para la vigencia 2021:</p><table cellspacing='0'><tr><td>Actividad</td><td>Responsable</td><td>Fechas</td></tr><tr><td>Fecha de iniciación de los eventos</td><td>Organizador Evento</td><td>2 de Junio a 17 de Diciembre de 2021</td></tr><tr><td>Publicación de la Convocatoria</td><td>CIDC</td><td>5 de Mayo de 2021</td></tr><tr><td>Apertura en el Sistema SICIUD</td><td>CIDC</td><td>6 de Mayo de 2021</td></tr><tr><td>Asesorías Técnicas</td><td>CIDC</td><td>Desde el 6 de Mayo de 2021</td></tr><tr><td>Plazo máximo para la inscripción en el sistema SICIUD</td><td>CIDC</td><td>Hasta 3 semanas11 antes del inicio del evento o su fecha máxima de inscripción</td></tr><tr><td>Evaluación de solicitudes</td><td>CIDC</td><td>Lunes de cada semana desde el 10 de Mayo de 2021</td></tr><tr><td>Publicación de resultados</td><td>CIDC</td><td>Miércoles de cada semana desde el 12 de Mayo de 2021</td></tr><tr><td>Entrega de Soportes12</td><td>Investigador(es)</td><td>Dentro de los 3 días hábiles posteriores a la publicación de resultados donde el docente sea favorecido</td></tr></table>"
+	},
+	{
+		"id": 9,
+		"ch_parent_id": null,
+		"ch_order": 9,
+		"ch_title": "Cuantía",
+		"ch_description": "<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar para evento internacional (inscripción)</p></td><td><p>$4'000.000 (Cuatro millones pesos)</p></td></tr><tr><td><p>Monto máximo a financiar para evento nacional (Inscripción)</p></td><td><p>$2'000.000 (Dos millones de pesos)</p></td></tr><tr><td><p>Monto total a financiar en la convocatoria</p></td><td><p><b>$90.000.000</b> (Noventa millones de pesos)</p></td></tr></table>"
+	},
+	{
+		"id": 10,
+		"ch_parent_id": null,
+		"ch_order": 10,
+		"ch_title": "Criterios de Evaluación",
+		"ch_description": "<p>Todas las solicitudes serán evaluadas por el Centro de Investigaciones y Desarrollo Científico de la Universidad Distrital, previa inscripción en el Sistema de Información SICIUD por parte del docente y cargue de los respectivos documentos soporte; se tendrán en cuenta los siguientes criterios de evaluación:</p><table cellspacing='0'><tr><td>8.1</td><td>Características del Evento</td><td>70</td></tr><tr><td rowspan='3'>8.1.1</td><td>Tipo</td><td>24</td></tr><tr><td><ul><li>Nacional</li></ul></td><td>18</td></tr><tr><td><ul><li>Internacional</li></ul></td><td>24</td></tr><tr><td rowspan='5'>8.1.2</td><td>Trayectoria del Evento</td><td>23</td></tr><tr><td><ul><li>1 a 2 ediciones</li></ul></td><td>8</td></tr><tr><td><ul><li>3 a 5 ediciones</li></ul></td><td>10</td></tr><tr><td><ul><li>6 a 10 ediciones</li></ul></td><td>12</td></tr><tr><td><ul><li>11 ediciones o mas</li></ul></td><td>23</td></tr><tr><td rowspan='4'>8.1.3</td><td>Modalidad de presentación</td><td>23</td></tr><tr><td><ul><li>Poster</li></ul></td><td>8</td></tr><tr><td><ul><li>Ponencia</li></ul></td><td>12</td></tr><tr><td><ul><li>Conferencia central ó Muestra artística</li></ul></td><td>23</td></tr><tr><td rowspan='4'>8.1.4</td><td>Tipo de Participación (Adicional)</td><td>5</td></tr><tr><td><ul><li>Organizador</li></ul></td><td>5</td></tr><tr><td><ul><li>Coordinador de Mesa</li></ul></td><td>3</td></tr><tr><td><ul><li>Coordinador de Panel</li></ul></td><td>3</td></tr><tr><td rowspan='3'>8.2</td><td>Trayectoria del Investigador</td><td>30</td></tr><tr><td>Investigador Novel (Con menos de 3 años de experiencia investigativa en la UD registrada en CVLAC)</td><td>30</td></tr><tr><td>Investigador de Trayectoria (Con más de 3 años de experiencia investigativa en la UD registrada en CVLAC)</td><td>15</td></tr></table><p><b>NOTA: La calificación mínima para aspirar a la aprobación del apoyo económico tendrá que ser igual o superior a 60 puntos para eventos nacionales, e igual o superior a 70 puntos para eventos internacionales, de acuerdo con los criterios de evaluación enunciados anteriormente.</b></p>"
+	},
+	{
+		"id": 11,
+		"ch_parent_id": null,
+		"ch_order": 0,
+		"ch_title": "Informe de Divulgación",
+		"ch_description": "<p>El docente investigador favorecido deberá diligenciar el formato 'Formato de presentación de Resultados de Ponencia de Evento Nacional e Internacional' que se encuentra en el siguiente link <a href='http://cidc.udistrital.edu.co/web/documentos/formatos/Formato_Presentacion_Resultados_Ponencia.docx' target='_blank'>http://cidc.udistrital.edu.co/web/documentos/formatos/Formato_Presentacion_Resultados_Ponencia.docx</a> como máximo quince (15) días hábiles después de la fecha de participación en el evento.</p><p><b>NOTA: Si el docente incumple con la presentación del informe de actividades anteriormente descrito dentro del plazo estipulado, el grupo de investigación al que pertenece y en nombre del cual presentó la propuesta será inhabilitado en el sistema por el término de un semestre; lo anterior implica que ninguno de sus miembros podrá participar en las convocatorias que realice el CIDC en el semestre.</b></p>"
+	},
+	{
+		"id": 12,
+		"ch_parent_id": null,
+		"ch_order": 12,
+		"ch_title": "Documentos solicitados",
+		"ch_description": "<p>El CIDC se reserva el derecho de hacer ajustes mediante el mecanismo de adendas a los términos de referencia durante el desarrollo de la convocatoria de acuerdo con las necesidades institucionales y la disponibilidad presupuestal.</p><p>El trámite administrativo de los apoyos está sujeto a los tiempos administrativos de cada una de las dependencias que participan en todo el proceso.</p>"
+	},
+	{
+		"id": 13,
+		"ch_parent_id": null,
+		"ch_order": 0,
+		"ch_title": "Información Adicional",
+		"ch_description": "<p>El CIDC se reserva el derecho de hacer ajustes mediante el mecanismo de adendas a los términos de referencia durante el desarrollo de la convocatoria de acuerdo con las necesidades institucionales y la disponibilidad presupuestal.</p><p>El trámite administrativo de los apoyos está sujeto a los tiempos administrativos de cada una de las dependencias que participan en todo el proceso.</p>"
+	},
+	{
+		"id": 14,
+		"ch_parent_id": null,
+		"ch_order": 0,
+		"ch_title": "Asesoría Técnica en el SICIUD",
+		"ch_description": "<p>Para cualquier duda o comentario relativo a la Convocatoria, favor comunicarse al correo electrónico <a href='mailto:planeacion-cidc@correo.udistrital.edu.co' target='_blank'>planeacion-cidc@correo.udistrital.edu.co</a></p>"
+	},
+	{
+		"id": 15,
+		"ch_parent_id": 9,
+		"ch_order": 15,
+		"ch_title": "Rubros a financiar",
+		"ch_description": "<p>La cuantía de la presente convocatoria será asignada con cargo al rubro de Promoción de la Investigación de la siguiente manera:</p><table cellspacing='0'><tr><td><p>Monto máximo a financiar para evento internacional (inscripción)</p></td><td><p>$4'000.000 (Cuatro millones pesos)</p></td></tr><tr><td><p>Monto máximo a financiar para evento nacional (Inscripción)</p></td><td><p>$2'000.000 (Dos millones de pesos)</p></td></tr><tr><td><p>Monto total a financiar en la convocatoria</p></td><td><p><b>$90.000.000</b> (Noventa millones de pesos)</p></td></tr></table>"
+	}
+]

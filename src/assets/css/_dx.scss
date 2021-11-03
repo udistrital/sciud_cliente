@@ -690,6 +690,11 @@
 			text-transform: uppercase;
 		}
 	}
+	&.text-end {
+		input[type="text"] {
+			text-align: right;
+		}
+	}
 }
 
 .nb {
@@ -829,18 +834,6 @@
 	}
 }
 
-.dx-button-has-text {
-	background-color: $main-color-600 !important;
-	.dx-button-content {
-		.dx-button-text {
-			font-weight: 600 !important;
-			font-size: 0.94rem !important;
-			font-family: $font-family !important;
-			color: #fff !important;
-		}
-	}
-}
-
 .dx-scrollable-scrollbar {
 	&.dx-state-hover {
 		background-color: $main-color-200 !important;
@@ -862,7 +855,7 @@
 		margin: 0 !important;
 		list-style: none !important;
 		// min-height: 300px;
-		border-radius: 6px;
+		// border-radius: 2px;
 		background-color: rgba(#fff, 0.97) !important;
 		display: block !important;
 		// align-items: center !important;
@@ -1379,6 +1372,18 @@ tr.hovered {
 	}
 }
 
+.dx-command-drag {
+	padding-top: 0.5rem !important;
+	vertical-align: top !important;
+	.dx-datagrid-drag-icon {
+		color: $main-color-600;
+		&:before {
+			font-family: icomoon !important;
+			content: "\ee49" !important;
+		}
+	}
+}
+
 .dx-sortable-placeholder {
 	border-color: $main-color-500 !important;
 }
@@ -1395,5 +1400,79 @@ tr.hovered {
 		margin-bottom: 0.5rem;
 	}
 }
-.dx-state-selected {
+.dx-treeview-node {
+	&.dx-state-selected,
+	&.dx-state-focused {
+		& > .dx-treeview-item {
+			background-color: $main-color-500;
+			.dx-treeview-item-content {
+				color: #fff;
+			}
+		}
+	}
+	&.dx-state-hover {
+		& > .dx-treeview-item {
+			background-color: #ccc;
+			.dx-treeview-item-content {
+				color: #333;
+			}
+		}
+	}
+	&.dx-state-selected {
+		.dx-treeview-item {
+			&.dx-state-hover {
+				background-color: #ccc;
+				.dx-treeview-item-content {
+					color: #333;
+				}
+			}
+		}
+	}
+}
+
+.dx-treeview-item-content {
+	&.list-item {
+		font-weight: 600;
+		.numeral {
+			margin-right: 0.12rem;
+		}
+	}
+}
+
+.dx-button-has-text {
+	background-color: $main-color-600;
+	.dx-button-content {
+		.dx-button-text {
+			font-weight: 600;
+			font-size: 0.94rem;
+			font-family: $font-family;
+			color: #fff;
+		}
+	}
+}
+
+.html-editor {
+	.dx-htmleditor-toolbar-wrapper {
+		padding: 0;
+		.dx-toolbar-before {
+			.dx-toolbar-item {
+				background-color: none;
+				padding: 0;
+				.dx-toolbar-item-content {
+					.dx-button-has-text {
+						background-color: #fff;
+						margin: 0;
+						.dx-button-content {
+							.dx-icon {
+								&::before {
+									color: $text !important;
+								}
+							}
+							padding: 4px 6px;
+						}
+					}
+				}
+			}
+		}
+	}
 }

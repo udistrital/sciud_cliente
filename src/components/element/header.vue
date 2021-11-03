@@ -3,7 +3,7 @@
 		<div class="page-title d-flex">
 			<h1>
 				<i class="icon-books mr-1 color-main-600"></i>
-				<span class="font-weight-semibold" id="title">Estructuras de Investigación</span>
+				<span class="font-weight-semibold" id="title">Estructuras de Investigación </span>
 				<span> &raquo; {{ title }}</span>
 			</h1>
 			<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
@@ -66,7 +66,7 @@ export default {
 	computed: {
 		title() {
 			if (this.group.id !== null) return this.$titleCase(this.group.group_type_name);
-			return "Nueva Estructura de Investigación";
+			return "Nueva Estructura de Investigación ";
 		},
 	},
 	methods: {

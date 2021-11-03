@@ -277,6 +277,10 @@ vue.mixin({
 			console.log(window.vm.$sep);
 			return result;
 		},
+		editModeConv() {
+			let result = true;
+			return result;
+		},
 		minDate() {
 			return new Date(2000, 0, 1);
 		},
@@ -293,7 +297,18 @@ vue.mixin({
 			return window.config.pageSizes;
 		},
 		is_dev() {
-			return process.env.NODE_ENV.toString().toLowerCase() === "development";
+			// 202109232005: Verifica si el ambiente es de desarrollo
+			let res = false;
+			let env = process.env.NODE_ENV.toString().toLowerCase();
+			let cUrl = window.location.href.toLowerCase();
+			// console.log(this.$sep);
+			// console.log("env =>", env);
+			// console.log("cUrl =>", cUrl);
+			if (cUrl.indexOf("siciud.") > -1) res = false;
+			if (cUrl.indexOf("nemedi.") > -1 || env === "development") res = true;
+			// console.log("is_dev =>", res);
+			// console.log(this.$sep);
+			return res;
 		},
 		baseUrl() {
 			return process.env.BASE_URL;

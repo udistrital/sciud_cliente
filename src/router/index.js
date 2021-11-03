@@ -71,11 +71,164 @@ let routes = new router({
 			component: () => import("@/modules/unidad/produccion"),
 		},
 		{
-			path: "/convocatoria",
 			name: "convocatoria",
+			path: "/convocatoria",
 			meta: { title: "Convocatorias", requiresAuth: true },
 			component: () => import("@/modules/convocatoria/"),
 		},
+		{
+			name: "convocatoria-crear",
+			path: "/convocatoria/crear",
+			meta: { title: "Nueva convocatoria", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/informacion"),
+		},
+		{
+			name: "convocatoria-info",
+			path: "/convocatoria/:itemId",
+			meta: { title: "Convocatoria", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/informacion"),
+		},
+		{
+			name: "convocatoria-documentos",
+			path: "/convocatoria/:itemId/documentos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/documentos"),
+		},
+		{
+			name: "convocatoria-cronograma",
+			path: "/convocatoria/:itemId/cronograma",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/cronograma"),
+		},
+		{
+			name: "convocatoria-criterios",
+			path: "/convocatoria/:itemId/criterios",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/criterios"),
+		},
+		{
+			name: "convocatoria-aspectos",
+			path: "/convocatoria/:itemId/aspectos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/aspectos"),
+		},
+		{
+			name: "convocatoria-rubros",
+			path: "/convocatoria/:itemId/rubros",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/rubros"),
+		},
+		{
+			name: "convocatoria-plantilla",
+			path: "/convocatoria/:itemId/plantilla",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/plantilla"),
+		},
+
+
+		//----------------------------------------------------------
+		//		constitucion de la red de investigación
+		//----------------------------------------------------------
+		{
+			name: "red",
+			path: "/red",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/index.vue"),
+		},
+
+		{
+			name: "red-crear",
+			path: "/red/crear",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+
+
+		{
+			name: "red-info",
+			path: "/red/:unidadId",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/informacion_red"),
+		},
+		{
+			name: "red-documentos",
+			path: "/red/:unidadId/documentos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/documentos"),
+		},
+		{
+			name: "red-grupos",
+			path: "/red/:unidadId/grupos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/red_investigacion/grupos"),
+		},
+
+
+		//-----------------------------------------
+		//   Comienzo de rutas plan de accion: camorenos
+		//-----------------------------------------
+		{
+			path: "/unidad/:unidadId/plan_accion",
+			name: "plan-accion",
+			meta: { title: "plan-accion", requiresAuth: true },
+			component: () => import("@/modules/plan_accion/"),
+		},
+		{
+			path: "/unidad/:unidadId/plan_accion/crear",
+			name: "plan-accion-nuevo-reg",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/plan_accion/ingreso_datos"),
+		},
+		{
+			name: "plan-accion-datos",
+			path: "/unidad/:unidadId/plan_accion/:planId/datos",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/plan_accion/items_plan"),
+		},
+		{
+			name: "plan-accion-vista",
+			path: "/unidad/:unidadId/plan_accion/:planId/vista",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/plan_accion/vista"),
+		},
+
+		//---------------------------------------------------
+		//				Entrada de entidades: camorenos
+		//---------------------------------------------------
+		{
+			name: "entidades",
+			path: "/admin/entidades",
+			component: () => import("@/modules/admin/entidades"),
+			meta: { title: "Administración » Entidades", requiresAuth: true },
+		},
+		{
+			name: "entidades-dep-represent",
+			path: "/admin/entidades/:idEnt/dependencias/:idDep",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/admin/form_entidades/index"),
+		},
+		{
+			name: "entidades-dep-represent",
+			path: "/admin/entidades/:idEnt",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/admin/form_entidades/index"),
+		},
+		{
+			name: "dependencias",
+			path: "/admin/entidades/:idEnt/dependencias",
+			component: () => import("@/modules/admin/dependencias"),
+			meta: { title: "Administración » Dependencias", requiresAuth: true },
+		},
+		
+
+		// {
+		// 	path: "*",
+		// 	redirect: { name: DEFAULT_ROUTE },
+		// },
+		//--------------------------------------------
+		//			Fin plan de accion: camorenos
+		//--------------------------------------------
+
 		{
 			// UserProfile will be rendered inside User's <router-view>
 			// when /user/:id/profile is matched
@@ -89,6 +242,12 @@ let routes = new router({
 			path: "/admin/tipos",
 			component: () => import("@/modules/admin/tipos"),
 			meta: { title: "Administración » Tipos", requiresAuth: true },
+		},
+		{
+			name: "indicadores",
+			path: "/admin/indicadores",
+			component: () => import("@/modules/admin/indicadores"),
+			meta: { title: "Administración » Indicadores", requiresAuth: true },
 		},
 		{
 			path: "*",

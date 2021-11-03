@@ -68,7 +68,8 @@ const store = {
 					return await api("oas")
 						.get("terceros_crud/v1/datos_identificacion?query=Numero:" + args.doc)
 						.then((r) => {
-							user_oas_details = r.data[0];
+							// 202109231949: Se actualiza para que obtenga el último del array
+							user_oas_details = r.data[r.data.length - 1];
 							// 202104020819: Se almacena el documento pues será el
 							// usado para buscar si no hay respuesta de la OAS
 							user_oas_details["doc"] = args.doc;

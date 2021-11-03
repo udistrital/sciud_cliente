@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="page-header header-elements-md-inline">
+		<div class="page-header header-elements-md-inline" id="panel-unidades-head">
 			<div class="page-title d-flex">
 				<h1>
 					<i class="icon-pencil6 mr-1 color-main-600"></i>
@@ -9,26 +9,23 @@
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
-			<div class="header-elements" v-if="editMode">
-				<button
-					type="button"
-					@click="add()"
-					title="Nueva Unidad de Investigación..."
-					class="btn btn-main btn-labeled btn-labeled-left legitRipple slide"
-					id="btn-add"
-				>
+			<div class="header-elements" v-if="es_admin">
+				<router-link tag="a" to="/convocatoria/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
 					<b><i class="icon-database-add"></i></b> Nueva Convocatoria
-				</button>
+				</router-link>
 			</div>
 		</div>
 
 		<div class="row" id="panel-unidades">
 			<div class="col">
 				<div class="card">
-					<div class="card-body pt-3 mh">
+					<div :class="'card-body pt-3 ' + (es_admin ? 'mh' : 'mhn')">
+						<!-- // 202107051635: https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/FilterPanel/Vue -->
+						<!--
 						<div class="slide data" v-if="unidad">
-							<Tabs ref="Tabs" :group="unidad" :parent="this" :documents="documentos" :saveFn="save" :cancelFn="cancel" :editMode="editMode" />
+							<Tabs ref="Tabs" :group="unidad" :parent="this" :documents="documentos" :saveFn="save" :cancelFn="cancel" :editModeConv="editModeConv" />
 						</div>
+						-->
 						<div class="grid">
 							<DxDataGrid
 								class="main"
@@ -36,98 +33,140 @@
 								@initialized="gridInit"
 								@content-ready="onContentReady"
 								:allow-column-reordering="true"
-								:data-source="dataSource"
+								:data-source="dsEstructuras"
 								:remote-operations="true"
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
+								:word-wrap-enabled="true"
 								:show-borders="false"
 							>
+								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
+								<DxColumnChooser :enabled="es_admin" mode="dragAndDrop" />
 								<DxExport :enabled="false" />
-								<DxColumnChooser :enabled="true" mode="dragAndDrop" />
-								<DxSorting mode="multiple" /><!-- single, multiple, none" -->
-								<DxPaging :page-size="dgPageSize" />
-								<DxFilterRow :visible="false" />
+								<DxFilterPanel :visible="false" />
+								<DxFilterRow :visible="true" />
+								<DxGrouping :auto-expand-all="true" />
+								<DxGroupPanel :visible="es_admin" :allow-column-dragging="true" />
 								<DxLoadPanel :enabled="false" />
-								<DxGroupPanel :visible="true" :allow-column-dragging="true" />
-								<DxGrouping :auto-expand-all="false" />
+								<DxPaging :page-size="dgPageSize" />
+								<DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
+								<DxStateStoring :enabled="false" type="sessionStorage" />
 								<DxSummary>
-									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} unidades" />
+									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} convocatorias" />
 								</DxSummary>
 								<DxPager
 									:show-info="true"
 									:show-page-size-selector="true"
 									:show-navigation-buttons="true"
 									:allowed-page-sizes="dgPageSizes"
-									info-text="Página {0} de {1} ({2} Estructuras de investigación)"
+									info-text="{2} convocatorias de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="true" :highlight-case-sensitive="true" />
 								<DxColumn
+									:allow-filtering="false"
 									:sort-index="1"
 									sort-order="asc"
-									:allow-filtering="false"
 									data-field="id"
-									caption="Id"
+									caption="ID"
 									data-type="number"
 									alignment="center"
 									:allow-sorting="true"
 									:width="70"
 								/>
-								<DxColumn data-field="group_type_name" caption="Tipo" data-type="string" alignment="left" :visible="true" :width="170" />
-								<DxColumn data-field="name" caption="Nombre" data-type="string" alignment="left" :visible="true" cell-template="titleCase" />
-								<DxColumn :visible="false" data-field="acronym" caption="Acrónimo" data-type="string" alignment="center" :width="100" cell-template="tplNull" />
 								<DxColumn
-									:visible="false"
-									data-field="cidc_registration_date"
-									caption="Fecha Registro CIDC"
-									alignment="center"
-									data-type="date"
-									format="dd/MM/yyyy"
-									:width="130"
-								/>
+									:allow-filtering="true"
+									data-field="call_state_id"
+									caption="Estado"
+									:group-index="0"
+									data-type="number"
+									alignment="left"
+									:visible="true"
+									:width="110"
+								>
+									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name" />
+								</DxColumn>
 								<DxColumn
-									data-field="cidc_act_number"
-									caption="No. Acta CIDC"
+									:allow-filtering="false"
+									:visible="true"
+									data-field="call_code"
+									caption="Código"
 									data-type="string"
-									alignment="center"
-									:visible="false"
-									:width="100"
-									cell-template="tplNull"
-								/>
-								<DxColumn
-									data-field="faculty_registration_date"
-									caption="Fecha Registro Facultad"
-									data-type="date"
-									format="dd/MM/yyyy"
-									alignment="center"
-									:visible="false"
-									:width="130"
-								/>
-								<DxColumn
-									data-field="faculty_act_number"
-									caption="No. Acta Facultad"
-									data-type="string"
-									alignment="center"
-									:visible="false"
+									alignment="left"
 									:width="120"
 									cell-template="tplNull"
 								/>
+								<DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" :width="180">
+									<DxLookup :data-source="tipos" value-expr="id" display-expr="st_name" />
+								</DxColumn>
+								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true" />
 								<DxColumn
-									data-field="member_ids.length"
-									caption="Miembros"
+									:allow-filtering="true"
+									data-field="call_beneficiary_id"
+									caption="Beneficiarios"
+									data-type="number"
+									alignment="center"
+									:visible="false"
+									:width="100"
+								>
+									<DxLookup :data-source="beneficiarios" value-expr="id" display-expr="st_name" />
+								</DxColumn>
+								<DxColumn
+									:allow-filtering="true"
+									:visible="false"
+									data-field="call_start_date"
+									caption="Fecha apertura"
+									alignment="center"
+									data-type="date"
+									format="dd/MM/yyyy"
+									:width="130"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									:visible="false"
+									data-field="call_end_date"
+									caption="Fecha cierre"
+									alignment="center"
+									data-type="date"
+									format="dd/MM/yyyy"
+									:width="130"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									:visible="true"
+									data-field="call_duration"
+									caption="Duración"
+									alignment="center"
+									data-type="number"
+									format="#0 meses"
+									:width="130"
+								/>
+								<DxColumn
+									:allow-filtering="true"
+									data-field="call_global_budget"
+									caption="Monto"
 									data-type="number"
 									alignment="center"
 									:allow-grouping="false"
-									:allow-filtering="false"
-									:allow-search="false"
+									format="$ #,##0."
+									:allow-search="true"
 									:allow-sorting="true"
 									:visible="true"
 									:width="100"
 								/>
-								<DxColumn data-field="email" caption="Email" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplEmail" />
-								<DxColumn data-field="gruplac" caption="GrupLAC" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplUrl" />
-								<DxColumn data-field="webpage" caption="Página Web" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplUrl" />
-								<DxColumn data-field="group_state_name" caption="Estado" data-type="string" alignment="center" :visible="true" :width="100" />
-								<DxColumn caption="" name="idEdit" data-field="id" :width="50" alignment="center" cell-template="tplCommands" />
+								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="160" alignment="center" cell-template="tplCommands" />
+								<template #tplCommands="{ data }">
+									<span class="cmds">
+										<a
+											v-for="(link, index) in navItems"
+											href="#"
+											:key="index"
+											:title="'Observar ' + link.name + '...'"
+											@click.prevent="go(data.value, `/convocatoria/${data.value}${link.key !== 'info' ? '/' + link.key : ''}`, `Cargando ${link.name}`)"
+											class="cmd-item color-main-600 mr-2"
+											><b><i :class="link.icon"></i></b>
+										</a>
+									</span>
+								</template>
 								<template #tplUrl="{ data }">
 									<a
 										v-if="data.value && data.value.trim() !== 'NULL' && data.value.trim().length > 5"
@@ -167,25 +206,8 @@
 										{{ $titleCase(data.value) }}
 									</div>
 								</template>
-								<template #tplCommands="{ data }">
-									<span class="cmds">
-										<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="edit(data)" href="#">
-											<i class="icon-database-edit"></i>
-										</a>
-									</span>
-								</template>
 							</DxDataGrid>
 						</div>
-						<!--
-              <transition name="fade">
-              <div class="row" v-if="unidad">
-                <div class="col">
-                  <b>Grupo:</b>
-                  <code> {{ JSON.stringify(unidad, null, 4) }} </code>
-                </div>
-              </div>
-            </transition>
-            -->
 					</div>
 				</div>
 			</div>
@@ -194,13 +216,7 @@
 		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
-					<div class="card-body">
-						editMode: {{ editMode }}<br />
-						{{ JSON.stringify(unidad, null, 3) }}
-					</div>
-					<div class="card-footer">
-						<a @click.prevent="scrollTop()" class="font-weight-semibold" href="#">SCROLL!!!</a>
-					</div>
+					<div class="card-body"><span class="font-weight-semibold">editModeConv:</span> {{ editModeConv }}</div>
 				</div>
 			</div>
 		</div>
@@ -209,9 +225,11 @@
 
 <script>
 /* eslint-disable no-unused-vars */
+/* eslint-disable vue/no-unused-components */
 let root = null;
 let $ = window.jQuery;
 import DxStore from "@/store/dx";
+import DxDropDownButton from "devextreme-vue/drop-down-button";
 // import Commands from "@/components/element/commands.vue";
 // {{url}}/research_group?page=1&per_page=5&group_type_id=1
 import {
@@ -219,25 +237,32 @@ import {
 	DxColumnChooser,
 	DxDataGrid,
 	DxExport,
+	DxFilterPanel,
 	DxFilterRow,
 	DxGrouping,
 	DxGroupItem,
 	DxGroupPanel,
 	DxLoadPanel,
+	DxLookup,
 	DxPager,
 	DxPaging,
 	DxSearchPanel,
 	DxSorting,
+	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
 	name: "inicio",
 	components: {
+		DxStateStoring,
+		DxDropDownButton,
 		DxColumn,
+		DxFilterPanel,
 		DxColumnChooser,
+		DxLookup,
 		DxDataGrid,
 		DxExport,
 		DxFilterRow,
@@ -250,61 +275,98 @@ export default {
 		DxSearchPanel,
 		DxSorting,
 		DxSummary,
+		// Tabs,
 	},
 	data: () => ({
 		items: [],
 		grid: null,
+		mode: null,
 		unidad: null,
 		documentos: [],
 		isValid: false,
-		baseEntity: null,
+		baseEntity: {},
 		docLink: null,
 		firstLoad: true,
-		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
+	created() {
+		root = this;
+	},
 	mounted() {
 		console.log("MOUNTED");
-		root = this;
-		this.loaderElement = "#panel-unidades .card-body";
-		this.loaderMessage = "Cargando Estructuras";
-		this.loaderShow();
-		this.unidad = window.vm.$clone(this.baseEntity);
-		this.getGroupRoles();
+		root.loaderElement = "#panel-unidades .card-body";
+		root.loaderMessage = "Cargando Convocatorias";
+		root.loaderShow();
+		root.unidad = window.vm.$clone(root.baseEntity);
+		root.getGroupRoles();
+		root.loaderHide();
+		console.log("editModeConv", root.editModeConv);
 	},
 	computed: {
-		...mapGetters("unidad", ["documents"]),
-		// ...mapState("unidad", ["loading"]),
-		dataSource: function() {
+		...mapGetters("convocatoria", ["navItems"]),
+		...mapGetters("core/tipo", ["subtypesByType"]),
+		...mapGetters("unidad", ["documents", "states", "types"]),
+		tipos() {
+			return root.subtypesByType("convocatoria_tipo", "id");
+		},
+		beneficiarios() {
+			return root.subtypesByType("convocatoria_beneficiario", "id");
+		},
+		estados() {
+			return root.subtypesByType("convocatoria_estado", "id");
+		},
+		dsEstructuras: function() {
 			// 202103120855: Obtiene los grupos del usuario actual si es participante
 			var ids = [];
-			console.log("this.user_role_id", this.user_role_id);
-			if (this.user_role_id === 5) {
-				this.user.groups.forEach((group) => {
+			console.log("root.user_role_id", root.user_role_id);
+			if (root.user_role_id === root.get_role_id("integrante")) {
+				console.clear();
+				console.log("ES INTEGRANTE!");
+				console.log("root.user =>", root.user);
+				console.log("root.user.groups =>", root.user.groups);
+				// 202107040646: Solo los grupos en los que se encuentre activo el usuario
+				let groups = root.user.groups.filter((o) => o.gm_state_id === 1);
+				console.log("groups =>", groups);
+				groups.forEach((group) => {
 					ids.push(group.research_group_id);
 				});
 			}
+			// 202107040621: Determina las facultades si el usuario tiene rol Gestor facultad
+			let faculties = [];
+			if (root.user_role_id === root.get_role_id("gestor_facultad")) {
+				console.clear();
+				console.log("ES GESTOR FACULTAD!");
+				console.log("root.user =>", root.user);
+				faculties = root.user.local.faculties_ids;
+				console.log("faculties =>", faculties);
+			}
 			return DxStore({
-				ids: ids,
 				key: ["id"],
-				endPoint: "research_units",
+				endPoint: "calls",
 				loadBaseEntity: true,
+				// 202107040725: Determina si debe mostrar solo los grupos activos
+				state: root.es_admin ? null : 1,
 				onLoading: function(loadOptions) {
 					root.loaderShow();
 					setTimeout(function() {
 						root.scrollTop();
 					}, 300);
 				},
-				onLoaded: function(result, baseEntity) {
+				onApiLoaded: async (results) => {
+					console.log(root.$sep);
+					console.log("onApiLoaded => ", results);
+					return results;
+				},
+				onLoaded: function(results, baseEntity) {
 					root.isLoading = false;
 					console.log("onLoaded Added");
-					console.log("result", result);
-					root.items = result.data;
+					console.log("result", results);
+					root.items = results.data;
 					console.log("baseEntity", baseEntity);
 					if (root.baseEntity === null) {
 						root.baseEntity = baseEntity;
-						root.baseEntity.id = 0;
-						root.baseEntity.cidc_registration_date = new Date();
-						root.baseEntity.faculty_registration_date = new Date();
+						root.baseEntity["id"] = 0;
+						root.baseEntity["cidc_registration_date"] = new Date();
+						root.baseEntity["faculty_registration_date"] = new Date();
 						root.unidad = window.vm.$clone(root.baseEntity);
 						console.log("root.baseEntity", root.baseEntity);
 					}
@@ -317,13 +379,42 @@ export default {
 	watch: {
 		items: function(val) {
 			// console.log("val", val.length);
-			// if (val.length > 0) this.loadingVisible = false;
+			// if (val.length > 0) root.loadingVisible = false;
 		},
 	},
 	methods: {
-		...mapActions("core/nuxeo", { fUpload: "upload", fCreate: "createDoc" }),
+		...mapActions("nuxeo", { fUpload: "upload", fCreate: "createDoc" }),
 		...mapActions("auth/usuario", ["getGroupRoles"]),
-		...mapActions("unidad", ["getResearchers"]),
+		...mapActions("unidad", ["getResearchers", "setUnit", "saveUnit"]),
+		...mapActions("convocatoria/documentos", { getDocs: "get" }),
+		cmdClick(e) {
+			console.log("e.itemData", e.itemData);
+			root.go(e.itemData.text, e.itemData.command, `Cargando ${e.itemData.text}`);
+		},
+		cmdGet(data) {
+			return [
+				{
+					command: `/convocatoria/${data.value}`,
+					text: "Información",
+					icon: "icon-info",
+				},
+				{
+					command: `/convocatoria/${data.value}/documentos`,
+					text: "Documentos",
+					icon: "icon-file-pdf",
+				},
+				{
+					command: `/convocatoria/${data.value}/integrantes`,
+					text: "Integrantes",
+					icon: "icon-users4",
+				},
+				{
+					command: `/convocatoria/${data.value}/produccion`,
+					text: "Producción",
+					icon: "icon-trophy",
+				},
+			];
+		},
 		customizeText(cellInfo) {
 			console.log("cellInfo", cellInfo);
 			return cellInfo.value + "$";
@@ -331,20 +422,19 @@ export default {
 		save(validationGroup) {
 			root.scrollTop();
 			$("#btn-add").fadeOut();
-			let msg = (this.unidad.id === 0 ? "Creando" : "Actualizando") + " unidad";
+			let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " unidad";
 			root.loaderMessage = msg;
 			root.loaderShow(msg);
-			// root.loadingVisible = true;
-			// setTimeout(function(){
 			root.unidad.acronym = root.unidad.acronym.toUpperCase();
 			root.unidad.cidc_act_number = root.unidad.cidc_act_number.toUpperCase();
 			root.unidad.faculty_act_number = root.unidad.faculty_act_number.toUpperCase();
+			if (root.mode == "add") root.unidad.created_by = root.user_id;
+			if (root.mode == "edit") root.unidad.updated_by = root.user_id;
+
 			// TODO: 202010281221 Arreglar para obtener 'oecd_knowledge_area_id' en '_integrantes.vue'
 			root.unidad.oecd_knowledge_area_id = 1;
-			// TODO: 202011252347: Corregir para obtener usuarios reales!
-			if (root.unidad.created_by === null) root.unidad.created_by = 1;
-			if (root.unidad.updated_by === null) root.unidad.updated_by = 1;
-			root.gSave({
+
+			root.saveUnit({
 				unidad: root.unidad,
 				callback: function(gResponse) {
 					console.log("gResponse", gResponse);
@@ -355,34 +445,39 @@ export default {
 					});
 				},
 			});
-			// }, 1000);
 		},
-		cancel(validationGroup) {
-			root.editMode = false;
-			console.log(this.$sep);
-			$("#title").html("Estructuras de Investigación");
+		reload() {
+			window.location.reload();
+		},
+		cancel() {
+			// root.editModeConv = false;
+			console.log(root.$sep);
+			$("#title").html("Convocatorias");
 			$("#msg").html("");
-			root.scrollTop();
+			$("#panel-unidades-head .btn-back").fadeOut();
 			$("#panel-unidades .data").fadeOut(function() {
 				var g = $("#panel-unidades .grid");
 				g.fadeIn(function() {
 					$("#btn-add").fadeIn();
-					if (typeof validationGroup.reset !== "undefined") validationGroup.reset();
-					root.unidad = root.$clone(this.baseEntity);
-					root.$refs.Tabs.clearMembers();
-					root.$refs.Tabs.changeTab(0);
+					root.unidad = root.$clone(root.baseEntity);
+					setTimeout(function() {
+						root.$refs.Tabs.clearMembers();
+						root.$refs.Tabs.changeTab(0);
+					}, 300);
 				});
 			});
 		},
 		add() {
+			root.mode = "add";
 			console.log("ADD!");
-			this.unidad = this.$clone(this.baseEntity);
-			console.log("this.unidad", this.unidad);
+			root.unidad = root.$clone(root.baseEntity);
+			console.log("root.unidad", root.unidad);
 			$("#btn-add").fadeOut();
 			$("#msg").html("Nueva Tabs");
 			root.$refs.Tabs.changeTab(0);
 			$("#panel-unidades .grid").fadeOut(function() {
 				console.log("END #panel-unidades fadeOut!");
+				$("#panel-unidades-head .btn-back").fadeIn();
 				$("#panel-unidades .data").fadeIn(function() {
 					root.scrollTop();
 					console.log("END #panel-unidades .data fadeIn!");
@@ -390,56 +485,75 @@ export default {
 			});
 		},
 		edit(row) {
-			// console.clear();
 			console.log("row", row);
-			this.unidad = this.$clone(row.data);
-			this.getResearchers(this.unidad.id);
-			$("#btn-add").fadeOut();
-			$("#title").html(`${this.unidad.group_type_name} &raquo; `);
-			let m = this.$titleCase(this.unidad.name);
+			root.setUnit(row.data);
+			root.go(row.data.id, `/convocatoria/${row.data.id}`);
+		},
+		edit2(row) {
+			root.mode = "add";
+			// console.clear();
+			root.loaderMessage = "Cargando unidad";
+			root.loaderShow();
+			console.log("row", row);
+			let u = root.$clone(row.data);
+			let m = root.$titleCase(u.name);
+			root.getResearchers(u.id);
 			root.$refs.Tabs.changeTab(0);
 			// 202103170030: Determina el rol del usuario dentro del grupo si es Integrante
 			console.log("user", root.user);
 			if (root.user_role_id === 5) {
-				var gs = root.user.groups.filter((o) => o.research_group_id === this.unidad.id);
+				var gs = root.user.groups.filter((o) => o.research_group_id === u.id);
 				if (gs.length > 0) {
 					let g = gs[0];
 					console.log("group", g);
 					// Tiene que ser director del grupo
-					// root.editMode = g.role_id === 1;
+					// root.editModeConv = g.role_id === 1;
 					m += ` (Rol: ${g.role_name})`;
 				}
 			} else {
 				// TODO: 202103170059: Implementar restricción para otros roles
 			}
+			console.log("editModeConv", root.editModeConv);
+			$("#btn-add").fadeOut();
+			$("#title").html(`${u.group_type_name} &raquo; `);
 			$("#msg").html(m);
-			console.log("editMode", root.editMode);
-
-			$("#panel-unidades .grid").fadeOut(function() {
-				$("#panel-unidades .data").fadeIn(function() {
-					root.scrollTop();
-				});
+			// 202104102143: Carga documentos
+			root.getDocs({
+				id: u.id,
+				cb: function(docs) {
+					console.log(root.$sep);
+					console.log("Documentos", docs);
+					u["documents"] = docs;
+					root.unidad = u;
+					$("#panel-unidades .grid").fadeOut(function() {
+						root.loaderHide();
+						$("#panel-unidades-head .btn-back").fadeIn();
+						$("#panel-unidades .data").fadeIn(function() {
+							// root.scrollTop();
+						});
+					});
+				},
 			});
 		},
 		enable(result, data) {
 			console.log(`Result: ${result}, Data: ${JSON.stringify(data)}`);
 		},
 		remove() {
-			console.log("remove " + this.data.id);
+			console.log("remove " + root.data.id);
 		},
 		gridInit(e) {
-			this.grid = e.component;
-			this.grid.beginUpdate = () => {};
-			this.grid.endUpdate = () => {};
+			root.grid = e.component;
+			root.grid.beginUpdate = () => {};
+			root.grid.endUpdate = () => {};
 		},
 		onContentReady() {
-			// this.loadingVisible = false;
-			// console.log("onContentReady!");
-			$(".commands a").click(function() {
-				console.log("Come on lets show the dropdown!!");
-			});
-			var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>Selector de Columnas:</span>";
-			if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
+			// // root.loadingVisible = false;
+			// // console.log("onContentReady!");
+			// $(".commands a").click(function() {
+			// 	console.log("Come on lets show the dropdown!!");
+			// });
+			// var h = "<span class='mr-1 color-text d-none d-md-inline' id='column-chooser-text'>Selector de Columnas:</span>";
+			// if ($("#column-chooser-text").length <= 0) $(".dx-datagrid-column-chooser-button").before(h);
 		},
 	},
 };

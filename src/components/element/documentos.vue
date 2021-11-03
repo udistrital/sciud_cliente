@@ -8,43 +8,51 @@
 						<div class="card-body mb-0 pb-0 pt-3">
 							<DxValidationGroup ref="vGroup">
 								<div class="row">
-									<div class="col-md-3">
-										<div class="form-group">
-											<label>Tipo:</label>
-											<DxSelectBox
-												:show-clear-button="true"
-												:grouped="false"
-												:data-source="documentTypes"
-												:value.sync="baseObj.document_type_id"
-												:search-enabled="false"
-												placeholder="Seleccione..."
-												class="form-control"
-												display-expr="st_name"
-												value-expr="id"
-											>
-												<DxValidator>
-													<DxRequiredRule />
-												</DxValidator>
-											</DxSelectBox>
+									<div class="col-9">
+										<div class="row">
+											<div class="col-5">
+												<div class="form-group mb-2">
+													<label>Tipo:</label>
+													<DxSelectBox
+														:show-clear-button="true"
+														:grouped="false"
+														:data-source="document_types"
+														:value.sync="baseObj.document_type_id"
+														:search-enabled="false"
+														placeholder="Seleccione..."
+														class="form-control"
+														display-expr="st_name"
+														@value-changed="documentTypeSelected"
+														value-expr="id"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxSelectBox>
+												</div>
+											</div>
+											<div class="col">
+												<div class="form-group mb-2">
+													<label>Nombre:</label>
+													<DxTextBox :value.sync="baseObj.doc_name" placeholder="Nombre(s)" class="form-control" :read-only="false" mode="text">
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxTextBox>
+												</div>
+											</div>
 										</div>
+										<transition name="fade">
+											<div class="row" v-if="doc_description">
+												<div class="col">
+													<div class="card-body m-0 mb-3 p-0" v-html="doc_description"></div>
+												</div>
+											</div>
+										</transition>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<label>Nombre:</label>
-											<DxTextBox :value.sync="baseObj.doc_name" placeholder="Nombre(s)" class="form-control" :read-only="false" mode="text">
-												<DxValidator>
-													<DxRequiredRule />
-												</DxValidator>
-											</DxTextBox>
-										</div>
-									</div>
-
-									<div class="col-md-3">
+									<div class="col-3">
 										<div class="form-group file-container">
 											<label>Documento:</label>
-											<!-- <a href="#" id="a-doc-link" @click.prevent="documentShow()" class="btn btn-main btn-sm btn-labeled btn-labeled-left legitRipple w-100">
-												<b><i class="icon-link"></i></b> OBSERVAR DOCUMENTO
-											</a> -->
 											<a
 												href="#"
 												id="a-doc-link"
@@ -60,10 +68,6 @@
 									</div>
 								</div>
 							</DxValidationGroup>
-
-							<div class="col-md-12" v-if="documentTypes.length > 0">
-								<div class="card-body" v-html="seleccionTipoDoc()"></div>
-							</div>
 						</div>
 						<div class="card-footer">
 							<div class="row">
@@ -94,7 +98,7 @@
 							@click.prevent="documentAdd"
 							class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple slide"
 						>
-							<b><i class="icon-database-add"></i></b> NUEVO DOCUMENTO
+							<b><i class="icon-database-add"></i></b> {{ newButtonText.toUpperCase() }}
 						</a>
 						<DxDataGrid
 							class="main"
@@ -115,7 +119,7 @@
 							<!-- <DxFilterRow :visible="false" /> -->
 							<DxLoadPanel :enabled="false" />
 							<DxGroupPanel :visible="true" :allow-column-dragging="true" />
-							<DxGrouping :auto-expand-all="false" />
+							<DxGrouping :auto-expand-all="true" />
 							<DxSummary>
 								<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
 							</DxSummary>
@@ -134,28 +138,19 @@
 								:allow-search="false"
 								:allow-sorting="true"
 								sort-order="asc"
-								:width="120"
+								:width="80"
 								alignment="center"
 								caption="ID"
 								data-field="id"
 								data-type="string"
 							/>
 							<DxColumn
+								:width="200"
 								:allow-filtering="true"
 								:allow-sorting="true"
-								:allow-grouping="false"
+								:allow-grouping="true"
 								:customize-text="nullText"
-								alignment="center"
-								caption="Nombre"
-								data-field="doc_name"
-								data-type="string"
-							/>
-							<DxColumn
-								:allow-filtering="true"
-								:allow-sorting="true"
-								:allow-grouping="false"
-								:customize-text="nullText"
-								alignment="center"
+								alignment="left"
 								caption="Tipo"
 								data-field="document_type_name"
 								data-type="string"
@@ -165,7 +160,18 @@
 								:allow-sorting="true"
 								:allow-grouping="false"
 								:customize-text="nullText"
-								alignment="center"
+								alignment="left"
+								caption="Nombre"
+								data-field="doc_name"
+								data-type="string"
+							/>
+							<DxColumn
+								:width="120"
+								:allow-filtering="true"
+								:allow-sorting="false"
+								:allow-grouping="false"
+								:customize-text="nullText"
+								alignment="left"
 								caption="Documento"
 								data-field="doc_path"
 								data-type="string"
@@ -182,6 +188,7 @@
 								>
 							</template>
 							<DxColumn
+								:width="100"
 								:allow-filtering="true"
 								:allow-sorting="true"
 								:allow-grouping="false"
@@ -205,7 +212,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" v-if="is_dev && debug">
+		<div class="row mt-3 pb-0" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
@@ -284,6 +291,7 @@ export default {
 		DxValidator,
 	},
 	data: () => ({
+		doc_description: null,
 		actionTitle: null,
 		baseEnt: null,
 		btnCancel: null,
@@ -293,8 +301,8 @@ export default {
 		current: null,
 		docLink: null,
 		tituloDocumento: null,
-		documentTypes: [],
-		documentTypesCurrent: [],
+		document_types: [],
+		item_document_types: [],
 		editing: false,
 		file: null,
 		fileError: null,
@@ -405,12 +413,26 @@ export default {
 				onLoaded: function(results) {
 					// console.clear();
 					console.log(root.$sep);
-					console.log("GRID LOADED!!");
-					root.documentTypesCurrent = [];
+					console.log("Grid loaded =>", results.data);
+					console.log("root.tipos =>", root.tipos);
+					console.log(root.$sep);
+					root.item_document_types = [];
 					results.data.forEach((o) => {
-						root.documentTypesCurrent.push(o.document_type_id);
+						console.log("o =>", o);
+						let dt = root.tipos.find((x) => x.id === o.document_type_id);
+						if (typeof dt !== "undefined") {
+							console.log("dt =>", dt);
+							console.log(typeof dt.multiple);
+							if (!dt.multiple) {
+								console.log("multiple =>", dt.multiple);
+								root.item_document_types.push(o.document_type_id);
+							}
+							console.log(root.$sep);
+						} else {
+							root.item_document_types.push(o.document_type_id);
+						}
 					});
-					console.log("root.documentTypesCurrent", root.documentTypesCurrent);
+					console.log("root.item_document_types", root.item_document_types);
 					root.documentTypeFilter(function() {
 						root.loaderHide();
 					});
@@ -439,6 +461,10 @@ export default {
 			type: String,
 			default: () => null,
 		},
+		newButtonText: {
+			type: String,
+			default: () => "Nuevo documento",
+		},
 		id: {
 			type: String,
 			default: () => null,
@@ -447,23 +473,27 @@ export default {
 	methods: {
 		...mapActions("core/nuxeo", ["upload", "get", "getDoc"]),
 		...mapActions("unidad/documentos", ["save", "update", "documents"]),
-		seleccionTipoDoc: () => {
-			let arreglotipos = root.documentTypes;
-			let id_data = root.baseObj.document_type_id;
-			let resultado = "";
-			let stringData = "<b><i class='icon-info'></i> Nota:</b><br>";
-			if (typeof arreglotipos !== "undefined" && arreglotipos !== null)
-				arreglotipos.find(function(value, index) {
-					if (value != null) {
-						if (value.id === id_data) resultado = value.st_description;
-						if (resultado !== null && !resultado.trim().length > 0) resultado = null;
+		// 202107272112: Nuevo método al seleccionar un tipo de documento
+		documentTypeSelected: (e) => {
+			let data = null;
+			let item = root.document_types.find((o) => o.id === e.value);
+			if (typeof item !== "undefined") {
+				let name = item.st_name;
+				let desc = item.st_description;
+				if (name !== null && name.length > 0 && desc !== null && desc.length > 0) {
+					try {
+						// 202107272117: Acá no se hace nada con 'data'
+						data = JSON.parse(desc);
+						console.log("data =>", data);
+						root.doc_description = null;
+					} catch (e) {
+						root.doc_description = `<span class="title-zone"><span class="title-desc"><i class='icon-info'></i> ${name}:&nbsp;</span> ${desc}</span>`;
 					}
-				});
-
-			return resultado != null && id_data != null ? stringData + resultado : "";
+				} else root.doc_description = null;
+			}
 		},
 		popupHidden: (e) => {
-			console.clear();
+			// console.clear();
 			console.log("e", e);
 			root.popupVisible = false;
 		},
@@ -474,7 +504,7 @@ export default {
 			let btn = $(`<a href="${dl}" target="_blank" class="color-main-600 font-weight-semibold"><i class="icon-link"></i> OBSERVAR</a>`);
 		},
 		documentShow: async (data) => {
-			console.clear();
+			// console.clear();
 			root.loaderShow("Cargando Documento", $("#panel-documentos").length > 0 ? "#panel-documentos" : "#" + root.id);
 			setTimeout(async function() {
 				console.log("data", data);
@@ -500,13 +530,13 @@ export default {
 		documentEdit: async (data) => {
 			root.editing = true;
 			root.baseObj = data;
-			root.documentTypes = root.tipos;
+			root.document_types = root.tipos;
 			console.log("data", data);
 			root.current = data;
 			root.fileError.hide();
 			root.btnDocLink.show();
 			console.log("root.btnDocSelect", root.btnDocSelect);
-			root.actionTitle.html("Editar Documento");
+			root.actionTitle.html("Editar documento");
 			root.btnDocSelect.find("span:first").text("CAMBIAR DOCUMENTO");
 			root.documentTypeFilter(function() {
 				$(root.panelGridDoc).fadeOut(function(params) {
@@ -515,13 +545,14 @@ export default {
 			});
 		},
 		documentAdd() {
-			// console.clear();
+			// // console.clear();
 			console.log("documentAdd");
 			root.editing = false;
 			root.fileError.hide();
 			root.btnDocLink.hide();
 			root.baseObj = root.baseEnt;
-			root.actionTitle.html("Nuevo Documento");
+			root.doc_description = null;
+			root.actionTitle.html(root.newButtonText);
 			root.btnDocSelect.find("span:first").text("SELECCIONAR DOCUMENTO");
 			root.documentTypeFilter(function() {
 				$(root.panelGridDoc).fadeOut(function(params) {
@@ -590,22 +621,23 @@ export default {
 		documentTypeFilter: (cb) => {
 			// 202104241607: Lógica para filtrado de tipos de documento
 			// https://stackoverflow.com/a/15287938
+			// console.clear();
 			console.log("root.tipos", root.tipos);
-			console.log("root.documentTypes", root.documentTypes);
-			console.log("root.documentTypesCurrent", root.documentTypesCurrent);
-			if (root.documentTypesCurrent.length === root.tipos.length) $(root.btnDocAdd).fadeOut();
-			if (root.documentTypesCurrent.length <= 0) {
-				root.documentTypes = root.tipos;
+			console.log("root.document_types", root.document_types);
+			console.log("root.item_document_types", root.item_document_types);
+			if (root.item_document_types.length === root.tipos.length) $(root.btnDocAdd).fadeOut();
+			if (root.item_document_types.length <= 0) {
+				root.document_types = root.tipos;
 				console.log("root.tipos", root.tipos);
-				console.log("root.documentTypes", root.documentTypes);
+				console.log("root.document_types", root.document_types);
 			} else {
-				root.documentTypes = [];
-				let ignore = root.documentTypesCurrent.join(",");
+				root.document_types = [];
+				let ignore = root.item_document_types.join(",");
 				root.tipos.forEach((item) => {
-					if (!ignore.includes(item.id.toString())) {
-						root.documentTypes.push(item);
-					} else if (root.current !== null && root.current.document_type_id === item.id) {
-						root.documentTypes.push(item);
+					console.log("item =>", item);
+					/// 202107272128: realiza las validaciones
+					if (item.multiple || !ignore.includes(item.id.toString()) || (root.current !== null && root.current.document_type_id === item.id)) {
+						root.document_types.push(item);
 					}
 				});
 			}
@@ -625,16 +657,16 @@ export default {
 						let btn = $(root.btnDocAdd);
 						console.log(el);
 						console.log(root.btnDocAdd, btn);
-						// console.clear();
+						// // console.clear();
 						// console.log("root.id", root.id);
 						// if (el.find("#btn-doc-add").length <= 0) {
 						// 	let btn = $(`#${root.id} #btn-doc-add`);
 						// 	console.log("btn", btn);
 						el.append(btn);
 						console.log("root.tipos", root.tipos);
-						console.log("root.documentTypes", root.documentTypes);
-						console.log("root.documentTypesCurrent", root.documentTypesCurrent);
-						if (root.documentTypesCurrent.length < root.tipos.length) btn.fadeIn();
+						console.log("root.document_types", root.document_types);
+						console.log("root.item_document_types", root.item_document_types);
+						if (root.item_document_types.length < root.tipos.length) btn.fadeIn();
 						else btn.fadeOut();
 						// }
 					}, 400);

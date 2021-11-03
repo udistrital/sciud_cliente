@@ -21,17 +21,15 @@
 						Estructuras de Investigación
 					</router-link>
 				</li>
-				<!--
-				<li class="nav-item">
+				<li class="nav-item" v-if="es_admin">
 					<router-link to="/convocatoria" tag="a" class="navbar-nav-link legitRipple" title="Convocatorias...">
 						<i class="icon-pencil6"></i>
 						Convocatorias
 					</router-link>
 				</li>
-				-->
 			</ul>
 			<ul class="navbar-nav navbar-nav-highlight ml-md-auto">
-				<li class="nav-item dropdown" v-if="user_role_id === 1">
+				<li class="nav-item dropdown" v-if="es_admin">
 					<a href="#" class="navbar-nav-link dropdown-toggle legitRipple" data-toggle="dropdown">
 						<i class="icon-cog3"></i>
 						<span class="ml-1">Administración</span>
@@ -45,6 +43,18 @@
 						<router-link to="/admin/tipos" tag="a" class="dropdown-item" title="Tipos...">
 							<i class="icon-menu7"></i>
 							Tipos y Subtipos
+						</router-link>
+						<router-link to="/admin/indicadores" tag="a" class="dropdown-item" title="Indicadores...">
+							<i class="icon-list"></i>
+							Indicadores
+						</router-link>
+						<!-- <router-link to="/admin/dependencias" tag="a" class="dropdown-item" title="dependencias...">
+							<i class="icon-tree5"></i>
+							Dependencias
+						</router-link> -->
+						<router-link to="/admin/entidades" tag="a" class="dropdown-item" title="Entidades...">
+							<i class="icon-office"></i>
+							Entidades
 						</router-link>
 					</div>
 				</li>

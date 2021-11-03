@@ -25,44 +25,70 @@
 					<div class="card-body pb-0 pt-2">
 						<DxValidationGroup ref="basicGroup">
 							<div class="row">
-								<div class="col subtype">
-									<div class="form-group">
-										<label>Tipo:</label>
-										<DxSelectBox
-											:show-clear-button="true"
-											:data-source="types"
-											:grouped="false"
-											:value.sync="baseObj.type_id"
-											:search-enabled="true"
-											:show-data-before-search="true"
-											:min-search-length="3"
-											placeholder="Busque y seleccione un tipo..."
-											class="form-control"
-											display-expr="t_name"
-											value-expr="id"
-										>
-											<DxValidator>
-												<DxCustomRule message="Obligatorio" :validation-callback="validarTipo" :reevaluate="true" />
-											</DxValidator>
-										</DxSelectBox>
+								<div class="col-9">
+									<div class="row">
+										<div class="col subtype">
+											<div class="form-group">
+												<label>Tipo:</label>
+												<DxSelectBox
+													:show-clear-button="true"
+													:data-source="types"
+													:grouped="false"
+													:value.sync="baseObj.type_id"
+													:search-enabled="true"
+													:show-data-before-search="true"
+													:min-search-length="3"
+													placeholder="Busque y seleccione un tipo..."
+													class="form-control"
+													display-expr="t_name"
+													value-expr="id"
+												>
+													<DxValidator>
+														<DxCustomRule message="Obligatorio" :validation-callback="validarTipo" :reevaluate="true" />
+													</DxValidator>
+												</DxSelectBox>
+											</div>
+										</div>
+										<div class="col subtype">
+											<div class="form-group">
+												<label>Subtipo Padre:</label>
+												<DxSelectBox
+													:show-clear-button="true"
+													:data-source="subtypes"
+													:grouped="false"
+													:search-enabled="true"
+													:show-data-before-search="true"
+													:min-search-length="3"
+													:value.sync="baseObj.parent_id"
+													placeholder="Busque y seleccione un subtipo..."
+													class="form-control"
+													display-expr="st_name"
+													value-expr="id"
+												/>
+											</div>
+										</div>
 									</div>
 								</div>
-								<div class="col subtype">
-									<div class="form-group">
-										<label>Subtipo Padre:</label>
-										<DxSelectBox
-											:show-clear-button="true"
-											:data-source="subtypes"
-											:grouped="false"
-											:search-enabled="true"
-											:show-data-before-search="true"
-											:min-search-length="3"
-											:value.sync="baseObj.parent_id"
-											placeholder="Busque y seleccione un subtipo..."
-											class="form-control"
-											display-expr="st_name"
-											value-expr="id"
-										/>
+								<div class="col-3">
+									<div class="row">
+										<div class="col">
+											<div class="form-group">
+												<label>Activo: </label>
+												<DxSwitch :value.sync="baseObj.active" switched-on-text="SI" switched-off-text="NO" />
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Múltiple: </label>
+												<DxSwitch :value.sync="baseObj.multiple" switched-on-text="SI" switched-off-text="NO" />
+											</div>
+										</div>
+										<div class="col">
+											<div class="form-group">
+												<label>Requerido: </label>
+												<DxSwitch :value.sync="baseObj.required" switched-on-text="SI" switched-off-text="NO" />
+											</div>
+										</div>
 									</div>
 								</div>
 								<div class="col">
@@ -73,12 +99,6 @@
 												<DxRequiredRule />
 											</DxValidator>
 										</DxTextBox>
-									</div>
-								</div>
-								<div class="col-md-1">
-									<div class="form-group">
-										<label>Activo: </label>
-										<DxSwitch :value.sync="baseObj.active" switched-on-text="SI" switched-off-text="NO" />
 									</div>
 								</div>
 							</div>
@@ -132,6 +152,7 @@
 								:remote-operations="true"
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
+								:word-wrap-enabled="false"
 								:show-borders="false"
 							>
 								<!-- https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/RowEditingAndEditingEvents/Vue/Light -->
@@ -146,6 +167,7 @@
 								<DxPaging :page-size="dgPageSize" />
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
 								<DxSorting mode="multiple" /><!-- single, multiple, none -->
+								<DxStateStoring :enabled="true" type="sessionStorage" storage-key="siciud-subtipos" />
 								<DxSummary>
 									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0}" />
 								</DxSummary>
@@ -177,13 +199,14 @@
 									:allow-sorting="false"
 									:visible="true"
 									:allow-editing="true"
+									:wrap-item-text="true"
 									sort-order="none"
 									alignment="left"
 									caption="Tipo"
 									data-field="type_id"
 									data-type="number"
 								>
-									<DxLookup :data-source="types" value-expr="id" display-expr="t_name" />
+									<DxLookup :data-source="types" value-expr="id" display-expr="t_name" :wrap-item-text="true" />
 								</DxColumn>
 								<DxColumn
 									:visible="true"
@@ -225,6 +248,7 @@
 									:allow-filtering="true"
 									:allow-sorting="true"
 									:customize-text="nullText"
+									:word-wrap-enabled="true"
 									alignment="left"
 									caption="Subtipo"
 									data-field="name"
@@ -282,28 +306,29 @@ import {
 	DxDataGrid,
 	DxEditing,
 	DxFilterRow,
-	DxLookup,
 	DxGrouping,
 	DxGroupItem,
 	DxGroupPanel,
 	DxLoadPanel,
+	DxLookup,
 	DxPager,
 	DxPaging,
 	DxSearchPanel,
 	DxSorting,
+	DxStateStoring,
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import {
-	DxDateBox,
-	DxFileUploader,
-	DxDropDownButton,
 	DxButton,
+	DxDateBox,
+	DxDropDownButton,
+	DxFileUploader,
+	DxNumberBox,
 	DxSelectBox,
 	DxSwitch,
 	DxTagBox,
 	DxTextArea,
 	DxTextBox,
-	DxNumberBox,
 	DxValidationGroup,
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
@@ -314,14 +339,13 @@ export default {
 	name: "inicio",
 	components: {
 		DxButton,
-		DxLookup,
-		DxDropDownButton,
 		DxColumn,
-		DxCustomRule,
 		DxColumnChooser,
 		DxColumnFixing,
+		DxCustomRule,
 		DxDataGrid,
 		DxDateBox,
+		DxDropDownButton,
 		DxEditing,
 		DxFileUploader,
 		DxFilterRow,
@@ -329,6 +353,7 @@ export default {
 		DxGroupItem,
 		DxGroupPanel,
 		DxLoadPanel,
+		DxLookup,
 		DxNumberBox,
 		DxNumberBoxButton,
 		DxPager,
@@ -344,6 +369,7 @@ export default {
 		DxTextBox,
 		DxValidationGroup,
 		DxValidator,
+		DxStateStoring,
 		Usuario: () => import("@/components/element/usuario"),
 	},
 	data: () => ({
@@ -366,7 +392,9 @@ export default {
 			description: null,
 			created_by: null,
 			updated_by: null,
-			active: null,
+			active: true,
+			multiple: false,
+			required: false,
 		},
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
@@ -392,9 +420,9 @@ export default {
 					console.log("loadOptions", loadOptions);
 					console.log(root._sep);
 					console.log("onLoading");
-					root.loaderElement = root.panelGrid.find(".card-body");
-					root.loaderMessage = "Cargando tipos y subtipos";
-					root.loaderShow();
+					// root.loaderElement = root.panelGrid.find(".card-body");
+					// root.loaderMessage = "Cargando tipos y subtipos";
+					// root.loaderShow("Cargando tipos y subtipos");
 					setTimeout(function() {
 						console.log("SCROLL!");
 						root.scrollTop();
@@ -477,6 +505,8 @@ export default {
 				root.baseObj.type_id = null;
 				root.baseObj.parent_id = null;
 				root.baseObj.active = item.active;
+				root.baseObj.multiple = item.multiple;
+				root.baseObj.required = item.required;
 				tit = `Editando Tipo "${item.t_name}"`;
 			} else {
 				$(".col.subtype").show();
@@ -489,6 +519,8 @@ export default {
 				root.baseObj.type_id = item.type_id;
 				root.baseObj.parent_id = item.parent_id == null ? null : item.parent_id;
 				root.baseObj.active = item.active;
+				root.baseObj.multiple = item.multiple;
+				root.baseObj.required = item.required;
 				tit = what == "parent_type" ? `Editando Subtipo Padre "${data.parent_name}"` : `Editando Subtipo "${data.name}"`;
 			}
 			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;${tit}`);
@@ -557,6 +589,8 @@ export default {
 							st_description: root.$clean(root.baseObj.description),
 							updated_by: root.user_id,
 							active: root.baseObj.active,
+							multiple: root.baseObj.multiple,
+							required: root.baseObj.required,
 						},
 						cb: function(result) {
 							root.getSubtypes({
@@ -614,7 +648,7 @@ export default {
 				optionChanged: (e) => {
 					if (e.fullName == "paging.pageIndex") {
 						console.log("optionChanged", e);
-						root.loaderShow();
+						root.loaderShow("Cargando tipos y subtipos");
 					}
 				},
 				editorPreparing: (e) => {
