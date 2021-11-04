@@ -17,12 +17,12 @@
 									<fieldset>
 										<legend>Información Básica</legend>
 										<div class="row">
-											<div class="col-md-10">
+											<div class="col-md-7">
 												<div class="form-group">
 													<label>Nombre de la estructura:</label>
 													<DxTextBox
 														:show-clear-button="true"
-														:read-only="!editMode"
+														:read-only="!editMode || !canEdit"
 														class="form-control"
 														:value.sync="group.name"
 														placeholder="Nombre de la estructura"
@@ -35,22 +35,47 @@
 													</DxTextBox>
 												</div>
 											</div>
-											<div class="col-md-2">
-												<div class="form-group">
-													<label>Acrónimo:</label>
-													<DxTextBox
-														:show-clear-button="true"
-														:read-only="!editMode"
-														class="form-control upper"
-														placeholder="Acrónimo"
-														:value.sync="group.acronym"
-														name="acronym"
-														id="acronym"
-													>
-														<DxValidator>
-															<DxRequiredRule />
-														</DxValidator>
-													</DxTextBox>
+											<div class="col-md-5">
+												<div class="row">
+													<div class="col-md-7">
+														<div class="form-group">
+															<label>Tipo de estructura:</label>
+															<DxSelectBox
+																:show-clear-button="true"
+																:data-source="unidadTipos"
+																:grouped="false"
+																:value.sync="group.group_type_id"
+																:search-enabled="false"
+																placeholder="Seleccione..."
+																class="form-control"
+																:read-only="!editMode || !canEdit"
+																display-expr="st_name"
+																value-expr="id"
+															>
+																<DxValidator>
+																	<DxRequiredRule />
+																</DxValidator>
+															</DxSelectBox>
+														</div>
+													</div>
+													<div class="col-md-5">
+														<div class="form-group">
+															<label>Acrónimo:</label>
+															<DxTextBox
+																:show-clear-button="true"
+																:read-only="!editMode"
+																class="form-control upper"
+																placeholder="Acrónimo"
+																:value.sync="group.acronym"
+																name="acronym"
+																id="acronym"
+															>
+																<DxValidator>
+																	<DxRequiredRule />
+																</DxValidator>
+															</DxTextBox>
+														</div>
+													</div>
 												</div>
 											</div>
 											<div class="col-md-4">
@@ -59,7 +84,7 @@
 													<DxTagBox
 														name="faculty_ids"
 														id="faculty_ids"
-														:read-only="!es_admin"
+														:read-only="!canEdit"
 														value-expr="Id"
 														display-expr="Nombre"
 														class="form-control"
@@ -83,7 +108,7 @@
 														:grouped="true"
 														:search-enabled="true"
 														:placeholder="placeholder"
-														:read-only="!editMode"
+														:read-only="!editMode || !canEdit"
 														:disabled="tbDisabled"
 														:show-selection-controls="true"
 														:data-source="proyectosCurriculares"
@@ -120,7 +145,41 @@
 													</DxTagBox>
 												</div>
 											</div>
-											<div class="col-md-5">
+											<div class="col-md-4" v-if="group.group_type_id == 3 && researchNetworks.length > 0">
+												<div class="form-group">
+													<label>Red de Investigación:</label>
+													<DxSelectBox
+														:show-clear-button="true"
+														:search-enabled="true"
+														:read-only="!editMode"
+														:placeholder="placeholder"
+														:data-source="researchNetworks"
+														:value.sync="group.parent_id"
+														ref="tbGroups"
+														class="form-control"
+														display-expr="name"
+														value-expr="id"
+													/>
+												</div>
+											</div>
+											<div class="col-md-4" v-if="group.group_type_id == 4 && researchGroups.length > 0">
+												<div class="form-group">
+													<label>Grupo de Investigación:</label>
+													<DxSelectBox
+														:show-clear-button="true"
+														:search-enabled="true"
+														:read-only="!editMode"
+														:placeholder="placeholder"
+														:data-source="researchGroups"
+														:value.sync="group.parent_id"
+														ref="tbGroups"
+														class="form-control"
+														display-expr="name"
+														value-expr="id"
+													/>
+												</div>
+											</div>
+											<div class="col-md-4">
 												<div class="form-group">
 													<label>CINE Amplio y Específico:</label>
 													<DxSelectBox
@@ -164,27 +223,6 @@
 													</DxTagBox>
 												</div>
 											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label>Tipo de unidad:</label>
-													<DxSelectBox
-														:show-clear-button="true"
-														:data-source="unidadTipos"
-														:grouped="false"
-														:value.sync="group.group_type_id"
-														:search-enabled="false"
-														placeholder="Seleccione..."
-														class="form-control"
-														:read-only="!editMode"
-														display-expr="st_name"
-														value-expr="id"
-													>
-														<DxValidator>
-															<DxRequiredRule />
-														</DxValidator>
-													</DxSelectBox>
-												</div>
-											</div>
 											<div class="col-md-2">
 												<div class="form-group">
 													<label>Inter Institucional:</label>
@@ -196,7 +234,7 @@
 													<label>Estado:</label>
 													<DxSelectBox
 														:show-clear-button="true"
-														:read-only="!editMode"
+														:read-only="!editMode || !canEdit"
 														:data-source="unidadEstados"
 														:value.sync="group.group_state_id"
 														class="form-control"
@@ -235,7 +273,7 @@
 														@focus-in="date_focus_in"
 														@focus-out="date_focus_out"
 														class="form-control"
-														:read-only="!editMode"
+														:read-only="!editMode || !canEdit"
 														name="cidcRegistrationDate"
 														:value.sync="group.cidc_registration_date"
 														id="cidcRegistrationDate"
@@ -281,7 +319,7 @@
 														id="facultyRegistrationDate"
 														placeholder="dd/mm/yyyy"
 														display-format="dd/MM/yyyy"
-														:read-only="!editMode"
+														:read-only="!editMode || !canEdit"
 														:min="minDate"
 														:max="actualDate"
 														type="date"
@@ -382,28 +420,28 @@
 													</DxTextBox>
 												</div>
 											</div> -->
-										
-										<!-- Editado por camorenos@udistrital.edu.co 22/10/2021,15:31 -->
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>SNIES</label>
-											<DxSelectBox
-												:show-clear-button="true"
-												:grouped="false"
-												:data-source="sniesItem"
-												:value.sync="group.snies_id"
-												:search-enabled="false"
-												placeholder="Seleccione..."
-												class="form-control"
-												display-expr="st_name"
-												value-expr="id"
-											>
-												<DxValidator>
-												<DxRequiredRule />
-												</DxValidator>
-											</DxSelectBox>
+
+											<!-- Editado por camorenos@udistrital.edu.co 22/10/2021,15:31 -->
+											<div class="col-md-2">
+												<div class="form-group">
+													<label>SNIES</label>
+													<DxSelectBox
+														:show-clear-button="true"
+														:grouped="false"
+														:data-source="sniesItem"
+														:value.sync="group.snies_id"
+														:search-enabled="false"
+														placeholder="Seleccione..."
+														class="form-control"
+														display-expr="st_name"
+														value-expr="id"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxSelectBox>
+												</div>
 											</div>
-										</div>
 
 											<div class="col-md-4">
 												<div class="form-group">
@@ -537,7 +575,13 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
+						<span class="font-weight-semibold">canEdit:</span> {{ canEdit }}
+						<hr class="sep mb-0" />
 						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">researchGroups.length:</span> {{ researchGroups.length }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">researchNetworks.length:</span> {{ researchNetworks.length }}
 						<hr class="sep mb-0" />
 						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
 					</div>
@@ -557,7 +601,6 @@ let $ = window.jQuery,
 import { DxButton, DxDateBox, DxFileUploader, DxSelectBox, DxSwitch, DxTagBox, DxTextArea, DxTextBox, DxValidationGroup } from "devextreme-vue";
 import DxValidator, { DxRequiredRule, DxEmailRule, DxPatternRule } from "devextreme-vue/validator";
 import DataSource from "devextreme/data/data_source";
-import Notify from "devextreme/ui/notify";
 import { mapActions, mapGetters, mapState } from "vuex";
 let hideErrors = () => {
 	$("#panel-basicos .dx-fileuploader-files-container").hide();
@@ -608,6 +651,11 @@ export default {
 		}
 	},
 	mounted() {
+		root.getGroups();
+		root.getResearchNetworks();
+		// 202111032240: Determina si el usuario actual esta dentro de los roles autorizados para modificar
+		root.canEdit = [1, 2, 6].includes(root.user.local.user_role_id);
+		console.log("root.user =>", root.user.local.user_role_id);
 		root.lineas = root.subtypesByType("unidad_linea_investigacion");
 		root.sniesItem = root.subtypesByType("snies_tipo"); //camorenos
 	},
@@ -634,7 +682,8 @@ export default {
 	},
 	data: () => ({
 		files: [],
-		sniesItem:null, //camorenos
+		canEdit: false,
+		sniesItem: null, //camorenos
 		mode: "edit",
 		group: null,
 		isValid: false,
@@ -725,9 +774,9 @@ export default {
 		},
 	}),
 	computed: {
-		...mapState("unidad", ["documents"]),
 		...mapState("unidad/oas", ["facultades"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
+		...mapState("unidad", ["documents", "researchGroups", "researchNetworks"]),
 		...mapGetters("unidad/cine", { cEspecificos: "specific", cDetallados: "detailed" }),
 		...mapState("unidad/ocde", { oEspecificos: "subareas", oDetallados: "disciplines" }),
 		ocdeEspecificos() {
@@ -770,7 +819,17 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions("unidad", ["getUnit", "saveUnit", "setDocument", "getMembers", "updateGroupMember", "activatePeriod", "updatePeriod"]),
+		...mapActions("unidad", [
+			"getUnit",
+			"saveUnit",
+			"setDocument",
+			"getMembers",
+			"updateGroupMember",
+			"activatePeriod",
+			"updatePeriod",
+			"getGroups",
+			"getResearchNetworks",
+		]),
 		...mapActions("unidad/cine", { getCine: "all" }),
 		...mapActions("unidad/oas", { getFacultades: "facultades" }),
 		...mapActions("unidad/ocde", { getOcde: "getAll" }),
