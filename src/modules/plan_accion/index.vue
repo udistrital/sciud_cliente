@@ -16,17 +16,17 @@
 			</div>
 
 			<div class="header-elements" v-if="true">
-				<!-- <router-link tag="a" :to="'plan_accion/crear'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="nuevo Plan de Acción">
-					<b><i class="icon-database-add"></i></b> nuevo Plan de Acción
+				<!-- <router-link tag="a" :to="'/unidad'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="nuevo Plan de Acción">
+					<b><i class="icon-arrow-left2"></i></b>Estructuras {{rutaprincipal}}
 				</router-link> -->
-				<!-- <div class="header-elements"> -->
+				<!-- <div class="header-elements"> @click.prevent="go(group.id, '/unidad', `Cargando Estructuras`);"-->
 				<a
-					href="#"
-					@click.prevent="go(group.id, '/unidad', `Cargando Estructuras`)"
+					:href="rutaprincipal"
 					title="Volver a Unidades..."
 					class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2">
 					<b><i class="icon-arrow-left2"></i></b> Estructuras
 				</a>
+				
 				<a
 					href="#"
 					v-if="editMode" 
@@ -299,6 +299,7 @@ export default {
 	created: function() {
 		root = this;
 		root.isAdmin = (this.user_role_id === this.get_role_id('administrador'));
+		console.warn("la ruta",this.$route);
 		root.getUnit({
 			id: root.$route.params.unidadId,
 			cb: function(result) {
@@ -310,6 +311,7 @@ export default {
 	},
 
 	data: () => ({
+		rutaprincipal: String(location.href).slice(0,-14),
 		group: null,
 		isAdmin:false,
 		totaCount: 0,

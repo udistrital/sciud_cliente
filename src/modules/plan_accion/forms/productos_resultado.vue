@@ -91,10 +91,11 @@
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group3">
 	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor"/>
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
+	</DxNumberBox>
 	</div>
 </div>
 

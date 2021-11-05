@@ -102,10 +102,11 @@
 <div v-if="actInfor" :class="'col-md'">
 	<div class="form-group">
 	<label>Avance: </label>
-	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje"/>
+	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje">
 	<DxValidator> 
 		<DxRequiredRule v-if="actInfor" />
 	</DxValidator> 
+	</DxNumberBox>
 	</div>
 </div>
 
