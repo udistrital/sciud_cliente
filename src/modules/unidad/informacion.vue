@@ -145,7 +145,7 @@
 													</DxTagBox>
 												</div>
 											</div>
-											<div class="col-md-4" v-if="group.group_type_id == get_group_type_id('grupo') && researchNetworks.length > 0">
+											<div class="col-md-4" v-if="group.group_type_id.toString() == get_group_type_id('grupo').toString() && researchNetworks.length > 0">
 												<div class="form-group">
 													<label>Red de Investigación:</label>
 													<DxSelectBox
@@ -162,7 +162,7 @@
 													/>
 												</div>
 											</div>
-											<div class="col-md-4" v-if="group.group_type_id == get_group_type_id('semillero') && researchGroups.length > 0">
+											<div class="col-md-4" v-if="group.group_type_id.toString() == get_group_type_id('semillero').toString() && researchGroups.length > 0">
 												<div class="form-group">
 													<label>Grupo de Investigación:</label>
 													<DxSelectBox
@@ -399,7 +399,7 @@
 														placeholder="Código Colciencias"
 													>
 														<DxValidator>
-															<DxRequiredRule />
+															<DxCustomRule :validation-callback="validateIfApply" :reevaluate="true" message="Obligatorio" />
 														</DxValidator>
 													</DxTextBox>
 												</div>
@@ -599,7 +599,7 @@
 let $ = window.jQuery,
 	root = null;
 import { DxButton, DxDateBox, DxFileUploader, DxSelectBox, DxSwitch, DxTagBox, DxTextArea, DxTextBox, DxValidationGroup } from "devextreme-vue";
-import DxValidator, { DxRequiredRule, DxEmailRule, DxPatternRule } from "devextreme-vue/validator";
+import DxValidator, { DxRequiredRule, DxCustomRule, DxEmailRule, DxPatternRule } from "devextreme-vue/validator";
 import DataSource from "devextreme/data/data_source";
 import { mapActions, mapGetters, mapState } from "vuex";
 let hideErrors = () => {
@@ -669,6 +669,7 @@ export default {
 		DxFileUploader,
 		DxValidator,
 		DxButton,
+		DxCustomRule,
 		DxRequiredRule,
 		DxSelectBox,
 		DxSwitch,
@@ -833,6 +834,14 @@ export default {
 		...mapActions("unidad/cine", { getCine: "all" }),
 		...mapActions("unidad/oas", { getFacultades: "facultades" }),
 		...mapActions("unidad/ocde", { getOcde: "getAll" }),
+		validateIfApply(e) {
+			console.log("e =>", e);
+			if (root.group.group_type_id.toString() == root.get_group_type_id("grupo").toString()) {
+				return e.value.length > 1;
+			} else {
+				return true;
+			}
+		},
 		validateUrl(e) {
 			console.log("e.value", e);
 			var r = /^(http|https):\/\/[^ "]+$/;
