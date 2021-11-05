@@ -40,7 +40,7 @@
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
-<div class="col-md-4">
+ <div class="col-md-4">
 	<div class="form-group">
 	<label>Tipo : </label>
 	<DxSelectBox
@@ -57,8 +57,8 @@
 		:wrapItemText="true"
 		>
 		<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator>
+			<DxRequiredRule />
+		</DxValidator>
 	</DxSelectBox>
 	</div>
 </div>
@@ -89,31 +89,34 @@
 <div :class="'col-md-'+(!actInfor?'4':'1')">
 	<div class="form-group">
 	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor"/>
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
+	</DxNumberBox>
 	</div>
 </div>
 
-<div v-if="actInfor" :class="'col-md'">
+
+<template v-if="actInfor">
+<div :class="'col-md'">
 	<div class="form-group">
 	<label>Avance: </label>
-	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje"/>
+	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje">
 	<DxValidator> 
-		<DxRequiredRule v-if="actInfor" />
+		<DxRequiredRule/>
 	</DxValidator> 
+	</DxNumberBox >
 	</div>
 </div>
 
-<div v-if="actInfor" :class="'col-md'">
+<div :class="'col-md'">
 	<div class="form-group">
 	<label>Porcentaje: </label>
 	<h3>{{val_porcentaje}}%</h3>
-	<!-- <DxNumberBox placeholder="0" class="form-control" :value.sync="porcentaje" :disabled="actInfor"/> -->
 	</div>
 </div>
-
+</template>
 
 
 								<!-- fin formulario -->
@@ -347,7 +350,10 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		actInfor:{type: Boolean,default: false},
+		actInfor:{
+			type: Boolean,
+			default: false
+		},
 		action_panel_id: {
 			type: Number,
 			default: 0,
@@ -416,6 +422,7 @@ export default {
 	},
 	mounted() {
 		// console.log("root.tipos", root.tipos);
+		console.clear()
 		root.panelData = $("#formulario1_proc .data");
 		root.panelGrid = $("#formulario1_proc .grid");
 		root.panelCmds = $("#formulario1_proc .cmds");

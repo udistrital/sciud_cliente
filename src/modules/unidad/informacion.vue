@@ -145,7 +145,7 @@
 													</DxTagBox>
 												</div>
 											</div>
-											<div class="col-md-4" v-if="group.group_type_id == 3 && researchNetworks.length > 0">
+											<div class="col-md-4" v-if="group.group_type_id == get_group_type_id('grupo') && researchNetworks.length > 0">
 												<div class="form-group">
 													<label>Red de Investigación:</label>
 													<DxSelectBox
@@ -162,7 +162,7 @@
 													/>
 												</div>
 											</div>
-											<div class="col-md-4" v-if="group.group_type_id == 4 && researchGroups.length > 0">
+											<div class="col-md-4" v-if="group.group_type_id == get_group_type_id('semillero') && researchGroups.length > 0">
 												<div class="form-group">
 													<label>Grupo de Investigación:</label>
 													<DxSelectBox

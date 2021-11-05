@@ -4,7 +4,7 @@ _notes.txt
 .DS_Store
 node_modules
 diagram
-*.code-workspace
+# *.code-workspace
 config/database.yml
 *.bk*
 *_bk*
