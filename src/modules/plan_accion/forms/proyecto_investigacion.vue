@@ -66,7 +66,7 @@
 
 <div class="col-md-6">
 	<div class="form-group">
-	<label>Estado Espedado Fin de Periodo.  : </label>
+	<label>Estado Esperado Fin de Periodo.  : </label>
 	<DxSelectBox
 		:show-clear-button="true"
 		:grouped="false"
