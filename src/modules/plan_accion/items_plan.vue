@@ -64,7 +64,7 @@
 													title="Listado de Procesos de Formación"
 													:actInfor="!dateplansys.is_draft"		
 													titleBtn="Agregar Proceso"	
-													titlecolum="title"
+													titlecolum="product_type_name"
 													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 												/>
 											</template>
@@ -80,9 +80,9 @@
 													:actInfor="!dateplansys.is_draft"
 													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Proyecto"	
-													titlecolum="title"
+													titlecolum="id"
 												/>
-											</template>
+											</template> 
 										</DxItem>
 
 										<DxItem title="Productos Resultado de Procesos de Investigación Creacion e Innovación a Generar para el Periodo Anual" icon="lab" id="plan_accion" data-idx="1">
@@ -95,7 +95,7 @@
 													:actInfor="!dateplansys.is_draft"
 													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Producto"	
-													titlecolum="title"
+													titlecolum="product_type_name"
 												/>
 											</template>
 										</DxItem>
@@ -110,8 +110,8 @@
 													:actInfor="!dateplansys.is_draft"
 													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Producto"	
-													titlecolum="title"
-												/> 
+													titlecolum="product_type_name"
+												/>
 											</template>
 										</DxItem>
 
@@ -125,7 +125,7 @@
 													:actInfor="!dateplansys.is_draft" 
 													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
 													titleBtn="Agregar Recurso"	
-													titlecolum="title"
+													titlecolum="type_description"
 												/>
 											</template>
 										</DxItem>
@@ -136,12 +136,12 @@
 													:group="group"
 													:action_panel_id="parseInt($route.params.planId)"  
 													:editMode="editMode" 
-													title="Listado de Redes Académicas de Promoción Cientifica"	
+													title="Listado de Redes Académicas de Promoción Científica"	
 													:actInfor="!dateplansys.is_draft"
 													:editing="dateplansys.management_report_is_draft==true"							
 													:totalLineasInv="listlines"
 													titleBtn="Agregar Rede Academica"	
-													titlecolum="title"
+													titlecolum="name"
 												/>
 											</template>
 										</DxItem>
@@ -265,7 +265,7 @@ export default {
 		
 		console.warn("datos del plan", root.dateplansys);
 		console.log("obheto grupo", root.group);
-		root.eval(dataplan);
+		// root.eval(dataplan);
 	},
 
 	components: {
@@ -321,10 +321,12 @@ export default {
 		nuevoPlan(){
 			let msg = "Guardando Plan de Acción";
 			root.loaderShow(msg);
+			
 			root.baseObjx.updated_by = root.user_id;
 			root.baseObjx.is_draft = false;
 			root.baseObjx.active = true;
 			let obj = root.baseObjx;
+			console.warn(root.baseObjx);
 			if(root.baseObjx.updated_by!=null){
 				console.warn(root.baseObjx);
 				let dto = {
@@ -353,6 +355,7 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
+					root.baseObjx.execution_validity = root.group.execution_validity;
 					root.nuevoPlan();
 				}
 			});
@@ -363,6 +366,7 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
+					root.baseObjx.execution_validity = root.group.execution_validity;
 					root.nuevoInfo();
 				}
 			});

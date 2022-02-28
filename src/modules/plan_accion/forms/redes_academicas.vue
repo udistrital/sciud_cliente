@@ -72,7 +72,7 @@
 
                 <div class="col-md-5">
                   <div class="form-group">
-                    <label>Lineas de Investigación asociadas:</label>
+                    <label>Líneas de Investigación asociadas:</label>
                     <DxSelectBox
                       :show-clear-button="true"
                       :search-enabled="false"
@@ -860,7 +860,7 @@ export default {
     baseObj: {
       name:null,
       description:null,
-      goal_state_id:0,
+      goal_state_id:null,
       goal_achieved:false,
       order:0,
       plan_type_id:0,
@@ -882,7 +882,7 @@ export default {
     root.tipoproceso = root.subtypesByType("planaccion_form6_estado_tipos");
     root.tiposDocumento = root.subtypesByType("planaccion_form6_estado_documentos");
     root.sniesItem = root.subtypesByType("snies_tipo");
-    console.warn("list lineas => ", root.totalLineasInv);
+    //--console.warn("list lineas => ", root.totalLineasInv);
     root.getUnit({
       id: root.$route.params.unidadId,
       cb: function (result) {
@@ -958,7 +958,7 @@ export default {
     },
 
     alldata() {
-      console.warn("lineas",root.totalLineasInv);
+      //--console.warn("lineas",root.totalLineasInv);
       return new DataSource({
         store: root.selectorLineas(root.totalLineasInv),
         key: "id",
@@ -967,7 +967,7 @@ export default {
     },
 
     ocdeDetallado2() {
-      console.warn("ocde",root.ocdeDetallado);
+      //--console.warn("ocde",root.ocdeDetallado);
       return new DataSource({
           store: root.ocdeDetallado,
           key: "id",
@@ -977,7 +977,7 @@ export default {
     },
 
     cineDetallados2() {
-      console.warn("ocde",root.cineDetallados);
+      //--console.warn("ocde",root.cineDetallados);
       return new DataSource({
           store: root.cineDetallados,
           key: "id",
@@ -1088,7 +1088,7 @@ export default {
         // root.LineasInvConocimiento({
         let limpio=[];
         console.clear;
-        console.warn("listado de datos",datos);
+        //--console.warn("listado de datos",datos);
         for (let i = 0; i < grupo.length; i++) {
             limpio = limpio.concat(
             datos.filter(
@@ -1096,8 +1096,8 @@ export default {
                 (datos.id) === parseInt(grupo[i])
             )
           );
-          console.warn("isd: "+i+" data= "+grupo[i]);
-          console.warn("isd", limpio);
+          //--console.warn("isd: "+i+" data= "+grupo[i]);
+          //--console.warn("isd", limpio);
         }
         return limpio;
     },
@@ -1105,23 +1105,27 @@ export default {
       console.log(root.$sep);
       console.log("e", e);
       let subdata=[];
-      // console.warn(e.elemet.outerText);
-      console.warn(e.element.outerText);
-      let dataText=e.element.outerText;
-      let namesOCDE = dataText.split('\n');
-      console.warn("array datos ",namesOCDE);
+      console.warn("e.elemet: ",e);
+      if(typeof e.value != 'undefined'){
+          let dataText=e.element.outerText;
+          let namesOCDE = dataText.split('\n');
+          //--console.warn("array datos ",namesOCDE);
 
-      for(let i=0; i<e.value.length; i++){
+          for(let i=0; i<e.value.length; i++){
 
-        var items = root.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value[i]);
-        console.warn("array items ",items);
-        if (items.length > 0) {
-          items = root.$objectSort(items, "name");
-          for(let m=0; m<items.length; m++) items[m].oecd_knowledge_subarea_name=namesOCDE[i];
-          subdata = subdata.concat(items);
-          console.log("ocdeDetallado", subdata);
-        }
+            var items = root.oDetallados.filter((o) => o.oecd_knowledge_subarea_id === e.value[i]);
+            //--console.warn("array items ",items);
+            if (items.length > 0) {
+              items = root.$objectSort(items, "name");
+              for(let m=0; m<items.length; m++) items[m].oecd_knowledge_subarea_name=namesOCDE[i];
+              subdata = subdata.concat(items);
+              console.log("ocdeDetallado", subdata);
+            }
+          }
+
       }
+      // //--console.warn(e.element.outerText);
+      
 
       if (subdata.length > 0) {
         root.ocdeDetallado = subdata;
@@ -1139,23 +1143,26 @@ export default {
     
     cineChange(e) {
       let subdata=[];
-      let dataText=e.element.outerText;
-      let namesCINE = dataText.split('\n');
-      console.warn("array datos CINE",namesCINE);
+      
+      if(typeof e.value != 'undefined'){      
+          let dataText=e.element.outerText;
+          let namesCINE = dataText.split('\n');
+          //--console.warn("array datos CINE",namesCINE);
 
-      for(let i=0; i<e.value.length; i++){
-        var items = root.cDetallados.filter((o) => o.cine_specific_area_id === e.value[i]);
-        if (items.length > 0) {
-          console.log(root.$sep);
-          console.log(root.cEspecificos);
-          var item = root.cEspecificos.filter((o) => o.id === e.value[i])[0];
-          root.baseObj.cine_broad_area_id = item.cine_broad_area_id;
-          // root.baseObj.cine_detailed_area_ids = [];
-          items = root.$objectSort(items, "name");
-          for(let m=0; m<items.length; m++) items[m].cine_specific_area_name=namesCINE[i];
-          subdata = subdata.concat(items);
-          // console.log("cineDetallados", root.cineDetallados);
-        }
+          for(let i=0; i<e.value.length; i++){
+            var items = root.cDetallados.filter((o) => o.cine_specific_area_id === e.value[i]);
+            if (items.length > 0) {
+              console.log(root.$sep);
+              console.log(root.cEspecificos);
+              var item = root.cEspecificos.filter((o) => o.id === e.value[i])[0];
+              root.baseObj.cine_broad_area_id = item.cine_broad_area_id;
+              // root.baseObj.cine_detailed_area_ids = [];
+              items = root.$objectSort(items, "name");
+              for(let m=0; m<items.length; m++) items[m].cine_specific_area_name=namesCINE[i];
+              subdata = subdata.concat(items);
+              // console.log("cineDetallados", root.cineDetallados);
+            }
+          }
       }
 
       if (subdata.length > 0) {
@@ -1281,11 +1288,11 @@ export default {
     selectorLineas(results){
       let limpio = [];
       let datax = results;
-      console.warn("elementos", root.group.research_focus_ids);
+      //--console.warn("elementos", root.group.research_focus_ids);
       for (let i = 0; i < root.group.research_focus_ids.length; i++) {
         limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ==  parseInt(root.group.research_focus_ids[i]) ) );
       }
-      console.warn("datax limpio", limpio);
+      //--console.warn("datax limpio", limpio);
       return limpio;
     },
 
@@ -1295,15 +1302,15 @@ export default {
       let arreglo=[], dataPadre=[], dataHijo=[];
       let hijo;
       let vector=objeto[vectorPadre]
-      console.warn("vector padre", vector);
+      //--console.warn("vector padre", vector);
       
-      //console.warn("", vectorPadre);
+      ////--console.warn("", vectorPadre);
 
       for(let i=0; i<vector.length; i++){
-        // console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
+        // //--console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
         dataPadre.push(vector[i][name_id_padre]);
         hijo = vector[i][name_id_hijo];
-        // console.warn("Vector hijo "+i+":  ",hijo);
+        // //--console.warn("Vector hijo "+i+":  ",hijo);
         for(let p=0; p<hijo.length; p++){
             dataHijo.push(hijo[p].id);
         }
@@ -1317,7 +1324,7 @@ export default {
       let vector=[];
       for(let i=0; i<vectorPadre.length; i++){
         vector.push(vectorPadre[i].snies_id);
-        // console.warn("vector ", vector);
+        // //--console.warn("vector ", vector);
       }
       return vector;
     },
@@ -1327,7 +1334,7 @@ export default {
 			root.mode = "edit";
       root.baseObj = root.$clone(root.baseEnt);
 			// console.log("data", data);
-      // console.warn("data id: ",data.id);
+      // //--console.warn("data id: ",data.id);
       //root.baseObj = data;
       root.loaderShow(`Abriendo Formulario`, "#panel-plan_accion .card-body");
       setTimeout(function() {
@@ -1336,7 +1343,7 @@ export default {
 					cb: function(results) {
 						root.dataForm = results;
             // console.clear();
-            // console.warn("dataForm",  root.dataForm);
+            // //--console.warn("dataForm",  root.dataForm);
             // 
             root.baseObj.id= root.dataForm.id;
             root.baseObj.name= root.dataForm.name;
@@ -1408,7 +1415,7 @@ export default {
       let am = state ? "Activando" : "Desactivando";
       let msg = `¿Realmente desea ${a} <span class='text-sb'>"${
         data.data[root.titlecolum]
-      } del usuario ${root.user_role_id}</span>?`;
+      } </span>?`;
       this.$confirm(msg, function (si_no) {
         console.log("result", si_no);
         if (si_no) {

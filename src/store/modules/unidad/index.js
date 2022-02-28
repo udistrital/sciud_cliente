@@ -19,6 +19,7 @@ const store = {
 		userPeriods: [],
 		currentItems: [],
 		researchGroups: [],
+		researchNetworks: [],
 		members: [],
 		loading: true,
 		baseEntity: null,
@@ -30,6 +31,24 @@ const store = {
 					.get("research_unit")
 					.then((r) => {
 						commit("SetData", r.data);
+					});
+			}
+		},
+		getResearchNetworks({ commit, state }, args) {
+			if (state.researchNetworks.length <= 0) {
+				api()
+					.get(`research_networks?filter=["active","=",1]&skip=0&take=100000&sort=[{"selector":"name","desc":false}]`)
+					.then((r) => {
+						commit("SetState", { name: "researchNetworks", data: r.data.data });
+					});
+			}
+		},
+		getGroups({ commit, state }, args) {
+			if (state.researchGroups.length <= 0) {
+				api()
+					.get(`research_units?filter=[["group_state_id","=",1],"and",["group_type_id","=",3]]&skip=0&take=100000&sort=[{"selector":"name","desc":false}]`)
+					.then((r) => {
+						commit("SetState", { name: "researchGroups", data: r.data.data });
 					});
 			}
 		},
@@ -299,6 +318,13 @@ const store = {
 			state.members = args.data;
 			state.loading = false;
 			if (this._vm.$isFunction(args.callback)) args.callback(args.data);
+		},
+		SetState(state, args) {
+			args.data.forEach((item) => {
+				item.name = window.vm.$capitalize(item.name);
+			});
+			console.log("args.data =>", args.data);
+			state[args.name] = args.data;
 		},
 		SetData(state, data) {
 			// console.log("window.vm", window.vm);

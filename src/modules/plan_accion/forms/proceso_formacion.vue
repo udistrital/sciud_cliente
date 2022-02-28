@@ -40,7 +40,7 @@
 						<div class="card-body mb-0 pb-0 pt-2">
 							<div class="row">
 								<!-- formulatio -->
-<div class="col-md-4">
+ <div class="col-md-4">
 	<div class="form-group">
 	<label>Tipo : </label>
 	<DxSelectBox
@@ -57,8 +57,8 @@
 		:wrapItemText="true"
 		>
 		<DxValidator> 
-		<DxRequiredRule />
-	</DxValidator>
+			<DxRequiredRule />
+		</DxValidator>
 	</DxSelectBox>
 	</div>
 </div>
@@ -89,31 +89,34 @@
 <div :class="'col-md-'+(!actInfor?'4':'1')">
 	<div class="form-group">
 	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor"/>
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
+	</DxNumberBox>
 	</div>
 </div>
 
-<div v-if="actInfor" :class="'col-md'">
+
+<template v-if="actInfor">
+<div :class="'col-md'">
 	<div class="form-group">
 	<label>Avance: </label>
-	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje"/>
+	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje">
 	<DxValidator> 
-		<DxRequiredRule v-if="actInfor" />
+		<DxRequiredRule/>
 	</DxValidator> 
+	</DxNumberBox >
 	</div>
 </div>
 
-<div v-if="actInfor" :class="'col-md'">
+<div :class="'col-md'">
 	<div class="form-group">
 	<label>Porcentaje: </label>
 	<h3>{{val_porcentaje}}%</h3>
-	<!-- <DxNumberBox placeholder="0" class="form-control" :value.sync="porcentaje" :disabled="actInfor"/> -->
 	</div>
 </div>
-
+</template>
 
 
 								<!-- fin formulario -->
@@ -347,7 +350,10 @@ export default {
 			type: Boolean,
 			default: true,
 		},
-		actInfor:{type: Boolean,default: false},
+		actInfor:{
+			type: Boolean,
+			default: false
+		},
 		action_panel_id: {
 			type: Number,
 			default: 0,
@@ -392,6 +398,7 @@ export default {
 		min: new Date(1950, 1, 1),
 		baseEnt: null,
 		val_porcentaje:0,
+		porcentaje:0,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
@@ -402,6 +409,7 @@ export default {
 			order: null,
 			plan_type_id: null,
 			product_type_id: null,
+
 		},
 	}),
 	created() {
@@ -416,6 +424,7 @@ export default {
 	},
 	mounted() {
 		// console.log("root.tipos", root.tipos);
+		console.clear()
 		root.panelData = $("#formulario1_proc .data");
 		root.panelGrid = $("#formulario1_proc .grid");
 		root.panelCmds = $("#formulario1_proc .cmds");
@@ -461,8 +470,15 @@ export default {
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
+		},
 		
-		porcentaje(){
+		porcentajex(){
 			
 			if(root.baseObj.advanced_total<=root.baseObj.goal && root.baseObj.advanced_total>=0){
 				root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);
@@ -614,7 +630,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} </span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

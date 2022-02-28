@@ -9,7 +9,11 @@
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
+
 			<div class="header-elements" v-if="es_admin">
+				<router-link tag="a" :to="'/plan_historico'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Histórico Plan de Acción e informes de Gestin">
+					<b><i class="icon-history"></i></b>Historico Planes e Informes
+				</router-link>
 				<router-link tag="a" to="/red" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Red de Investigación...">
 					<b><i class="icon-collaboration"></i></b> Redes Investicación
 				</router-link> 

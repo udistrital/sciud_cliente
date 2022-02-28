@@ -1,5 +1,5 @@
 <template>
-	<div :class="'col p-0 m-0 docs slide '+id" :id="id">
+	<div class="col p-0 m-0 docs slide" :id="id">
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide" v-if="editMode">
 				<div class="col">

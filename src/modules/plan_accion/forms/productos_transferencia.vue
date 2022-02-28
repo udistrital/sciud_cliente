@@ -91,7 +91,7 @@
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group">
 	<label>Meta : </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" >
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -102,10 +102,11 @@
 <div v-if="actInfor" :class="'col-md'">
 	<div class="form-group">
 	<label>Avance: </label>
-	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje"/>
+	<DxNumberBox placeholder="0" class="form-control" :value.sync="baseObj.advanced_total" :disabled="!actInfor" @value-changed="porcentaje">
 	<DxValidator> 
 		<DxRequiredRule v-if="actInfor" />
 	</DxValidator> 
+	</DxNumberBox>
 	</div>
 </div>
 
@@ -506,6 +507,14 @@ export default {
 
 		},
 
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
+		},
+
 		porcentaje(){
 			
 			if(root.baseObj.advanced_total<=root.baseObj.goal && root.baseObj.advanced_total>=0){
@@ -664,7 +673,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} </span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

@@ -42,9 +42,9 @@
 								<!-- formulatio -->
 
 
-<div class='col-md-5'>
+<div class='col-md-4'>
 	<div class='form-group'>
-	<label>Tipo : </label>
+	<label>Titulo Recurso: </label>
 	<DxTextBox placeholder='Tipo ' class='form-control' :value.sync='baseObj.type_description'>
 	<DxValidator>
 		<DxRequiredRule />
@@ -53,6 +53,51 @@
 	</div>
 </div>
 
+<!-- <div class="col-md-3">
+	<div class="form-group">
+		<label>Tipo Producto:</label>
+		<DxSelectBox 
+			:show-clear-button="true"
+		:grouped="false"
+		:search-enabled="true"
+		placeholder="Seleccione..."
+		:value.sync="baseObj.product_type_id" 
+		class="form-control"
+		:data-source="tipoproceso2" 
+		display-expr="st_name"
+		value-expr="id"
+		@value-changed="loadIndicators"
+		:wrapItemText="true"
+		:disabled="actInfor">
+			<DxValidator> 
+				<DxRequiredRule />
+			</DxValidator>
+		</DxSelectBox>
+	</div>
+</div> -->
+
+
+<div class="col-md-3">
+                        <div class="form-group">
+                            <label>Tipo Producto:</label>
+                            <DxSelectBox
+                                :show-clear-button="true"
+                                :grouped="false"
+                                :data-source="tipoproceso2"
+                                :value.sync="baseObj.classification_id"
+                                :search-enabled="false"
+                                placeholder="Seleccione..."
+                                class="form-control"
+                                display-expr="st_name"
+                                value-expr="id"
+                            >
+                                <DxValidator>
+                                <DxRequiredRule />
+                                </DxValidator>
+                            </DxSelectBox>
+                            </div>
+                        </div>
+
 <div class='col-md-2'>
 	<div class='form-group'>
 	<label>Inventariable: </label>
@@ -60,7 +105,7 @@
 	</div>
 </div>
 
-<div class='col-md-5'>
+<div class='col-md-3'>
 	<div class='form-group'>
 	<label>Placa: </label>
 	<DxTextBox placeholder='Placa' class='form-control' :value.sync='baseObj.inventory_plate' :disabled="!baseObj.inventoried" >
@@ -154,7 +199,8 @@
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
 						<DxColumn :width="100" data-field="id"  caption="ID" data-type="text" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn  data-field='type_description'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn  data-field='type_description'  caption='Titulo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
+						<DxColumn :width="100" data-field='classification_name'  caption='Tipo' data-type='String' alignment='left' :visible='true' :allow-grouping='false' />
 						<DxColumn  data-field='description'  caption='Descripción' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
 						<DxColumn :width="93" data-field="inventoried" caption="Inventariable" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 						<DxColumn :width="110" data-field='inventory_plate'  caption='Placa' data-type='String' alignment='left' :visible='true' :allow-grouping='false' /> 
@@ -391,7 +437,9 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		inventoried:false,
+		tipoproceso2:null,
 		baseObj: {
+			classification_id:null,
 			type_description:null,
 			inventoried:false,
 			inventory_plate:null,
@@ -404,6 +452,7 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		// console.warn("indicador", root.indicador);
 		// root.indicador=[];
+		root.tipoproceso2 = root.subtypesByType("planaccion_form5_tipos_inventario");
 		root.tipoproceso = root.subtypesByType("planaccion_form1_tipos");
 		// root.tiposDocumento = root.subtypesByType("planaccion_formE_documentos");
 	},
@@ -586,7 +635,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} </span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

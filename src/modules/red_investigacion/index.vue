@@ -222,12 +222,7 @@
 		<div class="row" v-if="is_dev && debug">
 			<div class="col">
 				<div class="card">
-					<div class="card-body"><strong>baseObj:</strong> 
-					<!-- {{ JSON.stringify(baseObj, null, 13) }} -->
-					
-					<div v-html="JSON.stringify(baseObj,'', 13)"></div>
-					</div>
-
+					<div class="card-body"><strong>baseObj:</strong> {{ JSON.stringify(baseObj, null, 3) }}</div>
 				</div>
 			</div>
 		</div>

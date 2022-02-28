@@ -230,7 +230,7 @@
 		</div>
 
 
-		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="70%" height="500" title="Historico Contactos:">
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="70%" height="500" title="Histórico Contactos:">
 			<div class="row" style="overflow-y: scroll; height:348px">
 				<Contactos
 					:group="{id: $route.params.idEnt}" 

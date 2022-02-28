@@ -37,13 +37,33 @@
 														</DxNumberBox>
 													</div>
 												</div>
-												<div class="col-md-2">
+												<!-- <div class="col-md-2">
 													<div class="form-group">
 														<label>Rol:</label>
 														<DxSelectBox
 															:show-clear-button="true"
 															:grouped="false"
 															:data-source="groupRoles"
+															:value.sync="group_member.role_id"
+															:search-enabled="false"
+															placeholder="Seleccione..."
+															class="form-control"
+															display-expr="name"
+															value-expr="id"
+														>
+															<DxValidator>
+																<DxRequiredRule />
+															</DxValidator>
+														</DxSelectBox>
+													</div>
+												</div> -->
+												<div class="col-md-2">
+													<div class="form-group">
+														<label>Rol EXP:</label>
+														<DxSelectBox
+															:show-clear-button="true"
+															:grouped="false"
+															:data-source="rol2"
 															:value.sync="group_member.role_id"
 															:search-enabled="false"
 															placeholder="Seleccione..."
@@ -470,21 +490,16 @@
 											<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 											<template #tpl="{ data }">
 												<span class="cmds" v-if="cmdVisible(data.data)">
+												<!-- <span class="cmds" v-if="cmdVisible(data.data)"> -->
 													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="userEdit(data.data)" href="#">
 														<i class="icon-database-edit"></i>
 													</a>
-													<!-- <a
-														v-if="data.data.gm_state_id === 1"
-														title="Desactivar usuario..."
-														class="cmd-item color-main-600 mr-2"
-														@click.prevent="userActive(data.data, false)"
-														href="#"
-													>
-														<i class="icon-database-remove"></i>
+													
+												</span>
+												<span class="cmds" v-else>
+													<a v-if="data.data.gm_state_id!=2" title="Desactivar Usuario..." class="cmd-item color-main-600 alert-danger" @click.prevent="unactive(data.data)" href="#">
+														<i class="icon-user-cancel2"></i>
 													</a>
-													<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="userActive(data.data, true)" href="#">
-														<i class="icon-database-check"></i>
-													</a> -->
 												</span>
 											</template>
 										</DxDataGrid>
@@ -510,6 +525,8 @@
 						<span class="font-weight-semibold">researcher:</span> {{ JSON.stringify(researcher, null, 3) }}
 						<hr class="sep" />
 						<span class="font-weight-semibold">gm_period:</span> {{ JSON.stringify(gm_period, null, 3) }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -562,6 +579,7 @@ export default {
 		root.panelGrid = root.panelMain + "-grid";
 		root.loaderElement = root.panelMain;
 		root.loaderMessage = "Cargando Información<br>de Integrantes";
+		
 		let uId = root.$route.params.unidadId;
 		root.getUnit({
 			id: uId,
@@ -569,10 +587,13 @@ export default {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
 				root.loadMembers();
+				root.listChange();
 			},
 		});
 	},
 	mounted() {
+		
+		
 		console.log(this.$sep);
 		setTimeout(function() {
 			root.nbId = typeof root.$refs.nbIdNum !== "undefined" ? root.$refs.nbIdNum.instance : null;
@@ -584,6 +605,7 @@ export default {
 			console.log("root.nbIdBtn", root.nbIdBtn);
 			console.log("root.chkActive", root.chkActive);
 		}, 1000);
+		console.warn("lectura rol2: ",root.rol2.data);
 	},
 	beforeUpdate: () => {},
 	updated: () => {
@@ -618,6 +640,7 @@ export default {
 		Header: () => import("./_header"),
 	},
 	data: () => ({
+		rol2:[],
 		app_user: null,
 		chkActive: null,
 		periods: null,
@@ -746,6 +769,7 @@ export default {
 		group_member: {
 			id: null,
 			role_id: null,
+			role_id_db: null,
 			gm_state_id: 1,
 			researcher_id: null,
 			name: null,
@@ -774,6 +798,7 @@ export default {
 			initial_date: new Date(),
 			final_date: null,
 			role_id: null,
+			role_id_db: null,
 			is_current: true,
 			active: true,
 			group_member_id: null,
@@ -830,6 +855,30 @@ export default {
 			"updateResearcher",
 		]),
 		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
+		...mapActions("unidad/producto/universalSentUpAct", {univerdalGet: "univerdalGet", objUpdate: "update"}),
+
+
+		async listChange() {
+			let arg={url:''},arg2={url:''}
+			let grupo=[], ambos=[];
+			console.warn("grupo = ", root.group);
+			arg.url='role?filter=[["active","=","true","AND","role_type_id","=","1055"]]';//para grupo y semillero
+			if(root.group.group_type_id==3) arg2.url='role?filter=[["active","=","true","AND","role_type_id","=","1057"]]';//para grupo y semillero
+			else arg2.url='role?filter=[["active","=","true","AND","role_type_id","=","1056"]]';//semillero 
+			grupo=await root.univerdalGet(arg2);
+			ambos=await root.univerdalGet(arg);
+			root.rol2=ambos.concat(grupo);
+			// if(root.rol2.length > 0) root.$info("Seleccione Producto Específico");
+			
+			console.warn("aldata2 data = ", root.rol2);
+		},
+
+
+// let arg={url:''};
+// 		arg.url='role';
+// 		root.rol2=root.univerdalID(arg);
+
+		
 		activeChanged(e) {
 			const previousValue = e.previousValue;
 			const is_active = e.value;
@@ -945,6 +994,55 @@ export default {
 				root.gm_period_bk1 = root.$clone(root.gm_period);
 			});
 		},
+
+		unactive(d) {
+			console.clear();
+			root.mode == "edit";
+			let data = root.$clone(d);
+			console.warn("data unable", data);
+			console.warn("group member id", data.id);
+			console.warn("group id", root.group.id);
+			let baseObj= {};
+			let msg = `¿Realmente desea desactivar al usuario identificado con documento N°: <span class='text-sb'>"${data.researcher.identification_number}"</span>?`;
+			this.$confirm(msg, function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					root.loaderShow(`Desactivando usuario...`, root.panelGrid);
+					baseObj.gm_state_id=2;
+					baseObj.role_id=data.role_id;
+					baseObj.researcher_id=data.researcher_id;
+					baseObj.active=false;
+					baseObj.updated_by=root.user_id;
+					
+					let obj = baseObj;
+					let dto = {
+						newFormat: false,
+						unidadId: root.group.id,
+						stringEP: "group_member",
+						mod: data.id,
+						objectSend: { group_member: obj },
+						cb: function(item) {
+							root.dsMembers.reload();
+							root.loaderHide();
+						},
+					};
+					console.log("root.mode", root.mode);
+					root.objUpdate(dto);
+
+					root.loadMembers(false, function() {
+						root.loading = false;
+						root.userCancel(true, function() {
+							root.dsMembers.reload();
+							if (root.grid.getVisibleRows().length > 0) root.grid.expandRow(root.grid.getKeyByRowIndex(0));
+						});
+					});
+
+				}
+			});
+
+		},
+		
+
 		userEdit(d) {
 			console.clear();
 			root.mode == "edit";
