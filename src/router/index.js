@@ -216,7 +216,7 @@ let routes = new router({
 			meta: { title: "Administración » Entidades", requiresAuth: true },
 		},
 		{
-			name: "entidades-dep-represent",
+			name: "entidades-dep-represent2",
 			path: "/admin/entidades/:idEnt/dependencias/:idDep",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/admin/form_entidades/index"),

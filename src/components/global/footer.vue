@@ -9,7 +9,8 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20211207 - ©{{ year }}
+				<!-- SICIUD v2.0.20211207 - ©{{ year }} -->
+				SICIUD v2.0.20220301 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -80,6 +81,10 @@ export default {
 				title: "Carlos (Administrador)",
 				text: "Administrador 2",
 			},
+
+
+
+
 			// {
 			// 	cc: "1023867324",
 			// 	title: "Gestor Facultad",
@@ -108,26 +113,33 @@ export default {
 			// 	text: "Directora",
 			// },
 
-			{
-				cc: "1655467973",
-				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-				text: "Gestor Facultad",
-			},
+			// {
+			// 	cc: "1655467973",
+			// 	title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
+			// 	text: "Gestor Facultad",
+			// },
+
+
 			// {
 			// 	cc: "53009619",
 			// 	title: "Luzangela Piñeros Botero (Líder Semillero)",
 			// 	text: "Líder Semillero",
 			// },
-			{
-				cc: "43105248",
-				title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-				text: "Int. Semillero",
-			},
-			{
-				cc: "19296014",
-				title: "German Arturo Lopez Martinez (Integrante)",
-				text: "Integrante",
-			},
+
+
+
+			//seccion administrativa visible
+			// {
+			// 	cc: "43105248",
+			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
+			// 	text: "Int. Semillero",
+			// },
+			// {
+			// 	cc: "19296014",
+			// 	title: "German Arturo Lopez Martinez (Integrante)",
+			// 	text: "Integrante",
+			// },
+			//fin seccion administrativa visible
 		],
 	}),
 	watch: {
