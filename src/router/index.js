@@ -125,7 +125,6 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/plantilla"),
 		},
 
-
 		//----------------------------------------------------------
 		//		constitucion de la red de investigación
 		//----------------------------------------------------------
@@ -142,7 +141,6 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/red_investigacion/informacion_red"),
 		},
-
 
 		{
 			name: "red-info",
@@ -163,10 +161,26 @@ let routes = new router({
 			component: () => import("@/modules/red_investigacion/grupos"),
 		},
 
+		//---------------------------------------------------
+		//				Entrada de proyectos: camorenos
+		//---------------------------------------------------
+
+		{
+			name: "proyecto-informacion",
+			path: "/proyecto/informacion",
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/proyecto/informacion"),
+		},
 
 		//-----------------------------------------
 		//   Comienzo de rutas plan de accion: camorenos
 		//-----------------------------------------
+		{
+			path: "/plan_historico",
+			name: "plan-accion-historico",
+			meta: { title: "plan-accion-historico", requiresAuth: true },
+			component: () => import("@/modules/plan_accion/historico"),
+		},
 		{
 			path: "/unidad/:unidadId/plan_accion",
 			name: "plan-accion",
@@ -202,7 +216,7 @@ let routes = new router({
 			meta: { title: "Administración » Entidades", requiresAuth: true },
 		},
 		{
-			name: "entidades-dep-represent",
+			name: "entidades-dep-represent2",
 			path: "/admin/entidades/:idEnt/dependencias/:idDep",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/admin/form_entidades/index"),
@@ -219,7 +233,13 @@ let routes = new router({
 			component: () => import("@/modules/admin/dependencias"),
 			meta: { title: "Administración » Dependencias", requiresAuth: true },
 		},
-		
+
+		{
+			name: "roles",
+			path: "/admin/rol_usuarios",
+			component: () => import("@/modules/admin/rol"),
+			meta: { title: "Administración » Roles", requiresAuth: true },
+		},
 
 		// {
 		// 	path: "*",

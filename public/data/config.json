@@ -9,12 +9,13 @@
     "api":  {
                 "rest":  {
                              "token_name":  "siciud_token",
-                             "url_dev":  "https://siciud-v2-api.nemedi.com/api/v1",
+                             "url_dev":  "http://pruebasapi2.intranetoas.udistrital.edu.co:8515/api/v1",
+                             "url_dev2":  "http://api2.intranetoas.udistrital.edu.co:8515/api/v1",
                              "url_prod":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/siciud_crud/v1"
                          },
                 "oas":  {
                             "token_name":  "oas_token",
-                            "token_value":  "75103153-64d6-3180-98df-ede75b0caffe",
+                            "token_value": "39265e00-a85d-353d-80ef-f28be14c357d",
                             "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
                         }
             },

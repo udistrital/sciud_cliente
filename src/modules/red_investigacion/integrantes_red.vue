@@ -2,7 +2,7 @@
   <!-- <Header :group="group" /> -->
   <div class="row">
     <div class="card-body mb-0 pb-0 pt-3">
-      <DxValidationGroup ref="vGroup">
+      <!-- <DxValidationGroup ref="basicGroup"> -->
         <div class="row">
           <div class="col-md-3">
             <div class="form-group">
@@ -139,7 +139,7 @@
             </div>
           </div>
         </div>
-      </DxValidationGroup>
+      <!-- </DxValidationGroup> -->
     </div>
 
     <div class="row" v-if="is_dev && debug && false">
@@ -257,7 +257,7 @@ export default {
     // console.warn("experimento datac", datac);
     //root.researcher.identification_number="52899935";
 
-    root.datauser();
+    // root.datauser();
 
     // datac = root.searchButton2.list;
     // console.warn("experimento datac", datac);
@@ -273,9 +273,11 @@ export default {
       root.getuserID(id_research_grup);
       console.warn("data serarcher id", root.group_member.researcher_id);
       console.warn("data serarcher", root.userdata.identification_number);
-
-      root.datauser();
+      // setTimeout(function(){  }, 5000);
+      root.datauser(root.userdata.identification_number);
     }
+    // setTimeout(function(){ root.datauser(); }, 5000);
+
   },
   beforeUpdate: () => {},
   updated: () => {
@@ -546,6 +548,7 @@ export default {
         return {
           researcher_id: null,
           main_research_group_id: null,
+          form_validate: null,
         };
       },
     },
@@ -583,15 +586,21 @@ export default {
       root.syncObject.main_research_group_id = root.group_member.role_id;
     },
 
-    async datauser() {
+    async datauser(iddata) {
+        let id=root.researcher.identification_number;
+        
 
-let id = root.researcher.identification_number;
+
+
         console.warn("Documento", id);
         if (id !== null) {
  
           let oas_user = await root.universalgetOas({ doc: id });
-
+          
+          console.warn("id=identification_number ", id);
+          console.warn("oas_user ", oas_user);
           if (!("TerceroId" in oas_user)) {
+            location.reload();
             let m = `El documento "${id}" no se encuentra registrado<br>en el `;
             m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
             m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
@@ -786,7 +795,7 @@ let id = root.researcher.identification_number;
       root.mode == "edit";
       let data = root.$clone(d);
       console.log("data", data);
-      // root.$refs.vGroup.instance.reset();
+      // root.$refs.basicGroup.instance.reset();
       root.nbIdBtn = root.nbId.getButton("search");
       // console.log("root.nbIdBtn", root.nbIdBtn);
       // root.nbId.option("readOnly", true);
@@ -860,7 +869,7 @@ let id = root.researcher.identification_number;
       console.clear();
       console.log(root.$sep);
       console.log("userSave() START");
-      var result = this.$refs.vGroup.instance.validate();
+      var result = this.$refs.basicGroup.instance.validate();
       console.log("result", result);
       if (result.isValid) {
         root.loaderShow("Guardando usuario", "#panel-integrantes-data .card");
@@ -1018,7 +1027,7 @@ let id = root.researcher.identification_number;
           root.group_member = root.$clone(root.group_member_bk);
           root.researcher = root.$clone(root.researcher_bk);
           root.gm_state = root.$clone(root.gm_state_bk);
-          root.$refs.vGroup.instance.reset();
+          root.$refs.basicGroup.instance.reset();
           $(root.panelData).clear();
           if (root.$isFunction(cb)) cb();
         });

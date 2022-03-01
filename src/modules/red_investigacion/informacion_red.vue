@@ -354,7 +354,7 @@
                           <DxTextArea
                             :read-only="!editMode"
                             :height="100"
-                            :max-length="400"
+                            :max-length="1000"
                             :value.sync="group.mission"
                             placeholder="Misión"
                             class="form-control"
@@ -371,7 +371,7 @@
                           <DxTextArea
                             :read-only="!editMode"
                             :height="100"
-                            :max-length="400"
+                            :max-length="1000"
                             :value.sync="group.vision"
                             placeholder="Visión"
                             class="form-control"
@@ -388,7 +388,7 @@
                           <DxTextArea
                             :read-only="!editMode"
                             :height="100"
-                            :max-length="400"
+                            :max-length="1000"
                             :value.sync="group.advantage"
                             placeholder="Descripción"
                             class="form-control"
@@ -413,7 +413,7 @@
                           <DxTextArea
                             :read-only="!editMode"
                             :height="100"
-                            :max-length="400"
+                            :max-length="1000"
                             :value.sync="group.legal_responsibilities"
                             placeholder="Descripción"
                             class="form-control"
@@ -431,7 +431,7 @@
                           <DxTextArea
                             :read-only="!editMode"
                             :height="100"
-                            :max-length="400"
+                            :max-length="1000"
                             :value.sync="group.financial_responsibilities"
                             placeholder="Descripción (Sustento de Sostenibilidad a futuro Presupuesto) en relación a Membresías, Cuotas, ETC."
                             class="form-control"
@@ -449,7 +449,7 @@
                           <DxTextArea
                             :read-only="!editMode"
                             :height="100"
-                            :max-length="400"
+                            :max-length="1000"
                             :value.sync="group.academic_responsibilities"
                             placeholder="Descripción"
                             class="form-control"
@@ -935,7 +935,7 @@ export default {
 				root.loaderShow(msg, root.panelData);
 				if (root.mode == "add") root.group.created_by = root.user_id;
 				if (root.mode == "edit") root.group.updated_by = root.user_id;
-        root.group.research_network_id=root.group.id;
+        // root.group.research_network_id=root.group.id;
         // root.group.snies_ids=[root.group.snies_ids];
 				let obj = root.group;
 				let dto = {

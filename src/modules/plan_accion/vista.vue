@@ -113,7 +113,7 @@
                           {{ group.cidc_registration_date }}
                         </div>
                         <div class="col-md-12">
-                          <strong>Codigo Colciencias: </strong
+                          <strong>Código Colciencias: </strong
                           >{{ group.colciencias_code }}
                         </div>
                         <div class="col-md-12">

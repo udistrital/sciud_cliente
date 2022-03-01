@@ -3,14 +3,14 @@
 // npm install jspdf jspdf-autotable
 
 <template>
-	<div v-if="group">
+	<div>
 
 		<div class="page-header header-elements-md-inline">
 			<div class="page-title d-flex">
 				<h1>
 					<i class="icon-books mr-1 color-main-600"></i>
-					<span class="font-weight-semibold" id="title">Estructuras de Investigación</span>
-					<span> &raquo; Plan de Acción e Informe de Gestión</span>
+					<span class="font-weight-semibold" id="title"> Plan de Acción e Informe de Gestión</span>
+					<span> &raquo; Historial </span>
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
@@ -21,7 +21,9 @@
 				</router-link> -->
 				<!-- <div class="header-elements"> @click.prevent="go(group.id, '/unidad', `Cargando Estructuras`);"-->
 				
-				
+				<!-- <router-link tag="a" :to="'/unidad'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="nuevo Plan de Acción">
+					<b><i class="icon-history"></i></b>Historico Planes
+				</router-link> -->
 
 				<a
 					:href="rutaprincipal"
@@ -30,14 +32,14 @@
 					<b><i class="icon-arrow-left2"></i></b> Estructuras
 				</a>
 				
-				<a
+				<!-- <a
 					href="#"
 					v-if="editMode" 
 					@click.prevent="nuevo()"
 					title="Volver a Unidades..."
 					class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2">
 					<b><i class="icon-database-add"></i></b> nuevo Plan de Acción 
-				</a>
+				</a> -->
 				<!-- </div> -->
 			</div>
 			
@@ -52,13 +54,13 @@
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
-									<div class="title"><i class="icon-clipboard"></i><small> <i>Plan de Acción e Informe de Gestión</i>  &raquo; {{ $titleCase(group.name) }}</small></div>
+									<div class="title"><i class="icon-history"></i><small> <i>Plan de Acción e Informe de Gestión</i>  &raquo; Historico</small></div>
 									<!-- <div class="sub-title"><i class="icon-history"></i>Gestion de Informacion</div> -->
 								</div>
 							</div>
 						</div>
 
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-md-12 mt-3">
 								<fieldset>
 									<legend>Información Básica</legend>
@@ -89,61 +91,76 @@
 								</fieldset>
 							</div>
 						</div>
-						
+						-->
 						<p> </p>
 						<div class="row">
 							<div class="col-md-12">
-								<fieldset>
-									<legend>Lista de Planes e Informes</legend>
+								
 										<div class="row grid">
 											<div class="col">
 												<h2></h2>
 												<div class="p-0">
 													<DxDataGrid
-														class="main"
-														width="100%"
-														@initialized="gridInit"
-														@content-ready="onContentReady"
-														:allow-column-reordering="true"
-														no-data-text="No hay elementos registrados"
-														:data-source="dataSource"
-														:remote-operations="true"
-														:hover-state-enabled="true"
-														:row-alternation-enabled="true"
-														:show-borders="false"
-													>
-														<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-														<DxSorting mode="single" /><!-- single, multiple, none" -->
-														<DxPaging :page-size="10" />
-														<DxFilterRow :visible="false" />
-														<DxLoadPanel :enabled="false" />
-														<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-														<DxGrouping :auto-expand-all="false" />
-														<DxSummary>
-															<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
-														</DxSummary>
-														<DxPager
-															:show-info="true"
-															:show-page-size-selector="true"
-															:show-navigation-buttons="true"
-															:allowed-page-sizes="dgPageSizes"
-															info-text="Página {0} de {1} ({2} elementos)"
-														/>
-														<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+                                                        class="main"
+                                                        width="100%"
+                                                        @initialized="gridInit"
+                                                        @content-ready="onContentReady"
+                                                        :allow-column-reordering="true"
+                                                        :data-source="dataSource"
+                                                        :remote-operations="true"
+                                                        :hover-state-enabled="true"
+                                                        :row-alternation-enabled="true"
+                                                        :show-borders="false"
+                                                    >
+                                                        <!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
+                                                        <DxColumnChooser :enabled="es_admin" mode="dragAndDrop" />
+                                                        <DxExport :enabled="false" />
+                                                        <DxFilterPanel :visible="false" />
+                                                        <DxFilterRow :visible="true" />
+                                                        <DxGrouping :auto-expand-all="true" />
+                                                        <DxGroupPanel :visible="es_admin" :allow-column-dragging="true" />
+                                                        <DxLoadPanel :enabled="false" />
+                                                        <DxPaging :page-size="dgPageSize" />
+                                                        <DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
+                                                        <DxStateStoring :enabled="true" type="sessionStorage" />
+                                                        <DxSummary>
+                                                            <DxGroupItem summary-type="count" column="group_type_name" display-format="{0} estructuras" />
+                                                        </DxSummary>
+                                                        <DxPager
+                                                            :show-info="true"
+                                                            :show-page-size-selector="true"
+                                                            :show-navigation-buttons="true"
+                                                            :allowed-page-sizes="dgPageSizes"
+                                                            info-text="{2} estructuras de investigación (Página {0} de {1})"
+                                                        />
+                                                        <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+                                                        <DxColumn
+                                                            :allow-filtering="false"
+                                                            :sort-index="1"
+                                                            sort-order="asc"
+                                                            data-field="id"
+                                                            caption="ID"
+                                                            data-type="number"
+                                                            alignment="center"
+                                                            :allow-sorting="true"
+                                                            :width="70"
+                                                        />
 														<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
-														<DxColumn data-field="id" :width="100"  caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
-														<DxColumn data-field="execution_validity" caption="Año Vigencia" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
-														<DxColumn data-field="research_group_acronym" caption="Acrónimo" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
-														<!-- <DxColumn data-field="research_group_gruplac" caption="Año Implementación" data-type="string" alignment="center" :visible="true" :allow-grouping="false" /> -->
-														<DxColumn data-field="created_at" caption="Fecha Creación" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
-														<DxColumn data-field="updated_at" caption="Fecha Actualización" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
+														<!-- <DxColumn data-field="id" :width="80"  caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" /> -->
+														
+                                                        <DxColumn data-field="research_group_name" caption="Grupo" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
+														<DxColumn data-field="research_group_acronym" width="90"  caption="Acrónimo" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
+														<DxColumn data-field="execution_validity" width="90" caption="Vigencia" data-type="number" alignment="center" :visible="true" :allow-grouping="false" />
+
+														<DxColumn data-field="created_at" width="90" caption="Creación" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
+														<DxColumn data-field="updated_at" width="90" caption="Actualización" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
 
 														<!-- <DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/>  -->
-														<DxColumn data-field="is_draft" caption="Plan Acción" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
-														<DxColumn data-field="management_report_is_draft" caption="Informe Gestíon" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
-														<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
+														<DxColumn data-field="is_draft" caption="Plan Acción" :allow-filtering="false" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="management_report_is_draft" :allow-filtering="false" caption="Informe Gestíon" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="active" caption="Activo" :allow-filtering="false" data-type="string" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
+														<DxColumn :width="130" alignment="center" :allow-filtering="false" cell-template="tpl" caption="" />
 
 														<!-- <template #tplWeb="{ data }">
 															<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
@@ -179,7 +196,7 @@
 																	<a v-if="data.data.is_draft && editMode"
 																	title="Completar Campos... " 
 																	class="cmd-item color-main-600"
-																	@click.prevent="go(data.data.id, `/unidad/${$route.params.unidadId}/plan_accion/${data.data.id}/datos`, 'Cargando Ingreso de Datos')"
+																	@click.prevent="go(data.data.id, `/unidad/${data.data.research_group_id}/plan_accion/${data.data.id}/datos`, 'Cargando Ingreso de Datos')"
 																	href="#">
 																	<i class="icon-pencil"></i>
 																	</a>
@@ -187,7 +204,7 @@
 																	<a v-if="!data.data.is_draft && editMode"
 																	title="Completar Informe... " 
 																	class="cmd-item color-main-600"
-																	@click.prevent="go(data.data.id, `/unidad/${$route.params.unidadId}/plan_accion/${data.data.id}/datos`, 'Cargando Ingreso de Datos')"
+																	@click.prevent="go(data.data.id, `/unidad/${data.data.research_group_id}/plan_accion/${data.data.id}/datos`, 'Cargando Ingreso de Datos')"
 																	href="#">
 																	<i class="icon-clipboard5"></i>
 																	</a>
@@ -195,7 +212,7 @@
 																	<a 
 																	title="Vista Impresion... " 
 																	class="cmd-item color-main-600" 
-																	@click.prevent="go(data.data.id, `/unidad/${$route.params.unidadId}/plan_accion/${data.data.id}/vista`, 'Cargando Vista de Datos')"
+																	@click.prevent="go(data.data.id, `/unidad/${data.data.research_group_id}/plan_accion/${data.data.id}/vista`, 'Cargando Vista de Datos')"
 																	href="#">
 																	<i class="icon-eye"></i>
 																	</a>
@@ -247,7 +264,7 @@
 												</div>
 											</div>
 										</div>
-								</fieldset>
+								
 							</div>
 						</div>
 
@@ -300,39 +317,7 @@
         </div>
       </div>
 
-		<div class="card-footer">
-              <div class="row">
-                <div class="col">
-                  <DxButton @click="popupObs = false" class="nb">
-                    <template #default>
-                      <span
-                        class="
-                          btn btn-main btn-labeled btn-labeled-left btn-sm
-                          legitRipple
-                        "
-                      >
-                        <b><i class="icon-database-remove"></i></b> CANCELAR
-                      </span>
-                    </template>
-                  </DxButton>
-                </div>
-                <div class="col text-right">
-                  <DxButton @click="nuevoPlan" class="nb" v-if="editMode">
-                    <template #default>
-                      <span
-                        class="
-                          btn btn-main btn-labeled btn-labeled-right btn-sm
-                          legitRipple
-                        "
-                      >
-                        GUARDAR <b><i class="icon-database-add"></i></b>
-                      </span>
-                    </template>
-                  </DxButton>
-                </div>
-              </div>
-            </div>
-
+	
 
     </DxPopup>
 
@@ -362,6 +347,7 @@ import {
 	DxColumn,
 	DxColumnChooser,
 	DxDataGrid,
+    DxExport,
 	DxFilterRow,
 	DxGroupItem,
 	DxGroupPanel,
@@ -371,6 +357,8 @@ import {
 	DxPaging,
 	DxSearchPanel,
 	DxSorting,
+    DxStateStoring,
+    DxFilterPanel,
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
@@ -383,25 +371,23 @@ import DxAccordion, { DxItem } from "devextreme-vue/accordion";
 export default {
 	created: function() {
 		root = this;
-		let today = new Date();
-		let year = today.getFullYear(), newyear=year+1;
-		
-		if(year===2021) root.tipoproceso=[{id:newyear, st_name:newyear}];
-		else root.tipoproceso=[{id:newyear, st_name:newyear},{id:year, st_name:year}];
-
-
+		// let today = new Date();
+		// let year = today.getFullYear(), newyear=year+1;
+        
+        
 		root.rutaprincipal=String(location.href).slice(0,-this.$route.path.length)+"/unidad";
 
 		root.isAdmin = (this.user_role_id === this.get_role_id('administrador'));
 		console.warn("la ruta",this.$route);
-		root.getUnit({
-			id: root.$route.params.unidadId,
+		
+        /*root.getUnit({
+			id: root.data.data.research_group_id,
 			cb: function(result) {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
 				root.loadMembers();
 			},
-		});
+		});*/
 	},
 
 	data: () => ({
@@ -421,8 +407,11 @@ export default {
 	components: {
 		DxItem,
 		DxAccordion,
+        DxStateStoring,
 		DxPopup,
+        DxExport,
 		DxButton,
+        DxFilterPanel,
 		DxColumn,
 		DxPatternRule,
 		DxColumnChooser,
@@ -450,13 +439,13 @@ export default {
 		// ...mapGetters("core/tipo", ["subtypesByType"]),
 		// ...mapState("unidad/colciencias", { convocatorias: "items" }),
 		dataSource: function() {
-			if (typeof this.group.id === "undefined") return null;
+			// if (typeof this.group.id === "undefined") return null;
 			console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
 				// ids: ["dw_type_id=1"],
 				stringParam: "dw_type_id=" + root.tipos,
-				endPoint: `research_units/${root.$route.params.unidadId}/action_plans/`,
+				endPoint: `action_plans`,
 				onLoading: function(loadOptions) {
 					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
 				},
@@ -470,66 +459,27 @@ export default {
 		},
 	},	
 	methods: {
-		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet" }),
+		// ...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
-		loadMembers() {
-			console.log("members", root.group.member_ids);
-		},
+		// loadMembers() {
+		// 	console.log("members", root.group.member_ids);
+		// },
 
 
 		estadoEntrega(cellInfo) {
 			return cellInfo.value ? "Editando...":"Terminado" ;
 		},
 		
-		async nuevoPlan(){
-			var result = root.$refs.basicGroup.instance.validate();
-			let dataval= await root.getSerarchDoc({url:  'research_units/'+root.$route.params.unidadId+'/action_plans/?filter=[["execution_validity","=","'+root.baseObj.execution_validity+'","AND","active","=","true"]]'});
-			console.clear();
-			console.warn("data", dataval)
-			if(dataval.length == 0){
-				if (result.isValid) {
-					let msg = "Creando nuevo Plan de Acción...";
-					root.loaderShow(msg);
-					root.baseObj.created_by = root.user_id;
-					root.baseObj.is_draft = true;
-					root.baseObj.active = true;
-					let obj = root.baseObj;
-					let dto = {
-						unidadId: root.group.id,
-						stringEP: "action_plans",
-						mod: obj.id,
-						objectSend: { action_plan: obj },
-						cb: function(item) {
-							console.log("dato", item);
-							root.grid.refresh();
-							root.loaderHide();
-						},
-					};
-					console.log("root.mode", root.mode);
-					root.objSave(dto);
-					root.popupObs=false;
-					root.baseObj.execution_validity=null;
-					
-				}
-			}else{
-				this.popupObs=false;
-				this.$info("El plan de accion que desea registrar ya se encuentra en uso para este grupo o semillero");
-
-			}
-			
-		},
-
 
 		nuevo() {
 			let msg="¿Está seguro que desea crear un nuevo plan de acción?<br>Nota: Recuerde que este no podrá ser eliminado o editado.";
 			this.$confirm(msg, function(si_no) {
 				console.log("result nuevo plan", si_no);
-
-
 				if (si_no) {
 					root.popupObs=true;
 					//root.nuevoPlan();
+                    
 				}
 			});
 		},
@@ -550,7 +500,7 @@ export default {
 						data: {
 							action_plan: {
 								active: state,
-								updated_by: root.group.id,
+								updated_by: root.user_id,
 							},
 						},
 						cb: function(result) {
@@ -585,7 +535,7 @@ export default {
 						baseObjx.management_report_is_draft = state;
 						let obj = baseObjx;
 						let dto = {
-							unidadId: root.group.id,
+							unidadId: data.data.research_group_id,
 							stringEP: "ap_management_reports",
 							mod: data.data.id,
 							newFormat:true,
@@ -593,8 +543,8 @@ export default {
 							cb: function(item) {
 								console.log("dato", item);
 								root.grid.refresh();
-								// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
-								//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+								// root.$router.go('/unidad/'+root.data.data.research_group_id+'/plan_accion');
+								//root.go(0, `/unidad/${root.data.data.research_group_id}/plan_accion`, 'Cargando Ingreso de Datos');
 								root.loaderHide();
 							},
 						};
@@ -629,7 +579,7 @@ export default {
 					root.baseObj.active = true;
 					let obj = root.baseObj;
 					let dto = {
-						unidadId: root.group.id,
+						unidadId: data.data.research_group_id,
 						stringEP: "action_plans",
 						mod: data.data.id,
 						newFormat:true,
@@ -637,8 +587,8 @@ export default {
 						cb: function(item) {
 							console.log("dato", item);
 							root.grid.refresh();
-							// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
-							//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+							// root.$router.go('/unidad/'+root.data.data.research_group_id+'/plan_accion');
+							//root.go(0, `/unidad/${root.data.data.research_group_id}/plan_accion`, 'Cargando Ingreso de Datos');
 							root.loaderHide();
 						},
 					};
@@ -652,7 +602,7 @@ export default {
 						baseObjx.management_report_is_draft = true;
 						let objx = baseObjx;
 						let dtox = {
-							unidadId: root.group.id,
+							unidadId: data.data.research_group_id,
 							stringEP: "ap_management_reports",
 							mod: data.data.id,
 							newFormat:true,
@@ -660,8 +610,8 @@ export default {
 							cb: function(item) {
 								console.log("dato", item);
 								root.grid.refresh();
-								// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
-								//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+								// root.$router.go('/unidad/'+root.data.data.research_group_id+'/plan_accion');
+								//root.go(0, `/unidad/${root.data.data.research_group_id}/plan_accion`, 'Cargando Ingreso de Datos');
 								root.loaderHide();
 							},
 						};

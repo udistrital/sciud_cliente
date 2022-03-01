@@ -112,23 +112,35 @@ vue.mixin({
 			e.component.close();
 		},
 		// 202108250029: Obtiene el id de un rol de grupo
+		
 		get_group_role_id: (name) => {
 			let item = window.clasificador.estructura_rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+		//Permite obtener elnombre del rol de un grupo segun el objeto creado en clasificator.js
+		get_group_role_name: (id) => {
+			let item = window.clasificador.estructura_rol.find((o) => o.id == id);
+			return typeof item !== "undefined" ? item["name"] : null;
+		},
+
+
 		// 202108250030: Obtiene el id de un tipo de grupo
 		get_group_type_id: (name) => {
 			let item = window.clasificador.estructura_tipo.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+		
 		get_role_id: (name) => {
 			let item = window.clasificador.rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+		
 		get_faculty_name: (id) => {
 			let item = window.clasificador.facultad.find((o) => o.id.toString() == id.toString());
 			return typeof item !== "undefined" ? item["nombre"] : null;
 		},
+
+
 		get_faculty_name_by_oas: (oas_id) => {
 			let item = window.clasificador.facultad.find((o) => o.id_oas.toString() == oas_id.toString());
 			return typeof item !== "undefined" ? item["nombre"] : null;
@@ -276,6 +288,9 @@ vue.mixin({
 			console.log("editMode =>", result);
 			console.log(window.vm.$sep);
 			return result;
+		},
+		listRolEstructureGroup(){
+			return window.clasificador.estructura_rol;
 		},
 		editModeConv() {
 			let result = true;
