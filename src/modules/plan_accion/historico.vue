@@ -54,8 +54,8 @@
 						<div class="row mb-3">
 							<div class="col">
 								<div class="col d-flex justify-content-between align-items-end">
-									<div class="title"><i class="icon-history"></i><small> <i>Plan de Acción e Informe de Gestión</i>  &raquo; Historico</small></div>
-									<!-- <div class="sub-title"><i class="icon-history"></i>Gestion de Informacion</div> -->
+									<div class="title"><i class="icon-history"></i><small> <i>Plan de Acción e Informe de Gestión</i>  &raquo; Histórico</small></div>
+									<!-- <div class="sub-title"><i class="icon-history"></i>Gestion de Información</div> -->
 								</div>
 							</div>
 						</div>
