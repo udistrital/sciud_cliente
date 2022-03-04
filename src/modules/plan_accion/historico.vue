@@ -22,7 +22,7 @@
 				<!-- <div class="header-elements"> @click.prevent="go(group.id, '/unidad', `Cargando Estructuras`);"-->
 				
 				<!-- <router-link tag="a" :to="'/unidad'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="nuevo Plan de Acción">
-					<b><i class="icon-history"></i></b>Historico Planes
+					<b><i class="icon-history"></i></b>Histórico Planes
 				</router-link> -->
 
 				<a
