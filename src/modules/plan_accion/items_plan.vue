@@ -321,10 +321,12 @@ export default {
 		nuevoPlan(){
 			let msg = "Guardando Plan de Acción";
 			root.loaderShow(msg);
+			
 			root.baseObjx.updated_by = root.user_id;
 			root.baseObjx.is_draft = false;
 			root.baseObjx.active = true;
 			let obj = root.baseObjx;
+			console.warn(root.baseObjx);
 			if(root.baseObjx.updated_by!=null){
 				console.warn(root.baseObjx);
 				let dto = {
@@ -353,6 +355,7 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
+					root.baseObjx.execution_validity = root.group.execution_validity;
 					root.nuevoPlan();
 				}
 			});
@@ -363,6 +366,7 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
+					root.baseObjx.execution_validity = root.group.execution_validity;
 					root.nuevoInfo();
 				}
 			});

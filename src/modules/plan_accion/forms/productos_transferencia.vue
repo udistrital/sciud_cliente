@@ -91,7 +91,7 @@
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group">
 	<label>Meta : </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" >
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -505,6 +505,14 @@ export default {
 			if(root.alldata2.length > 0) root.$info("Seleccione Producto Específico");
 			console.warn("aldata2 data = ", root.alldata2);
 
+		},
+
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
 		},
 
 		porcentaje(){

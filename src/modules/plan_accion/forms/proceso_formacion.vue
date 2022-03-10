@@ -89,7 +89,7 @@
 <div :class="'col-md-'+(!actInfor?'4':'1')">
 	<div class="form-group">
 	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor">
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -398,6 +398,7 @@ export default {
 		min: new Date(1950, 1, 1),
 		baseEnt: null,
 		val_porcentaje:0,
+		porcentaje:0,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
@@ -468,8 +469,15 @@ export default {
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
+		},
 		
-		porcentaje(){
+		porcentajex(){
 			
 			if(root.baseObj.advanced_total<=root.baseObj.goal && root.baseObj.advanced_total>=0){
 				root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);

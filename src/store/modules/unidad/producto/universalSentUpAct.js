@@ -60,7 +60,7 @@ const store = {
 				return await api()
 					.get(args.url)
 					.then((r) => {
-						console.log("getUniversalID => ", r.data);
+						console.warn("getUniversalID => ", r.data);
 						return r.data;
 				});
 			} catch (error) {
@@ -89,7 +89,7 @@ const store = {
 			try {
 				console.log("getEstructuras => ", args);
 				return await api()
-					.get('research_units?faculties='+args.facults+'&filter=[["name","contains","'+args.nameEstruc+'"],"and",["group_state_id","=",2]]')
+					.get('research_units?faculties='+args.facults+'&filter=[["name","contains","'+args.nameEstruc+'"],"and",["group_state_id","=",1]]')
 					.then((r) => {
 						return r.data.data;
 				});

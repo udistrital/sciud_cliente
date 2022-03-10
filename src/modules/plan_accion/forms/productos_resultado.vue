@@ -91,7 +91,7 @@
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group3">
 	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor">
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -467,6 +467,14 @@ export default {
 		...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
+		},
 
 		porcentaje(){
 			

@@ -336,7 +336,7 @@
 													<DxTextArea
 														:read-only="!editMode"
 														:height="100"
-														:max-length="400"
+														:max-length="1000"
 														:value.sync="group.mission"
 														placeholder="Misión"
 														class="form-control"
@@ -353,7 +353,7 @@
 													<DxTextArea
 														:read-only="!editMode"
 														:height="100"
-														:max-length="400"
+														:max-length="1000"
 														:value.sync="group.vision"
 														placeholder="Visión"
 														class="form-control"
@@ -370,7 +370,7 @@
 													<DxTextArea
 														:read-only="!editMode"
 														:height="100"
-														:max-length="400"
+														:max-length="1000"
 														:value.sync="group.description"
 														placeholder="Descripción"
 														class="form-control"

@@ -7,11 +7,13 @@
 		{ "id": 5, "name": "integrante" },
 		{ "id": 6, "name": "gestor_facultad" }
 	],
+	
 	"estructura_tipo": [
 		{ "id": 3, "name": "grupo" },
 		{ "id": 4, "name": "semillero" },
 		{ "id": 5, "name": "red" }
 	],
+	
 	"estructura_rol": [
 		{ "id": 0, "name": "sin_asignar" },
 		{ "id": 1, "name": "director" },
@@ -20,8 +22,9 @@
 		{ "id": 4, "name": "egresado" },
 		{ "id": 5, "name": "lider_semillero" },
 		{ "id": 6, "name": "invitado" },
-		{ "id": 7, "name": "docente_tutor" }
+		{ "id": 7, "name": "docente_tutor" } 
 	],
+
 	"facultad": [
 		{ "id": 8, "id_oas": 8, "nombre": "Vicerrectoria Académica" },
 		{ "id": 512, "id_oas": 14, "nombre": "Facultad de Ingeniería" },
@@ -38,6 +41,8 @@
 		{ "name": "acto_legislativo_documento", "id": 93 },
 		{ "name": "apoyo_creacion_categoria", "id": 164 },
 		{ "name": "apoyo_creacion_documento", "id": 165 },
+		{ "name": "seleccion_vista_rolparticipantes", "id": 234 },
+
 		{ "name": "articulo_categoria", "id": 11 },
 		{ "name": "articulo_tipo_documento", "id": 22 },
 		{ "name": "articulo_tipo", "id": 5 },
@@ -215,6 +220,7 @@
 		{ "name": "planaccion_productos_transferencia_documentos", "id": 222 },
 		{ "name": "planaccion_form6_estado_tipos", "id": 207 },
 		{ "name": "planaccion_form6_estado_documentos", "id": 222 },
+		{ "name": "planaccion_form5_tipos_inventario", "id": 234 },
 
 		{ "name": "redes_investigacion_tipo", "id": 213 },
 		{ "name": "redes_investigacion_tipo_estrusturas_academicas", "id": 214 },
@@ -224,6 +230,11 @@
 		{ "name": "entidades_naturaleza", "id": 208 },
 		{ "name": "entidades_tipos", "id": 209 },
 		{ "name": "entidades_documento", "id": 210 },
-		{ "name": "snies_tipo", "id": 233 }
+		{ "name": "snies_tipo", "id": 233 },
+
+		{ "name": "proyectos_informacion_estados", "id": 236 },
+		{ "name": "proyectos_informacion_tipos", "id": 235 }
+		
+		
 	]
 }
