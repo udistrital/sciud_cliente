@@ -77,7 +77,6 @@ export default {
 				text: "Administrador",
 			},
 			{
-<<<<<<< HEAD
 				cc: "1013622639",
 				title: "Carlos (Administrador)",
 				text: "Administrador 2",
@@ -141,56 +140,6 @@ export default {
 			// 	text: "Integrante",
 			// },
 			//fin seccion administrativa visible
-=======
-				cc: "1023867324",
-				title: "Gestor Facultad",
-				text: "Gestor Facultad",
-			},
-			{
-				cc: "1111111104",
-				title: "Prueba Usuario",
-				text: "Docente Tutor",
-			},
-
-			{
-				cc: "52899935",
-				title: "Prueba Estudiante Siciud (Directora)",
-				text: "Directora",
-			},
-			/*
-			{
-				cc: "65432123",
-				title: "Prueba Estudiante Siciud (Gestor)",
-				text: "Gestor",
-			},
-			{
-				cc: "52899935",
-				title: "Prueba Estudiante Siciud (Directora)",
-				text: "Directora",
-			},
-			
-			{
-				cc: "1655467973",
-				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-				text: "Gestor Facultad",
-			},
-			{
-				cc: "53009619",
-				title: "Luzangela Piñeros Botero (Líder Semillero)",
-				text: "Líder Semillero",
-			},
-			{
-				cc: "43105248",
-				title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-				text: "Int. Semillero",
-			},
-			{
-				cc: "19296014",
-				title: "German Arturo Lopez Martinez (Integrante)",
-				text: "Integrante",
-			},
-*/
->>>>>>> origin/master
 		],
 	}),
 	watch: {
