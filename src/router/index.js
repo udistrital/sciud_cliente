@@ -58,6 +58,17 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/unidad/documentos"),
 		},
+
+
+		{
+			name: "manuales-documentos",
+			path: "/help",
+			meta: { title: "ayuda", requiresAuth: false },
+			component: () => import("@/modules/documentacion"),
+		},
+
+
+
 		{
 			name: "unidad-integrantes",
 			path: "/unidad/:unidadId/integrantes",
@@ -216,13 +227,13 @@ let routes = new router({
 			meta: { title: "Administración » Entidades", requiresAuth: true },
 		},
 		{
-			name: "entidades-dep-represent2",
+			name: "entidades-dep-represent",
 			path: "/admin/entidades/:idEnt/dependencias/:idDep",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/admin/form_entidades/index"),
 		},
 		{
-			name: "entidades-dep-represent",
+			name: "entidades-represent",
 			path: "/admin/entidades/:idEnt",
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/admin/form_entidades/index"),

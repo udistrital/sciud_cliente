@@ -71,6 +71,12 @@
 						<i class="icon-square-right"></i>
 					</a>
 				</li>
+				<li class="nav-item">
+					<router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+						<i class="icon-question3"></i>
+						Ayuda
+					</router-link>
+				</li>
 			</ul>
 		</div>
 
@@ -88,6 +94,12 @@
 					<router-link to="/login" tag="a" class="navbar-nav-link legitRipple">
 						<i class="icon-user-lock"></i>
 						Ingresar al sistema
+					</router-link>
+				</li>
+				<li class="nav-item">
+					<router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+						<i class="icon-question3"></i>
+						Ayuda
 					</router-link>
 				</li>
 			</ul>

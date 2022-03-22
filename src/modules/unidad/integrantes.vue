@@ -19,8 +19,11 @@
 									<div class="card-header main">Agregar</div>
 									<div class="card-body mb-0 pb-0 pt-3">
 										<DxValidationGroup ref="vGroup">
+											<div v-if="anchoVista==12" class="alert alert-success col-md-12 mt-3" role="alert">
+												<div class="sub-title"><i class="icon-info"></i> Información: </div> Para poder diligenciar estos campos, ingrese el número de documento del nuevo integrante sin puntos o comas, previamente registrado en la OAS y SICIUD V2, luego presione el icono de la lupa que esta al costado derecho del campo de documento.
+											</div>
 											<div class="row">
-												<div class="col-md-2">
+												<div :class="'col-md-'+anchoVista">
 													<div class="form-group">
 														<label>Documento de identidad:</label>
 														<DxNumberBox
@@ -57,9 +60,10 @@
 														</DxSelectBox>
 													</div>
 												</div> -->
-												<div class="col-md-2">
+
+												<div class="col-md-2"   v-bind:style="styleObject">
 													<div class="form-group">
-														<label>Rol EXP:</label>
+														<label>Rol </label>
 														<DxSelectBox
 															:show-clear-button="true"
 															:grouped="false"
@@ -70,6 +74,7 @@
 															class="form-control"
 															display-expr="name"
 															value-expr="id"
+															:read-only="estateRol"
 														>
 															<DxValidator>
 																<DxRequiredRule />
@@ -77,7 +82,8 @@
 														</DxSelectBox>
 													</div>
 												</div>
-												<div class="col-md-3">
+												
+												<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="form-group">
 														<label>Nombre:</label>
 														<DxTextBox :value.sync="group_member.name" placeholder="Nombre" class="form-control" :read-only="true" mode="text">
@@ -87,7 +93,7 @@
 														</DxTextBox>
 													</div>
 												</div>
-												<div class="col-md-5">
+												<div class="col-md-5"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col-md-4">
 															<div class="form-group">
@@ -95,7 +101,7 @@
 																<DxTextBox :value.sync="researcher.id" placeholder="Investigador ID" class="form-control" :read-only="true" />
 															</div>
 														</div>
-														<div class="col-md-3">
+														<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 															<div class="form-group">
 																<label>OAS ID:</label>
 																<DxTextBox :value.sync="researcher.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
@@ -105,7 +111,7 @@
 																</DxTextBox>
 															</div>
 														</div>
-														<div class="col-md-2">
+														<div class="col-md-2"   > <!--v-if="visible=true">-->
 															<div class="form-group">
 																<label>Activo:</label>
 																<DxSwitch
@@ -118,7 +124,7 @@
 																/>
 															</div>
 														</div>
-														<div class="col-md-3">
+														<div class="col-md-3"   > <!--v-if="visible=true">-->
 															<div class="form-group">
 																<label>CVLAC:</label>
 																<DxTextBox :value.sync="researcher.cvlac" placeholder="CVLAC" class="form-control" />
@@ -126,7 +132,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col">
 															<div class="form-group">
@@ -137,12 +143,14 @@
 														<div class="col">
 															<div class="form-group">
 																<label>Firma Científica:</label>
-																<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" />
+																<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" >
+																<DxNumberBoxButton :options="questionbutton" name="question" location="after" />
+																</DxTextBox>
 															</div>
 														</div>
 													</div>
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col">
 															<div class="form-group">
@@ -194,7 +202,7 @@
 														</div> -->
 													</div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-6"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col-md-5">
 															<div class="form-group">
@@ -250,6 +258,7 @@
 														</div>
 													</div>
 												</div>
+												
 											</div>
 										</DxValidationGroup>
 										<div class="row" id="periods">
@@ -367,7 +376,7 @@
 												</DxButton>
 											</div>
 											<div class="col text-right">
-												<DxButton @click="userSave" class="nb">
+												<DxButton @click="userSave" class="nb"    v-bind:style="styleObject">
 													<template #default>
 														<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 															GUARDAR <b><i class="icon-database-add"></i></b>
@@ -421,7 +430,7 @@
 												:show-page-size-selector="true"
 												:show-navigation-buttons="true"
 												:allowed-page-sizes="dgPageSizes"
-												info-text="{2} integrantes (página {0} de {1})"
+												info-text="{2} Histórico (página {0} de {1})"
 											/>
 											<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
 											<DxColumn
@@ -494,10 +503,21 @@
 													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="userEdit(data.data)" href="#">
 														<i class="icon-database-edit"></i>
 													</a>
-													
+													<!-- <a
+														v-if="data.data.gm_state_id === 1"
+														title="Desactivar usuario..."
+														class="cmd-item color-main-600 mr-2"
+														@click.prevent="userActive(data.data, false)"
+														href="#"
+													>
+														<i class="icon-database-remove"></i>
+													</a>
+													<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="userActive(data.data, true)" href="#">
+														<i class="icon-database-check"></i>
+													</a> -->
 												</span>
 												<span class="cmds" v-else>
-													<a v-if="data.data.gm_state_id!=2" title="Desactivar Usuario..." class="cmd-item color-main-600 alert-danger" @click.prevent="unactive(data.data)" href="#">
+													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="unactive(data.data)" href="#">
 														<i class="icon-user-cancel2"></i>
 													</a>
 												</span>
@@ -527,6 +547,9 @@
 						<span class="font-weight-semibold">gm_period:</span> {{ JSON.stringify(gm_period, null, 3) }}
 						<hr class="sep" />
 						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">user:</span> {{ JSON.stringify(user, null, 3) }}
+						user
 					</div>
 				</div>
 			</div>
@@ -640,6 +663,10 @@ export default {
 		Header: () => import("./_header"),
 	},
 	data: () => ({
+		roluser:0,
+		styleObject:{visibility:'hidden'},
+		anchoVista:12,
+		estateRol:false,
 		rol2:[],
 		app_user: null,
 		chkActive: null,
@@ -728,6 +755,8 @@ export default {
 						let nombre = typeof det !== "undefined" ? `"${det.TerceroId.NombreCompleto}"` : `con el documento "${id}"`;
 						root.$info(`El usuario ${nombre} ya se<br>encuentra registrado como "${rol}" en el grupo.`);
 						root.loaderHide();
+						root.styleObject={visibility:'hidden'};
+						root.anchoVista=12;
 						return false;
 					}
 
@@ -738,6 +767,8 @@ export default {
 						m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
 						m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
 						root.$info(m);
+						root.styleObject={visibility:'hidden'};
+						root.anchoVista=12;
 						root.loaderHide();
 						return false;
 					}
@@ -760,10 +791,20 @@ export default {
 					} else {
 						console.log("");
 					}
+					root.anchoVista=2;
+					root.styleObject={visibility:'visible'},
 					root.loaderHide();
 				}
 			},
 		},
+
+		questionbutton: {
+			icon: "info",
+			onClick: async () => {
+				root.$info("La firma científica es la utilizada por el investigador para que se identifique y se distinga <br /> de otros autores, incluye tanto el nombre como la institución en la que trabaja.")
+			},
+		},
+		
 		group_member_bk1: null,
 		group_member_bk: null,
 		group_member: {
@@ -855,7 +896,7 @@ export default {
 			"updateResearcher",
 		]),
 		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
-		...mapActions("unidad/producto/universalSentUpAct", {univerdalGet: "univerdalGet", objUpdate: "update"}),
+		...mapActions("unidad/producto/universalSentUpAct", {univerdalGet: "univerdalGet", univerdalID: "univerdalID" }),
 
 
 		async listChange() {
@@ -869,7 +910,6 @@ export default {
 			ambos=await root.univerdalGet(arg);
 			root.rol2=ambos.concat(grupo);
 			// if(root.rol2.length > 0) root.$info("Seleccione Producto Específico");
-			
 			console.warn("aldata2 data = ", root.rol2);
 		},
 
@@ -982,6 +1022,17 @@ export default {
 			});
 		},
 		userEditEnd() {
+			// 8345	4523	1.013.622.639	Moreno Susatama Carlos Arturo	T:2 / A:1 / I:1	1	1	--	Administrador	SI	
+			// let userdatagrid=null, usersystem=null;
+
+			// usersystem=root.user.local.id;
+			// userdatagrid=root.group_member;
+
+
+			// console.warn("usersystem", usersystem);
+			// console.warn("userdatagrid", userdatagrid);
+			// app_user
+			
 			$(root.panelData + " #periods").show();
 			root.dsPeriods.reload();
 			$(root.panelData + " #periods").show();
@@ -995,59 +1046,73 @@ export default {
 			});
 		},
 
-		unactive(d) {
+		unactive5(d) {
 			console.clear();
 			root.mode == "edit";
 			let data = root.$clone(d);
 			console.warn("data unable", data);
-			console.warn("group member id", data.id);
-			console.warn("group id", root.group.id);
-			let baseObj= {};
-			let msg = `¿Realmente desea desactivar al usuario identificado con documento N°: <span class='text-sb'>"${data.researcher.identification_number}"</span>?`;
-			this.$confirm(msg, function(si_no) {
-				console.log("result", si_no);
-				if (si_no) {
-					root.loaderShow(`Desactivando usuario...`, root.panelGrid);
-					baseObj.gm_state_id=2;
-					baseObj.role_id=data.role_id;
-					baseObj.researcher_id=data.researcher_id;
-					baseObj.active=false;
-					baseObj.updated_by=root.user_id;
-					
-					let obj = baseObj;
-					let dto = {
-						newFormat: false,
-						unidadId: root.group.id,
-						stringEP: "group_member",
-						mod: data.id,
-						objectSend: { group_member: obj },
-						cb: function(item) {
-							root.dsMembers.reload();
-							root.loaderHide();
-						},
-					};
-					console.log("root.mode", root.mode);
-					root.objUpdate(dto);
-
-					root.loadMembers(false, function() {
-						root.loading = false;
-						root.userCancel(true, function() {
-							root.dsMembers.reload();
-							if (root.grid.getVisibleRows().length > 0) root.grid.expandRow(root.grid.getKeyByRowIndex(0));
-						});
-					});
-
-				}
-			});
-
 		},
-		
-
-		userEdit(d) {
+		unactive(d) {
 			console.clear();
 			root.mode == "edit";
 			let data = root.$clone(d);
 			console.log("data", data);
+
+			console.warn("root.group_member", root.group_member);
+			console.warn("root.researcher", root.researcher);
+			// root.$refs.vGroup.instance.reset();
+			root.nbIdBtn = root.nbId.getButton("search");
+			console.log("root.nbIdBtn", root.nbIdBtn);
+			root.nbId.option("readOnly", true);
+			root.nbIdBtn.option("visible", false);
+			root.chkActive.option("readOnly", false);
+			root.group_member.id = data.id;
+			root.group_member.role_id = data.role_id;
+			root.group_member.active = data.gm_state_id === 1;
+			root.group_member.researcher_id = data.researcher.id.toString();
+			//root.group_member.name = data.oas_details.TerceroId.NombreCompleto;
+			data.researcher.id = data.researcher.id.toString();
+			data.researcher.identification_number = parseInt(data.researcher.identification_number);
+			root.researcher = data.researcher;
+			if (typeof data.oas_details !== "undefined") root.researcher.oas_researcher_id = data.oas_details.TerceroId.Id.toString();
+			console.log("root.group_member", root.group_member);
+			// 202107010440: Carga los periodos si no lo ha hecho ya
+			root.getPeriods({
+				group_member_id: data.id,
+				cb: function(periods) {
+					root.periods = periods.data;
+					console.log("root.periods =>", root.periods);
+					root.group_member.gm_periods = periods.data;
+					let p = root.periods.filter((o) => o.is_current);
+					if (p.length > 0) {
+						root.gm_period = root.$clone(p[0]);
+						root.gm_period_bk1 = root.$clone(p[0]);
+					} else {
+						root.gm_period = root.$clone(root.gm_period_bk);
+						root.gm_period_bk = root.$clone(root.gm_period_bk);
+					}
+					console.log("AFTER root.group_member", root.group_member);
+					root.userEditEnd();
+				},
+			});
+		},
+
+		async userEdit(d) {
+			
+
+			console.clear();
+			root.mode == "edit";
+			let data = root.$clone(d);
+			console.log("data", data);
+			root.estateRol=false;
+			root.roluser= await root.univerdalID({url:'role/'+data.role_id});
+			console.warn("datos del rol: ",root.roluser);
+
+			if(!root.es_admin) if(root.roluser.parent_id==1 || root.roluser.parent_id==5 || root.roluser.parent_id==7) root.estateRol=true;
+			else console.warn("Este usuario es administrador");
+			// if(root.roluser.parent_id==data.role_id) root.estateRol=true;//root.estateRol=true;
+
+
 			// root.$refs.vGroup.instance.reset();
 			root.nbIdBtn = root.nbId.getButton("search");
 			console.log("root.nbIdBtn", root.nbIdBtn);
@@ -1083,6 +1148,10 @@ export default {
 					root.userEditEnd();
 				},
 			});
+			
+
+			root.anchoVista=2;
+			root.styleObject={visibility:'visible'};
 		},
 		userAdd() {
 			root.mode == "add";
@@ -1258,8 +1327,14 @@ export default {
 					});
 				});
 			}
+			root.anchoVista=12;
+			root.estateRol=false;//root.estateRol=false;
+
+
+			root.styleObject={visibility:'hidden'};
 		},
 		userCancel(loaderHide = false, cb) {
+			root.estateRol=false;//root.estateRol=false;
 			root.fromCancel = true;
 			$(root.panelData).fadeOut(function() {
 				if (loaderHide) root.loaderHide();
@@ -1272,6 +1347,8 @@ export default {
 					if (root.$isFunction(cb)) cb();
 				});
 			});
+			root.anchoVista=12;
+			root.styleObject={visibility:'hidden'};
 		},
 		async userActive(data, state) {
 			console.clear();

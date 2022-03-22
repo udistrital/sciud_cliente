@@ -56,7 +56,7 @@ const store = {
 		
 		async univerdalID({ commit, getters }, args) {
 			try {
-				console.log("get=> ", args);
+				console.log("getUniversalID get=> ", args);
 				return await api()
 					.get(args.url)
 					.then((r) => {
@@ -65,13 +65,15 @@ const store = {
 				});
 			} catch (error) {
 				//verifica si dentro del argumento existe una funccion callback
+				console.error(error)
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
+				
 			}
 		},
 
 		async univerdalGet({ commit, getters }, args) {
 			try {
-				console.log("get=> ", args);
+				console.log("univerdalGet get=> ", args);
 				return await api()
 					.get(args.url)
 					.then((r) => {
@@ -80,6 +82,7 @@ const store = {
 				});
 			} catch (error) {
 				//verifica si dentro del argumento existe una funccion callback
+				console.error(error);
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
 			}
 		},
