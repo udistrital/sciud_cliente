@@ -409,7 +409,6 @@ export default {
 			order: null,
 			plan_type_id: null,
 			product_type_id: null,
-
 		},
 	}),
 	created() {
