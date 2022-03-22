@@ -71,16 +71,16 @@ export default {
 		defaultVisible: false,
 		showDev: true,
 		items: [
-			{
-				cc: "79602309",
-				title: "Diego Alfonso Vargas Villegas (Administrador)",
-				text: "Administrador",
-			},
-			{
-				cc: "1013622639",
-				title: "Carlos (Administrador)",
-				text: "Administrador 2",
-			},
+			// {
+			// 	cc: "79602309",
+			// 	title: "Diego Alfonso Vargas Villegas (Administrador)",
+			// 	text: "Administrador",
+			// },
+			// {
+			// 	cc: "1013622639",
+			// 	title: "Carlos (Administrador)",
+			// 	text: "Administrador 2",
+			// },
 
 
 
@@ -89,7 +89,7 @@ export default {
 			// 	cc: "1023867324",
 			// 	title: "Gestor Facultad",
 			// 	text: "Gestor Facultad",
-			// },
+			//},
 			// {
 			// 	cc: "1111111104",
 			// 	title: "Prueba Usuario",
