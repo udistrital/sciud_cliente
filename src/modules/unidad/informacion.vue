@@ -562,8 +562,13 @@
 								>
 							</div>
 							<div class="col text-right" v-if="editMode">
-								<a href="#" @click.prevent="save()" title="Guardar Unidad..." class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple"
+								<a href="#" @click.prevent="save(false)" title="Guardar Unidad..." class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple"
 									>Guardar <b><i class="icon-floppy-disk"></i></b
+								></a>
+							</div>
+							<div  v-if="editMode && es_admin && mode=='edit'" >
+								<a href="#" @click.prevent="save2()" title="Guardar Unidad..." class="btn btn-warning btn-labeled btn-labeled-right btn-sm legitRipple"
+									>Guardar como Administrador<b><i class="icon-floppy-disk"></i></b
 								></a>
 							</div>
 						</div>
@@ -584,6 +589,11 @@
 						<span class="font-weight-semibold">researchNetworks.length:</span> {{ researchNetworks.length }}
 						<hr class="sep mb-0" />
 						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">es admin</span> {{ es_admin }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">Modo: </span> {{ mode }}
+						
 					</div>
 				</div>
 			</div>
@@ -907,14 +917,30 @@ export default {
 				},
 			});
 		},
-		save: async () => {
+
+		save2(){
+			root.$refs.basicGroup.instance.validate();
+			this.$confirm("¿Desea guardar información con campos incompletos?", function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					root.save(true);
+				}
+			});
+		},
+		save: async (esadmon) => {
 			console.clear();
+			let resultado = false;
 			var result = root.$refs.basicGroup.instance.validate();
+			if(esadmon){
+				resultado = esadmon;
+				root.$info("Se guardaron datos con campos incompletos.");
+			} else resultado =result.isValid;
 			// root.loaderHide();
 			console.log("result", result);
+			console.warn("edit", root.mode);
 			// root.loaderMessage = "Rekiki";
 			// root.loaderShow();
-			if (result.isValid) {
+			if (resultado) {
 				console.log(root.$sep);
 				console.log("VALID!");
 				$("#btn-add").fadeOut();

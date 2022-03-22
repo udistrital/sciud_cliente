@@ -199,7 +199,7 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
-									data-field="faculties.length"
+									data-field="faculty_ids.length"
 									caption="Facultades"
 									data-type="number"
 									alignment="center"
@@ -291,7 +291,7 @@
 								/>
 								<DxColumn
 									:width="90"
-									:allow-filtering="true"
+									
 									data-field="group_state_id"
 									caption="Estado"
 									data-type="string"
@@ -529,6 +529,7 @@ export default {
 		root.getFacultades();
 		root.loaderHide();
 		console.log("editMode", root.editMode);
+		console.warn("dsEstructuras: ",root.dsEstructuras)
 	},
 	computed: {
 		...mapState("unidad/oas", ["facultades"]),
