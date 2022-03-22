@@ -1108,7 +1108,7 @@ export default {
 			root.roluser= await root.univerdalID({url:'role/'+data.role_id});
 			console.warn("datos del rol: ",root.roluser);
 
-			if(!root.es_admin) if(root.roluser.parent_id==1 || root.roluser.parent_id==5) root.estateRol=true;
+			if(!root.es_admin) if(root.roluser.parent_id==1 || root.roluser.parent_id==5 || root.roluser.parent_id==7) root.estateRol=true;
 			else console.warn("Este usuario es administrador");
 			// if(root.roluser.parent_id==data.role_id) root.estateRol=true;//root.estateRol=true;
 
