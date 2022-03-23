@@ -10,7 +10,7 @@
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
 				<!-- SICIUD v2.0.20211207 - ©{{ year }} -->
-				SICIUD v2.0.20220322 SP1 - ©{{ year }}
+				SICIUD v2.0.20220322 SP2 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -71,16 +71,16 @@ export default {
 		defaultVisible: false,
 		showDev: true,
 		items: [
-			// {
-			// 	cc: "79602309",
-			// 	title: "Diego Alfonso Vargas Villegas (Administrador)",
-			// 	text: "Administrador",
-			// },
-			// {
-			// 	cc: "1013622639",
-			// 	title: "Carlos (Administrador)",
-			// 	text: "Administrador 2",
-			// },
+			{
+				cc: "79602309",
+				title: "Diego Alfonso Vargas Villegas (Administrador)",
+				text: "Administrador",
+			},
+			{
+				cc: "1013622639",
+				title: "Carlos (Administrador)",
+				text: "Administrador 2",
+			},
 
 
 
