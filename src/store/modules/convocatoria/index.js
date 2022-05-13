@@ -184,6 +184,11 @@ const store = {
 					icon: "icon-page-break2",
 					name: "Plantilla",
 				},
+				{
+					key: "movilidad",
+					icon: "icon-paperplane",
+					name: "Movilidad",
+				},
 			];
 		},
 		getItem: (state, getters) => (id) => {

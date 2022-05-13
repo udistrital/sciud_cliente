@@ -159,7 +159,7 @@
 						
 						:allow-column-reordering="true"
 						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
+						:data-source="dataSourceA"
 						:remote-operations="true"
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
@@ -310,7 +310,7 @@ import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPattern
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
-// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomdataSourceA/Vue/
 export default {
 	name: "plan_accion_formacion",
 	components: {
@@ -437,7 +437,7 @@ export default {
 		...mapState("unidad/indicadores", { indicador : "items" }),
 		
 
-		dataSource: function() {
+		dataSourceA: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";

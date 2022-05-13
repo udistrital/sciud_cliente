@@ -157,6 +157,14 @@ const store = {
 				});
 		},
 
+		async getSinData({ commit, state }, args) {
+			await api()
+				.get(args.url)
+				.then((r) => {
+					args.cb(r.data);
+				});
+		},
+
 
 		save({ commit, state, dispatch }, args) {
 			let ruta = null;

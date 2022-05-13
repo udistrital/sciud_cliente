@@ -10,9 +10,13 @@
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 			<div class="header-elements" v-if="es_admin">
-				<router-link tag="a" to="/convocatoria/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
+				<router-link tag="a" to="/convocatoria/crear" class="btn btn-main  mr-1  btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
 					<b><i class="icon-database-add"></i></b> Nueva Convocatoria
 				</router-link>
+
+				<!-- <router-link tag="a" to="/convocatoria/movilidad" class="btn btn-main mr-1 btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
+					<b><i class="icon-database-add"></i></b> Movilidad
+				</router-link> -->
 			</div>
 		</div>
 
@@ -153,7 +157,31 @@
 									:visible="true"
 									:width="100"
 								/>
-								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="160" alignment="center" cell-template="tplCommands" />
+								<!--suspendido por carlos 
+								<DxColumn :allow-filtering="false"  name="idEdit" data-field="id" :width="160" alignment="center" cell-template="tplCommands" caption="Acciones" :fixed="true"  fixed-position="right"/>
+								-->
+								<DxColumn :width="70" :allow-filtering="false" alignment="center" cell-template="tplCMD" caption="Acciones" name="cmds" :fixed="true" fixed-position="right" />
+								
+								
+								<template #tplCMD="{ data }">
+									<DxDropDownButton
+										:drop-down-options="{ width: '200' }"
+										:items="navItems"
+										@item-click="cmdClick({$event, data})"
+										display-expr="text"
+										icon="save"
+										item-template="list-item"
+										template="item"
+										key-expr="id"
+									>
+										<template #item><strong><i class="hand icon-menu9"></i></strong></template>
+										<template #list-item="{ data }" >
+											<span class="cmd-item" :title="'Observar '+ data.name "><i :class="data.icon"></i><span v-html="data.name"></span></span>
+										</template>
+									</DxDropDownButton>
+								</template>
+								
+								<!-- suspendido por carlos 
 								<template #tplCommands="{ data }">
 									<span class="cmds">
 										<a
@@ -167,6 +195,9 @@
 										</a>
 									</span>
 								</template>
+								-->
+
+
 								<template #tplUrl="{ data }">
 									<a
 										v-if="data.value && data.value.trim() !== 'NULL' && data.value.trim().length > 5"
@@ -388,33 +419,36 @@ export default {
 		...mapActions("unidad", ["getResearchers", "setUnit", "saveUnit"]),
 		...mapActions("convocatoria/documentos", { getDocs: "get" }),
 		cmdClick(e) {
-			console.log("e.itemData", e.itemData);
-			root.go(e.itemData.text, e.itemData.command, `Cargando ${e.itemData.text}`);
+			console.warn("e:", e);
+			console.warn("e.data:", e.data.data);
+			console.warn("e.$event.itemData", e.$event.itemData);
+			console.warn("ruta: ",  `/convocatoria/${e.data.data.id}${e.$event.itemData.key !== 'info' ? '/' + e.$event.itemData.key : ''}`);
+			root.go(e.data.data.id, `/convocatoria/${e.data.data.id}${e.$event.itemData.key !== 'info' ? '/' + e.$event.itemData.key : ''}`, `Cargando ${e.$event.itemData.name}`)
 		},
-		cmdGet(data) {
-			return [
-				{
-					command: `/convocatoria/${data.value}`,
-					text: "Información",
-					icon: "icon-info",
-				},
-				{
-					command: `/convocatoria/${data.value}/documentos`,
-					text: "Documentos",
-					icon: "icon-file-pdf",
-				},
-				{
-					command: `/convocatoria/${data.value}/integrantes`,
-					text: "Integrantes",
-					icon: "icon-users4",
-				},
-				{
-					command: `/convocatoria/${data.value}/produccion`,
-					text: "Producción",
-					icon: "icon-trophy",
-				},
-			];
-		},
+		// cmdGet(data) {
+		// 	return [
+		// 		{
+		// 			command: `/convocatoria/${data.value}`,
+		// 			text: "Información",
+		// 			icon: "icon-info",
+		// 		},
+		// 		{
+		// 			command: `/convocatoria/${data.value}/documentos`,
+		// 			text: "Documentos",
+		// 			icon: "icon-file-pdf",
+		// 		},
+		// 		{
+		// 			command: `/convocatoria/${data.value}/integrantes`,
+		// 			text: "Integrantes",
+		// 			icon: "icon-users4",
+		// 		},
+		// 		{
+		// 			command: `/convocatoria/${data.value}/produccion`,
+		// 			text: "Producción",
+		// 			icon: "icon-trophy",
+		// 		},
+		// 	];
+		// },
 		customizeText(cellInfo) {
 			console.log("cellInfo", cellInfo);
 			return cellInfo.value + "$";

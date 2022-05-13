@@ -171,7 +171,7 @@
 						
 						:allow-column-reordering="true"
 						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
+						:data-source="dataSourceE"
 						:remote-operations="true"
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
@@ -350,7 +350,7 @@ import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPattern
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup, DxSwitch } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
-// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomdataSourceE/Vue/
 export default {
 	name: "plan_accion_recursos",
 	components: {
@@ -469,7 +469,7 @@ export default {
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		// ...mapState("unidad/indicadores", { indicador : "items" }),
-		dataSource: function() {
+		dataSourceE: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
