@@ -133,9 +133,9 @@ export default {
 			// },
 
 			{
-				cc: "1655467973",
-				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-				text: "Gestor Facultad",
+				cc: "1026278985",
+				title: "Luis Javier Enrique Romero Puentes (Integrante)",
+				text: "Estudiante Integrante",
 			},
 
 
