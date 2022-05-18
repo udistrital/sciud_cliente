@@ -37,7 +37,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 			</div>
 		</div>
 
-		<!-- <Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this"	:tipos="tiposDocumento" /> -->
+		<Documentos :id="id_panel_documentos" end-point="mobility_calls" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
 
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -166,7 +166,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 									<DxButton @click="save" class="nb" v-if="editMode">
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-												Aplicar <b><i class="icon-database-add"></i></b>
+												{{mode=="edit"? "Actualizar": "Aplicar"}} <b><i class="icon-database-add"></i></b>
 											</span>
 										</template>
 									</DxButton>
@@ -269,10 +269,10 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<!-- <a title="Observar documentos..." class="cmd-item color-main-600 mr-2"
+								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2"
 									@click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
-								</a> -->
+								</a>
 
 
 								<a title="Aplicar a movilidad... " class="cmd-item color-main-600"
@@ -404,7 +404,7 @@ export default {
 		DxToolbarItem,
 		Geo: () => import("@/components/element/geo"),
 		// Observaciones: () => import("@/components/element/html_editor"),
-		// Documentos: () => import("@/components/element/documentos"),
+		Documentos: () => import("@/components/element/documentos"),
 		Verplanilla: () => import("@/modules/unidad/movilidad/plantilla.vue"),
 		// Participantes: () => import("@/components/element/participantes"),
 	},
@@ -504,7 +504,7 @@ export default {
 		// //root.getConvocatorias();
 		// // root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
 		// root.subtipos = root.subtypesByType("taller_creacion_categoria");
-		// root.tiposDocumento = root.subtypesByType("taller_creacion_documento");
+		root.tiposDocumento = root.subtypesByType("tipos_documentos_movilidad");
 		// root.participationid = root.subtypesByType("evento_participacion");
 	},
 	mounted() {
@@ -566,7 +566,7 @@ export default {
 	watch: {},
 	methods: {
 		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", get: "get" }),
 		
 		sistemaDate(e_date, operador){
 			let resultado=null
@@ -604,23 +604,34 @@ export default {
 		// 	return print;
 		// },
 
-		// documentos(data) {
-		// 	// console.clear();
-		// 	console.log("documentos", data.row.data);
-		// 	root.section = "documentos";
-		// 	// 202104111513: Error
-		// 	if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
-		// 	let rd = data.row.data;
-		// 	if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
-		// 	console.log("rd", rd);
-		// 	root.baseObj = rd;
-		// 	$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data[root.titlecolum]}`);
-		// 	root.panelCmds.fadeOut();
-		// 	root.panelGrid.fadeOut(function (params) {
-		// 		root.panelCmdBack.fadeIn();
-		// 		$("#" + root.id_panel_documentos).fadeIn(function (params) { });
-		// 	});
-		// },
+		documentos(data) {
+			// console.clear();
+			let fecha_final= root.sistemaDate(data.row.data.call_end_date, "mayor");
+			let fecha_inicial= root.sistemaDate(data.row.data.call_start_date, "menor");
+
+			let resultado=fecha_final===fecha_inicial
+
+			console.log("documentos", data.row.data);
+			
+			// 202104111513: Error
+			if(resultado){
+				root.section = "documentos";
+				if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+				let rd = data.row.data;
+				if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+				console.log("rd", rd);
+				root.baseObj = rd;
+
+				$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.call_name}`);
+				root.panelCmds.fadeOut();
+				root.panelGrid.fadeOut(function (params) {
+					root.panelCmdBack.fadeIn();
+					$("#" + root.id_panel_documentos).fadeIn(function (params) { });
+				});
+			}else{
+				root.$error("Por favor verifique las fechas de inicio y cierre, para aplicar a esta convocatoria.");
+			}
+		},
 
 		retorno() {
 			console.log(root.section);
@@ -663,6 +674,10 @@ export default {
 				let dto = {
 					newFormat: true,
 					rute2: "calls/"+obj.IDcall+"/mobility_calls",
+
+					stringEP: "mobility_calls",
+					
+					mod: obj.id,
 					objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function (item) {
 						console.log("item", item);
@@ -678,20 +693,34 @@ export default {
 			}
 		},
 
-		edit(data) {
+		async edit(data) {
 			// root.mode = "edit";
 			root.mode = "add";
 			let fecha_final= root.sistemaDate(data.call_end_date, "mayor");
 			let fecha_inicial= root.sistemaDate(data.call_start_date, "menor");
-			//let resultado= "final: " +fecha_final + "--- inicio: " + fecha_inicial;
-			//console.warn(resultado);
-			//console.log("data", data);
+
 			let resultado=fecha_final===fecha_inicial
 			root.baseObj.research_group_id = root.group.id;
 			root.baseObj.researcher_id=root.userinfo.datagroupmenber.id;
 			root.baseObj.IDcall=data.id;
 
 			if(resultado){
+				console.clear();
+				console.warn('research_units/'+root.group.id+'/mobility_calls?filter=[["call_id","=",'+data.id+'],"and",["researcher_id","=",'+root.userinfo.datagroupmenber.id+']]')
+				await root.get({
+					url: 'research_units/'+root.group.id+'/mobility_calls?filter=[["call_id","=",'+data.id+'],"and",["researcher_id","=",'+root.userinfo.datagroupmenber.id+']]',
+					cb: function (results) {
+						let res = results;
+						console.warn("data edit: ", res.data)
+						if(res.data[0]!== undefined){
+							root.$info("Usted va a realizar actualizacion de datos para esta convocatoria.")
+							root.baseObj=res.data[0];
+							root.mode = "edit"
+						}
+					},
+				});
+
+
 				// root.baseObj = data;
 				//root.panelCmdBack.fadeOut();
 				root.panelCmds.fadeOut();
