@@ -47,113 +47,93 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 							</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
-							<h2><span class="item-title mr-1">Por favor verifique bien la información diligenciada, esta aplicación no se podrá editar más adelante.</span></h2>
+							<h2><span class="item-title mr-1">Por favor verifique bien la información diligenciada, esta
+									aplicación no se podrá editar más adelante.</span></h2>
 							<div class="row">
 								<!-- formulatio -->
 
-<div class="col-md-5">
-	<div class="form-group">
-	<label>Nombre del evento al que se asiste: </label>
-	<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control" :value.sync="baseObj.event_name">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<label>Nombre del evento al que se asiste: </label>
+										<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control"
+											:value.sync="baseObj.event_name">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
 
 
-<div class="col-md-5">
-	<div class="form-group">
-	<label>Nombre de la ponencia: </label>
-	<DxTextBox placeholder="Nombre de la ponencia" class="form-control" :value.sync="baseObj.paper_name">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
+								<div class="col-md-5">
+									<div class="form-group">
+										<label>Nombre de la ponencia: </label>
+										<DxTextBox placeholder="Nombre de la ponencia" class="form-control"
+											:value.sync="baseObj.paper_name">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
-<div class="col-md-2">
-	<div class="form-group">
-	<label>N° de ediciones del Evento: </label>
-	<DxNumberBox placeholder="N° de ediciones del Evento" class="form-control" :value.sync="baseObj.event_edition_number">
-	<DxValidator>
-	</DxValidator>
-	</DxNumberBox>
-	</div>
-</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>N° de ediciones del Evento: </label>
+										<DxNumberBox placeholder="N° de ediciones del Evento" class="form-control"
+											:value.sync="baseObj.event_edition_number">
+											<DxValidator>
+											</DxValidator>
+										</DxNumberBox>
+									</div>
+								</div>
 
-<div class="col-md-12">
-	<label>Lugar: </label>
-<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-</div>
-<div class="col-md-3">
-	<div class="form-group">
-	<label>¿La UD participa como organizador o miembro de mesas de evaluación?: </label>
-	<DxSwitch :value.sync="baseObj.is_organizer" switched-on-text="SI" switched-off-text="NO" />
-	</div>
-</div>
+								<div class="col-md-12">
+									<label>Lugar: </label>
+									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>¿La UD participa como organizador o miembro de mesas de evaluación?:
+										</label>
+										<DxSwitch :value.sync="baseObj.is_organizer" switched-on-text="SI"
+											switched-off-text="NO" />
+									</div>
+								</div>
 
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Fecha del evento: </label>
-		<DxDateBox 
-			class="form-control" 
-			name="event_date" 
-			:value.sync="baseObj.event_date" 
-			id="event_date" 
-			placeholder="DD/MM/YYYY" 
-			display-format="dd/MM/yyyy" 
-			:min="minDate" 
-			:max="actualDate" 
-			type="date"> 
-		<DxValidator> 
-			<DxRequiredRule />
-		</DxValidator> 
-		</DxDateBox>
-	</div>
-</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Fecha del evento: </label>
+										<DxDateBox class="form-control" name="event_date"
+											:value.sync="baseObj.event_date" id="event_date" placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy" :min="minDate" :max="actualDate" type="date">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxDateBox>
+									</div>
+								</div>
 
-<div class="col-md-6">
-	<div class="form-group">
-	<label>Pagina del evento: </label>
-	<DxTextBox placeholder="Pagina del evento" class="form-control" :value.sync="baseObj.event_page">
-	<DxValidator>
-		<DxRequiredRule />
-		<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-
-<div class="col-md-12" v-if="tiposDocumento.length > 0">
-	<div class="card-body" v-html="requisitoArchivo()"></div>
-</div>
-<!-- <div class="col-md-0">
-	<div class="form-group">
-	<label>Grupo por el cual se presenta: </label>
-	<DxSelectBox
-		::show-clear-button="true"
-		:grouped="false"
-		:search-enabled="false"
-		placeholder="Seleccione..."
-		:value.sync="baseObj.research_group_id" 
-		class="form-control"
-		:data-source="" 
-		display-expr="st_name"
-		value-expr="id">
-	</DxSelectBox>
-	</div>
-</div> -->
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Pagina del evento: </label>
+										<DxTextBox placeholder="Pagina del evento" class="form-control"
+											:value.sync="baseObj.event_page">
+											<DxValidator>
+												<DxRequiredRule />
+												<DxPatternRule
+													message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo"
+													:pattern="urlPattern" />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
 
 
-
-
-
-								
+								<div class="col-md-12" v-if="tiposDocumento.length > 0">
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div>
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -169,10 +149,12 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb"> <!-- v-if="editMode">-->
+									<DxButton @click="save" class="nb">
+										<!-- v-if="editMode">-->
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-												{{mode=="edit"? "Actualizar": "Aplicar y Terminar"}} <b><i class="icon-database-add"></i></b>
+												{{ mode == "edit" ? "Actualizar" : "Aplicar y Terminar" }} <b><i
+														class="icon-database-add"></i></b>
 											</span>
 										</template>
 									</DxButton>
@@ -211,11 +193,11 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 							:allowed-page-sizes="dgPageSizes"
 							info-text="{2} convocatorias de investigación (Página {0} de {1})" />
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-						<DxColumn :allow-filtering="false" :sort-index="1" sort-order="desc" data-field="id" caption="ID"
-							data-type="number" alignment="center" :allow-sorting="true" :width="70" />
+						<DxColumn :allow-filtering="false" :sort-index="1" sort-order="desc" data-field="id"
+							caption="ID" data-type="number" alignment="center" :allow-sorting="true" :width="70" />
 
-						<DxColumn :allow-filtering="true" data-field="call_state_id" caption="Estado" 
-							data-type="number" alignment="left" :visible="true" :width="110">
+						<DxColumn :allow-filtering="true" data-field="call_state_id" caption="Estado" data-type="number"
+							alignment="left" :visible="true" :width="110">
 							<DxLookup :data-source="estados" value-expr="id" display-expr="st_name" />
 						</DxColumn>
 						<!-- <DxColumn
@@ -310,7 +292,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 		</div>
 
 		<div class="card-body" v-if="debug">
-            <pre>
+			<pre>
 				<strong class="font-weight-semibold">baseObj:</strong>
 				{{ JSON.stringify(baseObj, null, 4) }}
 			</pre>
@@ -318,20 +300,15 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 
 
 
-		<DxPopup :visible="popupObs" ref="popupConv" :drag-enabled="false"  :close-on-outside-click="false" :show-close-button="false"
-			:show-title="true" width="75%" height="70%" title="Datos de la Convocatoria:" >
+		<DxPopup :visible="popupObs" ref="popupConv" :drag-enabled="false" :close-on-outside-click="false"
+			:show-close-button="false" :show-title="true" width="75%" height="70%" title="Datos de la Convocatoria:">
 			<DxScrollView id="scrollview" ref="scrollViewWidget" :scroll-by-content="true" :scroll-by-thumb="true"
 				show-scrollbar="onScroll" :bounce-enabled="true">
 				<div class="col-12">
 					<Verplanilla :id_convocatoria="id_data_cov" :key="id_data_cov" v-if="id_data_cov != 0" />
 				</div>
 			</DxScrollView>
-			<DxToolbarItem
-				widget="dxButton"
-				toolbar="bottom"
-				location="after"
-				:options="closeButtonOptions"
-			/>
+			<DxToolbarItem widget="dxButton" toolbar="bottom" location="after" :options="closeButtonOptions" />
 		</DxPopup>
 
 	</div>
@@ -360,8 +337,8 @@ import {
 	DxStateStoring,
 	DxLookup,
 } from "devextreme-vue/data-grid";
-import {  DxRequiredRule,  DxValidator, DxPatternRule } from "devextreme-vue/validator";
-import { DxDateBox, DxSelectBox, DxButton,  DxTextBox, DxNumberBox,  DxValidationGroup, DxSwitch } from "devextreme-vue";
+import { DxRequiredRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
+import { DxDateBox, DxSelectBox, DxButton, DxTextBox, DxNumberBox, DxValidationGroup, DxSwitch } from "devextreme-vue";
 import { DxPopup, DxToolbarItem } from 'devextreme-vue/popup';
 import { mapState, mapActions, mapGetters } from "vuex";
 import { DxScrollView } from 'devextreme-vue/scroll-view';
@@ -395,7 +372,7 @@ export default {
 		DxSelectBox,
 		DxSorting,
 		DxSummary,
-		
+
 		DxTextBox,
 		DxValidator,
 		DxValidationGroup,
@@ -470,8 +447,8 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		id_data_cov: 0,
-		popupObs:false,
-		formulario:true,
+		popupObs: false,
+		formulario: true,
 		baseObj: {
 			geo_city_id: null,
 			geo_country_id: null,
@@ -501,11 +478,11 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		// http://pruebasapi2.intranetoas.udistrital.edu.co:8515/api/v1/calls/2/call_documents
 
-		
+
 		// //root.getConvocatorias();
 		// // root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
 		// root.subtipos = root.subtypesByType("taller_creacion_categoria");
-		
+
 		//root.tiposDocumento = root.subtypesByType("tipos_documentos_movilidad");
 		//root.participationid = root.subtypesByType("evento_participacion");
 	},
@@ -521,9 +498,9 @@ export default {
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/colciencias", { convocatorias: "items" }),
-		
-		closeOnOutsideClick(e){
-			console.warn("data: ",e)
+
+		closeOnOutsideClick(e) {
+			console.warn("data: ", e)
 			root.popupObs = !root.popupObs ? true : false;
 			return true;
 		},
@@ -541,7 +518,7 @@ export default {
 		dataSource: function () {
 			//if (typeof this.group.id === "undefined") return null;
 			console.log("root.group", this.group);
-			
+
 			return DxStore({
 				// key: ["id"],
 				// // ids: ["dw_type_id=1"],
@@ -565,8 +542,8 @@ export default {
 	watch: {},
 	methods: {
 		// ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getAll: "getAll",  get:"get"}),
-		
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getAll: "getAll", get: "get" }),
+
 		requisitoArchivo() {
 			let tipos = root.tiposDocumento;
 			let i = 0,
@@ -583,14 +560,14 @@ export default {
 			return print;
 		},
 
-		sistemaDate(e_date, operador){
-			let resultado=null
+		sistemaDate(e_date, operador) {
+			let resultado = null
 			let fecha = new Date(e_date);
-			let hoy =new Date();
-			if(operador=="mayor"){ resultado= fecha.valueOf() > hoy.valueOf(); } 
-			else if(operador=="menor"){ resultado= fecha.valueOf() < hoy.valueOf(); } 
-			else { 
-				resultado=null
+			let hoy = new Date();
+			if (operador == "mayor") { resultado = fecha.valueOf() > hoy.valueOf(); }
+			else if (operador == "menor") { resultado = fecha.valueOf() < hoy.valueOf(); }
+			else {
+				resultado = null
 				console.error("error en en la funcion sistemaDate(fecha, operador) debe colorcar de operador mayor o menor");
 			}
 			return resultado;
@@ -600,27 +577,27 @@ export default {
 			this.popupObs = true
 			console.warn("popupConv", this.popupObs)
 			this.id_data_cov = data.id;
-			
-		},
-		
 
-		listDoc2subtipos(parametro){
-			if(parametro.length >= 1){
-				parametro.map(function(lista){
-					lista.id_ant=lista.id
-					lista.st_name=lista.document_name;
-					lista.id=lista.document_id;
+		},
+
+
+		listDoc2subtipos(parametro) {
+			if (parametro.length >= 1) {
+				parametro.map(function (lista) {
+					lista.id_ant = lista.id
+					lista.st_name = lista.document_name;
+					lista.id = lista.document_id;
 					return lista;
 				});
-				root.tiposDocumento=parametro;
+				root.tiposDocumento = parametro;
 			}
-			
+
 		},
 
 		retorno() {
 			console.log(root.section);
 			root.panelCmdBack.fadeOut();
-			
+
 			$("#" + root.namePanel + " .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
@@ -645,10 +622,10 @@ export default {
 				let obj = root.baseObj;
 				let dto = {
 					newFormat: true,
-					rute2: "calls/"+obj.IDcall+"/mobility_calls",
+					rute2: "calls/" + obj.IDcall + "/mobility_calls",
 
 					stringEP: "mobility_calls",
-					
+
 					mod: obj.id,
 					objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function (item) {
@@ -670,34 +647,34 @@ export default {
 
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
-				url: "/calls/"+parseInt(data.id)+"/call_documents",
+				url: "/calls/" + parseInt(data.id) + "/call_documents",
 				cb: function (results) {
 					let listDocuments = results;
-					console.warn("movilidad docs list ", listDocuments );
+					console.warn("movilidad docs list ", listDocuments);
 					root.listDoc2subtipos(listDocuments);
 					root.loaderHide();
 				},
 			});
 
 			root.mode = "add";
-			let fecha_final= root.sistemaDate(data.call_end_date, "mayor");
-			let fecha_inicial= root.sistemaDate(data.call_start_date, "menor");
+			let fecha_final = root.sistemaDate(data.call_end_date, "mayor");
+			let fecha_inicial = root.sistemaDate(data.call_start_date, "menor");
 
-			let resultado=fecha_final===fecha_inicial
+			let resultado = fecha_final === fecha_inicial
 			root.baseObj.research_group_id = root.group.id;
-			root.baseObj.researcher_id=root.userinfo.datagroupmenber.id;
-			root.baseObj.IDcall=data.id;
-			
-			if(resultado){
+			root.baseObj.researcher_id = root.userinfo.datagroupmenber.id;
+			root.baseObj.IDcall = data.id;
+
+			if (resultado) {
 				console.clear();
-				console.warn('research_units/'+root.group.id+'/mobility_calls?filter=[["call_id","=",'+data.id+'],"and",["researcher_id","=",'+root.userinfo.datagroupmenber.id+']]')
+				console.warn('research_units/' + root.group.id + '/mobility_calls?filter=[["call_id","=",' + data.id + '],"and",["researcher_id","=",' + root.userinfo.datagroupmenber.id + ']]')
 				await root.get({
-					url: 'research_units/'+root.group.id+'/mobility_calls?filter=[["call_id","=",'+data.id+'],"and",["researcher_id","=",'+root.userinfo.datagroupmenber.id+']]',
+					url: 'research_units/' + root.group.id + '/mobility_calls?filter=[["call_id","=",' + data.id + '],"and",["researcher_id","=",' + root.userinfo.datagroupmenber.id + ']]',
 					cb: function (results) {
 						let res = results;
 						console.warn("data edit: ", res.data)
-						if(res.data[0]!== undefined){
-							root.$info("Advertencia usted tiene ["+ res.data.length +"] aplicaiones anteriores a esta convocatoria.")
+						if (res.data[0] !== undefined) {
+							root.$info("Advertencia usted tiene [" + res.data.length + "] aplicaiones anteriores a esta convocatoria.")
 							//root.baseObj=res.data[0];
 							//root.mode = "add"
 						}
@@ -708,7 +685,7 @@ export default {
 				root.panelGrid.fadeOut(function (params) {
 					root.panelData.fadeIn(function (params) { });
 				});
-			}else{
+			} else {
 				root.$error("Por favor verifique las fechas de inicio y cierre, para aplicar a esta convocatoria.");
 			}
 
@@ -728,7 +705,7 @@ export default {
 		},
 
 		cancel() {
-			root.baseObj=root.baseEnt;
+			root.baseObj = root.baseEnt;
 			console.log("CANCEL!");
 			root.panelData.fadeOut(function (params) {
 				root.panelCmds.fadeIn();
