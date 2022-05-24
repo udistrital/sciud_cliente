@@ -1,127 +1,153 @@
+\* data.row.data.name = titulo de participantes data.data.name = titulo para activar o desactivar Variedad Vegetal = Titulo botones Variedad Vegetal = Titulo
+principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable_variety = endpoindt especifico vegetable_varieties = rutas generales *\
 <template>
-  <div class="col mt-3 pl-1 pr-1" id="paneltrabajosD">
-    <div class="row">
-      <div class="col">
-        <div class="p-0">
-          <div class="page-header header-elements-md-inline mb-2"  v-if="!validateImp">
-            <div class="page-title p-0 m-0">
-              <h1>
-                <i class="icon-grid3 mr-1 color-main-600"></i>
-                <span class="font-weight-semibold">{{ title }}</span>
-                <span class="item-title">&nbsp;</span>
-              </h1>
-            </div>
-            <div class="header-elements">
-              <span class="cmds">
-                <button
-                  type="button"
-                  @click.prevent="add()"
-                  v-if="editMode  && !actInfor"
-                  title="Nuevo Elemento.."
-                  class="btn btn-main btn-labeled btn-labeled-left"
-                >
-                  <b><i class="icon-database-add"></i></b> Nuevo {{ title }}
-                </button>
-              </span>
-              <span class="cmds-back slide">
-                <button
-                  type="button"
-                  @click.prevent="retorno()"
-                  title="Volver al trabajo.."
-                  class="btn btn-main btn-labeled btn-labeled-left"
-                >
-                  <b><i class="icon-arrow-left"></i></b> Volver A {{ title }}
-                </button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <Documentos id="paneltrabajosD-documentos" end-point="form_d_act_plans" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-    <!-- <Participantes id="paneltrabajosD-participantes" end-point="form_d_act_plans" :product="baseObj" :group="group" ref="participantes" :parent="this" /> -->
-    <DxValidationGroup ref="basicGroup">
-      <div class="row data slide">
-        <div class="col">
-          <div class="card">
-            <div class="card-header main">
-              <i class="icon-pencil3 mr-1"></i>
-              <span class="font-weight-semibold"
-                >{{ mode == "edit" ? "Editar" : "Crear" }} {{ title }}</span
-              >
-            </div>
-            <div class="card-body mb-0 pb-0 pt-2">
-              <div class="row">
-                <!-- formulatio -->
+	<div class="col mt-3 pl-1 pr-1" id="panelvegvariet">
+		<div class="row">
 
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label>Nombre : </label>
-                    <DxTextBox
-                      placeholder="Nombre "
-                      class="form-control"
-                      :value.sync="baseObj.name" 
-                      :disabled="actInfor"
-                    >
-                      <DxValidator>
-                        <DxRequiredRule />
-                      </DxValidator>
-                    </DxTextBox>
+			<div class="col">
+				<div class="p-0">
+					<div class="page-header header-elements-md-inline mb-2">
+						<div class="page-title p-0 m-0">
+							<h1>
+								<i class="icon-grid3 mr-1 color-main-600"></i>
+								<span class="font-weight-semibold">Listado de Redes Académicas</span>
+								<span class="item-title">&nbsp;</span>
+							</h1>
+						</div>
+						<div class="header-elements">
+							<span class="cmds" v-if="contLineas!=0">
+								<button
+									type="button"
+									@click.prevent="add()"
+									v-if="editMode"
+									title="Nuevo Variedad Vegetal.."
+									class="btn btn-main btn-labeled btn-labeled-left "
+								>
+
+									<b><i class="icon-database-add"></i></b>Nueva Red Académica
+								</button>
+							</span>
+							<span class="cmds-back slide">
+								<button type="button" @click.prevent="retorno()" title="Volver al Variedad Vegetal.." class="btn btn-main btn-labeled btn-labeled-left ">
+									<b><i class="icon-arrow-left"></i></b>Volver Al Listado
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<Documentos id="panelvegvariet-documentos" end-point="vegetable_varieties" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<DxValidationGroup ref="basicGroup">
+			<div class="row data slide">
+				<div class="col">
+					<div class="card">
+						<div class="card-header main">
+							<i class="icon-pencil3 mr-1"></i>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} Red Academica</span>
+						</div>
+						<div class="card-body mb-0 pb-0 pt-2">
+							<div class="row">
+								<!-- formulatio -->
+                <template v-if="contLineas!=0">
+                  <div class="col-md-5" >
+                    <div class="form-group">
+                      <label>Nombre : </label>
+                      <DxTextBox
+                        placeholder="Nombre "
+                        class="form-control"
+                        :value.sync="baseObj.name" 
+                        :disabled="actInfor"
+                      >
+                        <DxValidator>
+                          <DxRequiredRule />
+                        </DxValidator>
+                      </DxTextBox>
+                    </div>
                   </div>
-                </div>
 
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label>Líneas de Investigación asociadas:</label>
-                    <DxSelectBox
-                      :show-clear-button="true"
-                      :search-enabled="false"
-                      placeholder="Seleccione..."
-                      :data-source="alldata"
-                      :grouped="true"
-                      display-expr="name"
-                      :value.sync="baseObj.research_focus_ids"
-                      value-expr="id"
-                      class="form-control"
-                      :wrapItemText="true"
-                      :disabled="actInfor"
-                    >
-                      <DxValidator>
-                        <DxRequiredRule />
-                      </DxValidator>
-                    </DxSelectBox>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label>Líneas de Investigación asociadas:</label>
+                      <DxSelectBox
+                        :show-clear-button="true"
+                        :search-enabled="false"
+                        placeholder="Seleccione..."
+                        :data-source="alldata"
+                        :grouped="true"
+                        display-expr="name"
+                        :value.sync="baseObj.research_focus_ids"
+                        value-expr="id"
+                        class="form-control"
+                        :wrapItemText="true"
+                        :disabled="actInfor"
+                      >
+                        <DxValidator>
+                          <DxRequiredRule />
+                        </DxValidator>
+                      </DxSelectBox>
+                    </div>
                   </div>
-                </div>
 
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>Estado Estimado : </label>
-                    <DxSelectBox
-                      :show-clear-button="true"
-                      :grouped="false"
-                      :search-enabled="false"
-                      placeholder="Seleccione..."
-                      :value.sync="baseObj.goal_state_id"
-                      class="form-control"
-                      :data-source="tipoproceso"
-                      display-expr="st_name"
-                      value-expr="id"
-                      :wrapItemText="true"
-                      :disabled="actInfor"
-                    >
-                      <DxValidator>
-                        <DxRequiredRule />
-                      </DxValidator>
-                    </DxSelectBox>
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>Estado Estimado : </label>
+                      <DxSelectBox
+                        :show-clear-button="true"
+                        :grouped="false"
+                        :search-enabled="false"
+                        placeholder="Seleccione..."
+                        :value.sync="baseObj.goal_state_id"
+                        class="form-control"
+                        :data-source="tipoproceso"
+                        display-expr="st_name"
+                        value-expr="id"
+                        :wrapItemText="true"
+                        :disabled="actInfor"
+                      >
+                        <DxValidator>
+                          <DxRequiredRule />
+                        </DxValidator>
+                      </DxSelectBox>
+                    </div>
                   </div>
-                </div>
+                </template>
 
-                <div class="col-md-12">
+
+
+                <div class="col-md-12" v-if="contLineas!=0">
                   <fieldset>
                     <legend>Áreas de Conocimiento</legend>
 
                     <div class="row">
+
+                      
                       <div class="col-md-4">
+                        <div class="form-group">
+                          <label>SNIES</label>
+                          <DxTagBox
+                            value-expr="id"
+                            display-expr="st_name"
+                            class="form-control"
+                            :read-only="!editMode"
+                            :search-enabled="true"
+                            :show-selection-controls="true"
+                            :value.sync="baseObj.snies_ids"
+                            placeholder="Busque y/o seleccione..."
+                            :data-source="sniesItem"
+                            :wrapItemText="true"
+                            :disabled="actInfor"
+                          >
+                            <DxValidator>
+                              <DxRequiredRule />
+                            </DxValidator>
+                          </DxTagBox>
+                        </div>
+                      </div>
+
+
+                    <div class="col-md-4">
                         <div class="form-group">
                           <label>Área OCDE:</label>
                           <DxTagBox
@@ -147,54 +173,33 @@
                         </div>
                       </div>
 
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label>Discipina OCDE:</label>
-                          <DxTagBox
-                          :show-clear-button="true"
-                            @value-changed="ocdeDiscChange"
-                            :data-source="ocdeDetallado2"
-                            :disabled="ocdeDisabled && actInfor"
-                            :grouped="true"
-                            :search-enabled="true"
-                            :show-selection-controls="true"
-                            :value.sync="baseObj.oecd_discipline_ids"
-                            class="form-control"
-                            :read-only="!editMode"
-                            display-expr="name"
-                            placeholder="Busque y/o seleccione..."
-                            value-expr="id"
-                            :wrapItemText="true"
-                          >
-                            <DxValidator>
-                              <DxRequiredRule />
-                            </DxValidator>
-                          </DxTagBox>
-                        </div>
-                      </div>
+                    <div class="col-md-4">
+                       <div class="form-group">
+                         <label>Discipina OCDE:</label>
+                         <DxTagBox
+                         :show-clear-button="true"
+                           @value-changed="ocdeDiscChange"
+                           :data-source="ocdeDetallado2"
+                           :disabled="ocdeDisabled && actInfor"
+                           :grouped="true"
+                           :search-enabled="true"
+                           :show-selection-controls="true"
+                           :value.sync="baseObj.oecd_discipline_ids"
+                           class="form-control"
+                           :read-only="!editMode"
+                           display-expr="name"
+                           placeholder="Busque y/o seleccione..."
+                           value-expr="id"
+                           :wrapItemText="true"
+                         >
+                           <DxValidator>
+                             <DxRequiredRule />
+                           </DxValidator>
+                         </DxTagBox>
+                       </div>
+                    </div>
 
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label>SNIES</label>
-                          <DxTagBox
-                            value-expr="id"
-                            display-expr="st_name"
-                            class="form-control"
-                            :read-only="!editMode"
-                            :search-enabled="true"
-                            :show-selection-controls="true"
-                            :value.sync="baseObj.snies_ids"
-                            placeholder="Busque y/o seleccione..."
-                            :data-source="sniesItem"
-                            :wrapItemText="true"
-                            :disabled="actInfor"
-                          >
-                            <DxValidator>
-                              <DxRequiredRule />
-                            </DxValidator>
-                          </DxTagBox>
-                        </div>
-                      </div>
+
 
                       <div class="col-md-6">
                         <div class="form-group">
@@ -247,92 +252,87 @@
                           </DxTagBox>
                         </div>
                       </div>
+
                     </div>
                   </fieldset>
                 </div>
 
-                <!-- fin formulario -->
-              </div>
-            </div>
-            <div class="card-footer">
-              <div class="row">
-                <div class="col">
-                  <DxButton @click="cancel" class="nb">
-                    <template #default>
-                      <span
-                        class="
-                          btn btn-main btn-labeled btn-labeled-left btn-sm
-                          legitRipple
-                        "
-                      >
-                        <b><i class="icon-database-remove"></i></b> CANCELAR
-                      </span>
-                    </template>
-                  </DxButton>
-                </div>
-                <div class="col text-right">
-                  <DxButton @click="save" class="nb" v-if="editMode">
-                    <template #default>
-                      <span
-                        class="
-                          btn btn-main btn-labeled btn-labeled-right btn-sm
-                          legitRipple
-                        "
-                      >
-                        GUARDAR <b><i class="icon-database-add"></i></b>
-                      </span>
-                    </template>
-                  </DxButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </DxValidationGroup>
-    <div class="row grid">
-      <div class="col">
-        <div class="p-0">
-          <!-- @content-ready="onContentReady" -->
-          <DxDataGrid
-            class="main"
-            width="100%"
-            @initialized="gridInit"
-            :allow-column-reordering="true"
-            no-data-text="No hay elementos registrados"
-            :data-source="dataSource"
-            :remote-operations="true"
-            :hover-state-enabled="true"
-            :row-alternation-enabled="true"
-            :word-wrap-enabled="true"
-            :show-borders="false"
-          >
-            <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-            <DxSorting mode="single" /><!-- single, multiple, none" -->
-            <DxPaging :page-size="10" />
-            <DxFilterRow :visible="false" />
-            <DxLoadPanel :enabled="false" />
-            <DxGroupPanel
-              :visible="totaCount > 0"
-              :allow-column-dragging="true"
-            />
-            <DxGrouping :auto-expand-all="false" />
-            <DxSummary>
-              <DxGroupItem
-                summary-type="count"
-                column="group_type_name"
-                display-format="{0} elementos"
-              />
-            </DxSummary>
-            <DxPager
-              :show-info="true"
-              :show-page-size-selector="true"
-              :show-navigation-buttons="true"
-              :allowed-page-sizes="dgPageSizes"
-              info-text="Página {0} de {1} ({2} elementos)"
-            />
-            <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-            <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
+								<!-- fin formulario -->
+							</div>
+						</div>
+						<div class="card-footer">
+							<div class="row">
+								<div class="col">
+									<DxButton @click="cancel" class="nb">
+										<template #default>
+											<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+												<b><i class="icon-database-remove"></i></b> CANCELAR
+											</span>
+										</template>
+									</DxButton>
+								</div>
+								<div class="col text-right">
+									<DxButton @click="save" class="nb" v-if="editMode">
+										<template #default>
+											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+												GUARDAR <b><i class="icon-database-add"></i></b>
+											</span>
+										</template>
+									</DxButton>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</DxValidationGroup>
+<div class="col-md-12" v-if="contLineas==0">
+  <div class="alert alert-warning" role="alert">
+    <i class="icon-info mr-1">Información: </i>
+    Para poder continuar con el registro de datos en este formulario, debe tener líneas de investigación asociadas al grupo o semillero de investigación. Presione el boton <b><em>"información de estructura"</em></b>, para crear la relacion.
+    <hr/>
+    <router-link tag="a" :to="'/unidad/'+$route.params.unidadId" class="btn btn-sm btn-warning btn-labeled btn-labeled-left legitRipple ml-2 " title="Información de estructura">
+				<b><i class="icon-info"></i></b>información de estructura
+		</router-link>
+  
+  </div>
+</div>
+
+		<div class="row grid">
+			<div class="col">
+				<div class="p-0">
+					<DxDataGrid
+						class="main"
+						width="100%"
+						@initialized="gridInit"
+						:allow-column-reordering="true"
+						no-data-text="No hay elementos registrados"
+						:data-source="dataSource"
+						:remote-operations="true"
+						:hover-state-enabled="true"
+						:row-alternation-enabled="true"
+						:show-borders="false"
+					>
+						<DxColumnChooser :enabled="totalCount > 0" mode="dragAndDrop" />
+						<DxSorting mode="single" /><!-- single, multiple, none" -->
+						<DxPaging :page-size="10" />
+						<DxFilterRow :visible="false" />
+						<DxLoadPanel :enabled="false" />
+						<DxGroupPanel :visible="totalCount > 0" :allow-column-dragging="true" />
+						<DxGrouping :auto-expand-all="false" />
+						<DxSummary>
+							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
+						</DxSummary>
+						<DxPager
+							:show-info="true"
+							:show-page-size-selector="true"
+							:show-navigation-buttons="true"
+							:allowed-page-sizes="dgPageSizes"
+							info-text="Página {0} de {1} ({2} elementos)"
+						/>
+						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
+			
 
             <DxColumn
               :width="110"
@@ -386,21 +386,6 @@
 								</template>
 
 
-
-            <!-- <DxColumn
-              data-field="research_focuses"
-              caption="Linea de Investigación asociada"
-              data-type="String"
-              alignment="center"
-              :visible="true"
-              :allow-grouping="false"
-              cell-template="tpl-line-invest"
-            />
-
-            <template #tpl-line-invest="{ data }">
-								<span>leyendo {{data.data.id}}</span>
-						</template> -->
-
             <DxColumn
               data-field="goal_state_name"
               caption="Estado estimado"
@@ -410,24 +395,6 @@
               :allow-grouping="false"
             />
 
-
-
-
-
-            <!-- <DxColumn data-field='dw_type_id'  caption='Tipo de Trabajo' data-type='text' alignment='center' :visible='true' :allow-grouping='false' />  -->
-            <!-- <DxColumn data-field="dw_recognition" caption="Reconocimientos" data-type="text" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn
-							data-field="colciencias_call_name"
-							caption="Categoría Minciencias"
-							data-type="text"
-							alignment="center"
-							:visible="false"
-							:allow-grouping="true"
-						/> -->
-            <!-- <DxColumn data-field='category_id'  caption='Categoría' data-type='text' alignment='center' :visible='false' :allow-grouping='false' />  -->
-            <!-- <DxColumn data-field="dw_observation" caption="Anotaciones" data-type="text" alignment="center" :visible="false" :allow-grouping="false" /> -->
-
-            <!-- <DxColumn data-field="dw_observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
             <DxColumn
               data-field="goal_achieved"
               caption="Cumplido"
@@ -541,61 +508,25 @@
                 </template>
               </span>
             </template>
-          </DxDataGrid>
-        </div>
-      </div>
-    </div>
 
-    <div class="card mt-3" v-if="debug">
-      <div class="card-body">
-        {{ JSON.stringify(baseObj, null, "\t") }}
-      </div>
-      <!-- <div class="card-body">
-        {{ JSON.stringify(alldata, null, "\t") }}
-      </div>
 
-      <div class="card-body">
-        {{ JSON.stringify(listb, null, "\t") }}
-      </div> -->
-    </div>
-    
-    
-    <DxPopup
-      :visible="popupObs"
-      :drag-enabled="false"
-      :close-on-outside-click="false"
-      :show-title="true"
-      width="60%"
-      height="300"
-      title="Observación:"
-    >
-      <div class="row" style="overflow-y: scroll; height: 148px">
-        <div class="col">
-          <h3>
-            <i class="icon-info mr-1 color-main-600"></i>
-            <span class="font-weight-semibold">{{ baseObj[titlecolum] }}</span>
-          </h3>
-          <div v-html="observarData"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <hr />
-          <DxButton @click="popupObs = false" class="nb">
-            <template #default>
-              <span
-                class="
-                  btn btn-main btn-labeled btn-labeled-left btn-sm
-                  legitRipple
-                "
-              >
-                <b><i class="icon-database-remove"></i></b> Salir
-              </span>
-            </template>
-          </DxButton>
-        </div>
-      </div>
-    </DxPopup>
+
+
+
+
+
+
+
+					</DxDataGrid>
+				</div>
+			</div>
+		</div>
+
+		<div class="card mt-3" v-if="debug">
+			<div class="card-body">
+				{{ JSON.stringify(baseObj, null, "\t") }}
+			</div>
+		</div>
 
 
     <DxPopup
@@ -699,6 +630,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -816,48 +748,43 @@ export default {
 		},
   },
 
-  data: () => ({
+
+	data: () => ({
+    //variables del formulario
+    sniesItem:[],
+    contLineas:0,
     areasObj: {
 			title: "Áreas de Conocimiento",
 		},
-    tiposDocumento:[],
     areasObj2:{},
+    tiposDocumento:[],
     popupVisible:false,
-    ttip: null,
+    tipos: 828,
     dataForm:{},
     cineDetallados: [],
     ocdeDetallado: [],
     ocdeDisabled: true,
     tbEspecificoDisabled:true,
-    // tipoprocesox:[{id:1,st_name:"Presentado"},{id:2,st_name:"Vinculado"}],
-    popupObs: false,
-    // totalLineasInv: [],
-    totalLineasInvlist: [],
-    observarData: "",
-    editData: null, //sirve para dejar formulario en limpio o llenar datos
-    tipoproceso: [],
-    totaCount: 0,
-    grid: null,
-    mode: null,
-    unidad: null,
-    section: null,
-    tipos: 828,
-    totalCount: 0,
-    isValid: false,
-    panelData: null,
-    panelGrid: null,
-    panelParticipantes: null,
-    panelDocs: null,
-    panelCmds: null,
-    baseEntity: null,
-    docLink: null,
-    firstLoad: true,
-    now: new Date(),
-    min: new Date(1950, 1, 1),
-    baseEnt: null,
-    urlPattern: /^(http|https):\/\/[^ "]+$/,
-    phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
-    baseObj: {
+    ttip: null,
+    //fin de variables del formulario
+		popupObs: false,
+		observarData: null,
+		editData: null, //sirve para dejar formulario en limpio o llenar datos
+		grid: null,
+		mode: null,
+		section: null,
+		totalCount: 0,
+		subtipos: [],
+		statepeticion: [],
+		isValid: false,
+		panelData: null,
+		panelGrid: null,
+		panelParticipantes: null,
+		panelDocs: null,
+		panelCmds: null,
+		baseEntity: null,
+		baseEnt: null,
+		baseObj: {
       name:null,
       description:null,
       goal_state_id:null,
@@ -872,53 +799,51 @@ export default {
       research_focus_ids:[],
       snies_ids:[],
     },
-  }),
- 
- created() {
+	}),
+
+
+  created() {
     root = this;
     root.baseEnt = this.$clone(this.baseObj);
-    // root.loadLineasInv();
-    // root.getSnies();
     root.tipoproceso = root.subtypesByType("planaccion_form6_estado_tipos");
     root.tiposDocumento = root.subtypesByType("planaccion_form6_estado_documentos");
     root.sniesItem = root.subtypesByType("snies_tipo");
-    //--console.warn("list lineas => ", root.totalLineasInv);
+    
     root.getUnit({
       id: root.$route.params.unidadId,
       cb: function (result) {
         root.group = result;
         console.log("group", root.group);
         setTimeout(function () {
-          root.ocdeChange({ value: root.baseObj.oecd_knowledge_subarea_id });
-          root.cineChange({ value: root.baseObj.cine_specific_area_id });
-          // // root.facultadChange({ value: root.baseObj.faculty_ids });
-          // root.mode = "edit";
+         root.ocdeChange({ value: root.baseObj.oecd_knowledge_subarea_id });
+         root.cineChange({ value: root.baseObj.cine_specific_area_id });
+          
           root.loaderHide();
         }, 500);
       },
     });
 
+    root.selectorLineas(root.totalLineasInv);
+    // console.error("lineas encontrada=> ", root.totalLineasInv);
+    // console.error("lienas seleccioandas=> ", root.contLineas)    
     root.getOcde();
     root.getCine(root.getFacultades());
   },
  
- mounted() {
-    // console.log("root.tipos", root.tipos);
+	mounted() {
     root.ttip = root.$refs.ttip.instance;
-    root.panelData = $("#paneltrabajosD .data");
-    root.panelGrid = $("#paneltrabajosD .grid");
-    root.panelCmds = $("#paneltrabajosD .cmds");
-    root.panelCmdBack = $("#paneltrabajosD .cmds-back");
-    root.panelDocs = $("#paneltrabajosD-documentos");
-    root.loaderMessage = "Cargando elementos";
-    root.loaderElement = "#paneltrabajosD .grid";
-  },
- 
- computed: {
-    ...mapGetters("core/tipo", ["subtypesByType"]),
-    // ...mapState("unidad/snies", { sniesItem : "items" }),
-    // ...mapState("unidad/producto/universalSentUpAct", { formGetData : "getData" }),
-
+		root.panelData = $("#panelvegvariet .data");
+		root.panelGrid = $("#panelvegvariet .grid");
+		root.panelCmds = $("#panelvegvariet .cmds");
+		root.panelCmdBack = $("#panelvegvariet .cmds-back");
+		root.panelDocs = $("#panelvegvariet-documentos");
+		root.loaderMessage = "Cargando Redes Académicas";
+		root.loaderElement = "#panelvegvariet .grid";
+	},
+	
+  
+  computed: {
+		...mapGetters("core/tipo", ["subtypesByType"]),
     ...mapGetters("unidad/cine", {
       cEspecificos: "specific",
       cDetallados: "detailed",
@@ -928,6 +853,15 @@ export default {
       oDetallados: "disciplines",
     }),
 
+		
+    alldata() {
+      //--console.warn("lineas",root.totalLineasInv);
+      return new DataSource({
+        store: root.selectorLineas(root.totalLineasInv),
+        key: "id",
+        group: "parent_name",
+      });
+    },
 
     dataSource: function () {
       let datat="";
@@ -954,15 +888,6 @@ export default {
           root.totaCount = results.totalCount;
           root.loaderHide();
         },
-      });
-    },
-
-    alldata() {
-      //--console.warn("lineas",root.totalLineasInv);
-      return new DataSource({
-        store: root.selectorLineas(root.totalLineasInv),
-        key: "id",
-        group: "parent_name",
       });
     },
 
@@ -1020,24 +945,16 @@ export default {
         },
       });
     },
-  },
- 
- methods: {
-    // ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-    ...mapActions("unidad", ["getUnit", "saveUnit", "setDocument"]),
+
+	},
+	
+  methods: {
+		...mapActions("unidad", ["getUnit", "saveUnit", "setDocument"]),
     ...mapActions("unidad/oas", { getFacultades: "facultades" }),
     ...mapActions("unidad/indicadores", { LineasInvConocimiento: "getAreasKnow" }),
     ...mapActions("unidad/ocde", { getOcde: "getAll" }),
     ...mapActions("unidad/cine", { getCine: "all" }),
-    // ...mapActions("unidad/snies", { getSnies: "getSnies" }),
-
-    //...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
-    ...mapActions("unidad/producto/universalSentUpAct", {
-      objSave: "save",
-      objUpdate: "update",
-      elementoActive: "active",
-      getForm: "get",
-    }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getForm: "get", }),
 
     documentos(data) {
 			// console.clear();
@@ -1056,6 +973,7 @@ export default {
 				$("#paneltrabajosD-documentos").fadeIn(function(params) {});
 			});
 		},
+
 
     loadInformation(data) {
 			root.loaderShow(`Listando Areas...`, "#panel-plan_accion .card-body");
@@ -1083,13 +1001,29 @@ export default {
 				root.ttip.hide();
 			}
 		},
-    
+
+    selectorLineas(results){
+      let limpio = [];
+      let datax = results;
+      console.warn("selectorLineas cant", root.group.research_focus_ids.length);
+      for (let i = 0; i < root.group.research_focus_ids.length; i++) {
+        limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ==  parseInt(root.group.research_focus_ids[i]) ) );
+        console.warn("selectorLineas i", i);
+      }
+      root.contLineas=limpio.length;
+      console.warn("cantidad de llineas", root.contLineas);
+      return limpio;
+    },
+
     operacion(datos, grupo){
         // root.LineasInvConocimiento({
         let limpio=[];
-        console.clear;
-        //--console.warn("listado de datos",datos);
+        
+        
+        //console.clear; //alerta clear 1
+        console.warn("operacion grupo.length ",grupo.length);
         for (let i = 0; i < grupo.length; i++) {
+          console.warn("operacion i", i);
             limpio = limpio.concat(
             datos.filter(
               (datos) =>
@@ -1101,6 +1035,38 @@ export default {
         }
         return limpio;
     },
+    
+    convert2array(objeto,vectorPadre,name_id_padre, name_id_hijo){
+      let arreglo=[], dataPadre=[], dataHijo=[];
+      let hijo;
+      let vector=objeto[vectorPadre]
+      //--console.warn("vector padre", vector);
+      
+      ////--console.warn("", vectorPadre);
+
+      for(let i=0; i<vector.length; i++){
+        // //--console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
+        dataPadre.push(vector[i][name_id_padre]);
+        hijo = vector[i][name_id_hijo];
+        // //--console.warn("Vector hijo "+i+":  ",hijo);
+        for(let p=0; p<hijo.length; p++){
+            dataHijo.push(hijo[p].id);
+        }
+      }
+      arreglo=[dataPadre,dataHijo];
+      return arreglo;
+    },
+
+
+    arrayObjeto2vectorSnies(vectorPadre){
+      let vector=[];
+      for(let i=0; i<vectorPadre.length; i++){
+        vector.push(vectorPadre[i].snies_id);
+        // //--console.warn("vector ", vector);
+      }
+      return vector;
+    },
+
     ocdeChange(e) {
       console.log(root.$sep);
       console.log("e", e);
@@ -1136,11 +1102,8 @@ export default {
       }
 
     },
-     ocdeDiscChange(e) {
-       console.log(root.$sep);
-       console.log("e", e);
-     },
-    
+
+
     cineChange(e) {
       let subdata=[];
       
@@ -1174,6 +1137,11 @@ export default {
       }
     },
 
+
+    ocdeDiscChange(e) {
+      console.log(root.$sep);
+      console.log("e", e);
+    },
 
     cineChangeNull(e) {
       let subdata=[];
@@ -1209,11 +1177,6 @@ export default {
         });
       }, 1000);
     },
-    verObservar(data) {
-      root.observarData = data.dw_observation;
-      root.baseObj[root.titlecolum] = data[root.titlecolum];
-      root.popupObs = !root.popupObs ? true : false;
-    },
 
     retorno() {
       console.log(root.section);
@@ -1236,7 +1199,7 @@ export default {
       root.section = null;
     },
 
-    save() {
+		save() {
       
       console.log(this.$sep);
       var result = root.$refs.basicGroup.instance.validate();
@@ -1276,59 +1239,16 @@ export default {
       }
     },
 
-    filtrarPorID(obj) {
-      if ('id' in obj && typeof(obj.id) === 'number' && !isNaN(obj.id) ) {
-        return true;
-      } else {
-        // entradasInvalidas++;
-        return false;
-      }
-    },
+		// edit(data) {
+		// 	root.mode = "edit";
+		// 	console.log("data", data);
+		// 	root.baseObj = data;
 
-    selectorLineas(results){
-      let limpio = [];
-      let datax = results;
-      //--console.warn("elementos", root.group.research_focus_ids);
-      for (let i = 0; i < root.group.research_focus_ids.length; i++) {
-        limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ==  parseInt(root.group.research_focus_ids[i]) ) );
-      }
-      //--console.warn("datax limpio", limpio);
-      return limpio;
-    },
-
-
-
-    convert2array(objeto,vectorPadre,name_id_padre, name_id_hijo){
-      let arreglo=[], dataPadre=[], dataHijo=[];
-      let hijo;
-      let vector=objeto[vectorPadre]
-      //--console.warn("vector padre", vector);
-      
-      ////--console.warn("", vectorPadre);
-
-      for(let i=0; i<vector.length; i++){
-        // //--console.warn("Vector padre "+i+":  ",vector[i][name_id_padre]);
-        dataPadre.push(vector[i][name_id_padre]);
-        hijo = vector[i][name_id_hijo];
-        // //--console.warn("Vector hijo "+i+":  ",hijo);
-        for(let p=0; p<hijo.length; p++){
-            dataHijo.push(hijo[p].id);
-        }
-      }
-      arreglo=[dataPadre,dataHijo];
-      return arreglo;
-    },
-
-
-    arrayObjeto2vectorSnies(vectorPadre){
-      let vector=[];
-      for(let i=0; i<vectorPadre.length; i++){
-        vector.push(vectorPadre[i].snies_id);
-        // //--console.warn("vector ", vector);
-      }
-      return vector;
-    },
-   
+		// 	root.panelCmds.fadeOut();
+		// 	root.panelGrid.fadeOut(function(params) {
+		// 		root.panelData.fadeIn(function(params) {});
+		// 	});
+		// },
 
     edit(data) {
 			root.mode = "edit";
@@ -1381,33 +1301,25 @@ export default {
       });
     },
 
-    add() {
-      //  root.totalLineasInv=[];
-      // root.loadLineasInv();
-      // root.totalLineasInv=root.selectorLineas(root.totalLineasInv);
-      if(root.group.research_focus_ids.length!=0){
-        root.add_valit();
-      }else{
-        let msg = `La estructura de investigacion llamada: <i><strong>${root.group.name}</strong></i>, no cuenta con lineas de investigación.<br /> ¿Desea ingresar lineas en informacion de la red?`;
-			this.$confirm(msg, function(si_no) {
-				console.log("result", si_no);
-				if (si_no) {
-          root.go(root.group.id, '/unidad/'+root.group.id, `Cargando Estructuras`)
-					// root.add_valit();
-				}
+		add() {
+			console.log("ADD");
+			root.mode = "add";
+			root.baseObj = this.$clone(this.baseEnt);
+			root.panelCmds.fadeOut();
+			root.panelGrid.fadeOut(function(params) {
+				root.panelData.fadeIn(function(params) {});
 			});
-      }
-    },
+		},
 
-    cancel() {
-      console.log("CANCEL!");
-      root.panelData.fadeOut(function (params) {
-        root.panelCmds.fadeIn();
-        root.panelGrid.fadeIn(function (params) {});
-      });
-    },
+		cancel() {
+			console.log("CANCEL!");
+			root.panelData.fadeOut(function(params) {
+				root.panelCmds.fadeIn();
+				root.panelGrid.fadeIn(function(params) {});
+			});
+		},
 
-    active(data, state) {
+		active(data, state) {
       // // console.clear();
       console.log("active", data);
       console.log("state", state);
@@ -1477,9 +1389,10 @@ export default {
       });
     },
 
-    gridInit(e) {
-      this.grid = e.component;
-    },
-  },
+		gridInit(e) {
+			this.grid = e.component;
+		},
+
+	},
 };
 </script>

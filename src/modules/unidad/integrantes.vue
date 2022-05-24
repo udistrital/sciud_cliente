@@ -1052,6 +1052,7 @@ export default {
 			let data = root.$clone(d);
 			console.warn("data unable", data);
 		},
+
 		unactive(d) {
 			console.clear();
 			root.mode == "edit";
@@ -1060,41 +1061,25 @@ export default {
 
 			console.warn("root.group_member", root.group_member);
 			console.warn("root.researcher", root.researcher);
-			// root.$refs.vGroup.instance.reset();
-			root.nbIdBtn = root.nbId.getButton("search");
-			console.log("root.nbIdBtn", root.nbIdBtn);
-			root.nbId.option("readOnly", true);
-			root.nbIdBtn.option("visible", false);
-			root.chkActive.option("readOnly", false);
-			root.group_member.id = data.id;
-			root.group_member.role_id = data.role_id;
-			root.group_member.active = data.gm_state_id === 1;
-			root.group_member.researcher_id = data.researcher.id.toString();
-			//root.group_member.name = data.oas_details.TerceroId.NombreCompleto;
-			data.researcher.id = data.researcher.id.toString();
-			data.researcher.identification_number = parseInt(data.researcher.identification_number);
-			root.researcher = data.researcher;
-			if (typeof data.oas_details !== "undefined") root.researcher.oas_researcher_id = data.oas_details.TerceroId.Id.toString();
-			console.log("root.group_member", root.group_member);
-			// 202107010440: Carga los periodos si no lo ha hecho ya
-			root.getPeriods({
-				group_member_id: data.id,
-				cb: function(periods) {
-					root.periods = periods.data;
-					console.log("root.periods =>", root.periods);
-					root.group_member.gm_periods = periods.data;
-					let p = root.periods.filter((o) => o.is_current);
-					if (p.length > 0) {
-						root.gm_period = root.$clone(p[0]);
-						root.gm_period_bk1 = root.$clone(p[0]);
-					} else {
-						root.gm_period = root.$clone(root.gm_period_bk);
-						root.gm_period_bk = root.$clone(root.gm_period_bk);
-					}
-					console.log("AFTER root.group_member", root.group_member);
-					root.userEditEnd();
-				},
-			});
+
+			root.loaderShow();
+			let researcher = data.researcher;
+
+			researcher.updated_by = root.user_id;
+			researcher.active = false;
+			console.warn("researcher TO SEND =>", researcher);
+			let r = root.updateResearcher(researcher);
+			console.warn("SAVED Researcher =>", r);
+			let group_member = data;
+			group_member.updated_by = root.user_id;
+			group_member.gm_state_id = 2;
+			console.warn("group_member ", group_member);
+			let gm = root.updateGroupMember({ group_id: root.group.id, item: group_member });
+			console.warn("group_member desactivado =>", gm);
+			// root.$info("El usuario con numero de identificacion: "+group_member.researcher.identification_number+" ha sido desactivado.")
+			location.reload();
+			// root.grid.refresh();
+			// root.loaderHide();
 		},
 
 		async userEdit(d) {

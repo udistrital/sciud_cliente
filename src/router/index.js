@@ -93,6 +93,38 @@ let routes = new router({
 			meta: { title: "Nueva convocatoria", requiresAuth: true },
 			component: () => import("@/modules/convocatoria/informacion"),
 		},
+
+
+		//convocatoria movilidad
+		{
+			name: "convocatoria-Movilidad",
+			path: "/convocatoria/:itemId/movilidad",
+			meta: { title: "Conv-Movilidad", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/movilidad/index.vue"),
+		},
+
+		
+//convocatoria movilidad desde grupo de investigacion
+		{
+			path: "/unidad/:unidadId/movilidad",
+			name: "movilidad",
+			meta: { title: "plan-accion", requiresAuth: true },
+			component: () => import("@/modules/unidad/movilidad/index.vue"),
+		},
+
+		{
+			name: "convocatoria-movilidad-plantilla",
+			path: "/unidad/:unidadId/movilidad/:itemId/plantilla",
+
+			meta: { title: "", requiresAuth: true },
+			component: () => import("@/modules/unidad/movilidad/plantilla.vue"),
+		},
+
+
+
+
+//convocatoria diego
+
 		{
 			name: "convocatoria-info",
 			path: "/convocatoria/:itemId",
@@ -135,6 +167,8 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/convocatoria/plantilla"),
 		},
+		
+		
 
 		//----------------------------------------------------------
 		//		constitucion de la red de investigación

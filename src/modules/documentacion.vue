@@ -76,7 +76,7 @@ export default {
 	data: () => ({
         datax:{
             group_type_name:"Ayuda",
-            id:1,
+            id:273,
             name:"Recursos y Manuales de Usuario",
         },
 		group: null,
