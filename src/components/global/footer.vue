@@ -25,9 +25,9 @@
 				<!--<li class="nav-item" v-for="(item, index) in links" :key="index">
 					<a :href="linkLogin(item.cc)" :class="cssClass" :data-title="item.title"><i class="icon-user"></i> {{ item.text }}</a>
 				</li>-->
-				<li class="nav-item dropup">
+				<li class="nav-item dropup" v-if="debug">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Roles del Sistema
+					Roles (Modo Pruebas)
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li class="nav-item" v-for="(item, index) in links" :key="index">
@@ -84,14 +84,19 @@ export default {
 			{
 				cc: "53009619", //79602309
 				title: "Diego Alfonso Vargas Villegas (Administrador)",
-				text: "Administrador",
+				text: "Administrador Diego",
 			},
 			{
 				cc: "1013622639",
 				title: "Carlos (Administrador)",
-				text: "Administrador 2",
+				text: "Administrador Carlos",
 			},
 
+			{
+				cc: "1016082469",
+				title: "edwar",
+				text: "Edwar Pruebas",
+			},
 
 
 //1023867324 dato cambiado para ingreso y simulacion de gestor 
@@ -108,11 +113,10 @@ export default {
 				text: "lector",
 			},
 
-//  dato cambiado para simular docente tutor
 			{
-				cc: "1111111104",
-				title: "Prueba Usuario",
-				text: "Docente Tutor",
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
 			},
 
 			{
@@ -122,22 +126,10 @@ export default {
 			},
 
 			{
-				cc: "65432123",
-				title: "Prueba Estudiante Siciud (Gestor)",
-				text: "Gestor",
-			},
-			// {
-			// 	cc: "52899935",
-			// 	title: "Prueba Estudiante Siciud (Directora)",
-			// 	text: "Directora",
-			// },
-
-			{
 				cc: "1026278985",
 				title: "Luis Javier Enrique Romero Puentes (Integrante)",
 				text: "Estudiante Integrante",
 			},
-
 
 			{
 				cc: "53009619",
@@ -145,6 +137,27 @@ export default {
 				text: "Líder Semillero",
 			},
 
+			/*
+			este usuario no funciona en pruebas
+			{
+				cc: "65432123",
+				title: "Prueba Estudiante Siciud (Gestor)",
+				text: "Gestor",
+			},
+
+			{
+				cc: "1111111104",
+				title: "Prueba Usuario",
+				text: "Docente Tutor",
+			},
+
+			{
+				cc: "98765432",
+				title: "German Arturo Lopez Martinez (Integrante)",
+				text: "Integrante",
+			},
+
+			*/
 
 
 			//seccion administrativa visible
@@ -153,13 +166,11 @@ export default {
 			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
 			// 	text: "Int. Semillero",
 			// },
+			/*
+			este usuario no funciona en pruebas
+			
+			*/
 
-			// 19296014 dato cambiado para simular integrante 
-			{
-				cc: "98765432",
-				title: "German Arturo Lopez Martinez (Integrante)",
-				text: "Integrante",
-			},
 			//fin seccion administrativa visible
 		],
 	}),

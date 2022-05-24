@@ -37,18 +37,17 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 			</div>
 		</div>
 
-		<Documentos :id="id_panel_documentos" end-point="mobility_calls" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
-
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">
-							<i class="icon-pencil3 mr-1"></i>
+							<i class="icon-pencil3 p-3"></i>
 							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{ titleBtn }}
 							</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
+							<h2><span class="item-title mr-1">Por favor verifique bien la información diligenciada, esta aplicación no se podrá editar más adelante.</span></h2>
 							<div class="row">
 								<!-- formulatio -->
 
@@ -57,6 +56,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 	<label>Nombre del evento al que se asiste: </label>
 	<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control" :value.sync="baseObj.event_name">
 	<DxValidator>
+		<DxRequiredRule />
 	</DxValidator>
 	</DxTextBox>
 	</div>
@@ -69,6 +69,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 	<label>Nombre de la ponencia: </label>
 	<DxTextBox placeholder="Nombre de la ponencia" class="form-control" :value.sync="baseObj.paper_name">
 	<DxValidator>
+		<DxRequiredRule />
 	</DxValidator>
 	</DxTextBox>
 	</div>
@@ -109,6 +110,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 			:max="actualDate" 
 			type="date"> 
 		<DxValidator> 
+			<DxRequiredRule />
 		</DxValidator> 
 		</DxDateBox>
 	</div>
@@ -126,6 +128,10 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 	</div>
 </div>
 
+
+<div class="col-md-12" v-if="tiposDocumento.length > 0">
+	<div class="card-body" v-html="requisitoArchivo()"></div>
+</div>
 <!-- <div class="col-md-0">
 	<div class="form-group">
 	<label>Grupo por el cual se presenta: </label>
@@ -163,10 +169,10 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb" v-if="editMode">
+									<DxButton @click="save" class="nb"> <!-- v-if="editMode">-->
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-												{{mode=="edit"? "Actualizar": "Aplicar"}} <b><i class="icon-database-add"></i></b>
+												{{mode=="edit"? "Actualizar": "Aplicar y Terminar"}} <b><i class="icon-database-add"></i></b>
 											</span>
 										</template>
 									</DxButton>
@@ -195,7 +201,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 						<DxGroupPanel :visible="true" :allow-column-dragging="true" />
 						<DxLoadPanel :enabled="false" />
 						<DxPaging :page-size="dgPageSize" />
-						<DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
+						<DxSorting :mode="true ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
 						<DxStateStoring :enabled="false" type="sessionStorage" />
 						<DxSummary>
 							<DxGroupItem summary-type="count" column="group_type_name"
@@ -205,7 +211,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 							:allowed-page-sizes="dgPageSizes"
 							info-text="{2} convocatorias de investigación (Página {0} de {1})" />
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-						<DxColumn :allow-filtering="false" :sort-index="1" sort-order="asc" data-field="id" caption="ID"
+						<DxColumn :allow-filtering="false" :sort-index="1" sort-order="desc" data-field="id" caption="ID"
 							data-type="number" alignment="center" :allow-sorting="true" :width="70" />
 
 						<DxColumn :allow-filtering="true" data-field="call_state_id" caption="Estado" 
@@ -226,10 +232,10 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 							data-type="number" alignment="center" :visible="true" :width="100">
 							<DxLookup :data-source="beneficiarios" value-expr="id" display-expr="st_name" />
 						</DxColumn>
-						<DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number"
+						<!-- <DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number"
 							alignment="left" :visible="true" :width="180">
 							<DxLookup :data-source="tipos" value-expr="id" display-expr="st_name" />
-						</DxColumn>
+						</DxColumn> -->
 						<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string"
 							alignment="left" :visible="true" />
 
@@ -269,11 +275,6 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2"
-									@click.prevent="documentos(data)" href="#">
-									<i class="icon-file-pdf"></i>
-								</a>
-
 
 								<a title="Aplicar a movilidad... " class="cmd-item color-main-600"
 									@click.prevent="edit(data.data)" href="#">
@@ -403,10 +404,8 @@ export default {
 		DxScrollView,
 		DxToolbarItem,
 		Geo: () => import("@/components/element/geo"),
-		// Observaciones: () => import("@/components/element/html_editor"),
-		Documentos: () => import("@/components/element/documentos"),
 		Verplanilla: () => import("@/modules/unidad/movilidad/plantilla.vue"),
-		// Participantes: () => import("@/components/element/participantes"),
+
 	},
 	props: {
 		group: {
@@ -467,12 +466,12 @@ export default {
 		now: new Date(),
 		baseEnt: null,
 		participationid: null,
-		id_panel_documentos: "documentos",
-		id_panel_participantes: "participantes",
+
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		id_data_cov: 0,
 		popupObs:false,
+		formulario:true,
 		baseObj: {
 			geo_city_id: null,
 			geo_country_id: null,
@@ -500,22 +499,22 @@ export default {
 		root = this;
 
 		root.baseEnt = this.$clone(this.baseObj);
+		// http://pruebasapi2.intranetoas.udistrital.edu.co:8515/api/v1/calls/2/call_documents
+
 		
 		// //root.getConvocatorias();
 		// // root.tipox = root.subtypesByType("regulacion_reglamento_tipo");
 		// root.subtipos = root.subtypesByType("taller_creacion_categoria");
-		root.tiposDocumento = root.subtypesByType("tipos_documentos_movilidad");
-		// root.participationid = root.subtypesByType("evento_participacion");
+		
+		//root.tiposDocumento = root.subtypesByType("tipos_documentos_movilidad");
+		//root.participationid = root.subtypesByType("evento_participacion");
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
-		root.id_panel_documentos = this.namePanel + "documentos";
-		root.id_panel_participantes = this.namePanel + "participantes";
 		root.panelData = $("#" + this.namePanel + " .data");
 		root.panelGrid = $("#" + this.namePanel + " .grid");
 		root.panelCmds = $("#" + this.namePanel + " .cmds");
 		root.panelCmdBack = $("#" + this.namePanel + " .cmds-back");
-		root.panelDocs = $("#" + this.namePanel + "-documentos");
 		root.loaderMessage = "Cargando Elementos";
 		root.loaderElement = "#" + this.namePanel + " .grid";
 	},
@@ -546,7 +545,7 @@ export default {
 			return DxStore({
 				// key: ["id"],
 				// // ids: ["dw_type_id=1"],
-				stringParam: 'filter=["call_state_id","=",654]',
+				stringParam: 'filter=[["call_state_id","=",654],"and",["call_type_id","=",1059]]',
 				// endPoint: `calls?filter=[%22call_state_id%22,%22=%22,654]`,
 				key: ["id"],
 				endPoint: 'calls',
@@ -565,9 +564,25 @@ export default {
 	},
 	watch: {},
 	methods: {
-		...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", get: "get" }),
+		// ...mapActions("unidad/colciencias", { getConvocatorias: "getAll" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getAll: "getAll",  get:"get"}),
 		
+		requisitoArchivo() {
+			let tipos = root.tiposDocumento;
+			let i = 0,
+				print = "";
+			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Requeridos <b>(Debe cargarlos en la pestaña 'Documentos')</b>:</i></b></h3> ";
+				print = print + "<ul>";
+				for (i = 0; i < tipos.length; i++) {
+					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
+				}
+				print = print + "</ul>";
+			}
+			return print;
+		},
+
 		sistemaDate(e_date, operador){
 			let resultado=null
 			let fecha = new Date(e_date);
@@ -587,68 +602,25 @@ export default {
 			this.id_data_cov = data.id;
 			
 		},
+		
 
-		// requisitoArchivo() {
-		// 	let tipos = root.tiposDocumento;
-		// 	let i = 0,
-		// 		print = "";
-		// 	if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
-		// 		print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
-		// 		print = print + "<ul>";
-		// 		for (i = 0; i < tipos.length; i++) {
-		// 			let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
-		// 			if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
-		// 		}
-		// 		print = print + "</ul>";
-		// 	}
-		// 	return print;
-		// },
-
-		documentos(data) {
-			// console.clear();
-			let fecha_final= root.sistemaDate(data.row.data.call_end_date, "mayor");
-			let fecha_inicial= root.sistemaDate(data.row.data.call_start_date, "menor");
-
-			let resultado=fecha_final===fecha_inicial
-
-			console.log("documentos", data.row.data);
-			
-			// 202104111513: Error
-			if(resultado){
-				root.section = "documentos";
-				if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
-				let rd = data.row.data;
-				if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
-				console.log("rd", rd);
-				root.baseObj = rd;
-
-				$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.call_name}`);
-				root.panelCmds.fadeOut();
-				root.panelGrid.fadeOut(function (params) {
-					root.panelCmdBack.fadeIn();
-					$("#" + root.id_panel_documentos).fadeIn(function (params) { });
+		listDoc2subtipos(parametro){
+			if(parametro.length >= 1){
+				parametro.map(function(lista){
+					lista.id_ant=lista.id
+					lista.st_name=lista.document_name;
+					lista.id=lista.document_id;
+					return lista;
 				});
-			}else{
-				root.$error("Por favor verifique las fechas de inicio y cierre, para aplicar a esta convocatoria.");
+				root.tiposDocumento=parametro;
 			}
+			
 		},
 
 		retorno() {
 			console.log(root.section);
 			root.panelCmdBack.fadeOut();
-			if (root.section == "participantes") {
-				root.panelParticipantes.fadeOut(function (params) {
-					root.panelCmds.fadeIn();
-					root.panelGrid.fadeIn(function (params) { });
-				});
-			} else {
-				console.log("Regresar!");
-				console.log("root.panelDocs", root.panelDocs);
-				$("#" + root.id_panel_documentos).fadeOut(function (params) {
-					root.panelCmds.fadeIn();
-					root.panelGrid.fadeIn(function (params) { });
-				});
-			}
+			
 			$("#" + root.namePanel + " .item-title").html("");
 			root.baseObj = this.$clone(root.baseEnt);
 			root.section = null;
@@ -695,6 +667,18 @@ export default {
 
 		async edit(data) {
 			// root.mode = "edit";
+
+			root.getAll({
+				// url: "/research_units/117/group_member/10286",
+				url: "/calls/"+parseInt(data.id)+"/call_documents",
+				cb: function (results) {
+					let listDocuments = results;
+					console.warn("movilidad docs list ", listDocuments );
+					root.listDoc2subtipos(listDocuments);
+					root.loaderHide();
+				},
+			});
+
 			root.mode = "add";
 			let fecha_final= root.sistemaDate(data.call_end_date, "mayor");
 			let fecha_inicial= root.sistemaDate(data.call_start_date, "menor");
@@ -703,7 +687,7 @@ export default {
 			root.baseObj.research_group_id = root.group.id;
 			root.baseObj.researcher_id=root.userinfo.datagroupmenber.id;
 			root.baseObj.IDcall=data.id;
-
+			
 			if(resultado){
 				console.clear();
 				console.warn('research_units/'+root.group.id+'/mobility_calls?filter=[["call_id","=",'+data.id+'],"and",["researcher_id","=",'+root.userinfo.datagroupmenber.id+']]')
@@ -713,16 +697,13 @@ export default {
 						let res = results;
 						console.warn("data edit: ", res.data)
 						if(res.data[0]!== undefined){
-							root.$info("Usted va a realizar actualizacion de datos para esta convocatoria.")
-							root.baseObj=res.data[0];
-							root.mode = "edit"
+							root.$info("Advertencia usted tiene ["+ res.data.length +"] aplicaiones anteriores a esta convocatoria.")
+							//root.baseObj=res.data[0];
+							//root.mode = "add"
 						}
 					},
 				});
 
-
-				// root.baseObj = data;
-				//root.panelCmdBack.fadeOut();
 				root.panelCmds.fadeOut();
 				root.panelGrid.fadeOut(function (params) {
 					root.panelData.fadeIn(function (params) { });
@@ -754,36 +735,6 @@ export default {
 				root.panelGrid.fadeIn(function (params) { });
 			});
 		},
-
-		// active(data, state) {
-		// 	// console.clear();
-		// 	console.log("active", data);
-		// 	console.log("state", state);
-		// 	let a = state ? "activar" : "desactivar";
-		// 	let am = state ? "Activando" : "Desactivando";
-		// 	let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]}"</span>?`;
-		// 	this.$confirm(msg, function (si_no) {
-		// 		console.log("result", si_no);
-		// 		if (si_no) {
-		// 			root.loaderShow(`${am}`, root.panelGrid);
-		// 			let active = JSON.stringify({ active: state, updated_by: root.user_id });
-
-		// 			var dto = {
-		// 				newFormat: true,
-		// 				url: `${root.endPointRute}/${data.data.id}`,
-		// 				data: JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
-		// 				cb: function (result) {
-		// 					console.log("Result", result);
-		// 					root.grid.refresh();
-		// 					root.loaderHide();
-		// 				},
-		// 			};
-		// 			console.log("dto", dto);
-		// 			root.elementoActive(dto);
-		// 			root.loaderHide();
-		// 		}
-		// 	});
-		// },
 
 		gridInit(e) {
 			this.grid = e.component;

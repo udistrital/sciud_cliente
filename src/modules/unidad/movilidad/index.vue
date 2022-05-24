@@ -119,9 +119,9 @@
 
             <p></p>
             <div class="col-md-12 mt-3">
-              <tacs :group="group" :researcherData="groupResearchers" v-if="groupResearchers.datagroupmenber.id !== null"/>
-              <div class="alert alert-warning" role="alert" v-else> <i class="icon-info mr-1 "></i> 
+               <div class="alert alert-warning" role="alert" v-if="groupResearchers.datagroupmenber.id == null"> <i class="icon-info mr-1 "></i> 
               El usuario no esta registrado en este grupo o semillero de investigación, no puede aplicar a estas convcatorias.</div>
+              <tacs :group="group" :researcherData="groupResearchers" :puedeAplicar="groupResearchers.datagroupmenber.id !== null" />
             </div>
 
 

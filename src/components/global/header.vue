@@ -9,8 +9,10 @@
 			<div id="navbar-mobile" class="collapse navbar-collapse d-flex justify-content-end text-right">
 				<span class="font-weight-semibold color-main-500">
 					<span v-if="user && user.local">{{ user_complete_name }} ({{ user.local.user_role_name }})<br /></span>
-					Fecha y hora: {{ date }}</span
-				>
+					Fecha y hora: {{ date }} 
+					<span v-if="debug">(Modo Pruebas)</span>
+					</span>
+					
 			</div>
 		</div>
 	</div>

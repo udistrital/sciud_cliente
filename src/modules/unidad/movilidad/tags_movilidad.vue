@@ -3,7 +3,7 @@
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				
-                <DxItem title="Listado de Convocatorias">
+                <DxItem title="Listado de Convocatorias" v-if="puedeAplicar">
 					<template #default>
 						<Convocatorias 
 							:group="group" 
@@ -18,17 +18,17 @@
 					</template>
 				</DxItem>
 
-				<DxItem title="Aplicaciones a Movilidad">
+				<DxItem title="Documentos Movilidad">
 					<template #default>
 						<Aplicaciones 
 							:group="group" 
 							:userinfo="researcherData"
 							:editMode="editMode" 
-							title="Listado de Aplicaciones del Investigador"
+							title="Listado y Carga de Documentos"
 							endPointRute="mobility_calls"
-							objEpdata="mobility_calls"
+							objEpdata="mobility_call"
 							titleBtn="Vista Aplicacion"	
-							titlecolum="title"
+							titlecolum="event_name"
 						/>
 					</template>
 				</DxItem>
@@ -64,6 +64,10 @@ export default {
 			type: Object,
 			default: () => {},
 		},
+		puedeAplicar:{
+			type:Boolean,
+			default: false
+		}
 	},
 };
 </script>
