@@ -206,6 +206,7 @@ export default {
         if(resoultFind != undefined) root.groupResearchers.datagroupmenber=resoultFind;
         root.loaderHide();
         console.warn("datos internos integrante ", objeto)
+        console.warn("datos separados con solo la estructura integrante ", resoultFind)
       },
     });
   },
