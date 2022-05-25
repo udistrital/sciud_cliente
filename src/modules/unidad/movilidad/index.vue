@@ -188,7 +188,7 @@ export default {
       cb: function (result) {
         root.group = result;
         document.title += ` ${root.$titleCase(root.group.name)}`;
-        root.loadMembers();
+        // root.loadMembers();
       },
     });
 
