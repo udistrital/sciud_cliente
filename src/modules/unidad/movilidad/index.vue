@@ -118,11 +118,11 @@
             </div>
 
             <p></p>
-            <!-- <div class="col-md-12 mt-3">
+            <div class="col-md-12 mt-3">
                <div class="alert alert-warning" role="alert" v-if="groupResearchers.datagroupmenber.id == null"> <i class="icon-info mr-1 "></i> 
               El usuario no esta registrado en este grupo o semillero de investigación, no puede aplicar a estas convcatorias.</div>
               <tacs :group="group" :researcherData="groupResearchers" :puedeAplicar="groupResearchers.datagroupmenber.id !== null" />
-            </div> -->
+            </div>
 
 
 
@@ -188,7 +188,7 @@ export default {
       cb: function (result) {
         root.group = result;
         document.title += ` ${root.$titleCase(root.group.name)}`;
-        // root.loadMembers();
+        root.loadMembers();
       },
     });
 
@@ -206,7 +206,6 @@ export default {
         if(resoultFind != undefined) root.groupResearchers.datagroupmenber=resoultFind;
         root.loaderHide();
         console.warn("datos internos integrante ", objeto)
-        console.warn("datos separados con solo la estructura integrante ", resoultFind)
       },
     });
   },
