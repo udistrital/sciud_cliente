@@ -27,25 +27,73 @@
 					<div class="card-header main">Alguna acción</div>
 					<div class="card-body pb-0 pt-2">
 					
-						<div class="col-md-12 mt-3">
-							
-								<strong>Datos Basicos del postulante: </strong>
-									<div class="row">
-										<div class="col-md-6">
-											<p>Nombre: {{dataUserLogin}}</p>
-										</div>
-										<div class="col-md-6">
-											<!-- <p>cedula: {{dataUserLogin.local.identification_number}}</p> -->
-										</div>
+						<h3>Listado de ponderacion del aspirante:</h3>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Trayectoria y proyeccion del estudiante en la universidad:</label>
+										<DxNumberBox
+										class="form-control"
+										:show-clear-button="true"
+										:value.sync="representante.identification_number"
+										placeholder="Documento de identidad"
+										:read-only="true"
+										>
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
+										</DxNumberBox>
 									</div>
-							
-						</div>
-						<hr />
-						
+								</div>
+								<div class="col-md-3">
+									<div class="Trayectoria y proyeccion del estudiante en la universidad">
+										<label>Procentaje total:</label>
+										<DxNumberBox
+										class="form-control"
+										:show-clear-button="true"
+										:value.sync="representante.identification_number"
+										placeholder="Documento de identidad"
+										:read-only="true"
+										>
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
+										</DxNumberBox>
+									</div>
+								</div>
+								
+						<h3>Resultado del aspirante:</h3>
 						<DxValidationGroup ref="basicGroup">
                                <div class="col-12">
 									<div class="row">
-										<div class="col-md-4">
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Procentaje total:</label>
+										<DxNumberBox
+										class="form-control"
+										:show-clear-button="true"
+										:value.sync="representante.identification_number"
+										placeholder="valor %"
+										:read-only="true"
+										>
+										<DxValidator>
+											<DxRequiredRule />
+										</DxValidator>
+										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
+										</DxNumberBox>
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Convocatoria Aceptada?: </label>
+										<DxSwitch :value.sync="baseObj.organisator" switched-on-text="SI" switched-off-text="NO" />
+									</div>
+								</div>
+
+										<!-- <div class="col-md-4">
 											<div class="form-group">
 											<label>Nombre del evento al que se asiste: </label>
 											<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control" :value.sync="baseObj.name_event">
@@ -96,7 +144,7 @@
 											</DxValidator>
 											</DxTextBox>
 											</div>
-										</div>
+										</div> -->
 
 										<!-- <div class="col-md-5">
 											<div class="form-group">
@@ -226,7 +274,7 @@
 			<div class="page-title d-flex">
 				<h1>
 					<i class="icon-list mr-1 color-main-600"></i>
-					<span class="font-weight-semibold">Listado postulaciones </span> &raquo; Convocatoria NN
+					<span class="font-weight-semibold">Listado participantes </span>
 				</h1>
 				<!-- <h1>
 					<i class="icon-list mr-1 color-main-600"></i>
@@ -279,6 +327,26 @@
 							:allow-filtering="false"
 							:sort-index="0"
 							width="80"
+						/>
+						<DxColumn
+							data-field="call_id"
+							caption="ID conv"
+							data-type="number"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+							width="80"
+						/>
+						<DxColumn
+							data-field="call_name"
+							caption="Convocatoria"
+							data-type="string"
+							alignment="left"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+							
 						/>
 
 						<DxColumn
@@ -474,13 +542,13 @@
 								</a> -->
 
 								<span v-if="editMode">
-									<a title="Modificar Rol..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+									<a title="Modificar participante..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
 									</a>
-									<a v-if="data.data.active" title="Desactivar Rol..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+									<a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 										<i class="icon-database-remove"></i>
 									</a>
-									<a v-else title="Activar Rol..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+									<a v-else title="Activar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 										<i class="icon-database-check"></i>
 									</a>
 								</span>
@@ -505,6 +573,9 @@
 				</div> 
 				<div class="card">
 					<div class="card-body"><strong>groupResearchers:</strong> {{ JSON.stringify(groupResearchers, null, 3) }}</div>
+				</div> 
+				<div class="card">
+					<div class="card-body"><strong>porcentajes convocatoria:</strong> {{ JSON.stringify(promedioconv, null, 3) }}</div>
 				</div> 
 			</div>
 		</div>
@@ -621,7 +692,7 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		datauser:{name:"", cc:""},
-
+		promedioconv:{},
 		groupResearchers:[],
 		baseObj: {
 			call_id: null,
@@ -676,7 +747,7 @@ export default {
 	},
     async mounted() {
 		root = this;
-		root.loaderShow("Cargando Roles");
+		root.loaderShow("Cargando participantees");
 		root.validator = root.$refs.basicGroup.instance;
 		root.baseObj.created_by = root.user_id;
 		root.baseObj.updated_by = root.user_id;
@@ -718,9 +789,9 @@ export default {
 			// console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `calls/2/mobility_calls`,
+				endPoint: `/calls/${root.$}/mobility_calls`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando Roles", "#panel-produccion .card-body");
+					root.loaderShow("Cargando participantees", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -737,7 +808,7 @@ export default {
 
 	methods: {
 		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet"}),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet", getAll:"getAll"}),
 		
 ...mapActions("unidad", ["getResearcher"]),
 		
@@ -917,6 +988,21 @@ export default {
 		// },
 
 		edit(data) {
+
+			root.getAll({
+				// url: "/research_units/117/group_member/10286",
+				//url: "/calls/" + parseInt(data.id) + "/call_documents",
+				url: "calls/"+data.call_id+"/call_eval_criteria",
+				cb: function (results) {
+					//let listDocuments = results;
+					root.promedioconv=results;
+					// console.warn("movilidad docs list ", listDocuments);
+					// root.listDoc2subtipos(listDocuments);
+					// root.loaderHide();
+				},
+			});
+
+
 			root.mode = "edit";
 			root.modeEdit=true,
 			root.type_id = null;
@@ -925,7 +1011,7 @@ export default {
 			console.log("data", data);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);
 			root.baseObj = root.$clone(data);
-			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Editar Rol`);
+			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Editar participante`);
 			root.panelCmd.fadeOut();
 			root.panelGrid.fadeOut(function() {
 				root.panelData.fadeIn();
@@ -938,7 +1024,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} el rol: <span class='text-sb'>"${data.data.name}" ?`;
+			let msg = `¿Realmente desea ${a} el participante: <span class='text-sb'>"${data.data.name}" ?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
