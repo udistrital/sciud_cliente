@@ -267,7 +267,7 @@ export default {
     }),
 
     loadMembers() {
-      console.log("members", root.group.member_ids);
+      console.log("members", root.group.member_id);
     },
 
 
