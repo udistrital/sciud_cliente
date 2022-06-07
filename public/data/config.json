@@ -15,7 +15,7 @@
                          },
                 "oas":  {
                             "token_name":  "oas_token",
-                            "token_value": "5ca3d2c5-cccb-319d-9163-f73318f5b262",
+                            "token_value": "4fe2e8cd-b5f4-3d63-8f8d-23fb976021e4",
                             "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
                         }
             },
