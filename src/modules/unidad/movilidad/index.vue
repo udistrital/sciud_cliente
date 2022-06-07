@@ -107,10 +107,7 @@
                                       <strong>Identificación: </strong>
                                       {{ dataUserLogin.local.identification_number }}
                                     </div>
-                                    <div class="col-md-12">
-                                      <strong>Tipo Vinculacion: </strong>
-                                      {{ rolStructureUser }}
-                                    </div>
+                                    
                                     <div class="col-md-12">
                                       <strong>Correo electronico: </strong>
                                       <a :href="'mailto:' + group.email" target="_blank">{{ dataUserLogin.oas.email }}</a>
@@ -209,8 +206,8 @@ export default {
     root=this;
     root.dataUserLogin = this.user;
     root.rutaprincipal = String(location.href).slice(0, -this.$route.path.length) + "/unidad";
-    console.warn("dataUserLogin: ", root.dataUserLogin)
-    root.rolStructureUser=  root.dataUserLogin.oas.role.length<0 ? root.dataUserLogin.oas.role[0] : null;
+    console.warn("dataUserLogin: ", root.dataUserLogin);
+    // root.rolStructureUser=  root.dataUserLogin.oas.role.length<0 ? root.dataUserLogin.oas.role[0] : null;
     // buscar datos de unidad
     root.getUnit({
       id: root.$route.params.unidadId,
