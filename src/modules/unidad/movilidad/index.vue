@@ -130,12 +130,14 @@
                         </div>
 
                       </div>
-											<!-- <NuevoConocimiento :group="group" :editMode="editMode" /> -->
+											
 										</template>
 									</DxItem>
 
                   <DxItem title="Movilidad" icon="info" id="inftomacion" data-idx="1">
 										<template #default>
+                      <!-- <NuevoConocimiento :group="group" :editMode="editMode" /> -->
+                      <tacs :group="group" :researcherData="groupResearchers" :puedeAplicar="groupResearchers.datagroupmenber.id !== null" />
                     </template>
                   </DxItem>
 									
@@ -198,7 +200,8 @@ export default {
 
   components: {
 		DxItem,
-		DxAccordion
+		DxAccordion,
+    tacs: () => import("@/modules/unidad/movilidad/tags_movilidad"),
   },
 
 
@@ -207,7 +210,6 @@ export default {
     root.dataUserLogin = this.user;
     root.rutaprincipal = String(location.href).slice(0, -this.$route.path.length) + "/unidad";
     console.warn("dataUserLogin: ", root.dataUserLogin);
-    // root.rolStructureUser=  root.dataUserLogin.oas.role.length<0 ? root.dataUserLogin.oas.role[0] : null;
     // buscar datos de unidad
     root.getUnit({
       id: root.$route.params.unidadId,

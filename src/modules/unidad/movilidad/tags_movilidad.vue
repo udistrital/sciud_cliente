@@ -3,7 +3,7 @@
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true">
 				
-                <!-- <DxItem title="Listado de Convocatorias" v-if="puedeAplicar">
+                <DxItem title="Listado de Convocatorias" v-if="puedeAplicar">
 					<template #default>
 						<Convocatorias 
 							:group="group" 
@@ -15,7 +15,7 @@
 							titlecolum="title"
 						/>
 					</template>
-				</DxItem> -->
+				</DxItem>
 
 				<DxItem title="Documentos Movilidad">
 					<template #default>
@@ -48,7 +48,7 @@ export default {
 		DxItem,
 		DxTabPanel,
 		Aplicaciones: () => import("@/modules/unidad/movilidad/lista_convocatorias_aplicadas.vue"),
-        // Convocatorias: () => import("@/modules/unidad/movilidad/convocatorias.vue"),
+        Convocatorias: () => import("@/modules/unidad/movilidad/convocatorias.vue"),
 	},
 	mounted() {
 		root = this;
