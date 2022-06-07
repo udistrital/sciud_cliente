@@ -209,6 +209,7 @@ export default {
     root=this;
     root.dataUserLogin = this.user;
     root.rutaprincipal = String(location.href).slice(0, -this.$route.path.length) + "/unidad";
+    console.warn("dataUserLogin: ", root.dataUserLogin)
     root.rolStructureUser=  root.dataUserLogin.oas.role.length<0 ? root.dataUserLogin.oas.role[0] : null;
     // buscar datos de unidad
     root.getUnit({
