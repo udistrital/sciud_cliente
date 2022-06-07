@@ -292,10 +292,10 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 		</div>
 
 		<div class="card-body" v-if="debug">
-			<pre>
+			<!-- <pre> -->
 				<strong class="font-weight-semibold">baseObj:</strong>
 				{{ JSON.stringify(baseObj, null, 4) }}
-			</pre>
+			<!-- </pre> -->
 		</div>
 
 
