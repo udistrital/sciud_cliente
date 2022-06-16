@@ -26,217 +26,8 @@
 				<div class="card main">
 					<div class="card-header main">Alguna acción</div>
 					<div class="card-body pb-0 pt-2">
-					
-						<h3>Listado de ponderacion del aspirante:</h3>
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Trayectoria y proyeccion del estudiante en la universidad:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="Documento de identidad"
-										:read-only="true"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
-										</DxNumberBox>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="Trayectoria y proyeccion del estudiante en la universidad">
-										<label>Procentaje total:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="Documento de identidad"
-										:read-only="true"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
-										</DxNumberBox>
-									</div>
-								</div>
-								
-						<h3>Resultado del aspirante:</h3>
 						<DxValidationGroup ref="basicGroup">
-                               <div class="col-12">
-									<div class="row">
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Procentaje total:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="valor %"
-										:read-only="true"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
-										</DxNumberBox>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Convocatoria Aceptada?: </label>
-										<DxSwitch :value.sync="baseObj.organisator" switched-on-text="SI" switched-off-text="NO" />
-									</div>
-								</div>
-
-										<!-- <div class="col-md-4">
-											<div class="form-group">
-											<label>Nombre del evento al que se asiste: </label>
-											<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control" :value.sync="baseObj.name_event">
-											<DxValidator>
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="form-group">
-											<label>N° de ediciones del Evento: </label>
-											<DxTextBox placeholder="N° de ediciones del Evento" class="form-control" :value.sync="baseObj.number_edit_event">
-											<DxValidator>
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="form-group">
-											<label>Nombre de la ponencia: </label>
-											<DxTextBox placeholder="Nombre de la ponencia" class="form-control" :value.sync="baseObj.name_participation">
-											<DxValidator>
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div>
-
-										<div class="col-md-12">
-											<label>Lugar: </label>
-										<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>¿La UD participa como organizador o miembro de mesas de evaluación?: </label>
-											<DxSwitch :value.sync="baseObj.organisator" switched-on-text="SI" switched-off-text="NO" />
-											</div>
-										</div>
-
-										<div class="col-md-5">
-											<div class="form-group">
-											<label>Pagina del evento: </label>
-											<DxTextBox placeholder="Pagina del evento" class="form-control" :value.sync="baseObj.url">
-											<DxValidator>
-												<DxRequiredRule />
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div> -->
-
-										<!-- <div class="col-md-5">
-											<div class="form-group">
-											<label>Grupo por el cual se presenta: </label>
-											<DxSelectBox
-												::show-clear-button="true"
-												:grouped="false"
-												:search-enabled="false"
-												placeholder="Seleccione..."
-												:value.sync="baseObj.reseacrcher_group_id" 
-												class="form-control"
-												:data-source="subtipos" 
-												display-expr="st_name"
-												value-expr="id">
-											</DxSelectBox>
-											</div>
-										</div> -->
-									</div>
-								</div>
-
-
-						<!--
-								<div class="col-12">
-								<div class="row">
-									
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Documento de identidad:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="Documento de identidad"
-										:read-only="modeEdit"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<DxNumberBoxButton :options="searchButton" name="search" location="after" />
-										</DxNumberBox>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-									<label>Tipo Documento: </label>
-									<DxSelectBox
-										::show-clear-button="true"
-										:grouped="false"
-										:search-enabled="false"
-										placeholder="Seleccione..."
-										:value.sync="representante.identification_type_id" 
-										class="form-control"
-										:data-source="tipoDocumento" 
-										display-expr="st_name"
-										:read-only="modeEdit"
-										value-expr="id">
-									</DxSelectBox>
-									</div>
-								</div>
-
-
-
-								<div class="col-md-3">
-									<div class="form-group">
-									<label>Nombre Representante: </label>
-									<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.name" :read-only="modeEdit">
-									<DxValidator>
-										<DxRequiredRule />
-									</DxValidator>
-									</DxTextBox>
-									</div>
-								</div> 
-
-
-								<div class="col-md-3">
-									<div class="form-group">
-									<label>Email: </label>
-									<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.email" :read-only="modeEdit">
-									<DxValidator>
-										<DxRequiredRule />
-									</DxValidator>
-									</DxTextBox>
-									</div>
-								</div>
-
-								</div>
-								</div> 
-					-->
-
-
-
+							<criteriosEvaluacion :group="{id:1}" :baseObj="baseObj" :key="baseObj.id"></criteriosEvaluacion>
 						</DxValidationGroup>
 					</div>
 					<div class="card-footer">
@@ -622,7 +413,7 @@ import {
 	DxValidationGroup,
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
-import  {DxValidator, DxRequiredRule, DxCustomRule, DxEmailRule, DxStringLengthRule, DxPatternRule } from "devextreme-vue/validator";
+import  {DxValidator, DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { mapActions, mapGetters, mapState } from "vuex";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
@@ -660,9 +451,10 @@ export default {
 		DxValidationGroup,
 		DxValidator,
 		DxStateStoring,
-		DxEmailRule, DxStringLengthRule, DxPatternRule,
-		Usuario: () => import("@/components/element/usuario"),
-        Geo: () => import("@/components/element/geo"),
+		// DxEmailRule, DxStringLengthRule, DxPatternRule,
+		// Usuario: () => import("@/components/element/usuario"),
+        // Geo: () => import("@/components/element/geo"),
+		criteriosEvaluacion: () => import("@/modules/convocatoria/movilidad/form_aceptacion_aspirantes.vue"),
 	},
 	data: () => ({
 		tiposPermiso:null,//[{id:1, name: "Roles de Grupo"},{id:2, name: "Roles de semillero"},{id:3, name: "Grupo y Semillero"}],
@@ -694,60 +486,50 @@ export default {
 		datauser:{name:"", cc:""},
 		promedioconv:{},
 		groupResearchers:[],
-		baseObj: {
+		baseObj:{
+			id: null,
 			call_id: null,
 			call_name: null,
 			geo_city_id: null,
-			geo_state_id: null,
+			geo_city_name: null,
 			geo_country_id: null,
+			geo_country_name: null,
+			geo_state_id: null,
 			event_name: null,
 			event_edition_number: null,
 			event_date: null,
 			paper_name: null,
 			is_organizer: null,
 			event_page: null,
-			research_group_id : null,
-			oas_research_id: null,
-			active: true,
-			create_by: 1
+			research_group_id: null,
+			research_group_name: null,
+			researcher_id: null,
+			oas_researcher_id: null,
+			geo_state_name: null,
+			active: null,
+
 		},
-		representante:{
-			name: null,
-			identification_number: null,
-			email: null,
-			identification_type_id: null,
-			active: true,
-			id: null,
-			identification_type_name: null,
-		},
-		baseObjhist:{
-			legal_representative_id: null,
-			is_current: true,
-			active: true,
-		},
+
+		
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
 
-		root.getResearchers({
-			id: this.group.id,
-			cb: function(results) {
-				console.log(root.$sep);
-				root.groupResearchers = results.researchers;
-				console.log("root.groupResearchers", root.groupResearchers);
-			},
-		});
-		// root.tiposPermiso = root.subtypesByType("seleccion_vista_rolparticipantes");
-		// root.baseEnt2 = this.$clone(this.representante);
-		// root.naturaleza = root.subtypesByType("roleUsers_naturaleza");
-		// root.tipoEntidad = root.subtypesByType("roleUsers_tipos");
-		// root.tipoDocumento = root.subtypesByType("roleUsers_documento");
+		// root.getResearchers({
+		// 	id: this.group.id,
+		// 	cb: function(results) {
+		// 		console.log(root.$sep);
+		// 		root.groupResearchers = results.researchers;
+		// 		console.log("root.groupResearchers", root.groupResearchers);
+		// 	},
+		// });
+
 	},
     async mounted() {
 		root = this;
-		root.loaderShow("Cargando participantees");
+		root.loaderShow("Cargando participantes");
 		root.validator = root.$refs.basicGroup.instance;
 		root.baseObj.created_by = root.user_id;
 		root.baseObj.updated_by = root.user_id;
@@ -772,7 +554,7 @@ export default {
 
 
 		// console.warn("usuario nombre completo ",  t.NombreCompleto);
-
+		
 
 		let root_id = "#panel-roleUsers";
 		root.panelCmd = $(`${root_id}-cmds`);
@@ -789,9 +571,9 @@ export default {
 			// console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `/calls/${root.$}/mobility_calls`,
+				endPoint: `/calls/${root.$route.params.itemId}/mobility_calls`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando participantees", "#panel-produccion .card-body");
+					root.loaderShow("Cargando participantes", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -823,76 +605,11 @@ export default {
 			} else return true;
 		},
 		
-		// editComp: async (entidad) =>{
-		// 	//let doc=root.baseObj.legal_representative_identification;
-		// 	let datauser= await root.getSerarchDoc({url: 'entities/'+entidad+'/hist_legal_representatives?filter=["is_current","=",true]'});
-		// 	let documet=datauser[0].legal_representative_identification;
-		// 	root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + documet});
-		// 	root.representante.identification_number=documet;
-		// 	root.representante=root.datosDoc[0];
-		// 	root.baseObj.legal_representative_id=root.representante.id;
-		// 	// root.representante=root.datosDoc[0];
-		// 	root.modeRep = "edit";
-		// },
-		// imprimir(){
-		// 	console.warn("resultado dato usuario ",this.get_group_role_name(2));
-		// },
+
 		
-		saveRepresentante() {
-			// if (result.isValid) {
-				// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-				if (root.modeRep == "add") root.representante.created_by = root.user_id;
-				if (root.modeRep == "edit") root.representante.updated_by = root.user_id;
-				let obj = root.representante;
-				let dto = {
-					newFormat: true,
-					// unidadId: root.$route.params.idEnt,
-					stringEP: "legal_representatives",
-					rute2: "legal_representatives",
-					mod: obj.id,
-					objectSend: { legal_representative: obj },
-					cb: function(item) {
-						console.log("item", item);
-						root.baseObjhist.legal_representative_id=item.id;
-						root.baseObj.legal_representative_id=item.id;
-					},
-				};
-				if (root.modeRep == "edit") root.objUpdate(dto);
-				else root.objSave(dto);
-		},
 
 
-		// saveHistory(id) {
-		// 	// console.log("VALID!");
-		// 	// root.scrollTop();
-		// 	// root.panelCmds.fadeOut();
-		// 	// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-		// 	// root.loaderShow(msg, root.panelData);
-		// 	// if (root.mode == "add") 
-		// 	root.baseObjhist.created_by = root.user_id;
-		// 	// if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
-			
-		// 	// root.baseObjhist.is_current=true;
-		// 	let obj = root.baseObjhist;
-		// 	let dto = {
-		// 		newFormat: true,
-		// 		// unidadId: root.$route.params.idEnt,
-		// 		stringEP: root.ruta,
-		// 		rute2: `entities/${id}/hist_legal_representatives/`,
-		// 		mod: obj.id,
-		// 		objectSend: { hist_legal_representative: obj },
-		// 		cb: function(item) {
-		// 			console.log("item", item);
-		// 			// root.grid.refresh();
-		// 			// root.loaderHide();
-		// 			// root.cancel();
-		// 		},
-		// 	};
-		// 	// console.log("root.mode", root.mode);
-		// 	// if (root.mode == "edit") root.objUpdate(dto);
-		// 	root.objSave(dto);
-		// 	// root.cancel();
-		// },
+
 		
 		save() {
 			console.log(this.$sep);
@@ -934,58 +651,6 @@ export default {
 			}
 		},
 
-		// save() {
-		// 	console.clear();
-		// 	console.log(root.$sep);
-		// 	root.loaderElement = root.panelData.find(".card");
-		// 	console.log("validator =>", root.validator);
-		// 	var result = root.validator.validate();
-		// 	console.log("result =>", result);
-
-		// 	if (result.isValid) {
-		// 		root.loaderShow("Guardando Entidad");
-
-
-		// 		console.log("VALID!");
-		// 		root.scrollTop();
-		// 		// root.panelCmds.fadeOut();
-		// 		// root.loaderElement = ;
-		// 		let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Elemento";
-		// 		root.loaderShow(msg, root.panelData);
-		// 		if (root.mode == "add") {
-		// 			root.baseObj.created_by = root.user_id;
-		// 			// root.saveRepresentante();
-		// 		}
-		// 		if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-		// 		// root.baseObj.legal_representative_id=root.representante.identification_type_id;
-
-		// 		// root.baseObj.product_type_id = root.codEP;
-		// 		// root.baseObj.research_group_id = root.group.id;
-		// 		let obj = root.baseObj;
-		// 		//let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
-		// 		let dto = {
-		// 			newFormat: true,
-		// 			// unidadId: root.group.id,
-		// 			stringEP: root.endPointRute,
-		// 			rute2: root.endPointRute,
-		// 			mod: obj.id,
-		// 			//objectSend: { regulation : obj },
-		// 			objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
-		// 			cb: function(item) {
-		// 				console.log(root.$sep);
-		// 				console.log("result =>", result);
-		// 				// root.saveHistory(item.id);
-		// 				root.grid.refresh();
-		// 				root.loaderHide();
-		// 				root.cancel();
-		// 			},
-		// 		};
-		// 		console.log("root.mode", root.mode);
-		// 		if (root.mode == "edit") root.objUpdate(dto);
-		// 		else root.objSave(dto);
-		// 		root.cancel();
-		// 	}
-		// },
 
 		edit(data) {
 
@@ -1011,7 +676,7 @@ export default {
 			console.log("data", data);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);
 			root.baseObj = root.$clone(data);
-			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Editar participante`);
+			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Evaluar Convocatoria de Movilidad`);
 			root.panelCmd.fadeOut();
 			root.panelGrid.fadeOut(function() {
 				root.panelData.fadeIn();

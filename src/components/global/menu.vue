@@ -97,10 +97,10 @@
 					</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+					<!-- <router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
 						<i class="icon-question3"></i>
 						Ayuda
-					</router-link>
+					</router-link> -->
 				</li>
 			</ul>
 		</div>
