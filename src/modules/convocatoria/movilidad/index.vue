@@ -119,7 +119,7 @@
 							:sort-index="0"
 							width="80"
 						/>
-						<DxColumn
+						<!-- <DxColumn
 							data-field="call_id"
 							caption="ID conv"
 							data-type="number"
@@ -128,7 +128,7 @@
 							:allow-grouping="false"
 							:allow-filtering="false"
 							width="80"
-						/>
+						/> -->
 						<DxColumn
 							data-field="call_name"
 							caption="Convocatoria"
@@ -181,7 +181,7 @@
 							:allow-filtering="false"
 						/>
 
-						<DxColumn
+						<!-- <DxColumn
 							data-field="geo_state_name"
 							caption="Estado"
 							data-type="string"
@@ -189,7 +189,7 @@
 							:visible="false"
 							:allow-grouping="false"
 							:allow-filtering="false"
-						/>
+						/> -->
 
 						<DxColumn
 							data-field="geo_city_name"
@@ -211,24 +211,24 @@
 							:allow-filtering="false"
 						/>
 
-						<DxColumn data-field="is_organizer" caption="Organizador UD" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
+						<DxColumn data-field="is_organizer" caption="Organizador UD" data-type="date" alignment="center" :visible="false" :customize-text="yesNo" width="70" />
 
-						<DxColumn
-							data-field="name"
-							caption="URL Evento"
-							data-type="string"
-							alignment="false"
-							:visible="false"
-							:allow-grouping="false"
-							:allow-filtering="false"
-						/>
+						<DxColumn data-field="event_page" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<template #tplWeb="{ data }">
+							<a v-if="data.data.event_page != '' && data.data.event_page != null"
+								:title="data.data.event_page" class="cmd-item color-main-600 mr-2"
+								:href="data.data.event_page" Target="_blank">
+								<i class="icon-link"></i> Visitar
+							</a>
+							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
 
 						<DxColumn
 							data-field="research_group_name"
 							caption="Grupo que Presenta"
 							data-type="string"
 							alignment="left"
-							:visible="true"
+							:visible="false"
 							:allow-grouping="false"
 							:allow-filtering="false"
 						/>

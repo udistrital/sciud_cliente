@@ -10,8 +10,8 @@
 								<span class="font-weight-semibold">{{ title }}</span>
 								<span class="item-title">&nbsp;</span>
 							</h1>
-							<span class="item-title">En esta sección podrá cargar los documentos requeridos para las
-								convocatorias que usted registro.</span>
+							<span class="item-title">En esta sección usted podrá visualizar las convocatorias de movilidad que tiene registradas hasta el momento.</span>
+							<p><b>Nota:</b> Cargue los documentos obligatorios y luego haga clic en el botón de publicar de la columna acciones.</p> 
 						</div>
 						<div class="header-elements">
 							<span class="cmds-back slide">
@@ -26,8 +26,136 @@
 			</div>
 		</div>
 
-		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this"
-			:tipos="tiposDocumento" />
+		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" :botonUploadVisible="{visible: cargadocs}" />
+
+		<DxValidationGroup ref="basicGroup">
+			<div class="row data slide">
+				<div class="col">
+					<div class="card">
+						<div class="card-header main">
+							<i class="icon-pencil3 p-3"></i>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{ titleBtn }}
+							</span>
+						</div>
+						<div class="card-body mb-0 pb-0 pt-2">
+							<h2><span class="item-title mr-1">Por favor verifique bien la información diligenciada, esta
+									aplicación no se podrá editar más adelante.</span></h2>
+							<div class="row">
+								<!-- formulatio -->
+
+								<div class="col-md-5">
+									<div class="form-group">
+										<label>Nombre del evento al que se asiste: </label>
+										<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control"
+											:value.sync="baseObj.event_name">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
+
+
+
+								<div class="col-md-5">
+									<div class="form-group">
+										<label>Nombre de la ponencia: </label>
+										<DxTextBox placeholder="Nombre de la ponencia" class="form-control"
+											:value.sync="baseObj.paper_name">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="form-group">
+										<label>N° de ediciones del Evento: </label>
+										<DxNumberBox placeholder="N° de ediciones del Evento" class="form-control"
+											:value.sync="baseObj.event_edition_number">
+											<DxValidator>
+											</DxValidator>
+										</DxNumberBox>
+									</div>
+								</div>
+
+								<div class="col-md-12">
+									<label>Lugar: </label>
+									<Geo :lockElement="loaderElement" :syncObject="baseObj" />
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>¿La UD participa como organizador o miembro de mesas de evaluación?:
+										</label>
+										<DxSwitch :value.sync="baseObj.is_organizer" switched-on-text="SI"
+											switched-off-text="NO" />
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="form-group">
+										<label>Fecha del evento: </label>
+										<DxDateBox class="form-control" name="event_date"
+											:value.sync="baseObj.event_date" id="event_date" placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy" :min="minDate" :max="actualDate" type="date">
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxDateBox>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Pagina del evento: </label>
+										<DxTextBox placeholder="Pagina del evento" class="form-control"
+											:value.sync="baseObj.event_page">
+											<DxValidator>
+												<DxRequiredRule />
+												<DxPatternRule
+													message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo"
+													:pattern="urlPattern" />
+											</DxValidator>
+										</DxTextBox>
+									</div>
+								</div>
+
+
+								<!-- <div class="col-md-12" v-if="tiposDocumento.length > 0">
+									<div class="card-body" v-html="requisitoArchivo()"></div>
+								</div> -->
+								<!-- fin formulario -->
+							</div>
+						</div>
+						<div class="card-footer">
+							<div class="row">
+								<div class="col">
+									<DxButton @click="cancel" class="nb">
+										<template #default>
+											<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
+												<b><i class="icon-database-remove"></i></b> Regresar
+											</span>
+										</template>
+									</DxButton>
+								</div>
+								<div class="col text-right">
+									<DxButton @click="save" class="nb" v-if="false">
+										<!-- v-if="editMode">-->
+										<template #default>
+											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+												{{ mode == "edit" ? "Actualizar Aplicacion" : "Nueva Aplicación" }} <b><i
+														class="icon-database-add"></i></b>
+											</span>
+										</template>
+									</DxButton>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</DxValidationGroup>
 
 
 		<div class="row grid">
@@ -52,22 +180,23 @@
 							:allowed-page-sizes="dgPageSizes" info-text="Página {0} de {1} ({2} elementos)" />
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-						<DxColumn data-field="id" :sort-index="1" sort-order="desc" caption="ID" data-type="string"
-							alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn data-field='researcher_id' caption='Id Investigador' data-type='string'
-							alignment='center' :visible='true' :allow-grouping='false' />
+						<DxColumn data-field="id" :sort-index="1" sort-order="desc" caption="ID"  width="90" data-type="string"
+							alignment="center" :visible="true" :allow-grouping="false"  />
+						<!-- <DxColumn data-field='researcher_id' caption='Id Investigador' data-type='string'
+							alignment='center' :visible='true' :allow-grouping='false' /> -->
 						<!-- <DxColumn data-field="researcher_id" caption="Nombre" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
 
-						<DxColumn data-field='call_name' caption='Convoatoria' data-type='string' alignment='center'
+						<DxColumn data-field='call_name' caption='Convocatoria' data-type='string' alignment='left'
 							:visible='true' :allow-grouping='false' />
-						<DxColumn data-field='geo_city_name' caption='Ciudad' data-type='string' alignment='center'
-							:visible='false' :allow-grouping='false' />
-						<DxColumn data-field='geo_country_name' caption='Pais' data-type='string' alignment='center'
-							:visible='false' :allow-grouping='false' />
-						<DxColumn data-field='event_name' caption='Evento' data-type='string' alignment='center'
+						<DxColumn data-field='event_name' caption='Evento' data-type='string' alignment='left'
 							:visible='true' :allow-grouping='false' />
 						<DxColumn data-field='event_edition_number' caption='Edicion' data-type='string'
-							alignment='center' :visible='true' :allow-grouping='false' />
+							alignment='center' width="90" :visible='true' :allow-grouping='false' />
+						<DxColumn data-field='geo_city_name' caption='Ciudad' data-type='string' alignment='left'
+							:visible='false' :allow-grouping='false' />
+						<DxColumn data-field='geo_country_name' caption='Pais' data-type='string' alignment='left'
+							:visible='true' :allow-grouping='false' />
+						
 						<DxColumn data-field='event_date' caption='Fecha' data-type='date' alignment='center'
 							:visible='true' :allow-grouping='false' />
 						<DxColumn data-field='is_organizer' width="70" caption='U. Distrital' data-type='string'
@@ -76,7 +205,7 @@
 							:visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field='geo_state_name' caption='Estado' data-type='string' alignment='center'
 							:visible='false' :allow-grouping='false' />
-						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center"
+						<DxColumn data-field="active" caption="Estado" data-type="date" alignment="center"
 							:visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn :width="90" alignment="center" cell-template="tpl" caption="Acciones" />
 
@@ -100,18 +229,29 @@
 									<i class="icon-file-pdf"></i>
 								</a>
 
+								<a title="Detalles Aplicación... " class="cmd-item color-main-600"
+									@click.prevent="edit(data.data)" href="#">
+									<i class="icon-insert-template"></i>
+								</a>
+
+								<a title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
+									@click.prevent="documentos(data)" href="#">
+									<i class="icon-bubble-last"></i>
+								</a>
+								
+
 								<span v-if="editMode"></span>
 								<!-- <a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
 									</a> -->
-								<a v-if="data.data.active" title="Desactivar Aplicacion..."
+								<!-- <a v-if="data.data.active" title="Desactivar Aplicacion..."
 									class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 									<i class="icon-database-remove"></i>
 								</a>
 								<a v-else title="Activar Aplicacion..." class="cmd-item color-main-600 mr-2"
 									@click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
-								</a>
+								</a> -->
 
 							</span>
 						</template>
@@ -175,7 +315,7 @@ import {
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
-import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
+import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup, DxSwitch } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 //import { DxStateStoring } from 'node_modules/devextreme-vue/pivot-grid';
 
@@ -207,6 +347,7 @@ export default {
 		DxTextBox,
 		DxValidator,
 		DxValidationGroup,
+		DxSwitch,
 		// Geo: () => import("@/components/element/geo"),
 		// Observaciones: () => import("@/components/element/html_editor"),
 		Documentos: () => import("@/components/element/documentos"),
@@ -217,6 +358,7 @@ export default {
 			type: Object,
 			default: () => null,
 		},
+
 		userinfo: {
 			type: Object,
 			default: () => null,
@@ -245,6 +387,7 @@ export default {
 
 	},
 	data: () => ({
+		cargadocs:true,
 		namePanel: "redconocimiento",
 		codEP: null, //611 612 613
 		popupObs: false,

@@ -91,15 +91,17 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
+						
 						<a
 							href="#"
-							v-if="editMode"
+							v-if="visibleButton"
 							id="btn-doc-add"
 							@click.prevent="documentAdd"
 							class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple slide"
 						>
 							<b><i class="icon-database-add"></i></b> {{ newButtonText.toUpperCase() }}
 						</a>
+
 						<DxDataGrid
 							class="main"
 							width="100%"
@@ -291,6 +293,7 @@ export default {
 		DxValidator,
 	},
 	data: () => ({
+		visibleButton: false,
 		doc_description: null,
 		actionTitle: null,
 		baseEnt: null,
@@ -330,6 +333,26 @@ export default {
 		root = this;
 		root.docLink = root.baseUrl + "view/index.html";
 		console.log("root.tipos", root.tipos);
+
+
+		// console.warn("coton de carga: ", root.visibleButton );
+		// console.warn("coton de carga: ", root.botonUploadVisible );
+
+
+		if(typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible!= null){
+			
+			if(Object.entries(root.botonUploadVisible).length != 0){
+				root.visibleButton = root.botonUploadVisible.visible; //visible es valor booleano (true and false)
+			}
+
+		}else{
+			root.visibleButton=this.editMode;
+			console.warn("...... Boton de carga: ", root.visibleButton );
+		}
+		
+
+		console.warn("coton de carga: ", root.visibleButton );
+		
 	},
 	mounted() {
 		console.log(root.$sep);
@@ -391,6 +414,8 @@ export default {
 					},
 				});
 		}, 500);
+		
+		
 	},
 	computed: {
 		...mapGetters("unidad", ["researchers"]),
@@ -469,6 +494,12 @@ export default {
 			type: String,
 			default: () => null,
 		},
+		
+		botonUploadVisible: {
+			type: Object,
+			default: () => null,
+		},
+
 	},
 	methods: {
 		...mapActions("core/nuxeo", ["upload", "get", "getDoc"]),
@@ -543,6 +574,7 @@ export default {
 					$(root.panelDataDoc).fadeIn();
 				});
 			});
+			
 		},
 		documentAdd() {
 			// // console.clear();
