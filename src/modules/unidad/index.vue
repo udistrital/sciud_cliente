@@ -723,11 +723,11 @@ export default {
 					text: "Plan de Acción e <br> Informe de Gestión",
 					icon: "icon-clipboard",
 				},
-				{
-					command: `/unidad/${data.data.id}/movilidad`,
-					text: "Aplicar a Convocatorias",
-					icon: "icon-paperplane",
-				},
+				// {
+				// 	command: `/unidad/${data.data.id}/movilidad`,
+				// 	text: "Aplicar a Convocatorias",
+				// 	icon: "icon-paperplane",
+				// },
 			];
 		},
 		customizeText(cellInfo) {

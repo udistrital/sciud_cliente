@@ -103,6 +103,21 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/movilidad/index.vue"),
 		},
 
+		//convocatoria movilidad postulacion
+		{
+			path: "/convocatoria/aplicaciones",
+			name: "Movilidad-listado-aplicacion",
+			meta: { title: "Movilidad-listado-aplicacion", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/movilidad/postulacion/index.vue"),
+		},
+		{
+			name: "aplicacion-movilidad",
+			path: "/convocatoria/:itemId/aplicar",
+			meta: { title: "aplicacion-movilidad", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/movilidad/postulacion/aplicar.vue"),
+		},
+
+
 		
 //convocatoria movilidad desde grupo de investigacion
 		{

@@ -9,7 +9,7 @@
 							:group="group" 
 							:userinfo="researcherData"
 							:editMode="editMode" 
-							title="Listado Convocatorias Activas"
+							title="Convocatorias Activas"
 							objEpdata="mobility_call"
 							titleBtn="Registro Convocatoria"	
 							titlecolum="title"
@@ -17,13 +17,13 @@
 					</template>
 				</DxItem>
 
-				<DxItem title="Documentos Movilidad">
+				<DxItem title="Listado Aplicaciones">
 					<template #default>
 						<Aplicaciones 
 							:group="group" 
 							:userinfo="researcherData"
 							:editMode="editMode" 
-							title="Listado y Carga de Documentos"
+							title="Listado de Aplicaciones"
 							endPointRute="mobility_calls"
 							objEpdata="mobility_call"
 							titleBtn="Vista Aplicacion"	

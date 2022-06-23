@@ -153,7 +153,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 										<!-- v-if="editMode">-->
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-												{{ mode == "edit" ? "Actualizar" : "Aplicar y Terminar" }} <b><i
+												{{ mode == "edit" ? "Actualizar" : "Nueva Aplicación" }} <b><i
 														class="icon-database-add"></i></b>
 											</span>
 										</template>
@@ -461,6 +461,7 @@ export default {
 			event_page: null,
 			research_group_id: null,
 			researcher_id: null,
+			state_id:1065,
 			active: true,
 		},
 
@@ -549,11 +550,12 @@ export default {
 			let i = 0,
 				print = "";
 			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
-				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Requeridos <b>(Debe cargarlos en la pestaña 'Documentos')</b>:</i></b></h3> ";
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Lista de documentos para aplicar:</i></b></h3> ";
 				print = print + "<ul>";
 				for (i = 0; i < tipos.length; i++) {
 					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
-					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
+					let importante = tipos[i].cd_required? '<em>(Requerido).</em>': ''
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + " "+ importante +" </b>" + text + "</li>";
 				}
 				print = print + "</ul>";
 			}
@@ -561,11 +563,20 @@ export default {
 		},
 
 		sistemaDate(e_date, operador) {
-			let resultado = null
-			let fecha = new Date(e_date);
+			let resultado = null 
+			let date = e_date.split("-");
+			let fecha = new Date(date[0], date[1], date[2]);
 			let hoy = new Date();
-			if (operador == "mayor") { resultado = fecha.valueOf() > hoy.valueOf(); }
-			else if (operador == "menor") { resultado = fecha.valueOf() < hoy.valueOf(); }
+			hoy.setHours(0,0,0,0);
+			fecha.setHours(23,59,59,0);
+
+			if (operador == "mayor") { 
+				resultado = fecha.valueOf() >= hoy.valueOf(); 
+			}
+			else if (operador == "menor") { 
+				resultado = fecha.valueOf() <= hoy.valueOf(); 
+				
+			}
 			else {
 				resultado = null
 				console.error("error en en la funcion sistemaDate(fecha, operador) debe colorcar de operador mayor o menor");
@@ -629,6 +640,7 @@ export default {
 					mod: obj.id,
 					objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
 					cb: function (item) {
+						root.$info("Estimado investigador, Su aplicación fue creada con éxito. <br/> Ingrese a listado de aplicaciones para completar los datos y enviar la postulación.")
 						console.log("item", item);
 						root.grid.refresh();
 						root.loaderHide();
@@ -639,6 +651,7 @@ export default {
 				if (root.mode == "edit") root.objUpdate(dto);
 				else root.objSave(dto);
 				root.cancel();
+				
 			}
 		},
 
@@ -657,7 +670,11 @@ export default {
 			});
 
 			root.mode = "add";
+			
+			console.warn("fecha final: " + data.call_end_date + ",  fecha hoy: " + new Date() + " => ");
 			let fecha_final = root.sistemaDate(data.call_end_date, "mayor");
+			
+			console.warn("fecha inicial: " + data.call_start_date + ",  fecha hoy: " + new Date() + " => ");
 			let fecha_inicial = root.sistemaDate(data.call_start_date, "menor");
 
 			let resultado = fecha_final === fecha_inicial
@@ -673,11 +690,11 @@ export default {
 					cb: function (results) {
 						let res = results;
 						console.warn("data edit: ", res.data)
-						if (res.data[0] !== undefined) {
-							root.$info("Advertencia usted tiene [" + res.data.length + "] aplicaiones anteriores a esta convocatoria.")
-							//root.baseObj=res.data[0];
-							//root.mode = "add"
-						}
+						// if (res.data[0] !== undefined) {
+						// 	root.$info("Advertencia usted tiene [" + res.data.length + "] aplicaiones anteriores a esta convocatoria.")
+						// 	//root.baseObj=res.data[0];
+						// 	//root.mode = "add"
+						// }
 					},
 				});
 

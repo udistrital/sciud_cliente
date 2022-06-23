@@ -26,7 +26,7 @@
 			</div>
 		</div>
 
-		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" :botonUploadVisible="{visible: cargadocs}" />
+		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" :botonUploadVisible="{visible:true}" />
 
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -43,7 +43,27 @@
 							<div class="row">
 								<!-- formulatio -->
 
-								<div class="col-md-5">
+								<div class="col-md-4">
+									<div class="form-group">
+										<label>Estructuras de Investigación:</label>
+										<DxSelectBox
+											:show-clear-button="true"
+											:read-only="false"
+											:data-source="listGrupoInvestigador"
+											:value.sync="baseObj.research_group_id"
+											class="form-control"
+											display-expr="research_group_name"
+											value-expr="research_group_id"
+											placeholder="Seleccione..."
+										>
+											<DxValidator>
+												<DxRequiredRule />
+											</DxValidator>
+										</DxSelectBox>
+									</div>
+								</div>
+
+								<div class="col-md-3">
 									<div class="form-group">
 										<label>Nombre del evento al que se asiste: </label>
 										<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control"
@@ -57,7 +77,7 @@
 
 
 
-								<div class="col-md-5">
+								<div class="col-md-3">
 									<div class="form-group">
 										<label>Nombre de la ponencia: </label>
 										<DxTextBox placeholder="Nombre de la ponencia" class="form-control"
@@ -279,6 +299,12 @@
 			<div class="card-body">
 				{{ JSON.stringify(baseObj, null, "\t") }}
 			</div>
+			<div class="card-body">
+				{{ JSON.stringify(tiposDocumento, null, "\t") }}
+			</div>
+			<div class="card-body">
+				{{ JSON.stringify(userinfo, null, "\t") }}
+			</div>
 		</div>
 
 		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true"
@@ -402,7 +428,9 @@ export default {
 
 	},
 	data: () => ({
-		cargadocs:true,
+		cargadocs:false,
+		visibleguardar:{visible:false},
+		listGrupoInvestigador:{},
 		listDocumnetUp:[],
 		listDocsRequire:[],
 		namePanel: "redconocimiento",
@@ -457,7 +485,9 @@ export default {
 	created() {
 		// console.clear();
 		root = this;
+		root.listGrupoInvestigador=root.userinfo.gropusmember;
 		root.baseEnt = this.$clone(this.baseObj);	
+		root.visibleguardar.visible=false;
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
@@ -473,7 +503,7 @@ export default {
 	},
 	computed: {
 		dataSource: function () {
-			if (typeof this.group.id === "undefined") return null;
+			
 			let data = root.codEP;
 			(data = data != null ? "product_type_id=" + data : null), console.warn("codEP: ", root.codEP);
 			console.warn("valor de data: ", root.codEP);
@@ -481,9 +511,10 @@ export default {
 			return DxStore({
 				key: ["id"],
 				//stringParam: data,
-				endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
+				// endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
+                endPoint: `researchers/3947/mobility_calls`,
 				onLoading: function (loadOptions) {
-					root.loaderShow("Cargando elementos", "#panel-produccion .card-body");
+					root.loaderShow("Cargando elementos", root.loaderElement);
 				},
 				onLoaded: function (results, baseEntity) {
 					// console.clear();
@@ -500,7 +531,7 @@ export default {
 	methods: {
 
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSinData: "getSinData", getAll: "getAll" }),
-
+		
 		verObservar(data) {
 			let objeto = {};
 			let numero = 0;
@@ -521,7 +552,7 @@ export default {
 			let tipos = root.tiposDocumento;
 			let i = 0,
 				print = "";
-			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
+			if (Array.isArray(tipos) && tipos.length != 0) {
 				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Lista de documentos para aplicar:</i></b></h3> ";
 				print = print + "<ul>";
 				for (i = 0; i < tipos.length; i++) {
@@ -530,6 +561,8 @@ export default {
 					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + " "+ importante +" </b>" + text + "</li>";
 				}
 				print = print + "</ul>";
+			}else{
+				print = "No se encuentra lista legible";
 			}
 			return print;
 		},
@@ -537,8 +570,9 @@ export default {
 		listDoc2subtipos(parametro) {
 			if (parametro.length >= 1) {
 				parametro.map(function (lista) {
+					let require = lista.cd_required? "(Requerido)": "";
 					lista.id_ant = lista.id
-					lista.st_name = lista.document_name;
+					lista.st_name = lista.document_name + " "+ require +"";
 					lista.id = lista.document_id;
 					return lista;
 				});
@@ -574,37 +608,47 @@ export default {
 		documentos(data) {
 			// console.clear();
 			console.log("documentos", data.row.data);
-			root.loaderShow("Cargando lista Documentos", "#panel-produccion .card-body");
+			root.loaderShow("Cargando lista Documentos", root.loaderElement);
 			// 202104111513: Error
+			
+			
 
-			root.tiposDocumento = {};
+			root.tiposDocumento = [];
 			root.loaderShow("Listado Documentos", root.panelData)
 			console.warn("id list docs", data.row.data.id)
 			
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
-				url: "/calls/" + parseInt(data.row.data.call_id) + "/call_documents",
+				url: "/calls/" + parseInt(data.data.call_id) + "/call_documents",
 				cb: function (results) {
 					let listDocuments = results;
 					console.warn("movilidad docs list ", listDocuments);
 					root.listDoc2subtipos(listDocuments);
+
+					
 					root.loaderHide();
 				},
 			});
 
-			root.section = "documentos";
-			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
-			let rd = data.row.data;
-			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
-			console.log("rd", rd);
-			root.baseObj = rd;
+				root.visibleguardar.visible=true;
+				//1062=corregir  1065=sin enviar  cargadocs=true o false para cargar ducumentos
+				if(data.data.state_id==1065 || data.data.state_id.state_id==1061){
+					this.visibleguardar.visible=true;
+				}
 
-			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.call_name}`);
-			root.panelCmds.fadeOut();
-			root.panelGrid.fadeOut(function (params) {
-				root.panelCmdBack.fadeIn();
-				$("#" + root.id_panel_documentos).fadeIn(function (params) { });
-			});
+				root.section = "documentos";
+				if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+				let rd = data.row.data;
+				if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+				console.log("rd", rd);
+				root.baseObj = rd;
+
+				$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.call_name}`);
+				root.panelCmds.fadeOut();
+				root.panelGrid.fadeOut(function (params) {
+					root.panelCmdBack.fadeIn();
+					$("#" + root.id_panel_documentos).fadeIn(function (params) { });
+				});
 
 		},
 
@@ -670,8 +714,10 @@ export default {
 		},
 
 		edit(data) {
-			root.tiposDocumento=[];
 
+			
+			root.tiposDocumento=[];
+			
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
 				url: "/calls/" + parseInt(data.call_id) + "/call_documents",
@@ -714,11 +760,6 @@ export default {
 			});
 		},
 
-		
-		docsUp(id_movilidad){
-			
-			
-		},
 
 		docRequire(id_convocatoria, id_movilidad){
 			root.tiposDocumento=[];
@@ -777,7 +818,7 @@ export default {
 			// console.log("state", state);
 			
 			root.docRequire(data.data.call_id, data.data.id);
-			root.loaderShow("Cargando requeridos", "#panel-produccion .card-body");
+			root.loaderShow("Cargando requeridos", root.loaderElement);
 			
 			let enviar = setTimeout(function(){
 				
