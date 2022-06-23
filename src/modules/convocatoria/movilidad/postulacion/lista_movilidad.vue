@@ -465,7 +465,7 @@ export default {
 		id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
-		id_researcher_group:null,
+		id_researcher_group:0,
 		baseObj: {
 			name: null,
 			category_id: null,
@@ -483,13 +483,20 @@ export default {
 			active: true,
 		},
 	}),
-	created() {
+	async created() {
 		// console.clear();
 		root = this;
-		root.listGrupoInvestigador=root.userinfo.gropusmember;
+		setTimeout(function(){
+			root.listGrupoInvestigador=root.userinfo.gropusmember;
+			if(root.userinfo.gropusmember.length>=1) root.id_researcher_group = root.listGrupoInvestigador[0].id;
+			root.baseEnt = this.$clone(this.baseObj);	
+			root.visibleguardar.visible=false;
+			root.grid.refresh();
+		}, 1000);
+			
 		
-		root.baseEnt = this.$clone(this.baseObj);	
-		root.visibleguardar.visible=false;
+		
+		
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
@@ -505,7 +512,7 @@ export default {
 	},
 	computed: {
 		dataSource: function () {
-			if(root.userinfo.gropusmember.length>=1) root.id_researcher_group = root.listGrupoInvestigador[0].id;
+			
 			let data = root.codEP;
 			(data = data != null ? "product_type_id=" + data : null), console.warn("codEP: ", root.codEP);
 			console.warn("valor de data: ", root.codEP);
