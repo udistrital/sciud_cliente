@@ -1,7 +1,7 @@
 <template>
 	<div class="col p-0 m-0 docs slide" :id="id">
 		<DxValidationGroup ref="basicGroup">
-			<div class="row data slide" v-if="editMode">
+			<div class="row data slide" v-if="visibleButton">
 				<div class="col">
 					<div class="card">
 						<div class="card-header main">Agregar Documento</div>
@@ -201,7 +201,7 @@
 								data-type="number"
 							/>
 							<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
-							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
+							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="visibleButton" />
 							<template #tpl="{ data }">
 								<span class="cmds">
 									<a title="Editar documento..." class="cmd-item color-main-600" @click.prevent="documentEdit(data.data)" href="#">
@@ -218,7 +218,8 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
+						<span class="font-weight-semibold">editMode:</span> {{ visibleButton }}
+						<span class="font-weight-semibold">botonUploadVisible:</span> {{ JSON.stringify(botonUploadVisible, null, 3) }}
 						<hr class="sep mb-0" />
 						<span class="font-weight-semibold">mainObj:</span> {{ JSON.stringify(mainObj, null, 3) }}
 					</div>
@@ -343,6 +344,8 @@ export default {
 			
 			if(Object.entries(root.botonUploadVisible).length != 0){
 				root.visibleButton = root.botonUploadVisible.visible; //visible es valor booleano (true and false)
+				// root.editMode=true;
+				console.warn("...... Boton de carga: ", root.visibleButton );
 			}
 
 		}else{

@@ -21,7 +21,7 @@
 						Estructuras de Investigación
 					</router-link>
 				</li>
-				<li class="nav-item" v-if="es_admin">
+				<li class="nav-item" > <!--v-if="es_admin"-->
 					<router-link to="/convocatoria" tag="a" class="navbar-nav-link legitRipple" title="Convocatorias...">
 						<i class="icon-pencil6"></i>
 						Convocatorias

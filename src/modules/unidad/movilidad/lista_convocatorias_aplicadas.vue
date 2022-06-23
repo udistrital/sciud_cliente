@@ -122,9 +122,9 @@
 								</div>
 
 
-								<!-- <div class="col-md-12" v-if="tiposDocumento.length > 0">
+								<div class="col-md-12" v-if="tiposDocumento.length > 0">
 									<div class="card-body" v-html="requisitoArchivo()"></div>
-								</div> -->
+								</div>
 								<!-- fin formulario -->
 							</div>
 						</div>
@@ -168,20 +168,28 @@
 						:row-alternation-enabled="true" :show-borders="false">
 						<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
 						<DxSorting mode="single" /><!-- single, multiple, none" -->
-						<DxPaging :page-size="10" />
+						<DxPaging :page-size="dgPageSize" />
 						<DxFilterRow :visible="false" />
 						<DxLoadPanel :enabled="false" />
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-						<DxGrouping :auto-expand-all="false" />
+						
+						<DxGrouping :auto-expand-all="true" />
+						
 						<DxSummary>
 							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
 						</DxSummary>
+						
 						<DxPager :show-info="true" :show-page-size-selector="true" :show-navigation-buttons="true"
-							:allowed-page-sizes="dgPageSizes" info-text="Página {0} de {1} ({2} elementos)" />
+							:allowed-page-sizes="dgPageSizes"
+							info-text="{2} Lista Aplicaciones Movilidad (Página {0} de {1})" />
+						
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+						
+						
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
-						<DxColumn data-field="id" :sort-index="1" sort-order="desc" caption="ID"  width="90" data-type="string"
-							alignment="center" :visible="true" :allow-grouping="false"  />
+						<!-- :sort-index="1" sort-order="desc" -->
+						<DxColumn data-field="id"   caption="ID"  width="90" data-type="string"
+							alignment="center" :visible="true" :allow-grouping="false"  /> 
 						<!-- <DxColumn data-field='researcher_id' caption='Id Investigador' data-type='string'
 							alignment='center' :visible='true' :allow-grouping='false' /> -->
 						<!-- <DxColumn data-field="researcher_id" caption="Nombre" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
@@ -205,8 +213,10 @@
 							:visible="true" :width="100" cell-template="tplWeb" />
 						<DxColumn data-field='geo_state_name' caption='Estado' data-type='string' alignment='center'
 							:visible='false' :allow-grouping='false' />
-						<DxColumn data-field="active" caption="Estado" data-type="date" alignment="center"
-							:visible="true" :customize-text="yesNo" width="70" />
+						<DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
+							:visible='true'  :group-index="0"  />
+						<!-- <DxColumn data-field="active" caption="Estado" data-type="date" alignment="center"
+							:visible="true" :customize-text="yesNo" width="70" /> -->
 						<DxColumn :width="90" alignment="center" cell-template="tpl" caption="Acciones" />
 
 						<template #tplWeb="{ data }">
@@ -234,9 +244,14 @@
 									<i class="icon-insert-template"></i>
 								</a>
 
-								<a title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
-									@click.prevent="documentos(data)" href="#">
+								<a v-if="data.data.state_id===1065" title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
+									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last"></i>
+								</a>
+
+								<a v-if="data.data.state_id===1062" title="Corregir y Enviar..." class="cmd-item color-main-600 mr-2"
+									@click.prevent="enviar(data)" href="#">
+									<i class="icon-bubble-last color"></i>
 								</a>
 								
 
@@ -348,7 +363,7 @@ export default {
 		DxValidator,
 		DxValidationGroup,
 		DxSwitch,
-		// Geo: () => import("@/components/element/geo"),
+		Geo: () => import("@/components/element/geo"),
 		// Observaciones: () => import("@/components/element/html_editor"),
 		Documentos: () => import("@/components/element/documentos"),
 		// Participantes: () => import("@/components/element/participantes"),
@@ -388,6 +403,8 @@ export default {
 	},
 	data: () => ({
 		cargadocs:true,
+		listDocumnetUp:[],
+		listDocsRequire:[],
 		namePanel: "redconocimiento",
 		codEP: null, //611 612 613
 		popupObs: false,
@@ -440,9 +457,7 @@ export default {
 	created() {
 		// console.clear();
 		root = this;
-		root.baseEnt = this.$clone(this.baseObj);
-
-
+		root.baseEnt = this.$clone(this.baseObj);	
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
@@ -457,8 +472,6 @@ export default {
 		root.loaderElement = "#" + this.namePanel + " .grid";
 	},
 	computed: {
-
-
 		dataSource: function () {
 			if (typeof this.group.id === "undefined") return null;
 			let data = root.codEP;
@@ -509,15 +522,29 @@ export default {
 			let i = 0,
 				print = "";
 			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
-				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Adicionales:</i></b></h3>";
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Lista de documentos para aplicar:</i></b></h3> ";
 				print = print + "<ul>";
 				for (i = 0; i < tipos.length; i++) {
 					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
-					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
+					let importante = tipos[i].cd_required? '<em>(Requerido).</em>': ''
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + " "+ importante +" </b>" + text + "</li>";
 				}
 				print = print + "</ul>";
 			}
 			return print;
+		},
+
+		listDoc2subtipos(parametro) {
+			if (parametro.length >= 1) {
+				parametro.map(function (lista) {
+					lista.id_ant = lista.id
+					lista.st_name = lista.document_name;
+					lista.id = lista.document_id;
+					return lista;
+				});
+				root.tiposDocumento = parametro;
+			}
+
 		},
 
 		participantes(data) {
@@ -547,12 +574,13 @@ export default {
 		documentos(data) {
 			// console.clear();
 			console.log("documentos", data.row.data);
-
+			root.loaderShow("Cargando lista Documentos", "#panel-produccion .card-body");
 			// 202104111513: Error
 
 			root.tiposDocumento = {};
 			root.loaderShow("Listado Documentos", root.panelData)
 			console.warn("id list docs", data.row.data.id)
+			
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
 				url: "/calls/" + parseInt(data.row.data.call_id) + "/call_documents",
@@ -580,19 +608,6 @@ export default {
 
 		},
 
-		listDoc2subtipos(parametro) {
-			if (parametro.length >= 1) {
-				parametro.map(function (lista) {
-					lista.id_ant = lista.id
-					lista.st_name = lista.document_name;
-					lista.id = lista.document_id;
-					return lista;
-				});
-				root.tiposDocumento = parametro;
-			}
-
-		},
-
 		retorno() {
 			console.log(root.section);
 			root.panelCmdBack.fadeOut();
@@ -615,6 +630,7 @@ export default {
 		},
 
 		save() {
+
 			console.log(this.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
@@ -654,6 +670,19 @@ export default {
 		},
 
 		edit(data) {
+			root.tiposDocumento=[];
+
+			root.getAll({
+				// url: "/research_units/117/group_member/10286",
+				url: "/calls/" + parseInt(data.call_id) + "/call_documents",
+				cb: function (results) {
+					let listDocuments = results;
+					console.warn("movilidad docs list ", listDocuments);
+					root.listDoc2subtipos(listDocuments);
+					root.loaderHide();
+				},
+			});
+
 			root.mode = "edit";
 			console.log("data", data);
 			root.baseObj = data;
@@ -685,34 +714,107 @@ export default {
 			});
 		},
 
-		active(data, state) {
-			// console.clear();
-			console.log("active", data);
-			console.log("state", state);
-			let a = state ? "activar" : "desactivar";
-			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]}"</span>?`;
+		
+		docsUp(id_movilidad){
+			
+			
+		},
+
+		docRequire(id_convocatoria, id_movilidad){
+			root.tiposDocumento=[];
+			// root.loaderShow("Cargando requeridos", "#panel-produccion .card-body");
+			root.getAll({
+				url: "/calls/" +id_convocatoria+ "/call_documents",
+				cb: function (results) {
+					root.tiposDocumento= results;
+					// root.listDoc2subtipos(dataDocs);
+					// root.loaderShow("Cargando documentos", "#panel-produccion .card-body");
+					root.getAll({
+						url: "mobility_calls/" + id_movilidad + "/documents",
+						cb: function (results1) {
+							root.listDocumnetUp=results1;
+							// root.loaderHide();
+						},
+					});
+					// root.loaderHide();
+				},
+			});
+			
+		},
+
+		sendEnd(data){
+			console.warn("documentos subidos: ", root.listDocumnetUp);
+			console.warn("documentos requeridos: ", root.tiposDocumento);
+			let msg = `¿Realmente desea aplicar a: <span class='text-sb'>"${data.data[root.titlecolum]}?" <br>Requerde que una vez enviada para evaluación, no puede hacer modificaciones.</span>`;
+			
 			this.$confirm(msg, function (si_no) {
 				console.log("result", si_no);
 				if (si_no) {
-					root.loaderShow(`${am}`, root.panelGrid);
-					let active = JSON.stringify({ active: state, updated_by: root.user_id });
+					root.loaderShow(`Postulación por evaluar!`, root.panelGrid);
+					let dataPatch = JSON.stringify({ active: true, updated_by: root.user_id, state_id:1061, total:0 });
 
 					var dto = {
 						newFormat: true,
 						url: `${root.endPointRute}/${data.data.id}`,
-						data: JSON.parse(`{ "${root.objEpdata}" :` + active + "}"),
+						data: JSON.parse(`{ "${root.objEpdata}" :` + dataPatch + "}"),
 						cb: function (result) {
 							console.log("Result", result);
 							root.grid.refresh();
 							root.loaderHide();
 						},
 					};
-					console.log("dto", dto);
+					console.warn("dto", dto);
 					root.elementoActive(dto);
 					root.loaderHide();
 				}
 			});
+			
+		},
+		
+		enviar(data, state) {
+			// console.clear();
+			// console.log("active", data);
+			// console.log("state", state);
+			
+			root.docRequire(data.data.call_id, data.data.id);
+			root.loaderShow("Cargando requeridos", "#panel-produccion .card-body");
+			
+			let enviar = setTimeout(function(){
+				
+				console.clear();
+				// root.sendEnd();
+				
+				let docRequire = root.tiposDocumento.filter(requerido => requerido.cd_required==true);
+				console.warn("docrequire = ",docRequire);
+				
+				let rectificador=false, noSubidos=[];
+
+				docRequire.forEach(evaluar=>{
+					root.listDocumnetUp.forEach(subidos => {
+						console.warn(evaluar.document_id+" == "+subidos.document_type_id);
+						if(evaluar.document_id==subidos.document_type_id){
+							rectificador=true;
+							console.warn("Son iguales!!!!");
+						}
+					});
+
+					if(rectificador==false){
+						noSubidos.push(evaluar.document_name)
+					}else{
+						rectificador=false;
+					}
+				});
+				console.warn("cantidad archivos no subidos: ", noSubidos.length)
+				if(noSubidos.length===0){
+					root.sendEnd(data);
+				}else{
+					root.$info("No se puede enviar la aplicación a esta convocatoria. <br> Faltan los siguientes documentos: "+noSubidos.join(', '));
+				}
+					
+				root.loaderHide();
+			}
+			,1000);
+			enviar();
 		},
 
 		gridInit(e) {
@@ -723,3 +825,8 @@ export default {
 	},
 };
 </script>
+<style scoped>
+.color{
+	color:rgb(10, 119, 28);
+}
+</style>

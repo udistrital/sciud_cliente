@@ -461,6 +461,7 @@ export default {
 			event_page: null,
 			research_group_id: null,
 			researcher_id: null,
+			state_id:1065,
 			active: true,
 		},
 
@@ -549,11 +550,12 @@ export default {
 			let i = 0,
 				print = "";
 			if (Array.isArray(tipos) && tipos.length != 0 && root.editMode) {
-				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Documentos Requeridos para continuar la postulación:</i></b></h3> ";
+				print = "<h3><i class='icon-info mr-1 color-main-600'></i><b><i>Lista de documentos para aplicar:</i></b></h3> ";
 				print = print + "<ul>";
 				for (i = 0; i < tipos.length; i++) {
 					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
-					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + "</b>" + text + "</li>";
+					let importante = tipos[i].cd_required? '<em>(Requerido).</em>': ''
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + " "+ importante +" </b>" + text + "</li>";
 				}
 				print = print + "</ul>";
 			}

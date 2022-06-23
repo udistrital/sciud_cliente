@@ -140,6 +140,8 @@ const store = {
 
 		getAll({ commit, state }, args) {
 			//console.warn("store subtipos",args.id_subtipos);
+			// let dataRequiere='';
+			// if(typeof args.dataRequiere != undefined) dataRequiere=args.dataRequiere
 			api()
 				.get(args.url+'?filter=[["active","=","true"]]')
 				.then((r) => {
