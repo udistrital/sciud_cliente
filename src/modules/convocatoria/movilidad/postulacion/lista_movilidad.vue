@@ -465,6 +465,7 @@ export default {
 		id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
+		id_researcher_group:null,
 		baseObj: {
 			name: null,
 			category_id: null,
@@ -486,6 +487,7 @@ export default {
 		// console.clear();
 		root = this;
 		root.listGrupoInvestigador=root.userinfo.gropusmember;
+		
 		root.baseEnt = this.$clone(this.baseObj);	
 		root.visibleguardar.visible=false;
 	},
@@ -503,7 +505,7 @@ export default {
 	},
 	computed: {
 		dataSource: function () {
-			
+			if(root.userinfo.gropusmember.length>=1) root.id_researcher_group = root.listGrupoInvestigador[0].id;
 			let data = root.codEP;
 			(data = data != null ? "product_type_id=" + data : null), console.warn("codEP: ", root.codEP);
 			console.warn("valor de data: ", root.codEP);
@@ -512,7 +514,7 @@ export default {
 				key: ["id"],
 				//stringParam: data,
 				// endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
-                endPoint: `researchers/3947/mobility_calls`,
+                endPoint: `researchers/${root.id_researcher_group}/mobility_calls`,
 				onLoading: function (loadOptions) {
 					root.loaderShow("Cargando elementos", root.loaderElement);
 				},
