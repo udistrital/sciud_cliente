@@ -105,7 +105,7 @@
 														@initialized="gridInit"
 														@content-ready="onContentReady"
 														:allow-column-reordering="true"
-														no-data-text="No hay elementos registrados"
+														no-data-text="No tiene planes de acción pendientes"
 														:data-source="dataSource"
 														:remote-operations="true"
 														:hover-state-enabled="true"
@@ -143,7 +143,7 @@
 														<DxColumn data-field="is_draft" caption="Plan Acción" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="management_report_is_draft" caption="Informe Gestíon" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
+														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="Acciones" :fixed="true"  fixed-position="right" />
 
 														<!-- <template #tplWeb="{ data }">
 															<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">

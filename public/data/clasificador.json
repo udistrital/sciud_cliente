@@ -233,7 +233,12 @@
 		{ "name": "snies_tipo", "id": 233 },
 
 		{ "name": "proyectos_informacion_estados", "id": 236 },
-		{ "name": "proyectos_informacion_tipos", "id": 235 }
+		{ "name": "proyectos_informacion_tipos", "id": 235 },
+		
+		{ "name": "tipos_documentos_movilidad", "id": 200 },
+
+		{ "name": "manuales_usuario", "id": 235 }
+
 		
 		
 	]

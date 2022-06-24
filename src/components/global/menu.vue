@@ -21,7 +21,7 @@
 						Estructuras de Investigación
 					</router-link>
 				</li>
-				<li class="nav-item" v-if="es_admin">
+				<li class="nav-item" > <!--v-if="es_admin"-->
 					<router-link to="/convocatoria" tag="a" class="navbar-nav-link legitRipple" title="Convocatorias...">
 						<i class="icon-pencil6"></i>
 						Convocatorias
@@ -71,6 +71,12 @@
 						<i class="icon-square-right"></i>
 					</a>
 				</li>
+				<li class="nav-item">
+					<router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+						<i class="icon-question3"></i>
+						Ayuda
+					</router-link>
+				</li>
 			</ul>
 		</div>
 
@@ -89,6 +95,12 @@
 						<i class="icon-user-lock"></i>
 						Ingresar al sistema
 					</router-link>
+				</li>
+				<li class="nav-item">
+					<!-- <router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+						<i class="icon-question3"></i>
+						Ayuda
+					</router-link> -->
 				</li>
 			</ul>
 		</div>

@@ -92,6 +92,7 @@ vue.mixin({
 
 		// 202105242012:
 		if (this.user !== null && this.user.local !== null && typeof this.user.local !== "undefined") {
+			//this.getAllRolesDataBase();
 			// 202103081850: Carga los roles de usuario globalmente
 			this.getAllRoles();
 			// 202103311032: Carga tipos y subtipos
@@ -103,6 +104,22 @@ vue.mixin({
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+
+		// ...mapActions("unidad/producto/universalSentUpAct", {
+		// 	getDataAll: "getAll",
+		// 	getForm: "get",
+		// }),
+		// getAllRolesDataBase(){
+		// 	let datalist=null;
+		// 	this.api()
+		// 		.get("/role")
+		// 		.then((r) => {
+		// 			datalist = r.data.data;
+		// 		});
+		// 	return datalist;
+		// },
+
+
 		date_focus_in(e) {
 			// console.log("date_focus_in =>", e);
 			e.component.open();
@@ -248,6 +265,49 @@ vue.mixin({
 		es_admin() {
 			return this.user_role_id == this.get_role_id("administrador");
 		},
+		//suspendido con el fin de relacionar las acciones de los roles de usuario creados desde el rol de administrador
+		//editado por camorenos@udistrital.edu.co 01042022
+		/*editMode() {
+			let root = this;
+			let result = false;
+			console.log(window.vm.$sep);
+			console.log("editMode");
+			if (
+				root.user_role_id === this.get_role_id("administrador") ||
+				root.user_role_id === this.get_role_id("gestor") ||
+				root.user_role_id === this.get_role_id("gestor_facultad")
+			) {
+				result = true;
+			} else {
+				console.log("this.$route.params", root.$route.params);
+				let groupId = root.$route.params.unidadId;
+				if (typeof groupId !== "undefined" && typeof window.vm.user !== "undefined") {
+					console.log("groupId =>", groupId);
+					console.log("user =>", window.vm.user);
+					// 202106162157: Filtra el grupo actual de los grupos seleccionados
+					console.log("groups =>", window.vm.user.groups);
+					if (typeof window.vm.user.groups !== "undefined") {
+						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
+						if (typeof g !== "undefined") {
+							console.log("current_group =>", g);
+							console.log("current_group => role_id =>", g.role_id);
+							// 202106170127: Si es director en el grupo actual
+							if (g.role_id === root.get_group_role_id("director")) result = true;
+							// 202108250019: Si el grupo es semillero y el rol es lider semillero
+							// 202109160520: Si el grupo es semillero y el rol es docente_tutor
+							if (
+								g.group_type_id === root.get_group_type_id("semillero") &&
+								(g.role_id === root.get_group_role_id("lider_semillero") || g.role_id === root.get_group_role_id("docente_tutor"))
+							)
+								result = true;
+						}
+					}
+				}
+			}
+			console.log("editMode =>", result);
+			console.log(window.vm.$sep);
+			return result;
+		},*/
 		editMode() {
 			let root = this;
 			let result = false;
@@ -289,6 +349,7 @@ vue.mixin({
 			console.log(window.vm.$sep);
 			return result;
 		},
+
 		listRolEstructureGroup(){
 			return window.clasificador.estructura_rol;
 		},

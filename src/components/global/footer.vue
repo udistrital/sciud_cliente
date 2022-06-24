@@ -10,7 +10,7 @@
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
 				<!-- SICIUD v2.0.20211207 - ©{{ year }} -->
-				SICIUD v2.0.20220310 - ©{{ year }}
+				SICIUD v2.0.20220622 movilidad - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -22,8 +22,18 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-lg-auto" v-else>
-				<li class="nav-item" v-for="(item, index) in links" :key="index">
+				<!--<li class="nav-item" v-for="(item, index) in links" :key="index">
 					<a :href="linkLogin(item.cc)" :class="cssClass" :data-title="item.title"><i class="icon-user"></i> {{ item.text }}</a>
+				</li>-->
+				<li class="nav-item dropup" v-if="debug">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Roles (Modo Pruebas)
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li class="nav-item" v-for="(item, index) in links" :key="index">
+							<a :href="linkLogin(item.cc)" :class="cssClass" :data-title="item.title"><i class="icon-user"></i> {{ item.text }}</a>
+						</li>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -72,60 +82,82 @@ export default {
 		showDev: true,
 		items: [
 			{
-				cc: "79602309",
+				cc: "53009619", //79602309
 				title: "Diego Alfonso Vargas Villegas (Administrador)",
-				text: "Administrador",
+				text: "Administrador Diego",
 			},
 			{
 				cc: "1013622639",
 				title: "Carlos (Administrador)",
-				text: "Administrador 2",
+				text: "Administrador Carlos",
+			},
+
+			{
+				cc: "1016082469",
+				title: "edwar",
+				text: "Edwar Pruebas",
 			},
 
 
+//1023867324 dato cambiado para ingreso y simulacion de gestor 
+			{
+				cc: "80843691",
+				title: "Gestor Facultad",
+				text: "Gestor Facultad",
+			},
 
+// 80843691 dato cambiado para ingreso y simulacion de gestor 
+			{
+				cc: "9872650",
+				title: "lector",
+				text: "lector",
+			},
 
-			// {
-			// 	cc: "1023867324",
-			// 	title: "Gestor Facultad",
-			// 	text: "Gestor Facultad",
-			// },
-			// {
-			// 	cc: "1111111104",
-			// 	title: "Prueba Usuario",
-			// 	text: "Docente Tutor",
-			// },
+			{
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
+			},
 
-			// {
-			// 	cc: "52899935",
-			// 	title: "Prueba Estudiante Siciud (Directora)",
-			// 	text: "Directora",
-			// },
+			{
+				cc: "52899935",
+				title: "Prueba Estudiante Siciud (Directora)",
+				text: "Directora",
+			},
 
-			// {
-			// 	cc: "65432123",
-			// 	title: "Prueba Estudiante Siciud (Gestor)",
-			// 	text: "Gestor",
-			// },
-			// {
-			// 	cc: "52899935",
-			// 	title: "Prueba Estudiante Siciud (Directora)",
-			// 	text: "Directora",
-			// },
+			{
+				cc: "1026278985",
+				title: "Luis Javier Enrique Romero Puentes (Integrante)",
+				text: "Estudiante Integrante",
+			},
 
-			// {
-			// 	cc: "1655467973",
-			// 	title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-			// 	text: "Gestor Facultad",
-			// },
+			{
+				cc: "53009619",
+				title: "Luzangela Piñeros Botero (Líder Semillero)",
+				text: "Líder Semillero",
+			},
 
+			/*
+			este usuario no funciona en pruebas
+			{
+				cc: "65432123",
+				title: "Prueba Estudiante Siciud (Gestor)",
+				text: "Gestor",
+			},
 
-			// {
-			// 	cc: "53009619",
-			// 	title: "Luzangela Piñeros Botero (Líder Semillero)",
-			// 	text: "Líder Semillero",
-			// },
+			{
+				cc: "1111111104",
+				title: "Prueba Usuario",
+				text: "Docente Tutor",
+			},
 
+			{
+				cc: "98765432",
+				title: "German Arturo Lopez Martinez (Integrante)",
+				text: "Integrante",
+			},
+
+			*/
 
 
 			//seccion administrativa visible
@@ -134,11 +166,11 @@ export default {
 			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
 			// 	text: "Int. Semillero",
 			// },
-			// {
-			// 	cc: "19296014",
-			// 	title: "German Arturo Lopez Martinez (Integrante)",
-			// 	text: "Integrante",
-			// },
+			/*
+			este usuario no funciona en pruebas
+			
+			*/
+
 			//fin seccion administrativa visible
 		],
 	}),

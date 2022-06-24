@@ -3,174 +3,31 @@
 		<div class="page-header header-elements-md-inline">
 			<div class="page-title d-flex">
 				<h1>
-					<i class="icon-cog mr-1 color-main-600"></i>
-					<span class="font-weight-semibold">Administración</span> &raquo; Rol de Usuarios 
+					<i class="icon-paperplane mr-1 color-main-600"></i>
+					<span class="font-weight-semibold">Convocatorias</span> &raquo; Movilidad
 				</h1>
 			</div>
 			<div class="header-elements">
 				<span id="panel-roleUsers-cmds">
 					<button type="button" @click.prevent="add()" title="Crear Entidad.." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
-						<b><i class="icon-database-add"></i></b> Nuevo Rol de usuario
+						<b><i class="icon-database-add"></i></b> Postular
 					</button>
 				</span>
 			</div>
 		</div>
 
 
+
+
+
 		<div class="row slide" id="panel-roleUsers-data">
+			
 			<div class="col">
 				<div class="card main">
 					<div class="card-header main">Alguna acción</div>
 					<div class="card-body pb-0 pt-2">
 						<DxValidationGroup ref="basicGroup">
-
-
-                                <div class="col-12">
-									<div class="row">
-
-												<div class="col-md-4">
-													<div class="form-group">
-														<label>Nombre:</label>
-														<DxTextBox :value.sync="baseObj.name" placeholder="Nombre" class="form-control" :read-only="false" mode="text">
-															<DxValidator>
-																<DxRequiredRule />
-															</DxValidator>
-														</DxTextBox>
-													</div>
-												</div>
-												
-												<div class="col-md-3">
-													<div class="form-group">
-														<label>Permiso del Rol:</label>
-														<DxSelectBox
-															:show-clear-button="true"
-															:grouped="false"
-															:data-source="groupRoles2"
-															:value.sync="baseObj.parent_id"
-															:search-enabled="false"
-															placeholder="Seleccione..."
-															class="form-control"
-															display-expr="name"
-															value-expr="id"
-														>
-															<DxValidator>
-																<DxRequiredRule />
-															</DxValidator>
-														</DxSelectBox>
-													</div>
-												</div>
-
-												<div class="col-md-3">
-													<div class="form-group">
-														<label>Tipo de Permiso:</label>
-														<DxSelectBox
-															:show-clear-button="true"
-															:grouped="false"
-															:data-source="tiposPermiso"
-															:value.sync="baseObj.role_type_id"
-															:search-enabled="false"
-															placeholder="Seleccione..."
-															class="form-control"
-															display-expr="st_name"
-															value-expr="id"
-														>
-															<DxValidator>
-																<DxRequiredRule />
-															</DxValidator>
-														</DxSelectBox>
-													</div>
-												</div>
-
-												<div class="col-md-2">
-													<div class="form-group">
-													<label>Activo:</label>
-														<DxSwitch
-															ref="chkActiveRef"
-															:value.sync="baseObj.active"
-															:read-only="!editMode"
-															switched-on-text="SI"
-															switched-off-text="NO"
-															@valueChanged="active"
-														/>
-													</div>
-												</div>
-
-
-									</div>
-								</div>
-
-
-<!--
-<div class="col-12">
-<div class="row">
-	
-<div class="col-md-3">
-	<div class="form-group">
-		<label>Documento de identidad:</label>
-		<DxNumberBox
-		class="form-control"
-		:show-clear-button="true"
-		:value.sync="representante.identification_number"
-		placeholder="Documento de identidad"
-		:read-only="modeEdit"
-		>
-		<DxValidator>
-			<DxRequiredRule />
-		</DxValidator>
-		<DxNumberBoxButton :options="searchButton" name="search" location="after" />
-		</DxNumberBox>
-	</div>
-</div>
-
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Tipo Documento: </label>
-	<DxSelectBox
-		::show-clear-button="true"
-		:grouped="false"
-		:search-enabled="false"
-		placeholder="Seleccione..."
-		:value.sync="representante.identification_type_id" 
-		class="form-control"
-		:data-source="tipoDocumento" 
-		display-expr="st_name"
-		:read-only="modeEdit"
-		value-expr="id">
-	</DxSelectBox>
-	</div>
-</div>
-
-
-
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Nombre Representante: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.name" :read-only="modeEdit">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div> 
-
-
-<div class="col-md-3">
-	<div class="form-group">
-	<label>Email: </label>
-	<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.email" :read-only="modeEdit">
-	<DxValidator>
-		<DxRequiredRule />
-	</DxValidator>
-	</DxTextBox>
-	</div>
-</div>
-
-</div>
-</div> 
--->
-
-
-
+							<criteriosEvaluacion :group="{id:1}" :baseObj="baseObj" :key="baseObj.id"></criteriosEvaluacion>
 						</DxValidationGroup>
 					</div>
 					<div class="card-footer">
@@ -203,6 +60,19 @@
 			<div class="col">
 				<div class="card" id="data-container">
 					<div class="card-body pt-3 mh">
+
+		<div class="page-header header-elements-md-inline">
+			<div class="page-title d-flex">
+				<h1>
+					<i class="icon-list mr-1 color-main-600"></i>
+					<span class="font-weight-semibold">Listado participantes </span>
+				</h1>
+				<!-- <h1>
+					<i class="icon-list mr-1 color-main-600"></i>
+					<span class="font-weight-semibold">Listado Participantes </span> &raquo; Convocatoria NN
+				</h1> -->
+			</div>
+		</div>
 						<div id="grid slide" class="pb-2">
 
 					<DxDataGrid
@@ -249,37 +119,130 @@
 							:sort-index="0"
 							width="80"
 						/>
+						<!-- <DxColumn
+							data-field="call_id"
+							caption="ID conv"
+							data-type="number"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+							width="80"
+						/> -->
+						<DxColumn
+							data-field="call_name"
+							caption="Convocatoria"
+							data-type="string"
+							alignment="left"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+							
+						/>
 
 						<DxColumn
-							data-field="name"
-							caption="Nombre"
+							data-field="event_name"
+							caption="Nombre Evento"
 							data-type="string"
 							alignment="left"
 							:visible="true"
 							:allow-grouping="false"
 							:allow-filtering="false"
 						/>
-						
-						<!-- <DxColumn
-							data-field="role_type_name"
-							caption="Tipo de Permiso"
+
+						<DxColumn
+							data-field="paper_name"
+							caption="Nombre Ponencia"
 							data-type="string"
 							alignment="left"
 							:visible="true"
 							:allow-grouping="false"
 							:allow-filtering="false"
+						/>
+
+						<DxColumn
+							data-field="event_edition_number"
+							caption="No Ediciones"
+							data-type="string"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+							width="80"
+						/>
+
+						<DxColumn
+							data-field="geo_country_name"
+							caption="País"
+							data-type="string"
+							alignment="left"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+						/>
+
+						<!-- <DxColumn
+							data-field="geo_state_name"
+							caption="Estado"
+							data-type="string"
+							alignment="left"
+							:visible="false"
+							:allow-grouping="false"
+							:allow-filtering="false"
 						/> -->
 
-						<DxColumn 
-						:allow-filtering="true" 
-						data-field="role_type_id" 
-						caption="Tipo de Permiso" 
-						data-type="number"
-						alignment="left" 
-						:visible="true" 
-						>
-							<DxLookup :data-source="tiposPermiso" value-expr="id" display-expr="st_name" />
-						</DxColumn>
+						<DxColumn
+							data-field="geo_city_name"
+							caption="Ciudad"
+							data-type="string"
+							alignment="left"
+							:visible="false"
+							:allow-grouping="false"
+							:allow-filtering="false"
+						/>
+
+						<DxColumn
+							data-field="event_date"
+							caption="Fecha Evento"
+							data-type="string"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+						/>
+
+						<DxColumn data-field="is_organizer" caption="Organizador UD" data-type="date" alignment="center" :visible="false" :customize-text="yesNo" width="70" />
+
+						<DxColumn data-field="event_page" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<template #tplWeb="{ data }">
+							<a v-if="data.data.event_page != '' && data.data.event_page != null"
+								:title="data.data.event_page" class="cmd-item color-main-600 mr-2"
+								:href="data.data.event_page" Target="_blank">
+								<i class="icon-link"></i> Visitar
+							</a>
+							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
+
+						<DxColumn
+							data-field="research_group_name"
+							caption="Grupo que Presenta"
+							data-type="string"
+							alignment="left"
+							:visible="false"
+							:allow-grouping="false"
+							:allow-filtering="false"
+						/>
+
+					<!-- 						
+						<DxColumn
+							data-field="role_type_name"
+							caption="Aplicacion del Permiso"
+							data-type="string"
+							alignment="left"
+							:visible="true"
+							:allow-grouping="false"
+							:allow-filtering="false"
+						/>
 
 
 						<DxColumn
@@ -294,7 +257,7 @@
 						/>
 
 						<template #tpl-data_user_rol="{ data }">
-							<!-- programando {{data.data.id}} mas {{data.data.role_type_id}} -->
+							<! -- programando {{data.data.id}} mas {{data.data.role_type_id}} -- >
 							{{get_group_role_name(data.data.parent_id)!== null? get_group_role_name(data.data.parent_id).charAt(0).toUpperCase()+get_group_role_name(data.data.parent_id).slice(1) : "--Sin Aplicar--"}}
 						</template>
 
@@ -317,7 +280,7 @@
 							:visible="true"
 							:allow-grouping="true"
 							
-						/>
+						/> -->
 
 						
 
@@ -370,13 +333,13 @@
 								</a> -->
 
 								<span v-if="editMode">
-									<a title="Modificar Rol..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+									<a title="Modificar participante..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
 									</a>
-									<a v-if="data.data.active" title="Desactivar Rol..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+									<a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 										<i class="icon-database-remove"></i>
 									</a>
-									<a v-else title="Activar Rol..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
+									<a v-else title="Activar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 										<i class="icon-database-check"></i>
 									</a>
 								</span>
@@ -396,9 +359,15 @@
 				<div class="card">
 					<div class="card-body"><strong>baseObj:</strong> {{ JSON.stringify(baseObj, null, 3) }}</div>
 				</div>
-				<!-- <div class="card">
-					<div class="card-body"><strong>representante:</strong> {{ JSON.stringify(representante, null, 3) }}</div>
-				</div> -->
+				<div class="card">
+					<div class="card-body"><strong>dataUserLogin:</strong> {{ JSON.stringify(dataUserLogin, null, 3) }}</div>
+				</div> 
+				<div class="card">
+					<div class="card-body"><strong>groupResearchers:</strong> {{ JSON.stringify(groupResearchers, null, 3) }}</div>
+				</div> 
+				<div class="card">
+					<div class="card-body"><strong>porcentajes convocatoria:</strong> {{ JSON.stringify(promedioconv, null, 3) }}</div>
+				</div> 
 			</div>
 		</div>
 	</div>
@@ -444,7 +413,7 @@ import {
 	DxValidationGroup,
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
-import  {DxValidator, DxRequiredRule, DxCustomRule, DxEmailRule, DxStringLengthRule, DxPatternRule } from "devextreme-vue/validator";
+import  {DxValidator, DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { mapActions, mapGetters, mapState } from "vuex";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
@@ -482,14 +451,15 @@ export default {
 		DxValidationGroup,
 		DxValidator,
 		DxStateStoring,
-		DxEmailRule, DxStringLengthRule, DxPatternRule,
-		Usuario: () => import("@/components/element/usuario"),
-        Geo: () => import("@/components/element/geo"),
+		// DxEmailRule, DxStringLengthRule, DxPatternRule,
+		// Usuario: () => import("@/components/element/usuario"),
+        // Geo: () => import("@/components/element/geo"),
+		criteriosEvaluacion: () => import("@/modules/convocatoria/movilidad/form_aceptacion_aspirantes.vue"),
 	},
 	data: () => ({
 		tiposPermiso:null,//[{id:1, name: "Roles de Grupo"},{id:2, name: "Roles de semillero"},{id:3, name: "Grupo y Semillero"}],
 		modeEdit:false,
-		groupRoles2:null,
+		dataUserLogin:null,
 		endPointRute:"role",
 		objEpdata: "role",
 		totaCount: 0,
@@ -513,40 +483,53 @@ export default {
 		digito:[{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7},{id:8},{id:9}],
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
-		baseObj: {
-			name: null,
-			role_type_id: null,
-			active: true,
-		},
-		representante:{
-			name: null,
-			identification_number: null,
-			email: null,
-			identification_type_id: null,
-			active: true,
+		datauser:{name:"", cc:""},
+		promedioconv:{},
+		groupResearchers:[],
+		baseObj:{
 			id: null,
-			identification_type_name: null,
+			call_id: null,
+			call_name: null,
+			geo_city_id: null,
+			geo_city_name: null,
+			geo_country_id: null,
+			geo_country_name: null,
+			geo_state_id: null,
+			event_name: null,
+			event_edition_number: null,
+			event_date: null,
+			paper_name: null,
+			is_organizer: null,
+			event_page: null,
+			research_group_id: null,
+			research_group_name: null,
+			researcher_id: null,
+			oas_researcher_id: null,
+			geo_state_name: null,
+			active: null,
+
 		},
-		baseObjhist:{
-			legal_representative_id: null,
-			is_current: true,
-			active: true,
-		},
+
+		
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-		root.tiposPermiso = root.subtypesByType("seleccion_vista_rolparticipantes");
-		// root.baseEnt2 = this.$clone(this.representante);
-		// root.naturaleza = root.subtypesByType("roleUsers_naturaleza");
-		// root.tipoEntidad = root.subtypesByType("roleUsers_tipos");
-		// root.tipoDocumento = root.subtypesByType("roleUsers_documento");
-		
+
+		// root.getResearchers({
+		// 	id: this.group.id,
+		// 	cb: function(results) {
+		// 		console.log(root.$sep);
+		// 		root.groupResearchers = results.researchers;
+		// 		console.log("root.groupResearchers", root.groupResearchers);
+		// 	},
+		// });
+
 	},
-	mounted() {
+    async mounted() {
 		root = this;
-		root.loaderShow("Cargando Roles");
+		root.loaderShow("Cargando participantes");
 		root.validator = root.$refs.basicGroup.instance;
 		root.baseObj.created_by = root.user_id;
 		root.baseObj.updated_by = root.user_id;
@@ -554,8 +537,24 @@ export default {
 		// root.imprimir();
 
 		// dato recuperado de clasificador.json seccion estructura_rol 
+		
 		// ingresado en el metodo comoutado listRolEstructureGroup.
-		this.groupRoles2=this.listRolEstructureGroup;
+		let usersys=root.user
+		// root.dataUserLogin.name=usersys.TerceroId.nombreCompleto;
+		// root.dataUserLogin.cc=usersys.local.identification_number
+
+		let id= parseInt(root.user.local.identification_number);
+
+//esto funciona para saber los datos de usuario con idoas       researcher_research_units?identification_number=9872650
+		let oas_user = await root.getOasUser({ doc: id });
+		console.warn("usuario", oas_user);
+		let t = oas_user;
+		root.datauser=t.TerceroId;
+//fin para saber datos usuario desde la oas con idoas
+
+
+		// console.warn("usuario nombre completo ",  t.NombreCompleto);
+		
 
 		let root_id = "#panel-roleUsers";
 		root.panelCmd = $(`${root_id}-cmds`);
@@ -567,15 +566,14 @@ export default {
 		...mapGetters("auth/usuario", ["groupRoles"]),
 		...mapState("core/tipo", ["types", "subtypes"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
-
 	dataSource: function() {
 			// if (typeof this.group.id === "undefined") return null;
 			// console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `role`,
+				endPoint: `/calls/${root.$route.params.itemId}/mobility_calls`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando Roles", "#panel-produccion .card-body");
+					root.loaderShow("Cargando participantes", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -592,7 +590,10 @@ export default {
 
 	methods: {
 		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet"}),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet", getAll:"getAll"}),
+		
+...mapActions("unidad", ["getResearcher"]),
+		
 		validarTipo(e) {
 			// 202104272101: Disable_Validation_Dynamically
 			// https://js.devexpress.com/Documentation/Guide/UI_Components/Common/UI_Widgets/Data_Validation/#Disable_Validation_Dynamically
@@ -604,76 +605,12 @@ export default {
 			} else return true;
 		},
 		
-		// editComp: async (entidad) =>{
-		// 	//let doc=root.baseObj.legal_representative_identification;
-		// 	let datauser= await root.getSerarchDoc({url: 'entities/'+entidad+'/hist_legal_representatives?filter=["is_current","=",true]'});
-		// 	let documet=datauser[0].legal_representative_identification;
-		// 	root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + documet});
-		// 	root.representante.identification_number=documet;
-		// 	root.representante=root.datosDoc[0];
-		// 	root.baseObj.legal_representative_id=root.representante.id;
-		// 	// root.representante=root.datosDoc[0];
-		// 	root.modeRep = "edit";
-		// },
-		// imprimir(){
-		// 	console.warn("resultado dato usuario ",this.get_group_role_name(2));
-		// },
+
 		
-		saveRepresentante() {
-			// if (result.isValid) {
-				// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-				if (root.modeRep == "add") root.representante.created_by = root.user_id;
-				if (root.modeRep == "edit") root.representante.updated_by = root.user_id;
-				let obj = root.representante;
-				let dto = {
-					newFormat: true,
-					// unidadId: root.$route.params.idEnt,
-					stringEP: "legal_representatives",
-					rute2: "legal_representatives",
-					mod: obj.id,
-					objectSend: { legal_representative: obj },
-					cb: function(item) {
-						console.log("item", item);
-						root.baseObjhist.legal_representative_id=item.id;
-						root.baseObj.legal_representative_id=item.id;
-					},
-				};
-				if (root.modeRep == "edit") root.objUpdate(dto);
-				else root.objSave(dto);
-		},
 
 
-		// saveHistory(id) {
-		// 	// console.log("VALID!");
-		// 	// root.scrollTop();
-		// 	// root.panelCmds.fadeOut();
-		// 	// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-		// 	// root.loaderShow(msg, root.panelData);
-		// 	// if (root.mode == "add") 
-		// 	root.baseObjhist.created_by = root.user_id;
-		// 	// if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
-			
-		// 	// root.baseObjhist.is_current=true;
-		// 	let obj = root.baseObjhist;
-		// 	let dto = {
-		// 		newFormat: true,
-		// 		// unidadId: root.$route.params.idEnt,
-		// 		stringEP: root.ruta,
-		// 		rute2: `entities/${id}/hist_legal_representatives/`,
-		// 		mod: obj.id,
-		// 		objectSend: { hist_legal_representative: obj },
-		// 		cb: function(item) {
-		// 			console.log("item", item);
-		// 			// root.grid.refresh();
-		// 			// root.loaderHide();
-		// 			// root.cancel();
-		// 		},
-		// 	};
-		// 	// console.log("root.mode", root.mode);
-		// 	// if (root.mode == "edit") root.objUpdate(dto);
-		// 	root.objSave(dto);
-		// 	// root.cancel();
-		// },
+
+		
 		save() {
 			console.log(this.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
@@ -714,60 +651,23 @@ export default {
 			}
 		},
 
-		// save() {
-		// 	console.clear();
-		// 	console.log(root.$sep);
-		// 	root.loaderElement = root.panelData.find(".card");
-		// 	console.log("validator =>", root.validator);
-		// 	var result = root.validator.validate();
-		// 	console.log("result =>", result);
-
-		// 	if (result.isValid) {
-		// 		root.loaderShow("Guardando Entidad");
-
-
-		// 		console.log("VALID!");
-		// 		root.scrollTop();
-		// 		// root.panelCmds.fadeOut();
-		// 		// root.loaderElement = ;
-		// 		let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Elemento";
-		// 		root.loaderShow(msg, root.panelData);
-		// 		if (root.mode == "add") {
-		// 			root.baseObj.created_by = root.user_id;
-		// 			// root.saveRepresentante();
-		// 		}
-		// 		if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-		// 		// root.baseObj.legal_representative_id=root.representante.identification_type_id;
-
-		// 		// root.baseObj.product_type_id = root.codEP;
-		// 		// root.baseObj.research_group_id = root.group.id;
-		// 		let obj = root.baseObj;
-		// 		//let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
-		// 		let dto = {
-		// 			newFormat: true,
-		// 			// unidadId: root.group.id,
-		// 			stringEP: root.endPointRute,
-		// 			rute2: root.endPointRute,
-		// 			mod: obj.id,
-		// 			//objectSend: { regulation : obj },
-		// 			objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
-		// 			cb: function(item) {
-		// 				console.log(root.$sep);
-		// 				console.log("result =>", result);
-		// 				// root.saveHistory(item.id);
-		// 				root.grid.refresh();
-		// 				root.loaderHide();
-		// 				root.cancel();
-		// 			},
-		// 		};
-		// 		console.log("root.mode", root.mode);
-		// 		if (root.mode == "edit") root.objUpdate(dto);
-		// 		else root.objSave(dto);
-		// 		root.cancel();
-		// 	}
-		// },
 
 		edit(data) {
+
+			root.getAll({
+				// url: "/research_units/117/group_member/10286",
+				//url: "/calls/" + parseInt(data.id) + "/call_documents",
+				url: "calls/"+data.call_id+"/call_eval_criteria",
+				cb: function (results) {
+					//let listDocuments = results;
+					root.promedioconv=results;
+					// console.warn("movilidad docs list ", listDocuments);
+					// root.listDoc2subtipos(listDocuments);
+					// root.loaderHide();
+				},
+			});
+
+
 			root.mode = "edit";
 			root.modeEdit=true,
 			root.type_id = null;
@@ -776,7 +676,7 @@ export default {
 			console.log("data", data);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);
 			root.baseObj = root.$clone(data);
-			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Editar Rol`);
+			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Evaluar Convocatoria de Movilidad`);
 			root.panelCmd.fadeOut();
 			root.panelGrid.fadeOut(function() {
 				root.panelData.fadeIn();
@@ -789,7 +689,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} el rol: <span class='text-sb'>"${data.data.name}" ?`;
+			let msg = `¿Realmente desea ${a} el participante: <span class='text-sb'>"${data.data.name}" ?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
@@ -826,7 +726,7 @@ export default {
 			console.log("add(data)", what);
 			root.baseObj = root.$clone(root.baseObjBk);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);
-			root.panelData.find(".card-header").html(`<i class="icon-database-add"></i>&nbsp;&nbsp;Nuevo Rol`);
+			root.panelData.find(".card-header").html(`<i class="icon-database-add"></i>&nbsp;&nbsp;Nueva Comvocatoria para Movilidad`);
 			root.panelCmd.fadeOut();
 			root.panelGrid.fadeOut(function() {
 				root.panelData.fadeIn(function() {
