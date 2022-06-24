@@ -1,5 +1,6 @@
 <template>
-	<div class="row divider">
+	<div>
+    <div class="row divider">
 		<div class="col subtab pb-1">
 			<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true" ref="tabPanel">
 
@@ -119,7 +120,7 @@
                             <div class="page-title d-flex">
                                 <h2>
                                     <i class="icon-info mr-1 color-main-600"></i>
-                                    <span class="font-weight-semibold" id="title">Formulario de calificación y aceptacion del aspirante</span>
+                                    <span class="font-weight-semibold" id="title">Evaluación de criterios del aspirante.</span>
                                 </h2>
                             </div>
                             <Evaluacion :inforBase="baseObj" :syncObject="saveUpdateeval"/>
@@ -129,18 +130,16 @@
 				
 			</DxTabPanel>
 		</div>
+	</div>
 
-
-        <div class="row" v-if="is_dev && debug">
-			<div class="col">
+     <div class="row" v-if="is_dev && debug">
+			<div class="col-12">
 				<div class="card">
 					<div class="card-body"><strong>saveUpdateEval:</strong> {{ JSON.stringify(saveUpdateeval, null, 3) }}</div>
 				</div>
 			</div>
 		</div>
-
-
-	</div>
+</div>
 </template>
 
 

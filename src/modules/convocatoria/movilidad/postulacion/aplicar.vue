@@ -352,16 +352,22 @@ export default {
 		},
 	}),
 	computed: {
-		// ...mapGetters("core/tipo", ["subtypesByType"]),
+		...mapGetters("core/tipo", ["subtypesByType"]),
+		tipos() {
+			return root.subtypesByType("convocatoria_tipo", "id");
+		},
+
         validDateConv(){
-            let data=root.baseItem;
-            console.warn("fecha final: " + data.call_end_date + ",  fecha hoy: " + new Date() + " => ");
-			let fecha_final = root.sistemaDate(data.call_end_date, "mayor");
+
 			
+            let data=root.baseItem;
+            console.warn("fecha final: " + data.call_end_date + ",  fecha hoy: " + new Date() + " => ", root.baseItem);
+			let fecha_final = root.sistemaDate(data.call_end_date, "mayor");
 			console.warn("fecha inicial: " + data.call_start_date + ",  fecha hoy: " + new Date() + " => ");
 			let fecha_inicial = root.sistemaDate(data.call_start_date, "menor");
-            if(root.baseItem.call_type_id != 1059){ this.go(0, '/convocatoria', `Cargando Convocatorias`); }
+			if(root.baseItem.call_type_name != "Movilidad"){ this.go(0, '/convocatoria', `Cargando Convocatorias`); }
 			return fecha_final === fecha_inicial
+
         },
 	},
 	methods: {
@@ -422,13 +428,14 @@ export default {
 			return print;
 		},
 
-        sistemaDate(e_date, operador) {
+         sistemaDate(e_date, operador) {
 			let resultado = null 
 			let date = e_date.split("-");
-			let fecha = new Date(date[0], date[1], date[2]);
-			let hoy = new Date();
-			hoy.setHours(0,0,0,0);
-			fecha.setHours(23,59,59,0);
+			// let fecha = new Date(date[0], date[1], date[2]);
+			let fecha = new Date(date[1]+"/"+date[0]+"/"+date[2]);
+			let hoy = Date.now();
+			// hoy.setHours(0,0,0,0);
+			// fecha.setHours(23,59,59,0);
 
 			if (operador == "mayor") { 
 				resultado = fecha.valueOf() >= hoy.valueOf(); 
@@ -441,6 +448,8 @@ export default {
 				resultado = null
 				console.error("error en en la funcion sistemaDate(fecha, operador) debe colorcar de operador mayor o menor");
 			}
+
+			console.warn("comparacion: "+new Date(date[1]+"/"+date[0]+"/"+date[2])+" "+operador+" "+new Date(), resultado)
 			return resultado;
 		},
 

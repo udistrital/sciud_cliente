@@ -523,6 +523,7 @@ export default {
 			return DxStore({
 				// key: ["id"],
 				// // ids: ["dw_type_id=1"],
+				
 				stringParam: 'filter=[["call_state_id","=",654],"and",["call_type_id","=",1059]]',
 				// endPoint: `calls?filter=[%22call_state_id%22,%22=%22,654]`,
 				key: ["id"],

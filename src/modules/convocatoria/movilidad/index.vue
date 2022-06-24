@@ -8,11 +8,17 @@
 				</h1>
 			</div>
 			<div class="header-elements">
-				<span id="panel-roleUsers-cmds">
+				<!-- <span id="panel-roleUsers-cmds">
 					<button type="button" @click.prevent="add()" title="Crear Entidad.." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
 						<b><i class="icon-database-add"></i></b> Postular
 					</button>
-				</span>
+				/span> -->
+				
+                <router-link tag="a" :to="'/convocatoria'" class="btn btn-main btn-labeled btn-labeled-left legitRipple"
+                    title="Regresar al listado de convocatorias">
+                    <b><i class="icon-arrow-left2"></i></b>Volver a Convocatorias
+                </router-link>
+				
 			</div>
 		</div>
 
