@@ -1,5 +1,5 @@
 {
-    "debug":  true,
+    "debug":  false,
     "pageSize":  20,
     "pageSizes":  [
                       10,
@@ -9,13 +9,13 @@
     "api":  {
                 "rest":  {
                              "token_name":  "siciud_token",
-                             "url_dev":  "http://pruebasapi2.intranetoas.udistrital.edu.co:8515/api/v1",
-                             "url_dev2":  "http://api2.intranetoas.udistrital.edu.co:8515/api/v1",
+                             "url_dev2":  "http://pruebasapi2.intranetoas.udistrital.edu.co:8515/api/v1",
+                             "url_dev":  "http://api2.intranetoas.udistrital.edu.co:8515/api/v1",
                              "url_prod":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/siciud_crud/v1"
                          },
                 "oas":  {
                             "token_name":  "oas_token",
-                            "token_value": "f3d63f81-4b90-3962-b72d-fb4ae9c8cff5",
+                            "token_value": "67d644c6-5607-3267-a76b-6705d2279222",
                             "url":  "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
                         }
             },

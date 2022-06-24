@@ -17,7 +17,14 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<DxNumberBox placeholder="Puntuacion" class="form-control" :value.sync="syncObject.valueCriterios[i]">
+					<DxNumberBox 
+						placeholder="Puntuacion" 
+						class="form-control" 
+						:value.sync="syncObject.valueCriterios[index]"
+						@value-changed="operar"
+						:max="parseFloat(criterio.cec_percentage)"
+						:min="0"
+					>
 						<DxValidator>
 							<DxRequiredRule />
 						</DxValidator>
@@ -26,6 +33,44 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-5">
+												<div class="form-group mb-2">
+													<label>Estado evaluacion:</label>
+													<DxSelectBox
+														:show-clear-button="true"
+														:grouped="false"
+														:data-source="listEstadosEval"
+														:value.sync="syncObject.document_type_id"
+														:search-enabled="false"
+														placeholder="Seleccione..."
+														class="form-control"
+														display-expr="st_name"
+														value-expr="id"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxSelectBox>
+												</div>
+											</div>
+
+		<div class="col-md-4">
+				<div class="form-group">
+					<label>Porcentaje de evaluación:</label>
+					<DxNumberBox 
+						:read-only="true"
+						placeholder="Porcentaje" 
+						class="form-control" 
+						:value.sync="syncObject.sunTotal"
+						:max="100"
+						:min="0"
+					>
+						<DxValidator>
+							<DxRequiredRule />
+						</DxValidator>
+					</DxNumberBox>
+				</div>
+			</div>
 
 	<!-- <div class="card-body" v-if="is_dev && debug">
         <div class="card">
@@ -33,7 +78,7 @@
                 <span class="font-weight-semibold">criterios:</span> {{ criterios }}
                 <hr class="sep mb-0" /> 
             </div>
-        </div>
+        </div>@value-changed="documentTypeSelected"
     </div> -->
 </div>
 </template>
@@ -50,6 +95,7 @@ export default {
 		DxNumberBox,
 		DxRequiredRule,
 		DxValidator,
+		DxSelectBox
 	},
 	props: {
 		inforBase:{
@@ -60,22 +106,33 @@ export default {
 			type: Object,
 			default: () => {
 				return {
-					geo_city_id: null,
-					geo_state_id: null,
-					geo_country_id: null,
+					document_type_id:null,
+					valueCriterios:[],
+					sunTotal:0,
+					// geo_city_id: null,
+					// geo_state_id: null,
+					// geo_country_id: null,
 				};
 			},
 		},
 	},
 	data: () => ({
-		countries: [],
-		states: [],
-		cities: [],
-        criterios:{}
+		listEstadosEval:[],
+		criterios:null,
 	}),
 	methods: {
         ...mapActions("unidad/producto/universalSentUpAct", {  getAll:"getAll"}),
-
+		operar(e){
+			// root.syncObject.event=e;
+			console.warn(e);
+			let arrayValue = root.syncObject.valueCriterios;
+			let sum = 0 ;
+			for (let i = 0; i < arrayValue.length; i++) {
+				sum += arrayValue[i];
+			}
+			root.syncObject.sunTotal=sum;
+			console.warn("recuire data",sum);
+		}
 	},
 	computed: {
 		
@@ -83,15 +140,9 @@ export default {
 	mounted() {
 		root = this;
 		root.getAll({
-			// url: "/research_units/117/group_member/10286",
-			//url: "/calls/" + parseInt(data.id) + "/call_documents",
 			url: "calls/"+root.inforBase.call_id+"/call_eval_criteria",
 			cb: function (results) {
-				//let listDocuments = results;
 				root.criterios=results;
-				// console.warn("movilidad docs list ", listDocuments);
-				// root.listDoc2subtipos(listDocuments);
-				// root.loaderHide();
 			},
 		});
 	},
