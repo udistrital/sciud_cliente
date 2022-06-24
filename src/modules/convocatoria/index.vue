@@ -210,7 +210,7 @@
 										<span class="cmds">	
 											
 											<a
-												v-if="data.data.call_type_id==1059"
+												v-if="data.data.call_type_name=='Movilidad'"
 												title="Aplicar a Movilidad..."
 												href="#"
 												@click.prevent="go(data.value, `convocatoria/${data.data.id}/aplicar`, 'Cargando Documentos')"
@@ -428,6 +428,8 @@ export default {
 			return root.subtypesByType("convocatoria_estado", "id")
 		},
 
+		
+		
 		closeOnOutsideClick(e) {
 			console.warn("data: ", e)
 			root.popupObs = !root.popupObs ? true : false;
@@ -516,6 +518,15 @@ export default {
 
 		},
 
+		vermovilidad(data_id){
+			// data==1059
+			let resultado=true;
+			console.warn("estado valor grilla",data_id);
+			let valor = root.tipos.find(contipos => contipos.tipos = "Movilidad" );
+			console.warn("codigo movilidad", valor);
+			// data.find( => element > 10);
+			return resultado;
+		},
 
 		filterByEstate() {
             if(!root.es_admin) root.grid.filter([[ "call_state_id", "=", 654 ]]);
