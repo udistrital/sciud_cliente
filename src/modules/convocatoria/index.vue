@@ -372,7 +372,7 @@ export default {
 		DxSorting,
 		DxSummary,
 		// Tabs,
-		Verplanilla: () => import("@/modules/unidad/movilidad/plantilla.vue"),
+		Verplanilla: () => import("@/modules/convocatoria/movilidad/plantilla.vue"),
 	},
 
 	data: () => ({

@@ -1,6 +1,7 @@
 <!-- calls/2/call_eval_criteria -->
 <template>
 <div>
+	
 	<div class="card-body">
 		
 		<div class="row" v-for="(criterio, index) of criterios" :key="index">
@@ -33,45 +34,57 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-5">
-												<div class="form-group mb-2">
-													<label>Estado evaluacion:</label>
-													<DxSelectBox
-														:show-clear-button="true"
-														:grouped="false"
-														:data-source="listEstadosEval"
-														:value.sync="syncObject.document_type_id"
-														:search-enabled="false"
-														placeholder="Seleccione..."
-														class="form-control"
-														display-expr="st_name"
-														value-expr="id"
-													>
-														<DxValidator>
-															<DxRequiredRule />
-														</DxValidator>
-													</DxSelectBox>
-												</div>
-											</div>
+
+	<div class="row" >
+		<div class="col-4">
+			<div class="form-group mb-2">
+				<label>Estado evaluacion:</label>
+				<DxSelectBox
+				:show-clear-button="true"
+				:grouped="false"
+				:data-source="listEstadosEval"
+				:value.sync="syncObject.estadoEval"
+				:search-enabled="false"
+				placeholder="Seleccione..."
+				class="form-control"
+				display-expr="st_name"
+				value-expr="id"
+				>
+					<DxValidator>
+						<DxRequiredRule />
+					</DxValidator>
+				</DxSelectBox>
+			</div>
+		</div>
 
 		<div class="col-md-4">
-				<div class="form-group">
-					<label>Porcentaje de evaluación:</label>
-					<DxNumberBox 
-						:read-only="true"
-						placeholder="Porcentaje" 
-						class="form-control" 
-						:value.sync="syncObject.sunTotal"
-						:max="100"
-						:min="0"
-					>
-						<DxValidator>
-							<DxRequiredRule />
-						</DxValidator>
-					</DxNumberBox>
-				</div>
+			<div class="form-group">
+				<label>Porcentaje de evaluación:</label>
+				<DxNumberBox 
+					:read-only="true"
+					placeholder="Porcentaje" 
+					class="form-control" 
+					:value.sync="syncObject.sunTotal"
+					:max="100"
+					:min="0"
+				>
+					<DxValidator>
+						<DxRequiredRule />
+					</DxValidator>
+				</DxNumberBox>
 			</div>
+		</div>
 
+		<div class="col-md-4 text-left">
+			<DxButton @click="save" class="nb">
+				<template #default>
+					<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+						GUARDAR <b><i class="icon-database-add"></i></b>
+					</span>
+				</template>
+			</DxButton>
+		</div>
+	</div>
 	<!-- <div class="card-body" v-if="is_dev && debug">
         <div class="card">
             <div class="card-body">
@@ -95,7 +108,8 @@ export default {
 		DxNumberBox,
 		DxRequiredRule,
 		DxValidator,
-		DxSelectBox
+		DxSelectBox,
+		DxButton
 	},
 	props: {
 		inforBase:{
@@ -108,6 +122,7 @@ export default {
 				return {
 					document_type_id:null,
 					valueCriterios:[],
+					estadoEval:0,
 					sunTotal:0,
 					// geo_city_id: null,
 					// geo_state_id: null,
@@ -136,9 +151,16 @@ export default {
 	},
 	computed: {
 		
+		...mapGetters("core/tipo", ["subtypesByType"]),
+	},
+	created(){
+		root = this;
+		root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
+		console.warn("root.listEstadosEval", root.listEstadosEval);
 	},
 	mounted() {
-		root = this;
+		
+		
 		root.getAll({
 			url: "calls/"+root.inforBase.call_id+"/call_eval_criteria",
 			cb: function (results) {

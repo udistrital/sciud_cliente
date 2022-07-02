@@ -100,7 +100,7 @@
 						<DxFilterRow :visible="false" />
 						<DxLoadPanel :enabled="false" />
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-						<DxGrouping :auto-expand-all="false" />
+						<DxGrouping :auto-expand-all="true" />
 						<DxSummary>
 							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} artículos" />
 						</DxSummary>
@@ -125,6 +125,9 @@
 							:sort-index="0"
 							width="80"
 						/>
+
+						<DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
+							:visible='true'  :group-index="0"  />
 						<!-- <DxColumn
 							data-field="call_id"
 							caption="ID conv"

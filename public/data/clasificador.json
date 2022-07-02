@@ -236,8 +236,11 @@
 		{ "name": "proyectos_informacion_tipos", "id": 235 },
 		
 		{ "name": "tipos_documentos_movilidad", "id": 200 },
+		{ "name": "estado_criterios_evaluacion", "id": 236 },
 
 		{ "name": "manuales_usuario", "id": 235 }
+
+
 
 		
 

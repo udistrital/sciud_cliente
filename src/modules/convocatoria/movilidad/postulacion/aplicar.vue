@@ -220,6 +220,8 @@
 						<span class="font-weight-semibold">baseItem:</span> {{ JSON.stringify(baseItem, null, 3) }}
                         <hr class="sep mb-0" />
                        <span class="font-weight-semibold">baseObj:</span> {{ JSON.stringify(baseObj, null, 3) }}
+						<hr class="sep mb-0" />
+						<pre><span class="font-weight-semibold">tipoEstados:</span> {{ JSON.stringify(estadoconv, null, 3) }}</pre>
 					</div>
 				</div>
 			</div>
@@ -255,13 +257,15 @@ export default {
         
 		root.getDocumentos(id);
 
-
+		
        
         this.loaderHide();
 
 	},
     
 	mounted() {
+		let id_estado = root.estadoconv.find( estado => estado.st_name == 'Sin Enviar' );
+		root.baseObj.state_id=id_estado.id;
 		// console.clear();
         // let aplicar=root.validDateConv();
 		// if(root.baseItem.call_type_id != 1056){ this.go(0, '/convocatoria', `Cargando Convocatorias`); }
@@ -347,7 +351,8 @@ export default {
 			event_page: null,
 			research_group_id: null,
 			researcher_id: null,
-			state_id:1065,
+			state_id:null,
+			state_id2:null,
 			active: true,
 		},
 	}),
@@ -356,6 +361,10 @@ export default {
 		tipos() {
 			return root.subtypesByType("convocatoria_tipo", "id");
 		},
+		estadoconv() {
+			return root.subtypesByType("estado_criterios_evaluacion", "id");
+		},
+		
 
         validDateConv(){
 

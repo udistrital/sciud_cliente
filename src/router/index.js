@@ -119,21 +119,21 @@ let routes = new router({
 
 
 		
-//convocatoria movilidad desde grupo de investigacion
-		{
-			path: "/unidad/:unidadId/movilidad",
-			name: "movilidad",
-			meta: { title: "plan-accion", requiresAuth: true },
-			component: () => import("@/modules/unidad/movilidad/index.vue"),
-		},
+// //convocatoria movilidad desde grupo de investigacion
+// 		{
+// 			path: "/unidad/:unidadId/movilidad",
+// 			name: "movilidad",
+// 			meta: { title: "plan-accion", requiresAuth: true },
+// 			component: () => import("@/modules/unidad/movilidad/index.vue"),
+// 		},
 
-		{
-			name: "convocatoria-movilidad-plantilla",
-			path: "/unidad/:unidadId/movilidad/:itemId/plantilla",
+// 		{
+// 			name: "convocatoria-movilidad-plantilla",
+// 			path: "/unidad/:unidadId/movilidad/:itemId/plantilla",
 
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/unidad/movilidad/plantilla.vue"),
-		},
+// 			meta: { title: "", requiresAuth: true },
+// 			component: () => import("@/modules/unidad/movilidad/plantilla.vue"),
+// 		},
 
 
 

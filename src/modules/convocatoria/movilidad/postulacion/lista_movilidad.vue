@@ -264,12 +264,12 @@
 									<i class="icon-insert-template"></i>
 								</a>
 
-								<a v-if="data.data.state_id===1065" title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
+								<a v-if="data.data.state_name=='Sin Enviar'" title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
 									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last"></i>
 								</a>
 
-								<a v-if="data.data.state_id===1062" title="Corregir y Enviar..." class="cmd-item color-main-600 mr-2"
+								<a v-if="data.data.state_name=='Por Subsanar'" title="Corregir y Enviar..." class="cmd-item color-main-600 mr-2"
 									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last color"></i>
 								</a>
@@ -304,6 +304,12 @@
 			</div>
 			<div class="card-body">
 				{{ JSON.stringify(userinfo, null, "\t") }}
+			</div>
+			<div class="card-body">estadoconv:
+				{{ JSON.stringify(estadoconv, null, "\t") }}
+			</div>
+			<div class="card-body">state_id:
+				{{ JSON.stringify(state_id, null, "\t") }}
 			</div>
 		</div>
 
@@ -466,6 +472,8 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		id_researcher_group:0,
+		
+		state_id:null,
 		baseObj: {
 			name: null,
 			category_id: null,
@@ -509,8 +517,11 @@ export default {
 		root.panelDocs = $("#" + this.namePanel + "-documentos");
 		root.loaderMessage = "Cargando Elementos";
 		root.loaderElement = "#" + this.namePanel + " .grid";
+		let id_estado = root.estadoconv.find( estado => estado.st_name == '	En Evaluación' );
+		root.state_id=id_estado.id;
 	},
 	computed: {
+		...mapGetters("core/tipo", ["subtypesByType"]),
 		dataSource: function () {
 			
 			let data = root.codEP;
@@ -532,6 +543,9 @@ export default {
 					root.loaderHide();
 				},
 			});
+		},
+		estadoconv() {
+			return root.subtypesByType("estado_criterios_evaluacion", "id");
 		},
 
 
@@ -640,8 +654,11 @@ export default {
 			});
 
 				root.visibleguardar.visible=true;
+				
 				//1062=corregir  1065=sin enviar  cargadocs=true o false para cargar ducumentos
-				if(data.data.state_id==1065 || data.data.state_id.state_id==1061){
+
+
+				if(data.data.state_name=="Sin Enviar" || data.data.state_id.state_name=="Por Subsanar"){
 					this.visibleguardar.visible=true;
 				}
 
@@ -801,7 +818,8 @@ export default {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`Postulación por evaluar!`, root.panelGrid);
-					let dataPatch = JSON.stringify({ active: true, updated_by: root.user_id, state_id:1061, total:0 });
+
+					let dataPatch = JSON.stringify({ active: true, updated_by: root.user_id, state_id:root.state_id, total:0 });
 
 					var dto = {
 						newFormat: true,
