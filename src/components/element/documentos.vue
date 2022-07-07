@@ -202,7 +202,7 @@
 							/>
 							<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 							<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="visibleButton" />
-							<template #tpl="{ data }">
+							<template #tpl="{ data }" v-if="visibleButton">
 								<span class="cmds">
 									<a title="Editar documento..." class="cmd-item color-main-600" @click.prevent="documentEdit(data.data)" href="#">
 										<i class="icon-database-edit"></i>
