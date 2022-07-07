@@ -529,7 +529,8 @@ export default {
 		},
 
 		filterByEstate() {
-            if(!root.es_admin) root.grid.filter([[ "call_state_id", "=", 654 ]]);
+			let estado = root.estados.find(element => element.st_name == 'Abierta');
+            if(!root.es_admin) root.grid.filter([[ "call_state_id", "=", estado.id ]]);
         },
 
 

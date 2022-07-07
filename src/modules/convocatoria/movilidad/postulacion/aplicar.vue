@@ -129,7 +129,7 @@
 										<label>Fecha del evento: </label>
 										<DxDateBox class="form-control" name="event_date"
 											:value.sync="baseObj.event_date" id="event_date" placeholder="DD/MM/YYYY"
-											display-format="dd/MM/yyyy" :min="minDate" :max="actualDate" type="date">
+											display-format="dd/MM/yyyy" :min="minDate"  type="date">
 											<DxValidator>
 												<DxRequiredRule />
 											</DxValidator>

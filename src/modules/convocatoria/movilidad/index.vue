@@ -30,19 +30,41 @@
 			
 			<div class="col">
 				<div class="card main">
-					<div class="card-header main">Alguna acción</div>
+					<div class="card-header main"></div>
+
+				<div class="card-body pb-0 pt-2">
+						<div class="row mr-3">
+							<div class="col text-left">
+								<h1>
+									<i class="icon-paperplane mr-1 color-main-600"></i>
+									<span class="font-weight-semibold">Evento: </span> &raquo; {{baseObj.event_name}}
+								</h1>
+							</div>
+							<div class="col text-right">
+								<DxButton @click="cancel" class="nb">
+									<template #default>
+										<span class="btn btn-main btn-labeled btn-labeled-left legitRipple">
+											<b><i class="icon-arrow-left2"></i></b> Regresar a eventos
+										</span>
+									</template>
+								</DxButton>
+							</div>
+						</div>
+					</div>
+
+
 					<div class="card-body pb-0 pt-2">
 						<DxValidationGroup ref="basicGroup">
-							<criteriosEvaluacion :group="{id:1}" :baseObj="baseObj" :key="baseObj.id"></criteriosEvaluacion>
+							<criteriosEvaluacion :group="{id:1}" :baseObj="baseObj" :key="baseObj.id" :reference="this" ></criteriosEvaluacion>
 						</DxValidationGroup>
 					</div>
-					<div class="card-footer">
+					<!-- <div class="card-footer">
 						<div class="row">
 							<div class="col">
 								<DxButton @click="cancel" class="nb">
 									<template #default>
 										<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
-											<b><i class="icon-database-remove"></i></b> CANCELAR
+											<b><i class="icon-database-remove"></i></b> Regresar al listado
 										</span>
 									</template>
 								</DxButton>
@@ -50,14 +72,14 @@
 							<div class="col text-right">
 								<DxButton @click="save" class="nb">
 									<template #default>
-										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple" v-if="btnsave">
 											GUARDAR <b><i class="icon-database-add"></i></b>
 										</span>
 									</template>
 								</DxButton>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -95,9 +117,9 @@
 						:show-borders="false"
 					>
 						<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-						<DxSorting mode="single" /><!-- single, multiple, none" -->
-						<DxPaging :page-size="10" />
-						<DxFilterRow :visible="false" />
+						<DxSorting mode="multiple" /><!-- single, multiple, none" -->
+						<DxPaging :page-size="50" />
+						<DxFilterRow :visible="true" />
 						<DxLoadPanel :enabled="false" />
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
 						<DxGrouping :auto-expand-all="true" />
@@ -126,8 +148,12 @@
 							width="80"
 						/>
 
-						<DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
-							:visible='true'  :group-index="0"  />
+						<!-- <DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
+							:visible='true'  :group-index="0"  /> -->
+
+						<DxColumn :allow-filtering="true"  data-field="state_id" caption="Estado Aplicación" data-type="number" alignment="left" :visible="true" >
+							<DxLookup :data-source="listEstadosEval" value-expr="id" display-expr="st_name" />
+						</DxColumn>
 						<!-- <DxColumn
 							data-field="call_id"
 							caption="ID conv"
@@ -143,7 +169,7 @@
 							caption="Convocatoria"
 							data-type="string"
 							alignment="left"
-							:visible="true"
+							:visible="false"
 							:allow-grouping="false"
 							:allow-filtering="false"
 							
@@ -222,7 +248,7 @@
 
 						<DxColumn data-field="is_organizer" caption="Organizador UD" data-type="date" alignment="center" :visible="false" :customize-text="yesNo" width="70" />
 
-						<DxColumn data-field="event_page" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<DxColumn data-field="event_page" :allow-filtering="false" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
 						<template #tplWeb="{ data }">
 							<a v-if="data.data.event_page != '' && data.data.event_page != null"
 								:title="data.data.event_page" class="cmd-item color-main-600 mr-2"
@@ -294,7 +320,7 @@
 						
 
 						<!-- <DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
-						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
+						<DxColumn data-field="active"  :allow-filtering="false" caption="Activo" data-type="string" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						
 						<DxColumn :width="80" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
 
@@ -376,7 +402,8 @@
 				</div> 
 				<div class="card">
 					<div class="card-body"><strong>porcentajes convocatoria:</strong> {{ JSON.stringify(promedioconv, null, 3) }}</div>
-				</div> 
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -466,6 +493,7 @@ export default {
 		criteriosEvaluacion: () => import("@/modules/convocatoria/movilidad/form_aceptacion_aspirantes.vue"),
 	},
 	data: () => ({
+		listEstadosEval:null,
 		tiposPermiso:null,//[{id:1, name: "Roles de Grupo"},{id:2, name: "Roles de semillero"},{id:3, name: "Grupo y Semillero"}],
 		modeEdit:false,
 		dataUserLogin:null,
@@ -516,28 +544,18 @@ export default {
 			oas_researcher_id: null,
 			geo_state_name: null,
 			active: null,
-
 		},
 
-		
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-
-		// root.getResearchers({
-		// 	id: this.group.id,
-		// 	cb: function(results) {
-		// 		console.log(root.$sep);
-		// 		root.groupResearchers = results.researchers;
-		// 		console.log("root.groupResearchers", root.groupResearchers);
-		// 	},
-		// });
-
+		root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
 	},
     async mounted() {
 		root = this;
+		root.filterByEstate();
 		root.loaderShow("Cargando participantes");
 		root.validator = root.$refs.basicGroup.instance;
 		root.baseObj.created_by = root.user_id;
@@ -614,11 +632,10 @@ export default {
 			} else return true;
 		},
 		
-
-		
-
-
-
+		filterByEstate() {
+			// let estado = root.listEstadosEval.find(element => element.st_name == 'En Evaluación');
+            // root.grid.filter([[ "state_id", "=", estado.id ]]);
+        },
 		
 		save() {
 			console.log(this.$sep);
@@ -756,6 +773,7 @@ export default {
 				root.panelCmd.fadeIn();
 				root.panelGrid.fadeIn();
 			});
+			root.grid.refresh();
 		},
 				
 		gridInit(e) {
