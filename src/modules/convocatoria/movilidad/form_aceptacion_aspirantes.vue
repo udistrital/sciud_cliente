@@ -123,7 +123,7 @@
                                     <span class="font-weight-semibold" id="title">Evaluación de criterios del aspirante.</span>
                                 </h2>
                             </div>
-                            <Evaluacion :inforBase="baseObj" :syncObject="saveUpdateeval"/>
+                            <Evaluacion :inforBase="baseObj" :reference="reference" />
                         </div>
 					</template>
 				</DxItem>
@@ -132,13 +132,16 @@
 		</div>
 	</div>
 
-     <div class="row" v-if="is_dev && debug">
+     <!-- <div class="row" v-if="is_dev && debug">
 			<div class="col-12">
 				<div class="card">
 					<div class="card-body"><strong>saveUpdateEval:</strong> {{ JSON.stringify(saveUpdateeval, null, 3) }}</div>
 				</div>
+                <div class="card">
+					<pre><div class="card-body"><strong>CriteriosEdit:</strong> {{ JSON.stringify(criteriosEdit, null, 3) }}</div></pre>
+				</div>
 			</div>
-		</div>
+		</div> -->
 </div>
 </template>
 
@@ -157,12 +160,13 @@ export default {
 	},
 	data() {
 		return {
+            criteriosEdit:{},
 			tp: null,
-            saveUpdateeval:{
-                valueCriterios:[],
-                state:false,
-
-            }
+            
+            // saveUpdateeval:{
+            //     valueCriterios:[],
+            //     state:null,
+            // }
 		};
 	},
 	mounted() {
@@ -173,6 +177,8 @@ export default {
 		root.tp.option("onItemClick", function() {
 			console.log("pestaña CLICK!");
 		});
+
+        
 	},
 	props: {
 		
@@ -184,6 +190,24 @@ export default {
 			type: Object,
 			default: () => {},
 		},
+        
+        reference: {
+			type: Object,
+			default: () => {},
+		},
+        // saveUpdateeval: {
+		// 	type: Object,
+		// 	default: () => {
+		// 		return {
+		// 			document_type_id:null,
+		// 			valueCriterios:[],
+		// 			estadoEval:0,
+		// 			sunTotal:0,
+		// 		};
+		// 	},
+		// },
+
+        
 	},
     methods:{
         convertirFecha(timestamp){

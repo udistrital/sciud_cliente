@@ -1,4 +1,5 @@
 <template>
+<div id="panel-datos-usuario">
     <div class="card-body">
         <div class="page-title d-flex">
             <h2>
@@ -156,6 +157,8 @@
 				</div>  -->
 
     </div>
+</div>
+    
 </template>
 
 <script>
@@ -212,15 +215,18 @@ export default {
         hideErrors();
     },
     async mounted() {
+        root.loaderShow("Cargando Información", ".card-body");
+        
+       
         await root.getSinData({
             // url: "/research_units/117/group_member/10286",
             url: "/researchers/" + parseInt(root.inforBase.researcher_id),
             cb: function (results) {
                 let objeto = results;
                 root.identification = objeto;
+                           
             },
         });
-
         root.dataUserLogin = await root.universalgetOas({ doc: root.identification.identification_number });
 
         await root.getSinData({
@@ -244,6 +250,11 @@ export default {
                 root.loadMembers();
             },
         });
+        let reload = setTimeout(
+           function(){
+                root.loaderHide();
+        },5000);
+        reload;
         this.$forceUpdate();
     },
 };
@@ -252,4 +263,8 @@ export default {
 .texto {
     color: darkslategrey;
 }
+/* #panel-datos-usuario{
+    height: 500px;
+} */
+
 </style>>
