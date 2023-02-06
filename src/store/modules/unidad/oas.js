@@ -26,9 +26,9 @@ const store = {
 					.get("/oikos_crud_api/v1/dependencia_padre/FacultadesConProyectos")
 					.then((r) => {
 						// console.log("response", r);
-						r.data.forEach((element) => {
-							element.Nombre = this._vm.$titleCase(element.Nombre);
-							element.Opciones.forEach((element) => {
+						r.data.forEach((facultad) => {
+							facultad.Nombre = this._vm.$titleCase(facultad.Nombre);
+							facultad.Opciones.forEach((element) => {
 								element.Nombre = this._vm.$titleCase(element.Nombre);
 							});
 						});

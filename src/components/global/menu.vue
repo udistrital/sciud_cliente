@@ -21,10 +21,16 @@
 						Estructuras de Investigación
 					</router-link>
 				</li>
-				<li class="nav-item" v-if="es_admin">
+				<li class="nav-item" > <!--v-if="es_admin"-->
 					<router-link to="/convocatoria" tag="a" class="navbar-nav-link legitRipple" title="Convocatorias...">
 						<i class="icon-pencil6"></i>
 						Convocatorias
+					</router-link>
+				</li>
+				<li class="nav-item" v-if="es_admin">
+					<router-link to="/proyecto" tag="a" class="navbar-nav-link legitRipple" title="Proyectos...">
+						<i class="icon-golf2"></i>
+						Proyectos
 					</router-link>
 				</li>
 			</ul>
@@ -37,6 +43,7 @@
 					<div class="dropdown-menu dropdown-menu-right">
 						<div class="dropdown-header">SEGURIDAD</div>
 						<router-link to="/admin/usuarios" tag="a" class="dropdown-item" title="Administrar usuarios..."> <i class="icon-users2"></i> Usuarios </router-link>
+						<router-link to="/admin/rol_usuarios" tag="a" class="dropdown-item" title="Administrar roles de usuarios..."> <i class="icon-user-lock2"></i> Rol de Usuario </router-link>
 						<!-- <a href="#" class="dropdown-item"><i class="icon-history"></i> Logs de actividad</a> -->
 						<div class="dropdown-divider"></div>
 						<div class="dropdown-header">CLASIFICADORES</div>
@@ -64,6 +71,12 @@
 						<i class="icon-square-right"></i>
 					</a>
 				</li>
+				<li class="nav-item">
+					<router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+						<i class="icon-question3"></i>
+						Ayuda
+					</router-link>
+				</li>
 			</ul>
 		</div>
 
@@ -82,6 +95,12 @@
 						<i class="icon-user-lock"></i>
 						Ingresar al sistema
 					</router-link>
+				</li>
+				<li class="nav-item">
+					<!-- <router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+						<i class="icon-question3"></i>
+						Ayuda
+					</router-link> -->
 				</li>
 			</ul>
 		</div>

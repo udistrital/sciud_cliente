@@ -89,7 +89,7 @@
 <div :class="'col-md-'+(!actInfor?'4':'1')">
 	<div class="form-group">
 	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor">
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -159,7 +159,7 @@
 						
 						:allow-column-reordering="true"
 						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
+						:data-source="dataSourceA"
 						:remote-operations="true"
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
@@ -310,7 +310,7 @@ import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPattern
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
-// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomdataSourceA/Vue/
 export default {
 	name: "plan_accion_formacion",
 	components: {
@@ -398,6 +398,7 @@ export default {
 		min: new Date(1950, 1, 1),
 		baseEnt: null,
 		val_porcentaje:0,
+		porcentaje:0,
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		baseObj: {
@@ -436,7 +437,7 @@ export default {
 		...mapState("unidad/indicadores", { indicador : "items" }),
 		
 
-		dataSource: function() {
+		dataSourceA: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
@@ -468,8 +469,15 @@ export default {
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
+		},
 		
-		porcentaje(){
+		porcentajex(){
 			
 			if(root.baseObj.advanced_total<=root.baseObj.goal && root.baseObj.advanced_total>=0){
 				root.val_porcentaje = ((root.baseObj.advanced_total*100)/root.baseObj.goal).toFixed(2);
@@ -621,7 +629,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} </span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

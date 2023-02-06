@@ -10,9 +10,28 @@
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
 			<div class="header-elements" v-if="es_admin">
-				<router-link tag="a" to="/convocatoria/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
+				<router-link tag="a" to="/convocatoria/crear" class="btn btn-main  mr-1  btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
 					<b><i class="icon-database-add"></i></b> Nueva Convocatoria
 				</router-link>
+
+				<!-- <router-link tag="a" to="/convocatoria/movilidad" class="btn btn-main mr-1 btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
+					<b><i class="icon-database-add"></i></b> Movilidad
+				</router-link> -->
+			</div>
+
+			<div class="header-elements" v-else>
+				<router-link
+					tag="a"
+					to="/convocatoria/aplicaciones"
+					class="btn btn-main  mr-1  btn-labeled btn-labeled-left legitRipple"
+					title="Listado de Aplicaciones..."
+				>
+					<b><i class="icon-list2"></i></b> Listado de Aplicaciones
+				</router-link>
+
+				<!-- <router-link tag="a" to="/convocatoria/movilidad" class="btn btn-main mr-1 btn-labeled btn-labeled-left legitRipple" title="Nueva convocatoria...">
+					<b><i class="icon-database-add"></i></b> Movilidad
+				</router-link> -->
 			</div>
 		</div>
 
@@ -37,7 +56,7 @@
 								:remote-operations="true"
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
-								:word-wrap-enabled="true"
+								:word-wrap-enabled="false"
 								:show-borders="false"
 							>
 								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
@@ -62,6 +81,7 @@
 									info-text="{2} convocatorias de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="true" :highlight-case-sensitive="true" />
+
 								<DxColumn
 									:allow-filtering="false"
 									:sort-index="1"
@@ -73,7 +93,8 @@
 									:allow-sorting="true"
 									:width="70"
 								/>
-								<DxColumn
+
+								<!-- <DxColumn
 									:allow-filtering="true"
 									data-field="call_state_id"
 									caption="Estado"
@@ -84,7 +105,8 @@
 									:width="110"
 								>
 									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name" />
-								</DxColumn>
+								</DxColumn> -->
+
 								<DxColumn
 									:allow-filtering="false"
 									:visible="true"
@@ -95,24 +117,40 @@
 									:width="120"
 									cell-template="tplNull"
 								/>
-								<DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" :width="180">
+
+								<DxColumn
+									:allow-filtering="es_admin"
+									data-field="call_state_id"
+									caption="Estado"
+									data-type="number"
+									alignment="left"
+									:visible="true"
+									:width="100"
+								>
+									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name"  :width="100" />
+								</DxColumn>
+
+								<DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" width="180">
 									<DxLookup :data-source="tipos" value-expr="id" display-expr="st_name" />
 								</DxColumn>
-								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true" />
+
+								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true"  />
+
 								<DxColumn
-									:allow-filtering="true"
+									:allow-filtering="es_admin"
 									data-field="call_beneficiary_id"
 									caption="Beneficiarios"
 									data-type="number"
 									alignment="center"
-									:visible="false"
+									:visible="!es_admin"
 									:width="100"
 								>
 									<DxLookup :data-source="beneficiarios" value-expr="id" display-expr="st_name" />
 								</DxColumn>
+
 								<DxColumn
 									:allow-filtering="true"
-									:visible="false"
+									:visible="!es_admin"
 									data-field="call_start_date"
 									caption="Fecha apertura"
 									alignment="center"
@@ -122,7 +160,7 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
-									:visible="false"
+									:visible="!es_admin"
 									data-field="call_end_date"
 									caption="Fecha cierre"
 									alignment="center"
@@ -132,7 +170,7 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
-									:visible="true"
+									:visible="es_admin"
 									data-field="call_duration"
 									caption="Duración"
 									alignment="center"
@@ -150,10 +188,73 @@
 									format="$ #,##0."
 									:allow-search="true"
 									:allow-sorting="true"
-									:visible="true"
+									:visible="es_admin"
 									:width="100"
 								/>
-								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="160" alignment="center" cell-template="tplCommands" />
+								<!--suspendido por carlos 
+								<DxColumn :allow-filtering="false"  name="idEdit" data-field="id" :width="160" alignment="center" cell-template="tplCommands" caption="Acciones" :fixed="true"  fixed-position="right"/>
+								-->
+								<DxColumn
+									:width="70"
+									:allow-filtering="false"
+									alignment="center"
+									cell-template="tplCMD"
+									caption="Acciones"
+									name="cmds"
+									:fixed="true"
+									fixed-position="right"
+								/>
+
+								<template #tplCMD="{ data }">
+									<DxDropDownButton
+										v-if="es_admin"
+										:drop-down-options="{ width: '200' }"
+										:items="navItems"
+										@item-click="cmdClick({ $event, data })"
+										display-expr="text"
+										icon="save"
+										item-template="list-item"
+										template="item"
+										key-expr="id"
+									>
+										<template #item
+											><strong><i class="hand icon-menu9"></i></strong
+										></template>
+										<template #list-item="{ data }">
+											<span class="cmd-item" :title="'Observar ' + data.name"><i :class="data.icon"></i><span v-html="data.name"></span></span>
+										</template>
+									</DxDropDownButton>
+
+									<div v-else>
+										<span class="cmds">
+											<a
+												v-if="data.data.call_type_name == 'Movilidad'"
+												title="Aplicar a Movilidad..."
+												href="#"
+												@click.prevent="go(data.data.id, `convocatoria/${data.data.id}/aplicar`, 'Cargando Propuesta <br/> Movilidad')"
+												class="cmd-item color-main-600"
+											>
+												<i class="icon-insert-template"></i>
+											</a>
+
+											<a
+												v-if="data.data.call_type_name.toUpperCase() == 'Proyecto de Investigación'.toUpperCase()"
+												title="Aplicar a Proyecto..."
+												href="#"
+												@click.prevent="go(data.data.id, `convocatoria/${data.data.id}/propuesta`, 'Cargando Propuesta <br> Proyecto')"
+												class="cmd-item color-main-600"
+											>
+												<i class="icon-insert-template"></i>
+											</a>
+
+											<a :title="data.data.name" class="cmd-item color-main-600 mr-2" @click.prevent="verObservar(data.data)" href="#" Target="_blank">
+												<i class="icon-eye"></i>
+											</a>
+										</span>
+									</div>
+								</template>
+
+								<!-- suspendido por carlos 
 								<template #tplCommands="{ data }">
 									<span class="cmds">
 										<a
@@ -167,6 +268,8 @@
 										</a>
 									</span>
 								</template>
+								-->
+
 								<template #tplUrl="{ data }">
 									<a
 										v-if="data.value && data.value.trim() !== 'NULL' && data.value.trim().length > 5"
@@ -178,6 +281,7 @@
 									</a>
 									<span v-else> -- </span>
 								</template>
+
 								<template #tplNull="{ data }">
 									<span
 										v-if="data.value && data.value.toString().trim() !== 'NULL' && data.value.toString().trim() !== '0' && data.value.toString().trim() !== '.'"
@@ -185,6 +289,7 @@
 									>
 									<span v-else> -- </span>
 								</template>
+
 								<template #tplEmail="{ data }">
 									<span v-if="data.value && data.value.toString().trim() !== 'NULL'">
 										<a class="color-main-600" :href="'mailto:' + data.value" :title="'Escribir a \'' + data.value.trim() + '\'...'"
@@ -201,6 +306,7 @@
 									</span>
 									<span v-else> -- </span>
 								</template>
+
 								<template #titleCase="{ data }">
 									<div style="max-width: 300px" :title="$titleCase(data.value)">
 										{{ $titleCase(data.value) }}
@@ -220,6 +326,25 @@
 				</div>
 			</div>
 		</div>
+
+		<DxPopup
+			:visible="popupObs"
+			ref="popupConv"
+			:drag-enabled="false"
+			:close-on-outside-click="false"
+			:show-close-button="false"
+			:show-title="true"
+			width="75%"
+			height="70%"
+			title="Datos de la Convocatoria:"
+		>
+			<DxScrollView id="scrollview" ref="scrollViewWidget" :scroll-by-content="true" :scroll-by-thumb="true" show-scrollbar="onScroll" :bounce-enabled="true">
+				<div class="col-12">
+					<Verplanilla :id_convocatoria="id_data_cov" :key="id_data_cov" v-if="id_data_cov != 0" />
+				</div>
+			</DxScrollView>
+			<DxToolbarItem widget="dxButton" toolbar="bottom" location="after" :options="closeButtonOptions" />
+		</DxPopup>
 	</div>
 </template>
 
@@ -229,6 +354,7 @@
 let root = null;
 let $ = window.jQuery;
 import DxStore from "@/store/dx";
+
 import DxDropDownButton from "devextreme-vue/drop-down-button";
 // import Commands from "@/components/element/commands.vue";
 // {{url}}/research_group?page=1&per_page=5&group_type_id=1
@@ -252,11 +378,15 @@ import {
 	DxSummary,
 } from "devextreme-vue/data-grid";
 import { mapActions, mapGetters } from "vuex";
-
+import { DxPopup, DxToolbarItem } from "devextreme-vue/popup";
+import { DxScrollView } from "devextreme-vue/scroll-view";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
 	name: "inicio",
 	components: {
+		DxScrollView,
+		DxPopup,
+		DxToolbarItem,
 		DxStateStoring,
 		DxDropDownButton,
 		DxColumn,
@@ -276,8 +406,12 @@ export default {
 		DxSorting,
 		DxSummary,
 		// Tabs,
+		Verplanilla: () => import("@/modules/convocatoria/movilidad/plantilla.vue"),
 	},
+
 	data: () => ({
+		popupObs: false,
+		id_data_cov: 0,
 		items: [],
 		grid: null,
 		mode: null,
@@ -287,9 +421,19 @@ export default {
 		baseEntity: {},
 		docLink: null,
 		firstLoad: true,
+		closeButtonOptions: {
+			text: "Salir",
+			onClick: () => {
+				root.popupObs = false;
+			},
+		},
+		id_movilidad: null,
+		id_proyecto: null,
 	}),
 	created() {
 		root = this;
+		root.id_movilidad = root.get_sub_type_id("id_proyecto");
+		root.id_proyecto = root.get_sub_type_id("id_movilidad");
 	},
 	mounted() {
 		console.log("MOUNTED");
@@ -300,11 +444,13 @@ export default {
 		root.getGroupRoles();
 		root.loaderHide();
 		console.log("editModeConv", root.editModeConv);
+		root.filterByEstate();
 	},
 	computed: {
 		...mapGetters("convocatoria", ["navItems"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapGetters("unidad", ["documents", "states", "types"]),
+
 		tipos() {
 			return root.subtypesByType("convocatoria_tipo", "id");
 		},
@@ -312,8 +458,18 @@ export default {
 			return root.subtypesByType("convocatoria_beneficiario", "id");
 		},
 		estados() {
+			// let estado
+			// if(root.es_admin) estado=root.subtypesByType("convocatoria_estado", "id");
+			// else estado=root.subtypesByType("convocatoria_estado", "id").filter(dato=> dato.st_name=="Abierta");
 			return root.subtypesByType("convocatoria_estado", "id");
 		},
+
+		closeOnOutsideClick(e) {
+			console.warn("data: ", e);
+			root.popupObs = !root.popupObs ? true : false;
+			return true;
+		},
+
 		dsEstructuras: function() {
 			// 202103120855: Obtiene los grupos del usuario actual si es participante
 			var ids = [];
@@ -344,7 +500,8 @@ export default {
 				endPoint: "calls",
 				loadBaseEntity: true,
 				// 202107040725: Determina si debe mostrar solo los grupos activos
-				state: root.es_admin ? null : 1,
+				// state: root.es_admin ? null : 1,
+				state: null,
 				onLoading: function(loadOptions) {
 					root.loaderShow();
 					setTimeout(function() {
@@ -387,34 +544,78 @@ export default {
 		...mapActions("auth/usuario", ["getGroupRoles"]),
 		...mapActions("unidad", ["getResearchers", "setUnit", "saveUnit"]),
 		...mapActions("convocatoria/documentos", { getDocs: "get" }),
+
+		verObservar(data) {
+			this.popupObs = true;
+			console.warn("popupConv", this.popupObs);
+			this.id_data_cov = data.id;
+		},
+
+		vermovilidad(data_id) {
+			// data==1059
+			let resultado = true;
+			console.warn("estado valor grilla", data_id);
+			let valor = root.tipos.find((contipos) => (contipos.tipos = "Movilidad"));
+			console.warn("codigo movilidad", valor);
+			// data.find( => element > 10);
+			return resultado;
+		},
+
+		filterByEstate() {
+			let estado = root.estados.find((element) => element.st_name == "Abierta");
+			if (!root.es_admin) root.grid.filter([["call_state_id", "=", estado.id]]);
+		},
+
 		cmdClick(e) {
-			console.log("e.itemData", e.itemData);
-			root.go(e.itemData.text, e.itemData.command, `Cargando ${e.itemData.text}`);
+			console.warn("e:", e);
+			console.warn("e.data:", e.data.data);
+			console.warn("e.$event.itemData", e.$event.itemData);
+			console.warn("ruta: ", `/convocatoria/${e.data.data.id}${e.$event.itemData.key !== "info" ? "/" + e.$event.itemData.key : ""}`);
+			if (e.$event.itemData.key !== "evaluar") {
+				root.go(
+					e.data.data.id,
+					`/convocatoria/${e.data.data.id}${e.$event.itemData.key !== "info" ? "/" + e.$event.itemData.key : ""}`,
+					`Cargando ${e.$event.itemData.name}`
+				);
+			} else {
+				// root.$info("entra a evaluacion");
+				if (e.data.data.call_type_id == root.id_proyecto) {
+					//647
+					//redirecciona a proyectos
+					root.go(e.data.data.id, `/convocatoria/${e.data.data.id}${e.$event.itemData.key !== "info" ? "/" + "proyecto" : ""}`, `Cargando Aspirantes`);
+				}
+
+				if (e.data.data.call_type_id == root.id_movilidad) {
+					//648
+					//redirecciona a movilidad
+					root.go(e.data.data.id, `/convocatoria/${e.data.data.id}${e.$event.itemData.key !== "info" ? "/" + "movilidad" : ""}`, `Cargando Aspirantes`);
+				}
+			}
 		},
-		cmdGet(data) {
-			return [
-				{
-					command: `/convocatoria/${data.value}`,
-					text: "Información",
-					icon: "icon-info",
-				},
-				{
-					command: `/convocatoria/${data.value}/documentos`,
-					text: "Documentos",
-					icon: "icon-file-pdf",
-				},
-				{
-					command: `/convocatoria/${data.value}/integrantes`,
-					text: "Integrantes",
-					icon: "icon-users4",
-				},
-				{
-					command: `/convocatoria/${data.value}/produccion`,
-					text: "Producción",
-					icon: "icon-trophy",
-				},
-			];
-		},
+		// cmdGet(data) {
+		// 	return [
+		// 		{
+		// 			command: `/convocatoria/${data.value}`,
+		// 			text: "Información",
+		// 			icon: "icon-info",
+		// 		},
+		// 		{
+		// 			command: `/convocatoria/${data.value}/documentos`,
+		// 			text: "Documentos",
+		// 			icon: "icon-file-pdf",
+		// 		},
+		// 		{
+		// 			command: `/convocatoria/${data.value}/integrantes`,
+		// 			text: "Integrantes",
+		// 			icon: "icon-users4",
+		// 		},
+		// 		{
+		// 			command: `/convocatoria/${data.value}/produccion`,
+		// 			text: "Producción",
+		// 			icon: "icon-trophy",
+		// 		},
+		// 	];
+		// },
 		customizeText(cellInfo) {
 			console.log("cellInfo", cellInfo);
 			return cellInfo.value + "$";
@@ -543,6 +744,7 @@ export default {
 		},
 		gridInit(e) {
 			root.grid = e.component;
+			root.filterByEstate();
 			root.grid.beginUpdate = () => {};
 			root.grid.endUpdate = () => {};
 		},

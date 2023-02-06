@@ -66,7 +66,7 @@
 
 <div class="col-md-6">
 	<div class="form-group">
-	<label>Estado Espedado Fin de Periodo.  : </label>
+	<label>Estado Esperado Fin de Periodo.  : </label>
 	<DxSelectBox
 		:show-clear-button="true"
 		:grouped="false"
@@ -138,7 +138,7 @@
 						
 						:allow-column-reordering="true"
 						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
+						:data-source="dataSourceD"
 						:remote-operations="true"
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
@@ -335,7 +335,7 @@ import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPattern
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
-// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomdataSourceD/Vue/
 export default {
 	name: "plan_accion_formacion",
 	components: {
@@ -451,7 +451,7 @@ export default {
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		// ...mapState("unidad/indicadores", { indicador : "items" }),
-		dataSource: function() {
+		dataSourceD: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";

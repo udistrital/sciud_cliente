@@ -19,8 +19,11 @@
 									<div class="card-header main">Agregar</div>
 									<div class="card-body mb-0 pb-0 pt-3">
 										<DxValidationGroup ref="vGroup">
+											<div v-if="anchoVista==12" class="alert alert-success col-md-12 mt-3" role="alert">
+												<div class="sub-title"><i class="icon-info"></i> Información: </div> Para poder diligenciar estos campos, ingrese el número de documento del nuevo integrante sin puntos o comas, previamente registrado en la OAS y SICIUD V2, luego presione el icono de la lupa que esta al costado derecho del campo de documento.
+											</div>
 											<div class="row">
-												<div class="col-md-2">
+												<div :class="'col-md-'+anchoVista">
 													<div class="form-group">
 														<label>Documento de identidad:</label>
 														<DxNumberBox
@@ -37,7 +40,7 @@
 														</DxNumberBox>
 													</div>
 												</div>
-												<div class="col-md-2">
+												<!-- <div class="col-md-2">
 													<div class="form-group">
 														<label>Rol:</label>
 														<DxSelectBox
@@ -56,8 +59,31 @@
 															</DxValidator>
 														</DxSelectBox>
 													</div>
+												</div> -->
+
+												<div class="col-md-2"   v-bind:style="styleObject">
+													<div class="form-group">
+														<label>Rol </label>
+														<DxSelectBox
+															:show-clear-button="true"
+															:grouped="false"
+															:data-source="rol2"
+															:value.sync="group_member.role_id"
+															:search-enabled="false"
+															placeholder="Seleccione..."
+															class="form-control"
+															display-expr="name"
+															value-expr="id"
+															:read-only="estateRol"
+														>
+															<DxValidator>
+																<DxRequiredRule />
+															</DxValidator>
+														</DxSelectBox>
+													</div>
 												</div>
-												<div class="col-md-3">
+												
+												<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="form-group">
 														<label>Nombre:</label>
 														<DxTextBox :value.sync="group_member.name" placeholder="Nombre" class="form-control" :read-only="true" mode="text">
@@ -67,7 +93,7 @@
 														</DxTextBox>
 													</div>
 												</div>
-												<div class="col-md-5">
+												<div class="col-md-5"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col-md-4">
 															<div class="form-group">
@@ -75,7 +101,7 @@
 																<DxTextBox :value.sync="researcher.id" placeholder="Investigador ID" class="form-control" :read-only="true" />
 															</div>
 														</div>
-														<div class="col-md-3">
+														<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 															<div class="form-group">
 																<label>OAS ID:</label>
 																<DxTextBox :value.sync="researcher.oas_researcher_id" placeholder="OAS ID" class="form-control" :read-only="true">
@@ -85,7 +111,7 @@
 																</DxTextBox>
 															</div>
 														</div>
-														<div class="col-md-2">
+														<div class="col-md-2"   > <!--v-if="visible=true">-->
 															<div class="form-group">
 																<label>Activo:</label>
 																<DxSwitch
@@ -98,7 +124,7 @@
 																/>
 															</div>
 														</div>
-														<div class="col-md-3">
+														<div class="col-md-3"   > <!--v-if="visible=true">-->
 															<div class="form-group">
 																<label>CVLAC:</label>
 																<DxTextBox :value.sync="researcher.cvlac" placeholder="CVLAC" class="form-control" />
@@ -106,7 +132,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col">
 															<div class="form-group">
@@ -117,12 +143,14 @@
 														<div class="col">
 															<div class="form-group">
 																<label>Firma Científica:</label>
-																<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" />
+																<DxTextBox :value.sync="researcher.scientific_signature" placeholder="Firma Científica" class="form-control" mode="text" >
+																<DxNumberBoxButton :options="questionbutton" name="question" location="after" />
+																</DxTextBox>
 															</div>
 														</div>
 													</div>
 												</div>
-												<div class="col-md-3">
+												<div class="col-md-3"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col">
 															<div class="form-group">
@@ -174,7 +202,7 @@
 														</div> -->
 													</div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-6"   v-bind:style="styleObject"> <!--v-if="visible=true">-->
 													<div class="row">
 														<div class="col-md-5">
 															<div class="form-group">
@@ -230,6 +258,7 @@
 														</div>
 													</div>
 												</div>
+												
 											</div>
 										</DxValidationGroup>
 										<div class="row" id="periods">
@@ -347,7 +376,7 @@
 												</DxButton>
 											</div>
 											<div class="col text-right">
-												<DxButton @click="userSave" class="nb">
+												<DxButton @click="userSave" class="nb"    v-bind:style="styleObject">
 													<template #default>
 														<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
 															GUARDAR <b><i class="icon-database-add"></i></b>
@@ -401,7 +430,7 @@
 												:show-page-size-selector="true"
 												:show-navigation-buttons="true"
 												:allowed-page-sizes="dgPageSizes"
-												info-text="{2} integrantes (página {0} de {1})"
+												info-text="{2} Histórico (página {0} de {1})"
 											/>
 											<DxSearchPanel :visible="false" :highlight-case-sensitive="false" />
 											<DxColumn
@@ -470,6 +499,7 @@
 											<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 											<template #tpl="{ data }">
 												<span class="cmds" v-if="cmdVisible(data.data)">
+												<!-- <span class="cmds" v-if="cmdVisible(data.data)"> -->
 													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="userEdit(data.data)" href="#">
 														<i class="icon-database-edit"></i>
 													</a>
@@ -485,6 +515,11 @@
 													<a v-else title="Activar usuario..." class="cmd-item color-main-600 mr-2" @click.prevent="userActive(data.data, true)" href="#">
 														<i class="icon-database-check"></i>
 													</a> -->
+												</span>
+												<span class="cmds" v-else>
+													<a title="Editar usuario..." class="cmd-item color-main-600" @click.prevent="unactive(data.data)" href="#">
+														<i class="icon-user-cancel2"></i>
+													</a>
 												</span>
 											</template>
 										</DxDataGrid>
@@ -510,6 +545,11 @@
 						<span class="font-weight-semibold">researcher:</span> {{ JSON.stringify(researcher, null, 3) }}
 						<hr class="sep" />
 						<span class="font-weight-semibold">gm_period:</span> {{ JSON.stringify(gm_period, null, 3) }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+						<hr class="sep" />
+						<span class="font-weight-semibold">user:</span> {{ JSON.stringify(user, null, 3) }}
+						user
 					</div>
 				</div>
 			</div>
@@ -562,6 +602,7 @@ export default {
 		root.panelGrid = root.panelMain + "-grid";
 		root.loaderElement = root.panelMain;
 		root.loaderMessage = "Cargando Información<br>de Integrantes";
+		
 		let uId = root.$route.params.unidadId;
 		root.getUnit({
 			id: uId,
@@ -569,10 +610,13 @@ export default {
 				root.group = result;
 				document.title += ` ${root.$titleCase(root.group.name)}`;
 				root.loadMembers();
+				root.listChange();
 			},
 		});
 	},
 	mounted() {
+		
+		
 		console.log(this.$sep);
 		setTimeout(function() {
 			root.nbId = typeof root.$refs.nbIdNum !== "undefined" ? root.$refs.nbIdNum.instance : null;
@@ -584,6 +628,7 @@ export default {
 			console.log("root.nbIdBtn", root.nbIdBtn);
 			console.log("root.chkActive", root.chkActive);
 		}, 1000);
+		console.warn("lectura rol2: ",root.rol2.data);
 	},
 	beforeUpdate: () => {},
 	updated: () => {
@@ -618,6 +663,11 @@ export default {
 		Header: () => import("./_header"),
 	},
 	data: () => ({
+		roluser:0,
+		styleObject:{visibility:'hidden'},
+		anchoVista:12,
+		estateRol:false,
+		rol2:[],
 		app_user: null,
 		chkActive: null,
 		periods: null,
@@ -705,6 +755,8 @@ export default {
 						let nombre = typeof det !== "undefined" ? `"${det.TerceroId.NombreCompleto}"` : `con el documento "${id}"`;
 						root.$info(`El usuario ${nombre} ya se<br>encuentra registrado como "${rol}" en el grupo.`);
 						root.loaderHide();
+						root.styleObject={visibility:'hidden'};
+						root.anchoVista=12;
 						return false;
 					}
 
@@ -715,6 +767,8 @@ export default {
 						m += `<a href="https://contratistas.portaloas.udistrital.edu.co" title="Visite el Sistema de Autenticación Única..." class="link" target="_blank"`;
 						m += `>Sistema de Autenticación Única</a> de la Universidad Distrital`;
 						root.$info(m);
+						root.styleObject={visibility:'hidden'};
+						root.anchoVista=12;
 						root.loaderHide();
 						return false;
 					}
@@ -737,15 +791,26 @@ export default {
 					} else {
 						console.log("");
 					}
+					root.anchoVista=2;
+					root.styleObject={visibility:'visible'},
 					root.loaderHide();
 				}
 			},
 		},
+
+		questionbutton: {
+			icon: "info",
+			onClick: async () => {
+				root.$info("La firma científica es la utilizada por el investigador para que se identifique y se distinga <br /> de otros autores, incluye tanto el nombre como la institución en la que trabaja.")
+			},
+		},
+		
 		group_member_bk1: null,
 		group_member_bk: null,
 		group_member: {
 			id: null,
 			role_id: null,
+			role_id_db: null,
 			gm_state_id: 1,
 			researcher_id: null,
 			name: null,
@@ -774,6 +839,7 @@ export default {
 			initial_date: new Date(),
 			final_date: null,
 			role_id: null,
+			role_id_db: null,
 			is_current: true,
 			active: true,
 			group_member_id: null,
@@ -830,6 +896,29 @@ export default {
 			"updateResearcher",
 		]),
 		...mapActions("auth/usuario", ["getUser", "saveUserAsync", "getOasUsers", "getOasUser"]),
+		...mapActions("unidad/producto/universalSentUpAct", {univerdalGet: "univerdalGet", univerdalID: "univerdalID" }),
+
+
+		async listChange() {
+			let arg={url:''},arg2={url:''}
+			let grupo=[], ambos=[];
+			console.warn("grupo = ", root.group);
+			arg.url='role?filter=[["active","=","true","AND","role_type_id","=","1055"]]';//para grupo y semillero
+			if(root.group.group_type_id==3) arg2.url='role?filter=[["active","=","true","AND","role_type_id","=","1057"]]';//para grupo y semillero
+			else arg2.url='role?filter=[["active","=","true","AND","role_type_id","=","1056"]]';//semillero 
+			grupo=await root.univerdalGet(arg2);
+			ambos=await root.univerdalGet(arg);
+			root.rol2=ambos.concat(grupo);
+			// if(root.rol2.length > 0) root.$info("Seleccione Producto Específico");
+			console.warn("aldata2 data = ", root.rol2);
+		},
+
+
+// let arg={url:''};
+// 		arg.url='role';
+// 		root.rol2=root.univerdalID(arg);
+
+		
 		activeChanged(e) {
 			const previousValue = e.previousValue;
 			const is_active = e.value;
@@ -920,9 +1009,9 @@ export default {
 					root.groupResearchers = result.researchers;
 					console.log("root.groupResearchers =>", root.groupResearchers);
 					// 202106170030: Solo activos para roles diferentes a admin y gestor
-					if (root.user_role_id > 2) {
-						root.groupResearchers = root.groupResearchers.filter((o) => o.gm_state_id === 1);
-					}
+					// if (root.user_role_id > 2) {
+					// 	root.groupResearchers = root.groupResearchers.filter((o) => o.gm_state_id === 1);
+					// }
 					if (loaderHide) {
 						root.dsMembers.reload();
 						root.loading = false;
@@ -933,6 +1022,17 @@ export default {
 			});
 		},
 		userEditEnd() {
+			// 8345	4523	1.013.622.639	Moreno Susatama Carlos Arturo	T:2 / A:1 / I:1	1	1	--	Administrador	SI	
+			// let userdatagrid=null, usersystem=null;
+
+			// usersystem=root.user.local.id;
+			// userdatagrid=root.group_member;
+
+
+			// console.warn("usersystem", usersystem);
+			// console.warn("userdatagrid", userdatagrid);
+			// app_user
+			
 			$(root.panelData + " #periods").show();
 			root.dsPeriods.reload();
 			$(root.panelData + " #periods").show();
@@ -945,11 +1045,59 @@ export default {
 				root.gm_period_bk1 = root.$clone(root.gm_period);
 			});
 		},
-		userEdit(d) {
+
+		unactive5(d) {
+			console.clear();
+			root.mode == "edit";
+			let data = root.$clone(d);
+			console.warn("data unable", data);
+		},
+
+		unactive(d) {
 			console.clear();
 			root.mode == "edit";
 			let data = root.$clone(d);
 			console.log("data", data);
+
+			console.warn("root.group_member", root.group_member);
+			console.warn("root.researcher", root.researcher);
+
+			root.loaderShow();
+			let researcher = data.researcher;
+
+			researcher.updated_by = root.user_id;
+			researcher.active = false;
+			console.warn("researcher TO SEND =>", researcher);
+			let r = root.updateResearcher(researcher);
+			console.warn("SAVED Researcher =>", r);
+			let group_member = data;
+			group_member.updated_by = root.user_id;
+			group_member.gm_state_id = 2;
+			console.warn("group_member ", group_member);
+			let gm = root.updateGroupMember({ group_id: root.group.id, item: group_member });
+			console.warn("group_member desactivado =>", gm);
+			// root.$info("El usuario con numero de identificacion: "+group_member.researcher.identification_number+" ha sido desactivado.")
+			location.reload();
+			// root.grid.refresh();
+			// root.loaderHide();
+		},
+
+		async userEdit(d) {
+			
+
+			console.clear();
+			root.mode == "edit";
+			let data = root.$clone(d);
+			console.log("data", data);
+			root.estateRol=false;
+			root.roluser= await root.univerdalID({url:'role/'+data.role_id});
+			console.warn("datos del rol: ",root.roluser);
+
+			if(!root.es_admin) if(root.roluser.parent_id==1 || root.roluser.parent_id==5 || root.roluser.parent_id==7) root.estateRol=true;
+			else console.warn("Este usuario es administrador");
+			// if(root.roluser.parent_id==data.role_id) root.estateRol=true;//root.estateRol=true;
+
+
 			// root.$refs.vGroup.instance.reset();
 			root.nbIdBtn = root.nbId.getButton("search");
 			console.log("root.nbIdBtn", root.nbIdBtn);
@@ -985,6 +1133,10 @@ export default {
 					root.userEditEnd();
 				},
 			});
+			
+
+			root.anchoVista=2;
+			root.styleObject={visibility:'visible'};
 		},
 		userAdd() {
 			root.mode == "add";
@@ -1160,8 +1312,14 @@ export default {
 					});
 				});
 			}
+			root.anchoVista=12;
+			root.estateRol=false;//root.estateRol=false;
+
+
+			root.styleObject={visibility:'hidden'};
 		},
 		userCancel(loaderHide = false, cb) {
+			root.estateRol=false;//root.estateRol=false;
 			root.fromCancel = true;
 			$(root.panelData).fadeOut(function() {
 				if (loaderHide) root.loaderHide();
@@ -1174,6 +1332,8 @@ export default {
 					if (root.$isFunction(cb)) cb();
 				});
 			});
+			root.anchoVista=12;
+			root.styleObject={visibility:'hidden'};
 		},
 		async userActive(data, state) {
 			console.clear();

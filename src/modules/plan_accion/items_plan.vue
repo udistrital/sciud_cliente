@@ -13,8 +13,12 @@
 				</div>
 				<!-- <div class="header-elements" v-if="es_admin"> -->
 				<div class="header-elements" v-if="true">
-					<router-link tag="a" :to="'/unidad/'+$route.params.unidadId+'/plan_accion'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="regresar al Listado">
+					<router-link tag="a" :to="'/unidad/'+$route.params.unidadId+'/plan_accion'" class="btn btn-main btn-labeled mr-1  btn-labeled-left legitRipple" title="regresar al Listado">
 						<b><i class="icon-database-remove"></i></b> Regresar al Listado
+					</router-link>
+				
+					<router-link tag="a" :to="'/unidad/'+$route.params.unidadId" class="btn btn-main btn-labeled btn-labeled-left mr-1 legitRipple" title="regresar al Listado">
+						<b><i class="icon-info"></i></b> información del Grupo
 					</router-link>
 				</div>
 			</div>
@@ -40,7 +44,7 @@
 
 										<div class="header-elements" v-if="dateplansys.is_draft==true && dateplansys.management_report_is_draft==true">
 											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-warning btn-labeled btn-labeled-left ">
-												<b><i class="icon-database-add"></i></b> Concluir Plan de Accion
+												<b><i class="icon-database-add"></i></b>  Plan de Accion
 											</button>
 										</div>
 
@@ -49,12 +53,12 @@
 							</div>
 							<div class="row">
 								<div class="col">
-									<DxAccordion :collapsible="false" :multiple="false">
+									<DxAccordion :collapsible="false" :multiple="false" >
 										<template #title="{ data }"
 											>
 											<div class="col pt-2 pb-2"><i :class="'icon-' + data.icon"></i>{{ data.title }}</div>
 										</template>
-
+ 
 										<DxItem title="Proceso de Formación para la Investigación/Investigación Formativa" icon="rocket" id="plan_accion" data-idx="1">
 											<template #default>
 												<ProcesoFormacion
@@ -124,11 +128,11 @@
 													title="Listado de Recursos con que cuenta el Grupo para el Desarrollo"
 													:actInfor="!dateplansys.is_draft" 
 													:editing="dateplansys.is_draft==true || dateplansys.management_report_is_draft==true"
-													titleBtn="Agregar Recurso"	
+													titleBtn="Agregar Recurso"	 
 													titlecolum="type_description"
 												/>
 											</template>
-										</DxItem>
+										</DxItem> 
 
 										<DxItem title="Redes Académicas de Promoción Científica y/o Artística " icon="sphere" id="plan_accion" data-idx="1">
 											<template #default>
@@ -176,12 +180,15 @@
 let root;
 import { mapActions, mapGetters, mapState } from "vuex";
 import DxAccordion, { DxItem } from "devextreme-vue/accordion";
+import DataSource from "devextreme/data/data_source";
+
 export default {
 
 	created: function() {
 		root = this;
 		// document.title += ` ${root.$titleCase(root.group.name)}`;
 		
+
 		root.LineasInvConocimiento({
           parent_id: 159,
           cb: function (results) {
@@ -228,6 +235,7 @@ export default {
 			},
 		});
 		// root.eval();
+		//root.line_group=root.selectorLineas(root.listlines);
 	},
 
 	data() {
@@ -247,6 +255,11 @@ export default {
 				updated_by: null,
 			}
 		};
+	},
+	computed: {
+		...mapGetters("core/tipo", ["subtypesByType"]),
+		
+		
 	},
 	mounted() {
 		console.clear();
@@ -317,14 +330,28 @@ export default {
 			}	
 		},
 		
+	
+
+	// selectorLineas(results){
+    //   let limpio = [];
+    //   let datax = results;
+    //   for (let i = 0; i < root.group.research_focus_ids.length; i++) {
+    //     limpio = limpio.concat(datax.filter((datax) => parseInt(datax.id) ==  parseInt(root.group.research_focus_ids[i]) ) );
+    //   }
+    //   root.contLineas=limpio.length;
+    //   console.warn("cantidad de llineas", root.contLineas);
+    //   return limpio;
+    // },
 		
 		nuevoPlan(){
 			let msg = "Guardando Plan de Acción";
 			root.loaderShow(msg);
+			
 			root.baseObjx.updated_by = root.user_id;
 			root.baseObjx.is_draft = false;
 			root.baseObjx.active = true;
 			let obj = root.baseObjx;
+			console.warn(root.baseObjx);
 			if(root.baseObjx.updated_by!=null){
 				console.warn(root.baseObjx);
 				let dto = {
@@ -353,6 +380,7 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
+					root.baseObjx.execution_validity = root.group.execution_validity;
 					root.nuevoPlan();
 				}
 			});
@@ -363,6 +391,7 @@ export default {
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
+					root.baseObjx.execution_validity = root.group.execution_validity;
 					root.nuevoInfo();
 				}
 			});

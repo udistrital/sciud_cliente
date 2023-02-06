@@ -90,8 +90,8 @@
 
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group3">
-	<label>Meta: </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor">
+	<label>Meta: </label><!--1026257279  Maira  Alexandra Beltran Diaz-->
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -158,7 +158,7 @@
 						
 						:allow-column-reordering="true"
 						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
+						:data-source="dataSourceB"
 						:remote-operations="true"
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
@@ -318,7 +318,7 @@ import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPattern
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
-// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomdataSourceB/Vue/
 export default {
 	name: "plan_accion_productos",
 	components: {
@@ -437,7 +437,7 @@ export default {
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/indicadores", { indicador : "items" }),
-		dataSource: function() {
+		dataSourceB: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
@@ -467,6 +467,14 @@ export default {
 		...mapActions("unidad/indicadores", { getIndicadores: "getAll" }),
 		//...mapActions("unidad/producto/conocimiento/articulo", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
 		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
+		},
 
 		porcentaje(){
 			
@@ -622,7 +630,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} </span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

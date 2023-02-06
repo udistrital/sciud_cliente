@@ -9,10 +9,19 @@
 				</h1>
 				<a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
 			</div>
+
 			<div class="header-elements" v-if="es_admin">
+				<router-link
+					tag="a"
+					:to="'/plan_historico'"
+					class="btn btn-main btn-labeled btn-labeled-left legitRipple"
+					title="Histórico Plan de Acción e informes de Gestin"
+				>
+					<b><i class="icon-history"></i></b>Historico Planes e Informes
+				</router-link>
 				<router-link tag="a" to="/red" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Red de Investigación...">
-					<b><i class="icon-collaboration"></i></b> Redes Investicación
-				</router-link> 
+					<b><i class="icon-collaboration"></i></b> Redes Investigación
+				</router-link>
 				<router-link tag="a" to="/unidad/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Estructura de Investigación...">
 					<b><i class="icon-database-add"></i></b> Nueva Estructura
 				</router-link>
@@ -111,14 +120,18 @@
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
 								:show-borders="false"
+								:word-wrap-enabled="false"
 							>
+								<!-- nuevas caracteristicas 10042022 camorenos-->
+								<DxColumnFixing :enabled="true" />
+								<!--Fin de modificaciones-->
 								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
 								<DxColumnChooser :enabled="es_admin" mode="dragAndDrop" />
 								<DxExport :enabled="false" />
 								<DxFilterPanel :visible="false" />
 								<DxFilterRow :visible="true" />
 								<DxGrouping :auto-expand-all="true" />
-								<DxGroupPanel :visible="es_admin" :allow-column-dragging="true" />
+								<DxGroupPanel :visible="true" :allow-column-dragging="true" />
 								<DxLoadPanel :enabled="false" />
 								<DxPaging :page-size="dgPageSize" />
 								<DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
@@ -134,6 +147,7 @@
 									info-text="{2} estructuras de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+
 								<DxColumn
 									:allow-filtering="false"
 									:sort-index="1"
@@ -195,7 +209,7 @@
 								/>
 								<DxColumn
 									:allow-filtering="true"
-									data-field="faculties.length"
+									data-field="faculty_ids.length"
 									caption="Facultades"
 									data-type="number"
 									alignment="center"
@@ -287,7 +301,6 @@
 								/>
 								<DxColumn
 									:width="90"
-									:allow-filtering="true"
 									data-field="group_state_id"
 									caption="Estado"
 									data-type="string"
@@ -297,7 +310,8 @@
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
-								<DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="150" alignment="center" cell-template="tplCommands" />
+
+								<!-- <DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="150" alignment="center" cell-template="tplCommands" :fixed="true" fixed-position="right"/>
 								<template #tplCommands="{ data }">
 									<span class="cmds">
 										<a
@@ -333,7 +347,7 @@
 											<i class="icon-trophy"></i>
 										</a>
 
-										<!-- Nuevo elementos plan accion  -->
+										<! -- Nuevo elementos plan accion  -- >
 										<a
 											title="Observar Plan Accion..."
 											href="#"
@@ -343,7 +357,29 @@
 											<i class="icon-clipboard"></i>
 										</a>
 									</span>
+								</template> -->
+
+								<DxColumn :width="70" alignment="center" cell-template="tpl" caption="Menú" name="cmds" :fixed="true" fixed-position="right" />
+								<template #tpl="{ data }">
+									<DxDropDownButton
+										:drop-down-options="{ width: '200' }"
+										:items="cmdGet(data)"
+										@item-click="cmdClick($event, data)"
+										display-expr="text"
+										icon="save"
+										item-template="list-item"
+										template="item"
+										key-expr="id"
+									>
+										<template #item
+											><strong><i class="hand icon-menu9"></i></strong
+										></template>
+										<template #list-item="{ data }">
+											<span class="cmd-item" title="Ver Sub Modulos..."><i :class="data.icon"></i><span v-html="data.text"></span></span>
+										</template>
+									</DxDropDownButton>
 								</template>
+
 								<template #tplUrl="{ data }">
 									<a
 										v-if="data.value && data.value.trim() !== 'NULL' && data.value.trim().length > 5"
@@ -432,6 +468,7 @@ import {
 	DxSorting,
 	DxStateStoring,
 	DxSummary,
+	DxColumnFixing,
 } from "devextreme-vue/data-grid";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
@@ -461,6 +498,7 @@ export default {
 		DxSearchPanel,
 		DxSorting,
 		DxSummary,
+		DxColumnFixing,
 		// Tabs,
 	},
 	data: () => ({
@@ -525,6 +563,7 @@ export default {
 		root.getFacultades();
 		root.loaderHide();
 		console.log("editMode", root.editMode);
+		console.warn("dsEstructuras: ", root.dsEstructuras);
 	},
 	computed: {
 		...mapState("unidad/oas", ["facultades"]),
@@ -662,25 +701,35 @@ export default {
 		cmdGet(data) {
 			return [
 				{
-					command: `/unidad/${data.value}`,
-					text: "Información",
+					command: `/unidad/${data.data.id}`,
+					text: "Información ",
 					icon: "icon-info",
 				},
 				{
-					command: `/unidad/${data.value}/documentos`,
+					command: `/unidad/${data.data.id}/documentos`,
 					text: "Documentos",
 					icon: "icon-file-pdf",
 				},
 				{
-					command: `/unidad/${data.value}/integrantes`,
+					command: `/unidad/${data.data.id}/integrantes`,
 					text: "Integrantes",
 					icon: "icon-users4",
 				},
 				{
-					command: `/unidad/${data.value}/produccion`,
+					command: `/unidad/${data.data.id}/produccion`,
 					text: "Producción",
 					icon: "icon-trophy",
 				},
+				{
+					command: `/unidad/${data.data.id}/plan_accion`,
+					text: "Plan de Acción e <br> Informe de Gestión",
+					icon: "icon-clipboard",
+				},
+				// {
+				// 	command: `/unidad/${data.data.id}/movilidad`,
+				// 	text: "Aplicar a Convocatorias",
+				// 	icon: "icon-paperplane",
+				// },
 			];
 		},
 		customizeText(cellInfo) {

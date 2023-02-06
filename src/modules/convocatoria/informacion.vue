@@ -136,7 +136,7 @@
 											</div>
 											<div class="col-3">
 												<div class="form-group">
-													<label>Monto máximo por proyecto:</label>
+													<label>Monto máximo por postulación:</label>
 													<DxNumberBox
 														align="right"
 														format="$ #,##0."

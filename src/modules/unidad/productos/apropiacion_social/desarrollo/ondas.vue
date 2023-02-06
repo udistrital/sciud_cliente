@@ -1,4 +1,3 @@
-/* Elementos a remplazar: Ondas = Titulos Principales de la aplicacion en singular una palabra Nuevo Programa Ondas = Son para los botones de nuevo elemento
 Programa Ondas = titulo abrebiado de la del contenido a mostrar programaOndasjs = nombre del archivo store al cual esta configurado axios research_units= ruta
 principal del modulo en el endPoint ondas_program = objeto json al cual se enviaran los datos de formulario */
 

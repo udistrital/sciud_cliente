@@ -20,6 +20,9 @@
 					<b><i class="icon-arrow-left2"></i></b>Estructuras {{rutaprincipal}}
 				</router-link> -->
 				<!-- <div class="header-elements"> @click.prevent="go(group.id, '/unidad', `Cargando Estructuras`);"-->
+				
+				
+
 				<a
 					:href="rutaprincipal"
 					title="Volver a Unidades..."
@@ -33,7 +36,7 @@
 					@click.prevent="nuevo()"
 					title="Volver a Unidades..."
 					class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2">
-					<b><i class="icon-database-add"></i></b> nuevo Plan de Acción
+					<b><i class="icon-database-add"></i></b> nuevo Plan de Acción 
 				</a>
 				<!-- </div> -->
 			</div>
@@ -91,7 +94,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<fieldset>
-									<legend>Lista de Planes</legend>
+									<legend>Lista de Planes e Informes</legend>
 										<div class="row grid">
 											<div class="col">
 												<h2></h2>
@@ -102,7 +105,7 @@
 														@initialized="gridInit"
 														@content-ready="onContentReady"
 														:allow-column-reordering="true"
-														no-data-text="No hay elementos registrados"
+														no-data-text="No tiene planes de acción pendientes"
 														:data-source="dataSource"
 														:remote-operations="true"
 														:hover-state-enabled="true"
@@ -130,16 +133,17 @@
 														<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 
 														<DxColumn data-field="id" :width="100"  caption="ID" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
-														<DxColumn data-field="research_group_acronym" caption="Acronimo" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
+														<DxColumn data-field="execution_validity" caption="Año Vigencia" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+														<DxColumn data-field="research_group_acronym" caption="Acrónimo" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
 														<!-- <DxColumn data-field="research_group_gruplac" caption="Año Implementación" data-type="string" alignment="center" :visible="true" :allow-grouping="false" /> -->
 														<DxColumn data-field="created_at" caption="Fecha Creación" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
 														<DxColumn data-field="updated_at" caption="Fecha Actualización" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
 
 														<!-- <DxColumn data-field='observation'  caption='Observaciones' data-type='string' alignment='center' :visible='true'  cell-template="tplObs"/>  -->
 														<DxColumn data-field="is_draft" caption="Plan Acción" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
-														<DxColumn data-field="management_report_is_draft" caption="Informe Gestion" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
+														<DxColumn data-field="management_report_is_draft" caption="Informe Gestíon" data-type="string" alignment="center" :visible="true" :customize-text="estadoEntrega" width="120" />
 														<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" />
+														<DxColumn :width="130" alignment="center" cell-template="tpl" caption="Acciones" :fixed="true"  fixed-position="right" />
 
 														<!-- <template #tplWeb="{ data }">
 															<a v-if="data.data.url != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.url" Target="_blank">
@@ -205,10 +209,12 @@
 																		class="cmd-item 
 																		color-main-600 mr-2" 
 																		@click.prevent="active(data, true)" href="#">
-																			<i class="icon-lock"></i>
+																			<i class="icon-database-add"></i>
 																		</a>
 																	</template>
-
+																	
+																	
+																	
 																	<template v-if="isAdmin">
 																		<a title="Desactivar Guardado Plan de Accion"  v-if="data.data.is_draft" class="cmd-item color-main-600 mr-2" @click.prevent="activePlan(data, false)" href="#">
 																			<i class="icon-lock"></i>
@@ -225,13 +231,15 @@
 																			<i class="icon-file-locked2"></i>
 																		</a>
 																		<a v-else 
-																		title="Habilitar Guardado informe Gestion" 
+																		title="Habilitar Guardado informe Gestíon" 
 																		class="cmd-item 
 																		color-main-600 mr-2" 
 																		@click.prevent="activeInfo(data, true)" href="#">
 																			<i class="icon-file-spreadsheet2"></i>
 																		</a>
 																	</template>
+
+
 																</span>
 															</span>
 														</template>
@@ -250,6 +258,83 @@
 			</div>
 		</div>
 
+	<DxPopup
+      :visible="popupObs"
+      :drag-enabled="false"
+      :close-on-outside-click="false"
+      :show-title="true"
+      width="400"
+      height="250"
+      title="Nuevo plan de acción"
+    >
+      <div>
+        <div class="col">
+          <p>
+            <i class="icon-info mr-1 color-main-600"></i>
+            <span class="font-weight-semibold"> Seleccione el año de vigencia para crear el plan de acción y presione el botón guardar.</span>
+          </p>
+         <DxValidationGroup ref="basicGroup">
+			<div class="col-md-12">
+                  <div class="form-group">
+                    <label>Año de vigencia : </label>
+                    <DxSelectBox
+                      :show-clear-button="true"
+                      :grouped="false"
+                      :search-enabled="false"
+                      placeholder="Seleccione..."
+                      :value.sync="baseObj.execution_validity"
+                      class="form-control"
+                      :data-source="tipoproceso"
+                      display-expr="st_name"
+                      value-expr="id"
+                      :wrapItemText="true"
+                    >
+                      <DxValidator>
+                        <DxRequiredRule />
+                      </DxValidator>
+                    </DxSelectBox>
+                  </div>
+                </div>
+			</DxValidationGroup>
+
+        </div>
+      </div>
+
+		<div class="card-footer">
+              <div class="row">
+                <div class="col">
+                  <DxButton @click="popupObs = false" class="nb">
+                    <template #default>
+                      <span
+                        class="
+                          btn btn-main btn-labeled btn-labeled-left btn-sm
+                          legitRipple
+                        "
+                      >
+                        <b><i class="icon-database-remove"></i></b> CANCELAR
+                      </span>
+                    </template>
+                  </DxButton>
+                </div>
+                <div class="col text-right">
+                  <DxButton @click="nuevoPlan" class="nb" v-if="editMode">
+                    <template #default>
+                      <span
+                        class="
+                          btn btn-main btn-labeled btn-labeled-right btn-sm
+                          legitRipple
+                        "
+                      >
+                        GUARDAR <b><i class="icon-database-add"></i></b>
+                      </span>
+                    </template>
+                  </DxButton>
+                </div>
+              </div>
+            </div>
+
+
+    </DxPopup>
 
 		<div class="row" v-if="is_dev && debug">
 			<div class="col">
@@ -298,6 +383,15 @@ import DxAccordion, { DxItem } from "devextreme-vue/accordion";
 export default {
 	created: function() {
 		root = this;
+		let today = new Date();
+		let year = today.getFullYear(), newyear=year+1;
+		
+		if(year===2021) root.tipoproceso=[{id:newyear, st_name:newyear}];
+		else root.tipoproceso=[{id:newyear, st_name:newyear},{id:year, st_name:year}];
+
+
+		root.rutaprincipal=String(location.href).slice(0,-this.$route.path.length)+"/unidad";
+
 		root.isAdmin = (this.user_role_id === this.get_role_id('administrador'));
 		console.warn("la ruta",this.$route);
 		root.getUnit({
@@ -311,12 +405,14 @@ export default {
 	},
 
 	data: () => ({
-		rutaprincipal: String(location.href).slice(0,-14),
+		popupObs:false,
+		tipoproceso:[{id:2021, st_name:2021},{id:2022, st_name:2022}],
+		rutaprincipal:null,
 		group: null,
 		isAdmin:false,
 		totaCount: 0,
 		baseObj: {
-			execution_validity: 0,
+			execution_validity: null,
 			is_draft: true,
 			active: true,
 		}
@@ -375,7 +471,7 @@ export default {
 	},	
 	methods: {
 		...mapActions("unidad", ["getUnit", "getResearchers", "saveResearcher", "updateResearcher"]),
-		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active" }),
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSerarchDoc: "univerdalGet" }),
 
 		loadMembers() {
 			console.log("members", root.group.member_ids);
@@ -386,26 +482,42 @@ export default {
 			return cellInfo.value ? "Editando...":"Terminado" ;
 		},
 		
-		nuevoPlan(){
-			let msg = "Creando nuevo Plan de Acción...";
-			root.loaderShow(msg);
-			root.baseObj.created_by = root.user_id;
-			root.baseObj.is_draft = true;
-			root.baseObj.active = true;
-			let obj = root.baseObj;
-			let dto = {
-				unidadId: root.group.id,
-				stringEP: "action_plans",
-				mod: obj.id,
-				objectSend: { action_plan: obj },
-				cb: function(item) {
-					console.log("dato", item);
-					root.grid.refresh();
-					root.loaderHide();
-				},
-			};
-			console.log("root.mode", root.mode);
-			root.objSave(dto);
+		async nuevoPlan(){
+			var result = root.$refs.basicGroup.instance.validate();
+			let dataval= await root.getSerarchDoc({url:  'research_units/'+root.$route.params.unidadId+'/action_plans/?filter=[["execution_validity","=","'+root.baseObj.execution_validity+'","AND","active","=","true"]]'});
+			console.clear();
+			console.warn("data", dataval)
+			if(dataval.length == 0){
+				if (result.isValid) {
+					let msg = "Creando nuevo Plan de Acción...";
+					root.loaderShow(msg);
+					root.baseObj.created_by = root.user_id;
+					root.baseObj.is_draft = true;
+					root.baseObj.active = true;
+					let obj = root.baseObj;
+					let dto = {
+						unidadId: root.group.id,
+						stringEP: "action_plans",
+						mod: obj.id,
+						objectSend: { action_plan: obj },
+						cb: function(item) {
+							console.log("dato", item);
+							root.grid.refresh();
+							root.loaderHide();
+						},
+					};
+					console.log("root.mode", root.mode);
+					root.objSave(dto);
+					root.popupObs=false;
+					root.baseObj.execution_validity=null;
+					
+				}
+			}else{
+				this.popupObs=false;
+				this.$info("El plan de accion que desea registrar ya se encuentra en uso para este grupo o semillero");
+
+			}
+			
 		},
 
 
@@ -413,8 +525,11 @@ export default {
 			let msg="¿Está seguro que desea crear un nuevo plan de acción?<br>Nota: Recuerde que este no podrá ser eliminado o editado.";
 			this.$confirm(msg, function(si_no) {
 				console.log("result nuevo plan", si_no);
+
+
 				if (si_no) {
-					root.nuevoPlan();
+					root.popupObs=true;
+					//root.nuevoPlan();
 				}
 			});
 		},
@@ -425,7 +540,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} el plan de acción con id: <span class='text-sb'>"${data.data.id}"</span>?`;
+			let msg = `¿Realmente desea ${a} el plan de acción: <span class='text-sb'>"${data.data.execution_validity} id: ${data.data.id}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
@@ -457,48 +572,59 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} el guardado de datos en plan de acción con id: <span class='text-sb'>"${data.data.id}"</span>?`;
-			this.$confirm(msg, function(si_no) {
-				console.log("result", si_no);
-				if (si_no) {
-					let baseObjx={};
-					root.loaderShow(state+" Informe");
-					baseObjx.update_by = root.user_id;
-					baseObjx.updated_by= root.user_id;
-					baseObjx.management_report_is_draft = state;
-					let obj = baseObjx;
-					let dto = {
-						unidadId: root.group.id,
-						stringEP: "ap_management_reports",
-						mod: data.data.id,
-						newFormat:true,
-						objectSend: { ap_management_report: obj },
-						cb: function(item) {
-							console.log("dato", item);
-							root.grid.refresh();
-							// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
-							//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
-							root.loaderHide();
-						},
-					};
-					root.objUpdate(dto);
-				}
-			});
+			let msg = `¿Realmente desea ${a} el guardado de datos en Informe de Gestíon <span class='text-sb'>"${data.data.execution_validity} id: ${data.data.id}"</span>?`;
+
+			if(data.data.is_draft==false){
+				this.$confirm(msg, function(si_no) {
+					console.log("result", si_no);
+					if (si_no) {
+						let baseObjx={};
+						root.loaderShow(state+" Informe");
+						baseObjx.update_by = root.user_id;
+						baseObjx.updated_by= root.user_id;
+						baseObjx.management_report_is_draft = state;
+						let obj = baseObjx;
+						let dto = {
+							unidadId: root.group.id,
+							stringEP: "ap_management_reports",
+							mod: data.data.id,
+							newFormat:true,
+							objectSend: { ap_management_report: obj },
+							cb: function(item) {
+								console.log("dato", item);
+								root.grid.refresh();
+								// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
+								//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+								root.loaderHide();
+							},
+						};
+						root.objUpdate(dto);
+					}
+				});
+			}else{
+				root.$info("Debe terminar el plan de acción para continuar con esta tarea.");	
+			}
+			
+
+
 		},
 
 		activePlan(data, state) {
-			// // console.clear();
+			//console.clear();
 			console.log("active", data);
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} el guardado de datos en plan de acción con id: <span class='text-sb'>"${data.data.id}"</span>?`;
+			let msg = `¿Realmente desea ${a} el guardado de datos en plan de acción con <span class='text-sb'>"${data.data.execution_validity} id: ${data.data.id}"</span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow("Activando formularios");
 					root.baseObj.update_by = root.user_id;
 					root.baseObj.updated_by= root.user_id;
+					
+					if(data.data.execution_validity==0) root.baseObj.execution_validity = 2021;
+					else root.baseObj.execution_validity = data.data.execution_validity;
 					root.baseObj.is_draft = state;
 					root.baseObj.active = true;
 					let obj = root.baseObj;
@@ -517,6 +643,30 @@ export default {
 						},
 					};
 					root.objUpdate(dto);
+
+					if(data.data.management_report_is_draft==false){
+						let baseObjx={};
+						root.loaderShow(state+"Activando Informe");
+						baseObjx.update_by = root.user_id;
+						baseObjx.updated_by= root.user_id;
+						baseObjx.management_report_is_draft = true;
+						let objx = baseObjx;
+						let dtox = {
+							unidadId: root.group.id,
+							stringEP: "ap_management_reports",
+							mod: data.data.id,
+							newFormat:true,
+							objectSend: { ap_management_report: objx },
+							cb: function(item) {
+								console.log("dato", item);
+								root.grid.refresh();
+								// root.$router.go('/unidad/'+root.$route.params.unidadId+'/plan_accion');
+								//root.go(0, `/unidad/${root.$route.params.unidadId}/plan_accion`, 'Cargando Ingreso de Datos');
+								root.loaderHide();
+							},
+						};
+						root.objUpdate(dtox);
+					}
 				}
 			});
 		},

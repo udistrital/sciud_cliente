@@ -158,31 +158,42 @@ const store = {
 					key: "info",
 					icon: "icon-info",
 					name: "Información",
+					
 				},
 				{
 					key: "documentos",
 					icon: "icon-file-pdf",
 					name: "Documentos",
+					
 				},
 				{
 					key: "criterios",
 					icon: "icon-tree7",
 					name: "Criterios",
+					
 				},
 				{
 					key: "rubros",
 					icon: "icon-coins",
 					name: "Rubros",
+					
 				},
 				{
 					key: "cronograma",
 					icon: "icon-calendar",
 					name: "Cronograma",
+					
 				},
 				{
 					key: "plantilla",
 					icon: "icon-page-break2",
 					name: "Plantilla",
+					
+				},
+				{
+					key: "evaluar",
+					icon: "icon-paperplane",
+					name: "Aspirantes Convocatoria",
 				},
 			];
 		},

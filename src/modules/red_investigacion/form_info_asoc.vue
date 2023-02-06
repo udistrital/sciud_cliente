@@ -115,8 +115,6 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 									</div>
 								</div>
 
-								
-
                                 <div class="col-md-4">
 									<div class="form-group">
 										<label>País:</label>
@@ -262,6 +260,8 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 								<a title="Observar participantes..." class="cmd-item color-main-600 mr-2" @click.prevent="participantes(data)" href="#">
 									<i class="icon-users"></i>
 								</a> -->
+
+								
 
 								<span v-if="editMode">
 									<a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">

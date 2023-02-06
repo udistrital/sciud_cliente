@@ -91,7 +91,7 @@
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group">
 	<label>Meta : </label>
-	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" >
+	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />
 	</DxValidator> 
@@ -171,7 +171,7 @@
 						
 						:allow-column-reordering="true"
 						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
+						:data-source="dataSourceC"
 						:remote-operations="true"
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
@@ -333,10 +333,10 @@ import {
 } from "devextreme-vue/data-grid";
 import { DxEmailRule, DxRequiredRule, DxStringLengthRule, DxValidator, DxPatternRule } from "devextreme-vue/validator";
 import { DxDateBox, DxSelectBox, DxButton, DxTagBox, DxTextBox, DxNumberBox, DxTextArea, DxValidationGroup, DxPopup } from "devextreme-vue";
-import DataSource from 'devextreme/data/data_source';
+import dataSourceC from 'devextreme/data/data_source';
 import { mapState, mapActions, mapGetters } from "vuex";
 
-// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
+// https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomdataSourceC/Vue/
 export default {
 	name: "plan_accion_formacion",
 	components: {
@@ -459,7 +459,7 @@ export default {
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapState("unidad/indicadores", { lista_areas : "items_areas" }),
-		dataSource: function() {
+		dataSourceC: function() {
 			if (typeof this.action_panel_id === "undefined") return null;
 			console.log("root.group", this.group);
 			let datat="";
@@ -482,7 +482,7 @@ export default {
 			});
 		},
 		alldata(){
-			return new DataSource({
+			return new dataSourceC({
 				store: root.totalAreas,
 				key: 'id',
 				group: 'parent_name'
@@ -505,6 +505,14 @@ export default {
 			if(root.alldata2.length > 0) root.$info("Seleccione Producto Específico");
 			console.warn("aldata2 data = ", root.alldata2);
 
+		},
+
+		keyDown(e) {
+			const { event } = e;
+			const str = event.key || String.fromCharCode(event.which);
+			if (/^[.,e,+,-]$/.test(str)) {
+				event.preventDefault();
+			}
 		},
 
 		porcentaje(){
@@ -665,7 +673,7 @@ export default {
 			console.log("state", state);
 			let a = state ? "activar" : "desactivar";
 			let am = state ? "Activando" : "Desactivando";
-			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} del usuario ${root.user_role_id}</span>?`;
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data[root.titlecolum]} </span>?`;
 			this.$confirm(msg, function(si_no) {
 				console.log("result", si_no);
 				if (si_no) {

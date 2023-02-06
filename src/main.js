@@ -92,6 +92,7 @@ vue.mixin({
 
 		// 202105242012:
 		if (this.user !== null && this.user.local !== null && typeof this.user.local !== "undefined") {
+			//this.getAllRolesDataBase();
 			// 202103081850: Carga los roles de usuario globalmente
 			this.getAllRoles();
 			// 202103311032: Carga tipos y subtipos
@@ -103,32 +104,85 @@ vue.mixin({
 		...mapActions("auth/login", ["authLogout"]),
 		...mapActions("auth/usuario", ["getAllRoles"]),
 		...mapActions("core/tipo", ["getTypes", "getSubtypes"]),
+
+		// ...mapActions("unidad/producto/universalSentUpAct", {
+		// 	getDataAll: "getAll",
+		// 	getForm: "get",
+		// }),
+		// getAllRolesDataBase(){
+		// 	let datalist=null;
+		// 	this.api()
+		// 		.get("/role")
+		// 		.then((r) => {
+		// 			datalist = r.data.data;
+		// 		});
+		// 	return datalist;
+		// },
+
+		get_date(dateStr) {
+			let arr = dateStr.split("-");
+			let y = parseInt(arr[0]);
+			let m = parseInt(arr[1]) - 1;
+			let d = parseInt(arr[2]);
+			let nd = new Date(y, m, d);
+			console.log(`get_date(${dateStr}) =>`, nd);
+			return nd;
+		},
+
+		get_min_date(dateArray) {
+			return new Date(Math.min.apply(null, dateArray));
+		},
+
+		get_max_date(dateArray) {
+			return new Date(Math.max.apply(null, dateArray));
+		},
+
+		get_day_diff(d1, d2) {
+			return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+		},
+
 		date_focus_in(e) {
 			// console.log("date_focus_in =>", e);
 			e.component.open();
 		},
+
 		date_focus_out(e) {
 			// console.log("date_focus_out =>", e);
 			e.component.close();
 		},
 		// 202108250029: Obtiene el id de un rol de grupo
+
 		get_group_role_id: (name) => {
 			let item = window.clasificador.estructura_rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+		//Permite obtener elnombre del rol de un grupo segun el objeto creado en clasificator.js
+		get_group_role_name: (id) => {
+			let item = window.clasificador.estructura_rol.find((o) => o.id == id);
+			return typeof item !== "undefined" ? item["name"] : null;
+		},
+
 		// 202108250030: Obtiene el id de un tipo de grupo
 		get_group_type_id: (name) => {
 			let item = window.clasificador.estructura_tipo.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+
+		get_sub_type_id: (name) => {
+			let item = window.clasificador.identificadores_subtipo.find((o) => o.name == name);
+			return typeof item !== "undefined" ? item["id"] : null;
+		},
+
 		get_role_id: (name) => {
 			let item = window.clasificador.rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
+
 		get_faculty_name: (id) => {
 			let item = window.clasificador.facultad.find((o) => o.id.toString() == id.toString());
 			return typeof item !== "undefined" ? item["nombre"] : null;
 		},
+
 		get_faculty_name_by_oas: (oas_id) => {
 			let item = window.clasificador.facultad.find((o) => o.id_oas.toString() == oas_id.toString());
 			return typeof item !== "undefined" ? item["nombre"] : null;
@@ -196,6 +250,13 @@ vue.mixin({
 		yesNo(cellInfo) {
 			return cellInfo.value ? "SI" : "NO";
 		},
+		currency(cellInfo) {
+			console.log("cellInfo =>", cellInfo);
+			return typeof cellInfo.value !== undefined ? "$ " + cellInfo.value.format() : "--";
+		},
+		number(cellInfo) {
+			return typeof cellInfo.value !== undefined ? cellInfo.value.format() : "--";
+		},
 		siNo() {
 			return [
 				{
@@ -207,6 +268,10 @@ vue.mixin({
 					name: "NO",
 				},
 			];
+		},
+		toDate(dateStr) {
+			var parts = dateStr.split("-");
+			return new Date(parts[0], parseInt(parts[1]) - 1, parts[2]);
 		},
 		nullText(cellInfo) {
 			if (cellInfo.valueText.length > 0) {
@@ -236,6 +301,49 @@ vue.mixin({
 		es_admin() {
 			return this.user_role_id == this.get_role_id("administrador");
 		},
+		//suspendido con el fin de relacionar las acciones de los roles de usuario creados desde el rol de administrador
+		//editado por camorenos@udistrital.edu.co 01042022
+		/*editMode() {
+			let root = this;
+			let result = false;
+			console.log(window.vm.$sep);
+			console.log("editMode");
+			if (
+				root.user_role_id === this.get_role_id("administrador") ||
+				root.user_role_id === this.get_role_id("gestor") ||
+				root.user_role_id === this.get_role_id("gestor_facultad")
+			) {
+				result = true;
+			} else {
+				console.log("this.$route.params", root.$route.params);
+				let groupId = root.$route.params.unidadId;
+				if (typeof groupId !== "undefined" && typeof window.vm.user !== "undefined") {
+					console.log("groupId =>", groupId);
+					console.log("user =>", window.vm.user);
+					// 202106162157: Filtra el grupo actual de los grupos seleccionados
+					console.log("groups =>", window.vm.user.groups);
+					if (typeof window.vm.user.groups !== "undefined") {
+						let g = window.vm.user.groups.find((o) => o.research_group_id == groupId);
+						if (typeof g !== "undefined") {
+							console.log("current_group =>", g);
+							console.log("current_group => role_id =>", g.role_id);
+							// 202106170127: Si es director en el grupo actual
+							if (g.role_id === root.get_group_role_id("director")) result = true;
+							// 202108250019: Si el grupo es semillero y el rol es lider semillero
+							// 202109160520: Si el grupo es semillero y el rol es docente_tutor
+							if (
+								g.group_type_id === root.get_group_type_id("semillero") &&
+								(g.role_id === root.get_group_role_id("lider_semillero") || g.role_id === root.get_group_role_id("docente_tutor"))
+							)
+								result = true;
+						}
+					}
+				}
+			}
+			console.log("editMode =>", result);
+			console.log(window.vm.$sep);
+			return result;
+		},*/
 		editMode() {
 			let root = this;
 			let result = false;
@@ -276,6 +384,10 @@ vue.mixin({
 			console.log("editMode =>", result);
 			console.log(window.vm.$sep);
 			return result;
+		},
+
+		listRolEstructureGroup() {
+			return window.clasificador.estructura_rol;
 		},
 		editModeConv() {
 			let result = true;

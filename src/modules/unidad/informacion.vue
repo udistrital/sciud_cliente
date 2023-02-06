@@ -145,7 +145,7 @@
 													</DxTagBox>
 												</div>
 											</div>
-											<div class="col-md-4" v-if="group.group_type_id == get_group_type_id('grupo') && researchNetworks.length > 0">
+											<div class="col-md-4" v-if="group.group_type_id.toString() == get_group_type_id('grupo').toString() && researchNetworks.length > 0">
 												<div class="form-group">
 													<label>Red de Investigación:</label>
 													<DxSelectBox
@@ -162,7 +162,7 @@
 													/>
 												</div>
 											</div>
-											<div class="col-md-4" v-if="group.group_type_id == get_group_type_id('semillero') && researchGroups.length > 0">
+											<div class="col-md-4" v-if="group.group_type_id.toString() == get_group_type_id('semillero').toString() && researchGroups.length > 0">
 												<div class="form-group">
 													<label>Grupo de Investigación:</label>
 													<DxSelectBox
@@ -336,7 +336,7 @@
 													<DxTextArea
 														:read-only="!editMode"
 														:height="100"
-														:max-length="400"
+														:max-length="1000"
 														:value.sync="group.mission"
 														placeholder="Misión"
 														class="form-control"
@@ -353,7 +353,7 @@
 													<DxTextArea
 														:read-only="!editMode"
 														:height="100"
-														:max-length="400"
+														:max-length="1000"
 														:value.sync="group.vision"
 														placeholder="Visión"
 														class="form-control"
@@ -370,7 +370,7 @@
 													<DxTextArea
 														:read-only="!editMode"
 														:height="100"
-														:max-length="400"
+														:max-length="1000"
 														:value.sync="group.description"
 														placeholder="Descripción"
 														class="form-control"
@@ -399,7 +399,7 @@
 														placeholder="Código Colciencias"
 													>
 														<DxValidator>
-															<DxRequiredRule />
+															<DxCustomRule :validation-callback="validateIfApply" :reevaluate="true" message="Obligatorio" />
 														</DxValidator>
 													</DxTextBox>
 												</div>
@@ -562,8 +562,13 @@
 								>
 							</div>
 							<div class="col text-right" v-if="editMode">
-								<a href="#" @click.prevent="save()" title="Guardar Unidad..." class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple"
+								<a href="#" @click.prevent="save(false)" title="Guardar Unidad..." class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple"
 									>Guardar <b><i class="icon-floppy-disk"></i></b
+								></a>
+							</div>
+							<div  v-if="editMode && es_admin && mode=='edit'" >
+								<a href="#" @click.prevent="save2()" title="Guardar Unidad..." class="btn btn-warning btn-labeled btn-labeled-right btn-sm legitRipple"
+									>Guardar como Administrador<b><i class="icon-floppy-disk"></i></b
 								></a>
 							</div>
 						</div>
@@ -584,6 +589,11 @@
 						<span class="font-weight-semibold">researchNetworks.length:</span> {{ researchNetworks.length }}
 						<hr class="sep mb-0" />
 						<span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">es admin</span> {{ es_admin }}
+						<hr class="sep mb-0" />
+						<span class="font-weight-semibold">Modo: </span> {{ mode }}
+						
 					</div>
 				</div>
 			</div>
@@ -599,7 +609,7 @@
 let $ = window.jQuery,
 	root = null;
 import { DxButton, DxDateBox, DxFileUploader, DxSelectBox, DxSwitch, DxTagBox, DxTextArea, DxTextBox, DxValidationGroup } from "devextreme-vue";
-import DxValidator, { DxRequiredRule, DxEmailRule, DxPatternRule } from "devextreme-vue/validator";
+import DxValidator, { DxRequiredRule, DxCustomRule, DxEmailRule, DxPatternRule } from "devextreme-vue/validator";
 import DataSource from "devextreme/data/data_source";
 import { mapActions, mapGetters, mapState } from "vuex";
 let hideErrors = () => {
@@ -669,6 +679,7 @@ export default {
 		DxFileUploader,
 		DxValidator,
 		DxButton,
+		DxCustomRule,
 		DxRequiredRule,
 		DxSelectBox,
 		DxSwitch,
@@ -833,6 +844,14 @@ export default {
 		...mapActions("unidad/cine", { getCine: "all" }),
 		...mapActions("unidad/oas", { getFacultades: "facultades" }),
 		...mapActions("unidad/ocde", { getOcde: "getAll" }),
+		validateIfApply(e) {
+			console.log("e =>", e);
+			if (root.group.group_type_id.toString() == root.get_group_type_id("grupo").toString()) {
+				return e.value.length > 1;
+			} else {
+				return true;
+			}
+		},
 		validateUrl(e) {
 			console.log("e.value", e);
 			var r = /^(http|https):\/\/[^ "]+$/;
@@ -898,14 +917,30 @@ export default {
 				},
 			});
 		},
-		save: async () => {
+
+		save2(){
+			root.$refs.basicGroup.instance.validate();
+			this.$confirm("¿Desea guardar información con campos incompletos?", function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					root.save(true);
+				}
+			});
+		},
+		save: async (esadmon) => {
 			console.clear();
+			let resultado = false;
 			var result = root.$refs.basicGroup.instance.validate();
+			if(esadmon){
+				resultado = esadmon;
+				root.$info("Se guardaron datos con campos incompletos.");
+			} else resultado =result.isValid;
 			// root.loaderHide();
 			console.log("result", result);
+			console.warn("edit", root.mode);
 			// root.loaderMessage = "Rekiki";
 			// root.loaderShow();
-			if (result.isValid) {
+			if (resultado) {
 				console.log(root.$sep);
 				console.log("VALID!");
 				$("#btn-add").fadeOut();
@@ -964,7 +999,9 @@ export default {
 			}
 		},
 		facultadChange(e) {
-			// console.clear();
+			console.clear();
+			let facultad_matematicas_id = root.get_sub_type_id("facultad_matematicas");
+			console.log("facultad_matematicas =>", facultad_matematicas_id);
 			console.log("value", e.value);
 			console.log("facultades", root.facultades);
 			if (typeof e.value !== "undefined") {

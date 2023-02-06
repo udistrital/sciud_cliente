@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20211104 - ©{{ year }}
+				SICIUD v2.0.20230206 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -21,8 +21,18 @@
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-lg-auto" v-else>
-				<li class="nav-item" v-for="(item, index) in links" :key="index">
+				<!--<li class="nav-item" v-for="(item, index) in links" :key="index">
 					<a :href="linkLogin(item.cc)" :class="cssClass" :data-title="item.title"><i class="icon-user"></i> {{ item.text }}</a>
+				</li>-->
+				<li class="nav-item dropup" v-if="debug">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Roles (Modo Pruebas)
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<li class="nav-item" v-for="(item, index) in links" :key="index">
+							<a :href="linkLogin(item.cc)" :class="cssClass" :data-title="item.title"><i class="icon-user"></i> {{ item.text }}</a>
+						</li>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -71,19 +81,34 @@ export default {
 		showDev: true,
 		items: [
 			{
-				cc: "79602309",
+				cc: "79602309", //79602309
 				title: "Diego Alfonso Vargas Villegas (Administrador)",
-				text: "Administrador",
+				text: "Administrador Diego",
 			},
 			{
-				cc: "1023867324",
+				cc: "1013622639",
+				title: "Carlos (Administrador)",
+				text: "Administrador Carlos",
+			},
+
+			{
+				cc: "1016082469",
+				title: "edwar",
+				text: "Edwar Pruebas",
+			},
+
+			//1023867324 dato cambiado para ingreso y simulacion de gestor
+			{
+				cc: "80843691",
 				title: "Gestor Facultad",
 				text: "Gestor Facultad",
 			},
+
+			// 80843691 dato cambiado para ingreso y simulacion de gestor
 			{
-				cc: "1111111104",
-				title: "Prueba Usuario",
-				text: "Docente Tutor",
+				cc: "9872650",
+				title: "lector",
+				text: "lector",
 			},
 
 			{
@@ -91,39 +116,59 @@ export default {
 				title: "Prueba Estudiante Siciud (Directora)",
 				text: "Directora",
 			},
-			/*
-			{
-				cc: "65432123",
-				title: "Prueba Estudiante Siciud (Gestor)",
-				text: "Gestor",
-			},
+
 			{
 				cc: "52899935",
 				title: "Prueba Estudiante Siciud (Directora)",
 				text: "Directora",
 			},
-			
+
 			{
-				cc: "1655467973",
-				title: "Carlos Arturo Marín Sánzhez (Gestor Facultad Ingeniería)",
-				text: "Gestor Facultad",
+				cc: "1026278985",
+				title: "Luis Javier Enrique Romero Puentes (Integrante)",
+				text: "Estudiante Integrante",
 			},
+
 			{
 				cc: "53009619",
 				title: "Luzangela Piñeros Botero (Líder Semillero)",
 				text: "Líder Semillero",
 			},
+
+			/*
+			este usuario no funciona en pruebas
 			{
-				cc: "43105248",
-				title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-				text: "Int. Semillero",
+				cc: "65432123",
+				title: "Prueba Estudiante Siciud (Gestor)",
+				text: "Gestor",
 			},
+
 			{
-				cc: "19296014",
+				cc: "1111111104",
+				title: "Prueba Usuario",
+				text: "Docente Tutor",
+			},
+
+			{
+				cc: "98765432",
 				title: "German Arturo Lopez Martinez (Integrante)",
 				text: "Integrante",
 			},
-*/
+
+			*/
+
+			//seccion administrativa visible
+			// {
+			// 	cc: "43105248",
+			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
+			// 	text: "Int. Semillero",
+			// },
+			/*
+			este usuario no funciona en pruebas
+			
+			*/
+
+			//fin seccion administrativa visible
 		],
 	}),
 	watch: {

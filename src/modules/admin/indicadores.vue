@@ -402,6 +402,8 @@ export default {
 	},
 	methods: {
 		...mapActions("core/indicador", ["set"]),
+		...mapActions("unidad/producto/universalSentUpAct", { elementoActive: "active" }),
+
 		validarTipo(e) {
 			// 202104272101: Disable_Validation_Dynamically
 			// https://js.devexpress.com/Documentation/Guide/UI_Components/Common/UI_Widgets/Data_Validation/#Disable_Validation_Dynamically
@@ -412,6 +414,37 @@ export default {
 				return e.value !== null;
 			} else return true;
 		},
+
+		active(data, state) {
+			// console.clear();
+			console.log("active", data);
+			console.log("state", state);
+			let a = state ? "activar" : "desactivar";
+			let am = state ? "Activando" : "Desactivando";
+			let msg = `¿Realmente desea ${a} <span class='text-sb'>"${data.data.ind_description} ?`;
+			this.$confirm(msg, function(si_no) {
+				console.log("result", si_no);
+				if (si_no) {
+					root.loaderShow(`${am}`, root.panelGrid);
+					let active = JSON.stringify({ active: state, updated_by: root.user_id });
+
+					var dto = {
+						newFormat: true,
+						url: `/indicators/${data.data.id}`,
+						data: JSON.parse(`{ "indicator" :` + active + "}"),
+						cb: function(result) {
+							console.log("Result", result);
+							root.grid.refresh();
+							root.loaderHide();
+						},
+					};
+					console.log("dto", dto);
+					root.elementoActive(dto);
+					root.loaderHide();
+				}
+			});
+		},
+
 		getSubtypes(e, a) {
 			// console.clear();
 			console.log("e =>", e);
