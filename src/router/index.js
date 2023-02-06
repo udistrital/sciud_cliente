@@ -120,7 +120,10 @@ let routes = new router({
 
 		
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> master
 // //convocatoria movilidad desde grupo de investigacion
 // 		{
 // 			path: "/unidad/:unidadId/movilidad",

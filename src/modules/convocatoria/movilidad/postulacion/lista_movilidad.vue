@@ -11,11 +11,12 @@
 								<span class="item-title">&nbsp;</span>
 							</h1>
 							<span class="item-title">En esta sección usted podrá visualizar las convocatorias de movilidad que tiene registradas hasta el momento.</span>
-							<p><b>Nota:</b> Cargue los documentos obligatorios y luego haga clic en el botón de publicar de la columna acciones.</p>
+							<p><b>Nota:</b> Cargue los documentos obligatorios y luego haga clic en el botón de publicar de la columna acciones.</p> 
 						</div>
 						<div class="header-elements">
 							<span class="cmds-back slide">
-								<button type="button" @click.prevent="retorno()" title="Volver al panel principal.." class="btn btn-main btn-labeled btn-labeled-left ">
+								<button type="button" @click.prevent="retorno()" title="Volver al panel principal.."
+									class="btn btn-main btn-labeled btn-labeled-left ">
 									<b><i class="icon-arrow-left"></i></b> Volver A {{ title }}
 								</button>
 							</span>
@@ -25,14 +26,7 @@
 			</div>
 		</div>
 
-		<Documentos
-			:id="id_panel_documentos"
-			:end-point="endPointRute"
-			:main-obj="baseObj"
-			:parent="this"
-			:tipos="tiposDocumento"
-			:botonUploadVisible="{ visible: true }"
-		/>
+		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" :botonUploadVisible="{visible:true}" />
 
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -40,12 +34,12 @@
 					<div class="card">
 						<div class="card-header main">
 							<i class="icon-pencil3 p-3"></i>
-							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{ titleBtn }} </span>
+							<span class="font-weight-semibold">{{ mode == "edit" ? "Editar" : "Crear" }} {{ titleBtn }}
+							</span>
 						</div>
 						<div class="card-body mb-0 pb-0 pt-2">
-							<h2>
-								<span class="item-title mr-1">Por favor verifique bien la información diligenciada, esta aplicación no se podrá editar más adelante.</span>
-							</h2>
+							<h2><span class="item-title mr-1">Por favor verifique bien la información diligenciada, esta
+									aplicación no se podrá editar más adelante.</span></h2>
 							<div class="row">
 								<!-- formulatio -->
 
@@ -72,7 +66,8 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Nombre del evento al que se asiste: </label>
-										<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control" :value.sync="baseObj.event_name">
+										<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control"
+											:value.sync="baseObj.event_name">
 											<DxValidator>
 												<DxRequiredRule />
 											</DxValidator>
@@ -80,10 +75,13 @@
 									</div>
 								</div>
 
+
+
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Nombre de la ponencia: </label>
-										<DxTextBox placeholder="Nombre de la ponencia" class="form-control" :value.sync="baseObj.paper_name">
+										<DxTextBox placeholder="Nombre de la ponencia" class="form-control"
+											:value.sync="baseObj.paper_name">
 											<DxValidator>
 												<DxRequiredRule />
 											</DxValidator>
@@ -94,8 +92,10 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<label>N° de ediciones del Evento: </label>
-										<DxNumberBox placeholder="N° de ediciones del Evento" class="form-control" :value.sync="baseObj.event_edition_number">
-											<DxValidator> </DxValidator>
+										<DxNumberBox placeholder="N° de ediciones del Evento" class="form-control"
+											:value.sync="baseObj.event_edition_number">
+											<DxValidator>
+											</DxValidator>
 										</DxNumberBox>
 									</div>
 								</div>
@@ -106,25 +106,19 @@
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										<label>¿La UD participa como organizador o miembro de mesas de evaluación?: </label>
-										<DxSwitch :value.sync="baseObj.is_organizer" switched-on-text="SI" switched-off-text="NO" />
+										<label>¿La UD participa como organizador o miembro de mesas de evaluación?:
+										</label>
+										<DxSwitch :value.sync="baseObj.is_organizer" switched-on-text="SI"
+											switched-off-text="NO" />
 									</div>
 								</div>
 
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Fecha del evento: </label>
-										<DxDateBox
-											class="form-control"
-											name="event_date"
-											:value.sync="baseObj.event_date"
-											id="event_date"
-											placeholder="DD/MM/YYYY"
-											display-format="dd/MM/yyyy"
-											:min="minDate"
-											:max="actualDate"
-											type="date"
-										>
+										<DxDateBox class="form-control" name="event_date"
+											:value.sync="baseObj.event_date" id="event_date" placeholder="DD/MM/YYYY"
+											display-format="dd/MM/yyyy" :min="minDate" :max="actualDate" type="date">
 											<DxValidator>
 												<DxRequiredRule />
 											</DxValidator>
@@ -135,14 +129,18 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Pagina del evento: </label>
-										<DxTextBox placeholder="Pagina del evento" class="form-control" :value.sync="baseObj.event_page">
+										<DxTextBox placeholder="Pagina del evento" class="form-control"
+											:value.sync="baseObj.event_page">
 											<DxValidator>
 												<DxRequiredRule />
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
+												<DxPatternRule
+													message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo"
+													:pattern="urlPattern" />
 											</DxValidator>
 										</DxTextBox>
 									</div>
 								</div>
+
 
 								<div class="col-md-12" v-if="tiposDocumento.length > 0">
 									<div class="card-body" v-html="requisitoArchivo()"></div>
@@ -166,7 +164,8 @@
 										<!-- v-if="editMode">-->
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
-												{{ mode == "edit" ? "Actualizar Aplicacion" : "Nueva Aplicación" }} <b><i class="icon-database-add"></i></b>
+												{{ mode == "edit" ? "Actualizar Aplicacion" : "Nueva Aplicación" }} <b><i
+														class="icon-database-add"></i></b>
 											</span>
 										</template>
 									</DxButton>
@@ -178,93 +177,72 @@
 			</div>
 		</DxValidationGroup>
 
+
 		<div class="row grid">
 			<div class="col">
 				<h2></h2>
 				<div class="p-0">
-					<DxDataGrid
-						class="main"
-						width="100%"
-						@initialized="gridInit"
-						@content-ready="onContentReady"
-						:allow-column-reordering="true"
-						no-data-text="No hay elementos registrados"
-						:data-source="dataSource"
-						:remote-operations="true"
-						:hover-state-enabled="true"
-						:row-alternation-enabled="true"
-						:show-borders="false"
-					>
+					<DxDataGrid class="main" width="100%" @initialized="gridInit" @content-ready="onContentReady"
+						:allow-column-reordering="true" no-data-text="No hay elementos registrados"
+						:data-source="dataSource" :remote-operations="true" :hover-state-enabled="true"
+						:row-alternation-enabled="true" :show-borders="false">
 						<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
 						<DxSorting mode="single" /><!-- single, multiple, none" -->
 						<DxPaging :page-size="dgPageSize" />
 						<DxFilterRow :visible="false" />
 						<DxLoadPanel :enabled="false" />
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-
+						
 						<DxGrouping :auto-expand-all="true" />
-
+						
 						<DxSummary>
 							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} elementos" />
 						</DxSummary>
-
-						<DxPager
-							:show-info="true"
-							:show-page-size-selector="true"
-							:show-navigation-buttons="true"
+						
+						<DxPager :show-info="true" :show-page-size-selector="true" :show-navigation-buttons="true"
 							:allowed-page-sizes="dgPageSizes"
-							info-text="{2} Lista Aplicaciones Movilidad (Página {0} de {1})"
-						/>
-
+							info-text="{2} Lista Aplicaciones Movilidad (Página {0} de {1})" />
+						
 						<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-
+						
+						
 						<!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
 						<!-- :sort-index="1" sort-order="desc" -->
-						<DxColumn data-field="id" caption="ID" width="90" data-type="string" alignment="center" :visible="true" :allow-grouping="false" />
+						<DxColumn data-field="id"   caption="ID"  width="90" data-type="string"
+							alignment="center" :visible="true" :allow-grouping="false"  /> 
 						<!-- <DxColumn data-field='researcher_id' caption='Id Investigador' data-type='string'
 							alignment='center' :visible='true' :allow-grouping='false' /> -->
 						<!-- <DxColumn data-field="researcher_id" caption="Nombre" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
 
-						<DxColumn data-field="call_name" caption="Convocatoria" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
-						<DxColumn data-field="event_name" caption="Evento" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
-						<DxColumn
-							data-field="event_edition_number"
-							caption="Edicion"
-							data-type="string"
-							alignment="center"
-							width="90"
-							:visible="true"
-							:allow-grouping="false"
-						/>
-						<DxColumn data-field="geo_city_name" caption="Ciudad" data-type="string" alignment="left" :visible="false" :allow-grouping="false" />
-						<DxColumn data-field="geo_country_name" caption="Pais" data-type="string" alignment="left" :visible="true" :allow-grouping="false" />
-
-						<DxColumn data-field="event_date" caption="Fecha" data-type="date" alignment="center" :visible="true" :allow-grouping="false" />
-						<DxColumn
-							data-field="is_organizer"
-							width="70"
-							caption="U. Distrital"
-							data-type="string"
-							alignment="center"
-							:visible="true"
-							:customize-text="yesNo"
-							:allow-grouping="false"
-						/>
-						<DxColumn data-field="event_page" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
-						<DxColumn data-field="geo_state_name" caption="Estado" data-type="string" alignment="center" :visible="false" :allow-grouping="false" />
-						<DxColumn data-field="state_name" caption="Aplicación" data-type="string" alignment="center" :visible="true" :group-index="0" />
+						<DxColumn data-field='call_name' caption='Convocatoria' data-type='string' alignment='left'
+							:visible='true' :allow-grouping='false' />
+						<DxColumn data-field='event_name' caption='Evento' data-type='string' alignment='left'
+							:visible='true' :allow-grouping='false' />
+						<DxColumn data-field='event_edition_number' caption='Edicion' data-type='string'
+							alignment='center' width="90" :visible='true' :allow-grouping='false' />
+						<DxColumn data-field='geo_city_name' caption='Ciudad' data-type='string' alignment='left'
+							:visible='false' :allow-grouping='false' />
+						<DxColumn data-field='geo_country_name' caption='Pais' data-type='string' alignment='left'
+							:visible='true' :allow-grouping='false' />
+						
+						<DxColumn data-field='event_date' caption='Fecha' data-type='date' alignment='center'
+							:visible='true' :allow-grouping='false' />
+						<DxColumn data-field='is_organizer' width="70" caption='U. Distrital' data-type='string'
+							alignment='center' :visible="true" :customize-text="yesNo" :allow-grouping='false' />
+						<DxColumn data-field="event_page" caption="URL" data-type="string" alignment="center"
+							:visible="true" :width="100" cell-template="tplWeb" />
+						<DxColumn data-field='geo_state_name' caption='Estado' data-type='string' alignment='center'
+							:visible='false' :allow-grouping='false' />
+						<DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
+							:visible='true'  :group-index="0"  />
 						<!-- <DxColumn data-field="active" caption="Estado" data-type="date" alignment="center"
 							:visible="true" :customize-text="yesNo" width="70" /> -->
 						<DxColumn :width="90" alignment="center" cell-template="tpl" caption="Acciones" />
 
 						<template #tplWeb="{ data }">
-							<a
-								v-if="data.data.event_page != '' && data.data.event_page != null"
-								:title="data.data.event_page"
-								class="cmd-item color-main-600 mr-2"
-								:href="data.data.event_page"
-								Target="_blank"
-							>
+							<a v-if="data.data.event_page != '' && data.data.event_page != null"
+								:title="data.data.event_page" class="cmd-item color-main-600 mr-2"
+								:href="data.data.event_page" Target="_blank">
 								<i class="icon-link"></i> Visitar
 							</a>
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
@@ -276,33 +254,26 @@
 
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2" @click.prevent="documentos(data)" href="#">
+								<a title="Observar documentos..." class="cmd-item color-main-600 mr-2"
+									@click.prevent="documentos(data)" href="#">
 									<i class="icon-file-pdf"></i>
 								</a>
 
-								<a title="Detalles Aplicación... " class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+								<a title="Detalles Aplicación... " class="cmd-item color-main-600"
+									@click.prevent="edit(data.data)" href="#">
 									<i class="icon-insert-template"></i>
 								</a>
 
-								<a
-									v-if="data.data.state_id == estado.borrador"
-									title="Terminar y Enviar..."
-									class="cmd-item color-main-600 mr-2"
-									@click.prevent="enviar(data)"
-									href="#"
-								>
+								<a v-if="data.data.state_name=='Sin Enviar'" title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
+									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last"></i>
 								</a>
 
-								<a
-									v-if="data.data.state_id == estado.subsanar"
-									title="Corregir y Enviar..."
-									class="cmd-item color-main-600 mr-2"
-									@click.prevent="enviar(data)"
-									href="#"
-								>
+								<a v-if="data.data.state_name=='Por Subsanar'" title="Corregir y Enviar..." class="cmd-item color-main-600 mr-2"
+									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last color"></i>
 								</a>
+								
 
 								<span v-if="editMode"></span>
 								<!-- <a title="Editar elemento..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
@@ -316,6 +287,7 @@
 									@click.prevent="active(data, true)" href="#">
 									<i class="icon-database-check"></i>
 								</a> -->
+
 							</span>
 						</template>
 					</DxDataGrid>
@@ -333,17 +305,16 @@
 			<div class="card-body">
 				{{ JSON.stringify(userinfo, null, "\t") }}
 			</div>
-			<div class="card-body">
-				estadoconv:
+			<div class="card-body">estadoconv:
 				{{ JSON.stringify(estadoconv, null, "\t") }}
 			</div>
-			<div class="card-body">
-				state_id:
+			<div class="card-body">state_id:
 				{{ JSON.stringify(state_id, null, "\t") }}
 			</div>
 		</div>
 
-		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true" width="60%" height="300" title="Observación:">
+		<DxPopup :visible="popupObs" :drag-enabled="false" :close-on-outside-click="false" :show-title="true"
+			width="60%" height="300" title="Observación:">
 			<div class="row" style="overflow-y: scroll; height:148px">
 				<div class="col">
 					<h3>
@@ -460,13 +431,14 @@ export default {
 			type: String,
 			default: () => null,
 		},
+
 	},
 	data: () => ({
-		cargadocs: false,
-		visibleguardar: { visible: false },
-		listGrupoInvestigador: {},
-		listDocumnetUp: [],
-		listDocsRequire: [],
+		cargadocs:false,
+		visibleguardar:{visible:false},
+		listGrupoInvestigador:{},
+		listDocumnetUp:[],
+		listDocsRequire:[],
 		namePanel: "redconocimiento",
 		codEP: null, //611 612 613
 		popupObs: false,
@@ -499,12 +471,9 @@ export default {
 		id_panel_participantes: "participantes",
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
-		id_researcher_group: 0,
-		estado: {
-			subsanar: 0,
-			borrador: 0,
-		},
-		state_id: null,
+		id_researcher_group:0,
+		
+		state_id:null,
 		baseObj: {
 			name: null,
 			category_id: null,
@@ -525,16 +494,17 @@ export default {
 	async created() {
 		// console.clear();
 		root = this;
-		root.estado.borrador = root.get_sub_type_id("borrador");
-		root.estado.subsanar = root.get_sub_type_id("por_subsanar");
-		console.warn("root.estado => ", root.estado);
-		setTimeout(function() {
-			root.listGrupoInvestigador = root.userinfo.gropusmember;
-			if (root.userinfo.gropusmember.length >= 1) root.id_researcher_group = root.listGrupoInvestigador[0].id;
-			root.baseEnt = this.$clone(this.baseObj);
-			root.visibleguardar.visible = false;
+		setTimeout(function(){
+			root.listGrupoInvestigador=root.userinfo.gropusmember;
+			if(root.userinfo.gropusmember.length>=1) root.id_researcher_group = root.listGrupoInvestigador[0].id;
+			root.baseEnt = this.$clone(this.baseObj);	
+			root.visibleguardar.visible=false;
 			root.grid.refresh();
 		}, 1000);
+			
+		
+		
+		
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
@@ -547,12 +517,13 @@ export default {
 		root.panelDocs = $("#" + this.namePanel + "-documentos");
 		root.loaderMessage = "Cargando Elementos";
 		root.loaderElement = "#" + this.namePanel + " .grid";
-		let id_estado = root.estadoconv.find((estado) => estado.st_name == "	En Evaluación");
-		root.state_id = id_estado.id;
+		let id_estado = root.estadoconv.find( estado => estado.st_name == '	En Evaluación' );
+		root.state_id=id_estado.id;
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
-		dataSource: function() {
+		dataSource: function () {
+			
 			let data = root.codEP;
 			(data = data != null ? "product_type_id=" + data : null), console.warn("codEP: ", root.codEP);
 			console.warn("valor de data: ", root.codEP);
@@ -561,11 +532,11 @@ export default {
 				key: ["id"],
 				//stringParam: data,
 				// endPoint: `research_units/${root.group.id}/${root.endPointRute}`,
-				endPoint: `researchers/${root.id_researcher_group}/mobility_calls`,
-				onLoading: function(loadOptions) {
+                endPoint: `researchers/${root.id_researcher_group}/mobility_calls`,
+				onLoading: function (loadOptions) {
 					root.loaderShow("Cargando elementos", root.loaderElement);
 				},
-				onLoaded: function(results, baseEntity) {
+				onLoaded: function (results, baseEntity) {
 					// console.clear();
 					console.log("results", results);
 					root.totaCount = results.totalCount;
@@ -576,24 +547,21 @@ export default {
 		estadoconv() {
 			return root.subtypesByType("estado_criterios_evaluacion", "id");
 		},
+
+
 	},
 	watch: {},
 	methods: {
-		...mapActions("unidad/producto/universalSentUpAct", {
-			objSave: "save",
-			objUpdate: "update",
-			elementoActive: "active",
-			getSinData: "getSinData",
-			getAll: "getAll",
-		}),
 
+		...mapActions("unidad/producto/universalSentUpAct", { objSave: "save", objUpdate: "update", elementoActive: "active", getSinData: "getSinData", getAll: "getAll" }),
+		
 		verObservar(data) {
 			let objeto = {};
 			let numero = 0;
 			root.getSinData({
 				// url: "/research_units/117/group_member/10286",
 				url: "users/" + data.researcher_id,
-				cb: function(results) {
+				cb: function (results) {
 					objeto = results;
 					console.warn("objeto [" + data.id + "]", objeto.identification_number);
 					return results.identification_number;
@@ -612,11 +580,11 @@ export default {
 				print = print + "<ul>";
 				for (i = 0; i < tipos.length; i++) {
 					let text = tipos[i].st_description == null ? "" : "<br>" + tipos[i].st_description;
-					let importante = tipos[i].cd_required ? "<em>(Requerido).</em>" : "";
-					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + " " + importante + " </b>" + text + "</li>";
+					let importante = tipos[i].cd_required? '<em>(Requerido).</em>': ''
+					if (tipos[i].active) print = print + "<li>" + "<b>" + tipos[i].st_name + " "+ importante +" </b>" + text + "</li>";
 				}
 				print = print + "</ul>";
-			} else {
+			}else{
 				print = "No se encuentra lista legible";
 			}
 			return print;
@@ -624,15 +592,16 @@ export default {
 
 		listDoc2subtipos(parametro) {
 			if (parametro.length >= 1) {
-				parametro.map(function(lista) {
-					let require = lista.cd_required ? "(Requerido)" : "";
-					lista.id_ant = lista.id;
-					lista.st_name = lista.document_name + " " + require + "";
+				parametro.map(function (lista) {
+					let require = lista.cd_required? "(Requerido)": "";
+					lista.id_ant = lista.id
+					lista.st_name = lista.document_name + " "+ require +"";
 					lista.id = lista.document_id;
 					return lista;
 				});
 				root.tiposDocumento = parametro;
 			}
+
 		},
 
 		participantes(data) {
@@ -652,10 +621,10 @@ export default {
 			root.panelParticipantes = $("#" + root.id_panel_participantes);
 			console.log("root.panelParticipantes", root.id_panel_participantes.length);
 			$("#" + root.namePanel + "-documentos").hide();
-			root.panelGrid.fadeOut(function(params) {
+			root.panelGrid.fadeOut(function (params) {
 				root.panelCmdBack.fadeIn();
 				$("#" + root.namePanel + "-participantes .grid").fadeIn();
-				root.panelParticipantes.fadeIn(function(params) {});
+				root.panelParticipantes.fadeIn(function (params) { });
 			});
 		},
 
@@ -664,60 +633,65 @@ export default {
 			console.log("documentos", data.row.data);
 			root.loaderShow("Cargando lista Documentos", root.loaderElement);
 			// 202104111513: Error
+			
+			
 
 			root.tiposDocumento = [];
-			root.loaderShow("Listado Documentos", root.panelData);
-			console.warn("id list docs", data.row.data.id);
-
+			root.loaderShow("Listado Documentos", root.panelData)
+			console.warn("id list docs", data.row.data.id)
+			
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
 				url: "/calls/" + parseInt(data.data.call_id) + "/call_documents",
-				cb: function(results) {
+				cb: function (results) {
 					let listDocuments = results;
 					console.warn("movilidad docs list ", listDocuments);
 					root.listDoc2subtipos(listDocuments);
 
+					
 					root.loaderHide();
 				},
 			});
 
-			root.visibleguardar.visible = true;
+				root.visibleguardar.visible=true;
+				
+				//1062=corregir  1065=sin enviar  cargadocs=true o false para cargar ducumentos
 
-			//1062=corregir  1065=sin enviar  cargadocs=true o false para cargar ducumentos
 
-			if (data.data.state_id == root.estado.borrador || data.data.state_id.state_id == root.estado.subsanar) {
-				this.visibleguardar.visible = true;
-			}
+				if(data.data.state_name=="Sin Enviar" || data.data.state_id.state_name=="Por Subsanar"){
+					this.visibleguardar.visible=true;
+				}
 
-			root.section = "documentos";
-			if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
-			let rd = data.row.data;
-			if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
-			console.log("rd", rd);
-			root.baseObj = rd;
+				root.section = "documentos";
+				if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
+				let rd = data.row.data;
+				if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+				console.log("rd", rd);
+				root.baseObj = rd;
 
-			$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.call_name}`);
-			root.panelCmds.fadeOut();
-			root.panelGrid.fadeOut(function(params) {
-				root.panelCmdBack.fadeIn();
-				$("#" + root.id_panel_documentos).fadeIn(function(params) {});
-			});
+				$("#" + root.namePanel + " .item-title").html(`<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo;  ${data.row.data.call_name}`);
+				root.panelCmds.fadeOut();
+				root.panelGrid.fadeOut(function (params) {
+					root.panelCmdBack.fadeIn();
+					$("#" + root.id_panel_documentos).fadeIn(function (params) { });
+				});
+
 		},
 
 		retorno() {
 			console.log(root.section);
 			root.panelCmdBack.fadeOut();
 			if (root.section == "participantes") {
-				root.panelParticipantes.fadeOut(function(params) {
+				root.panelParticipantes.fadeOut(function (params) {
 					root.panelCmds.fadeIn();
-					root.panelGrid.fadeIn(function(params) {});
+					root.panelGrid.fadeIn(function (params) { });
 				});
 			} else {
 				console.log("Regresar!");
 				console.log("root.panelDocs", root.panelDocs);
-				$("#" + root.id_panel_documentos).fadeOut(function(params) {
+				$("#" + root.id_panel_documentos).fadeOut(function (params) {
 					root.panelCmds.fadeIn();
-					root.panelGrid.fadeIn(function(params) {});
+					root.panelGrid.fadeIn(function (params) { });
 				});
 			}
 			$("#" + root.namePanel + " .item-title").html("");
@@ -726,6 +700,7 @@ export default {
 		},
 
 		save() {
+
 			console.log(this.$sep);
 			var result = root.$refs.basicGroup.instance.validate();
 			console.log("result", result);
@@ -750,7 +725,7 @@ export default {
 					mod: obj.id,
 					//objectSend: { regulation : obj },
 					objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
-					cb: function(item) {
+					cb: function (item) {
 						console.log("item", item);
 						root.grid.refresh();
 						root.loaderHide();
@@ -765,12 +740,14 @@ export default {
 		},
 
 		edit(data) {
-			root.tiposDocumento = [];
 
+			
+			root.tiposDocumento=[];
+			
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
 				url: "/calls/" + parseInt(data.call_id) + "/call_documents",
-				cb: function(results) {
+				cb: function (results) {
 					let listDocuments = results;
 					console.warn("movilidad docs list ", listDocuments);
 					root.listDoc2subtipos(listDocuments);
@@ -783,8 +760,8 @@ export default {
 			root.baseObj = data;
 			//root.panelCmdBack.fadeOut();
 			root.panelCmds.fadeOut();
-			root.panelGrid.fadeOut(function(params) {
-				root.panelData.fadeIn(function(params) {});
+			root.panelGrid.fadeOut(function (params) {
+				root.panelData.fadeIn(function (params) { });
 			});
 		},
 
@@ -796,59 +773,59 @@ export default {
 			root.panelCmds.fadeOut();
 			console.warn("clase padre: ", this.padre);
 			console.warn("name panel: ", root.namePanel);
-			root.panelGrid.fadeOut(function(params) {
-				root.panelData.fadeIn(function(params) {});
+			root.panelGrid.fadeOut(function (params) {
+				root.panelData.fadeIn(function (params) { });
 			});
 		},
 
 		cancel() {
 			console.log("CANCEL!");
-			root.panelData.fadeOut(function(params) {
+			root.panelData.fadeOut(function (params) {
 				root.panelCmds.fadeIn();
-				root.panelGrid.fadeIn(function(params) {});
+				root.panelGrid.fadeIn(function (params) { });
 			});
 		},
 
-		docRequire(id_convocatoria, id_movilidad) {
-			root.tiposDocumento = [];
+
+		docRequire(id_convocatoria, id_movilidad){
+			root.tiposDocumento=[];
 			// root.loaderShow("Cargando requeridos", "#panel-produccion .card-body");
 			root.getAll({
-				url: "/calls/" + id_convocatoria + "/call_documents",
-				cb: function(results) {
-					root.tiposDocumento = results;
+				url: "/calls/" +id_convocatoria+ "/call_documents",
+				cb: function (results) {
+					root.tiposDocumento= results;
 					// root.listDoc2subtipos(dataDocs);
 					// root.loaderShow("Cargando documentos", "#panel-produccion .card-body");
 					root.getAll({
 						url: "mobility_calls/" + id_movilidad + "/documents",
-						cb: function(results1) {
-							root.listDocumnetUp = results1;
+						cb: function (results1) {
+							root.listDocumnetUp=results1;
 							// root.loaderHide();
 						},
 					});
 					// root.loaderHide();
 				},
 			});
+			
 		},
 
-		sendEnd(data) {
+		sendEnd(data){
 			console.warn("documentos subidos: ", root.listDocumnetUp);
 			console.warn("documentos requeridos: ", root.tiposDocumento);
-			let msg = `¿Realmente desea aplicar a: <span class='text-sb'>"${
-				data.data[root.titlecolum]
-			}?" <br>Requerde que una vez enviada para evaluación, no puede hacer modificaciones.</span>`;
-
-			this.$confirm(msg, function(si_no) {
+			let msg = `¿Realmente desea aplicar a: <span class='text-sb'>"${data.data[root.titlecolum]}?" <br>Requerde que una vez enviada para evaluación, no puede hacer modificaciones.</span>`;
+			
+			this.$confirm(msg, function (si_no) {
 				console.log("result", si_no);
 				if (si_no) {
 					root.loaderShow(`Postulación por evaluar!`, root.panelGrid);
 
-					let dataPatch = JSON.stringify({ active: true, updated_by: root.user_id, state_id: root.state_id, total: 0 });
+					let dataPatch = JSON.stringify({ active: true, updated_by: root.user_id, state_id:root.state_id, total:0 });
 
 					var dto = {
 						newFormat: true,
 						url: `${root.endPointRute}/${data.data.id}`,
 						data: JSON.parse(`{ "${root.objEpdata}" :` + dataPatch + "}"),
-						cb: function(result) {
+						cb: function (result) {
 							console.log("Result", result);
 							root.grid.refresh();
 							root.loaderHide();
@@ -859,50 +836,52 @@ export default {
 					root.loaderHide();
 				}
 			});
+			
 		},
-
+		
 		enviar(data, state) {
 			// console.clear();
 			// console.log("active", data);
 			// console.log("state", state);
-
+			
 			root.docRequire(data.data.call_id, data.data.id);
 			root.loaderShow("Cargando requeridos", root.loaderElement);
-
-			let enviar = setTimeout(function() {
+			
+			let enviar = setTimeout(function(){
+				
 				console.clear();
 				// root.sendEnd();
+				
+				let docRequire = root.tiposDocumento.filter(requerido => requerido.cd_required==true);
+				console.warn("docrequire = ",docRequire);
+				
+				let rectificador=false, noSubidos=[];
 
-				let docRequire = root.tiposDocumento.filter((requerido) => requerido.cd_required == true);
-				console.warn("docrequire = ", docRequire);
-
-				let rectificador = false,
-					noSubidos = [];
-
-				docRequire.forEach((evaluar) => {
-					root.listDocumnetUp.forEach((subidos) => {
-						console.warn(evaluar.document_id + " == " + subidos.document_type_id);
-						if (evaluar.document_id == subidos.document_type_id) {
-							rectificador = true;
+				docRequire.forEach(evaluar=>{
+					root.listDocumnetUp.forEach(subidos => {
+						console.warn(evaluar.document_id+" == "+subidos.document_type_id);
+						if(evaluar.document_id==subidos.document_type_id){
+							rectificador=true;
 							console.warn("Son iguales!!!!");
 						}
 					});
 
-					if (rectificador == false) {
-						noSubidos.push(evaluar.document_name);
-					} else {
-						rectificador = false;
+					if(rectificador==false){
+						noSubidos.push(evaluar.document_name)
+					}else{
+						rectificador=false;
 					}
 				});
-				console.warn("cantidad archivos no subidos: ", noSubidos.length);
-				if (noSubidos.length === 0) {
+				console.warn("cantidad archivos no subidos: ", noSubidos.length)
+				if(noSubidos.length===0){
 					root.sendEnd(data);
-				} else {
-					root.$info("No se puede enviar la aplicación a esta convocatoria. <br> Faltan los siguientes documentos: " + noSubidos.join(", "));
+				}else{
+					root.$info("No se puede enviar la aplicación a esta convocatoria. <br> Faltan los siguientes documentos: "+noSubidos.join(', '));
 				}
-
+					
 				root.loaderHide();
-			}, 1000);
+			}
+			,1000);
 			enviar();
 		},
 
@@ -910,12 +889,12 @@ export default {
 			this.grid = e.component;
 		},
 
-		onContentReady() {},
+		onContentReady() { },
 	},
 };
 </script>
 <style scoped>
-.color {
-	color: rgb(10, 119, 28);
+.color{
+	color:rgb(10, 119, 28);
 }
 </style>

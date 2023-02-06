@@ -497,7 +497,6 @@ export default {
 			type: String,
 			default: () => null,
 		},
-
 		botonUploadVisible: {
 			type: Object,
 			default: () => null,
