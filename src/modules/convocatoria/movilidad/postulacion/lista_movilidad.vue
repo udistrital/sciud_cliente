@@ -264,12 +264,12 @@
 									<i class="icon-insert-template"></i>
 								</a>
 
-								<a v-if="data.data.state_id==estado.borrador" title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
+								<a v-if="data.data.state_name=='Sin Enviar'" title="Terminar y Enviar..." class="cmd-item color-main-600 mr-2"
 									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last"></i>
 								</a>
 
-								<a v-if="data.data.state_id==estado.subsanar" title="Corregir y Enviar..." class="cmd-item color-main-600 mr-2"
+								<a v-if="data.data.state_name=='Por Subsanar'" title="Corregir y Enviar..." class="cmd-item color-main-600 mr-2"
 									@click.prevent="enviar(data)" href="#">
 									<i class="icon-bubble-last color"></i>
 								</a>
@@ -472,10 +472,7 @@ export default {
 		urlPattern: /^(http|https):\/\/[^ "]+$/,
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		id_researcher_group:0,
-		estado:{
-			subsanar:0,
-			borrador:0
-		},
+		
 		state_id:null,
 		baseObj: {
 			name: null,
@@ -497,9 +494,6 @@ export default {
 	async created() {
 		// console.clear();
 		root = this;
-		root.estado.borrador=root.get_sub_type_id("borrador");
-		root.estado.subsanar=root.get_sub_type_id("por_subsanar");
-		console.warn("root.estado => ", root.estado);
 		setTimeout(function(){
 			root.listGrupoInvestigador=root.userinfo.gropusmember;
 			if(root.userinfo.gropusmember.length>=1) root.id_researcher_group = root.listGrupoInvestigador[0].id;
@@ -507,6 +501,10 @@ export default {
 			root.visibleguardar.visible=false;
 			root.grid.refresh();
 		}, 1000);
+			
+		
+		
+		
 	},
 	mounted() {
 		console.log("root.tipos", this.tipos);
@@ -660,7 +658,7 @@ export default {
 				//1062=corregir  1065=sin enviar  cargadocs=true o false para cargar ducumentos
 
 
-				if(data.data.state_id==root.estado.borrador || data.data.state_id.state_id==root.estado.subsanar){
+				if(data.data.state_name=="Sin Enviar" || data.data.state_id.state_name=="Por Subsanar"){
 					this.visibleguardar.visible=true;
 				}
 

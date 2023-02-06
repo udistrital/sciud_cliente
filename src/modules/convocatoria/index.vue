@@ -127,15 +127,14 @@
 									:visible="true"
 									:width="100"
 								>
-									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name"  :width="100" />
+									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name" :width="100" />
 								</DxColumn>
 
 								<DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" width="180">
 									<DxLookup :data-source="tipos" value-expr="id" display-expr="st_name" />
 								</DxColumn>
 
-								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true"  />
-
+								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true" />
 								<DxColumn
 									:allow-filtering="es_admin"
 									data-field="call_beneficiary_id"
