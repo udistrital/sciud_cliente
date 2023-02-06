@@ -237,8 +237,8 @@
 		{ "name": "propuesta_tipo_monto_rubro", "id": 242 },
 		{ "name": "Porpuesta_seguimeinto_inventario_estados", "id": 244 },
 		{ "name": "proyecto_seguimiento", "id": 243 },
-		{"name": "Proyecto_Seguimiento_Inventarios_Tipo", "id": 245},
-		{"name": "Proyecto_Seguimiento_estado_producto", "id": 246},
+		{ "name": "Proyecto_Seguimiento_Inventarios_Tipo", "id": 245 },
+		{ "name": "Proyecto_Seguimiento_estado_producto", "id": 246 },
 		{ "name": "variedad_vegetal_estado_peticion", "id": 64 }
 	],
 	"identificadores_subtipo": [

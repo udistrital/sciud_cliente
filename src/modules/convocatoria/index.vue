@@ -81,7 +81,6 @@
 									info-text="{2} convocatorias de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="true" :highlight-case-sensitive="true" />
-
 								<DxColumn
 									:allow-filtering="false"
 									:sort-index="1"
@@ -127,14 +126,14 @@
 									:visible="true"
 									:width="100"
 								>
-									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name"  :width="100" />
+									<DxLookup :data-source="estados" value-expr="id" display-expr="st_name" :width="100" />
 								</DxColumn>
 
 								<DxColumn :allow-filtering="true" data-field="call_type_id" caption="Tipo" data-type="number" alignment="left" :visible="true" width="180">
 									<DxLookup :data-source="tipos" value-expr="id" display-expr="st_name" />
 								</DxColumn>
 
-								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true"  />
+								<DxColumn :allow-filtering="true" data-field="call_name" caption="Nombre" data-type="string" alignment="left" :visible="true" />
 
 								<DxColumn
 									:allow-filtering="es_admin"
@@ -450,7 +449,6 @@ export default {
 		...mapGetters("convocatoria", ["navItems"]),
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		...mapGetters("unidad", ["documents", "states", "types"]),
-
 		tipos() {
 			return root.subtypesByType("convocatoria_tipo", "id");
 		},

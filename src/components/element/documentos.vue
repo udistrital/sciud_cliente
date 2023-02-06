@@ -91,7 +91,6 @@
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						
 						<a
 							href="#"
 							v-if="visibleButton"
@@ -218,8 +217,8 @@
 			<div class="col">
 				<div class="card">
 					<div class="card-body">
-						<span class="font-weight-semibold">editMode:</span> {{ visibleButton }}
-						<span class="font-weight-semibold">botonUploadVisible:</span> {{ JSON.stringify(botonUploadVisible, null, 3) }}
+						<span class="font-weight-semibold">editMode:</span> {{ visibleButton }} <span class="font-weight-semibold">botonUploadVisible:</span>
+						{{ JSON.stringify(botonUploadVisible, null, 3) }}
 						<hr class="sep mb-0" />
 						<span class="font-weight-semibold">mainObj:</span> {{ JSON.stringify(mainObj, null, 3) }}
 					</div>
@@ -294,7 +293,7 @@ export default {
 		DxValidator,
 	},
 	data: () => ({
-		listVisible:true,
+		listVisible: true,
 		visibleButton: false,
 		doc_description: null,
 		actionTitle: null,
@@ -336,33 +335,28 @@ export default {
 		root.docLink = root.baseUrl + "view/index.html";
 		console.log("root.tipos", root.tipos);
 
-
 		// console.warn("coton de carga: ", root.visibleButton );
 		// console.warn("coton de carga: ", root.botonUploadVisible );
 
-
-		if(typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible!= null){
-			
-			if(Object.entries(root.botonUploadVisible).length != 0){
+		if (typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible != null) {
+			if (Object.entries(root.botonUploadVisible).length != 0) {
 				root.visibleButton = root.botonUploadVisible.visible; //visible es valor booleano (true and false)
 				// root.editMode=true;
-				console.warn("...... Boton de carga: ", root.visibleButton );
+				console.warn("...... Boton de carga: ", root.visibleButton);
 			}
-
-		}else{
-			root.visibleButton=this.editMode;
-			console.warn("...... Boton de carga: ", root.visibleButton );
+		} else {
+			root.visibleButton = this.editMode;
+			console.warn("...... Boton de carga: ", root.visibleButton);
 		}
 
 		// para relacionar un id especidico para la carga de un documento de proyectos
-		if(typeof root.botonUploadVisible.id != "undefined" && root.botonUploadVisible.id!= null){
-			root.listVisible=false;
-			root.baseObj.document_type_id=root.botonUploadVisible.id;
+		if (typeof root.botonUploadVisible.id != "undefined" && root.botonUploadVisible.id != null) {
+			root.listVisible = false;
+			root.baseObj.document_type_id = root.botonUploadVisible.id;
 		}
 
-		console.warn("this.editMode: ", this.editMode );
-		console.warn("boton de carga: ", root.visibleButton );
-		
+		console.warn("this.editMode: ", this.editMode);
+		console.warn("boton de carga: ", root.visibleButton);
 	},
 	mounted() {
 		this.$forceUpdate();
@@ -425,8 +419,6 @@ export default {
 					},
 				});
 		}, 500);
-		
-		
 	},
 	computed: {
 		...mapGetters("unidad", ["researchers"]),
@@ -505,12 +497,11 @@ export default {
 			type: String,
 			default: () => null,
 		},
-		
+
 		botonUploadVisible: {
 			type: Object,
 			default: () => null,
 		},
-
 	},
 	methods: {
 		...mapActions("core/nuxeo", ["upload", "get", "getDoc"]),
@@ -585,7 +576,6 @@ export default {
 					$(root.panelDataDoc).fadeIn();
 				});
 			});
-			
 		},
 		documentAdd() {
 			// // console.clear();
@@ -603,7 +593,6 @@ export default {
 					$(root.panelDataDoc).fadeIn();
 				});
 			});
-			
 		},
 		documentCancel(gridRefresh = false) {
 			$(root.panelDataDoc).fadeOut(function(params) {
