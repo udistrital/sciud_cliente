@@ -8,8 +8,8 @@
 		"publish": "npm run build",
 		"pb0": "powershell -NoProfile -ExecutionPolicy Bypass -File publish.ps1",
 		"pb": "powershell -NoProfile -ExecutionPolicy Bypass -File \"D:/siciud-v2/publish.ps1\"",
-		"preinstall": "nvm install 13.14.0 && nvm use 13.14.0",
-		"preserve": "nvm install 13.14.0 && nvm use 13.14.0",
+		"_preinstall": "nvm install 13.14.0 && nvm use 13.14.0",
+		"_preserve": "nvm install 13.14.0 && nvm use 13.14.0",
 		"serve": "vue-cli-service serve --port 4500 --host localhost --https false",
 		"start": "set NODE_ENV=dev && node app.js"
 	},
