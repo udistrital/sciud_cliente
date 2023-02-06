@@ -27,12 +27,12 @@
 						Convocatorias
 					</router-link>
 				</li>
-				<!-- <li class="nav-item" v-if="es_admin">
-					<router-link to="/proyecto/informacion" tag="a" class="navbar-nav-link legitRipple" title="Proyectos...">
+				<li class="nav-item" v-if="es_admin">
+					<router-link to="/proyecto" tag="a" class="navbar-nav-link legitRipple" title="Proyectos...">
 						<i class="icon-golf2"></i>
 						Proyectos
 					</router-link>
-				</li> -->
+				</li>
 			</ul>
 			<ul class="navbar-nav navbar-nav-highlight ml-md-auto">
 				<li class="nav-item dropdown" v-if="es_admin">

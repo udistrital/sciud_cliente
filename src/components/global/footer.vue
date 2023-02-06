@@ -9,8 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				<!-- SICIUD v2.0.20211207 - ©{{ year }} -->
-				SICIUD v2.0.20220707.03:20 - ©{{ year }}
+				SICIUD v2.0.20230206 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -27,7 +26,7 @@
 				</li>-->
 				<li class="nav-item dropup" v-if="debug">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Roles (Modo Pruebas)
+						Roles (Modo Pruebas)
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<li class="nav-item" v-for="(item, index) in links" :key="index">
@@ -82,7 +81,7 @@ export default {
 		showDev: true,
 		items: [
 			{
-				cc: "53009619", //79602309
+				cc: "79602309", //79602309
 				title: "Diego Alfonso Vargas Villegas (Administrador)",
 				text: "Administrador Diego",
 			},
@@ -98,15 +97,14 @@ export default {
 				text: "Edwar Pruebas",
 			},
 
-
-//1023867324 dato cambiado para ingreso y simulacion de gestor 
+			//1023867324 dato cambiado para ingreso y simulacion de gestor
 			{
 				cc: "80843691",
 				title: "Gestor Facultad",
 				text: "Gestor Facultad",
 			},
 
-// 80843691 dato cambiado para ingreso y simulacion de gestor 
+			// 80843691 dato cambiado para ingreso y simulacion de gestor
 			{
 				cc: "9872650",
 				title: "lector",
@@ -158,7 +156,6 @@ export default {
 			},
 
 			*/
-
 
 			//seccion administrativa visible
 			// {

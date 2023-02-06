@@ -1,0 +1,65 @@
+[
+    {
+       "id": 1,
+       "ch_parent_id": null,
+       "ch_order": 0,
+       "ch_title": "Resumen del Proyecto",
+       "ch_description": "<p>Describa el Resumen del Proyecto  en máximo de 2100 caracteres.</p>"
+    },
+    {
+       "id": 2,
+       "ch_parent_id": null,
+       "ch_order": 1,
+       "ch_title": "Introducción",
+       "ch_description": "<p>Introducción: Breve descripción del tema del trabajo, para que el lector sepa qué va a encontrar en el texto.</p><p>¿Por qué? y ¿Para qué? La razón e importancia de la propuesta sobre ese tema o fenómeno y cuáles son los propósitos y alcance esperado. Se pueden incluir los antecedentes que existan sobre la materia que se está estudiando.</p><p>¿Cómo? La metodología y la forma en que se hizo la propuesta.</p><p><br></p><p>máximo de 500 palabras.</p>"
+    },
+    {
+       "id": 3,
+       "ch_parent_id": null,
+       "ch_order": 2,
+       "ch_title": "Contexto - Marco Teórico",
+       "ch_description": "<p>Describa el Marco Teórico en maximo 6000 caracteres.</p>"
+    },
+    {
+       "id": 4,
+       "ch_parent_id": null,
+       "ch_order": 3,
+       "ch_title": "Metodología de Trabajo",
+       "ch_description": "<p>Describa la Metodología de Trabajo en maximo 2000 caracteres.</p>"
+    },
+    {
+       "id": 5,
+       "ch_parent_id": null,
+       "ch_order": 4,
+       "ch_title": "Capacidad del Equipo de Investigación",
+       "ch_description": "<p>Describa la Capacidad del Equipo de Investigación en maximo 6000 caracteres.</p>"
+    },
+    {
+       "id": 6,
+       "ch_parent_id": null,
+       "ch_order": 5,
+       "ch_title": "Bibliografía",
+       "ch_description": "<p>Complete estos campos según la norma solicitada o trabajada para el desarrollo de contenido bibliográfico.</p>"
+    },
+    {
+        "id": 7,
+        "ch_parent_id": 2,
+        "ch_order": 6,
+        "ch_title": "Descripción del Problema",
+        "ch_description": "<p>Descripción del Problema en maximo 6000 caracteres.</p>"
+     },
+     {
+        "id": 8,
+        "ch_parent_id": 2,
+        "ch_order": 7,
+        "ch_title": "Alcance",
+        "ch_description": "<p>Describa el Alcance en maximo 6000 caracteres.</p>"
+     },
+     {
+        "id": 9,
+        "ch_parent_id": 2,
+        "ch_order": 8,
+        "ch_title": "Justificación",
+        "ch_description": "<p>Describa la Justificación en maximo 6000 caracteres.</p>"
+     }
+ ]

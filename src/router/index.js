@@ -59,15 +59,12 @@ let routes = new router({
 			component: () => import("@/modules/unidad/documentos"),
 		},
 
-
 		{
 			name: "manuales-documentos",
 			path: "/help",
 			meta: { title: "ayuda", requiresAuth: false },
 			component: () => import("@/modules/documentacion"),
 		},
-
-
 
 		{
 			name: "unidad-integrantes",
@@ -94,7 +91,6 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/informacion"),
 		},
 
-
 		//convocatoria movilidad
 		{
 			name: "convocatoria-Movilidad",
@@ -117,28 +113,21 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/movilidad/postulacion/aplicar.vue"),
 		},
 
+		// //convocatoria movilidad desde grupo de investigacion
+		// 		{
+		// 			path: "/unidad/:unidadId/movilidad",
+		// 			name: "movilidad",
+		// 			meta: { title: "plan-accion", requiresAuth: true },
+		// 			component: () => import("@/modules/unidad/movilidad/index.vue"),
+		// 		},
 
-		
-// //convocatoria movilidad desde grupo de investigacion
-// 		{
-// 			path: "/unidad/:unidadId/movilidad",
-// 			name: "movilidad",
-// 			meta: { title: "plan-accion", requiresAuth: true },
-// 			component: () => import("@/modules/unidad/movilidad/index.vue"),
-// 		},
+		// 		{
+		// 			name: "convocatoria-movilidad-plantilla",
+		// 			path: "/unidad/:unidadId/movilidad/:itemId/plantilla",
 
-// 		{
-// 			name: "convocatoria-movilidad-plantilla",
-// 			path: "/unidad/:unidadId/movilidad/:itemId/plantilla",
-
-// 			meta: { title: "", requiresAuth: true },
-// 			component: () => import("@/modules/unidad/movilidad/plantilla.vue"),
-// 		},
-
-
-
-
-//convocatoria diego
+		// 			meta: { title: "", requiresAuth: true },
+		// 			component: () => import("@/modules/unidad/movilidad/plantilla.vue"),
+		// 		},
 
 		{
 			name: "convocatoria-info",
@@ -182,8 +171,6 @@ let routes = new router({
 			meta: { title: "", requiresAuth: true },
 			component: () => import("@/modules/convocatoria/plantilla"),
 		},
-		
-		
 
 		//----------------------------------------------------------
 		//		constitucion de la red de investigación
@@ -226,10 +213,49 @@ let routes = new router({
 		//---------------------------------------------------
 
 		{
-			name: "proyecto-informacion",
-			path: "/proyecto/informacion",
-			meta: { title: "", requiresAuth: true },
-			component: () => import("@/modules/proyecto/informacion"),
+			name: "proyecto-propuesta",
+			path: "/convocatoria/:convocatoriaId/propuesta",
+			meta: { title: "Creación propuesta", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/proyectos/propuesta/index"),
+		},
+
+		{
+			name: "convocatoria-proyecto",
+			path: "/convocatoria/:itemId/proyecto",
+			meta: { title: "Conv-propuesta", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/proyectos/evaluacion/index"),
+		},
+
+		{
+			name: "seguimiento-proyecto",
+			path: "/propuesta/:propuestaId/proyecto",
+			meta: { title: "Conv-proyecto", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/proyectos/evaluacion/evaluar.vue"),
+		},
+
+		// {
+		// 	name: "proyecto-Edicion",
+		// 	path: "/convocatoria/:convocatoriaId/propuesta/:propuestaId",
+		// 	meta: { title: "Edición Propuesta", requiresAuth: true },
+		// 	component: () => import("@/modules/convocatoria/proyectos/propuesta/index"),
+		// },
+
+		//---------------------------------------------------
+		//	 Entrada de proyectos seguimiento: camorenos
+		//---------------------------------------------------
+
+		{
+			name: "lista-proyecto-seguimiento",
+			path: "/proyecto/:propuestaId",
+			meta: { title: "seguimiento-proyecto", requiresAuth: true },
+			component: () => import("@/modules/proyecto/informacion.vue"),
+		},
+
+		{
+			name: "proyecto-seguimiento",
+			path: "/proyecto",
+			meta: { title: "seguimiento-proyecto", requiresAuth: true },
+			component: () => import("@/modules/proyecto/index.vue"),
 		},
 
 		//-----------------------------------------

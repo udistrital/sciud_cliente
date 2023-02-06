@@ -452,7 +452,8 @@ export default {
 		root.baseEnt = this.$clone(this.baseObj);
 		// console.warn("indicador", root.indicador);
 		// root.indicador=[];
-		root.tipoproceso2 = root.subtypesByType("planaccion_form5_tipos_inventario");
+		// root.tipoproceso2 = root.subtypesByType("planaccion_form5_tipos_inventario");
+		root.tipoproceso2 = root.subtypesByType("planaccion_productos_resultado_tipos" );
 		root.tipoproceso = root.subtypesByType("planaccion_form1_tipos");
 		// root.tiposDocumento = root.subtypesByType("planaccion_formE_documentos");
 	},

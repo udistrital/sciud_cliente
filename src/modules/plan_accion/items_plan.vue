@@ -44,7 +44,7 @@
 
 										<div class="header-elements" v-if="dateplansys.is_draft==true && dateplansys.management_report_is_draft==true">
 											<button type="button" @click.prevent="retorno()" title="Volver al trabajo.." class="btn btn-warning btn-labeled btn-labeled-left ">
-												<b><i class="icon-database-add"></i></b> Concluir Plan de Accion
+												<b><i class="icon-database-add"></i></b>  Plan de Accion
 											</button>
 										</div>
 

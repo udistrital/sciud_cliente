@@ -758,3 +758,19 @@ hr.sep {
 	min-height: 5px;
 	zoom: 1;
 }
+
+a.disabled {
+	pointer-events: none;
+	cursor: default;
+}
+
+span.error {
+	color: $error;
+	font-weight: 500;
+}
+
+.dx-calendar-navigator {
+	.dx-button-text {
+		color: #fff !important;
+	}
+}

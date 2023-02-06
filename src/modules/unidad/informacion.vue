@@ -999,7 +999,9 @@ export default {
 			}
 		},
 		facultadChange(e) {
-			// console.clear();
+			console.clear();
+			let facultad_matematicas_id = root.get_sub_type_id("facultad_matematicas");
+			console.log("facultad_matematicas =>", facultad_matematicas_id);
 			console.log("value", e.value);
 			console.log("facultades", root.facultades);
 			if (typeof e.value !== "undefined") {

@@ -11,12 +11,17 @@
 			</div>
 
 			<div class="header-elements" v-if="es_admin">
-				<router-link tag="a" :to="'/plan_historico'" class="btn btn-main btn-labeled btn-labeled-left legitRipple" title="Histórico Plan de Acción e informes de Gestin">
+				<router-link
+					tag="a"
+					:to="'/plan_historico'"
+					class="btn btn-main btn-labeled btn-labeled-left legitRipple"
+					title="Histórico Plan de Acción e informes de Gestin"
+				>
 					<b><i class="icon-history"></i></b>Historico Planes e Informes
 				</router-link>
 				<router-link tag="a" to="/red" class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Red de Investigación...">
-					<b><i class="icon-collaboration"></i></b> Redes Investicación
-				</router-link> 
+					<b><i class="icon-collaboration"></i></b> Redes Investigación
+				</router-link>
 				<router-link tag="a" to="/unidad/crear" class="btn btn-main btn-labeled btn-labeled-left legitRipple ml-2" title="Nueva Estructura de Investigación...">
 					<b><i class="icon-database-add"></i></b> Nueva Estructura
 				</router-link>
@@ -115,12 +120,11 @@
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
 								:show-borders="false"
-
 								:word-wrap-enabled="false"
 							>
-							<!-- nuevas caracteristicas 10042022 camorenos-->
-							<DxColumnFixing :enabled="true" />
-							<!--Fin de modificaciones-->
+								<!-- nuevas caracteristicas 10042022 camorenos-->
+								<DxColumnFixing :enabled="true" />
+								<!--Fin de modificaciones-->
 								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
 								<DxColumnChooser :enabled="es_admin" mode="dragAndDrop" />
 								<DxExport :enabled="false" />
@@ -143,7 +147,6 @@
 									info-text="{2} estructuras de investigación (Página {0} de {1})"
 								/>
 								<DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
-
 
 								<DxColumn
 									:allow-filtering="false"
@@ -298,7 +301,6 @@
 								/>
 								<DxColumn
 									:width="90"
-									
 									data-field="group_state_id"
 									caption="Estado"
 									data-type="string"
@@ -308,7 +310,6 @@
 								>
 									<DxLookup :data-source="estadosUnidad" value-expr="id" display-expr="st_name" />
 								</DxColumn>
-
 
 								<!-- <DxColumn :allow-filtering="false" caption="" name="idEdit" data-field="id" :width="150" alignment="center" cell-template="tplCommands" :fixed="true" fixed-position="right"/>
 								<template #tplCommands="{ data }">
@@ -364,14 +365,15 @@
 										:drop-down-options="{ width: '200' }"
 										:items="cmdGet(data)"
 										@item-click="cmdClick($event, data)"
-										
 										display-expr="text"
 										icon="save"
 										item-template="list-item"
 										template="item"
 										key-expr="id"
 									>
-										<template #item><strong><i class="hand icon-menu9"></i></strong></template>
+										<template #item
+											><strong><i class="hand icon-menu9"></i></strong
+										></template>
 										<template #list-item="{ data }">
 											<span class="cmd-item" title="Ver Sub Modulos..."><i :class="data.icon"></i><span v-html="data.text"></span></span>
 										</template>
@@ -466,7 +468,7 @@ import {
 	DxSorting,
 	DxStateStoring,
 	DxSummary,
-	DxColumnFixing
+	DxColumnFixing,
 } from "devextreme-vue/data-grid";
 
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
@@ -496,7 +498,7 @@ export default {
 		DxSearchPanel,
 		DxSorting,
 		DxSummary,
-		DxColumnFixing
+		DxColumnFixing,
 		// Tabs,
 	},
 	data: () => ({
@@ -561,7 +563,7 @@ export default {
 		root.getFacultades();
 		root.loaderHide();
 		console.log("editMode", root.editMode);
-		console.warn("dsEstructuras: ",root.dsEstructuras)
+		console.warn("dsEstructuras: ", root.dsEstructuras);
 	},
 	computed: {
 		...mapState("unidad/oas", ["facultades"]),

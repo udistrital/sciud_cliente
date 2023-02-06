@@ -368,15 +368,15 @@
 								</a> -->
 
 								<span v-if="editMode">
-									<a title="Modificar participante..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-										<i class="icon-database-edit"></i>
+									<a title="Evaluar..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-pencil"></i>
 									</a>
-									<a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+									<!-- <a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 										<i class="icon-database-remove"></i>
 									</a>
 									<a v-else title="Activar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 										<i class="icon-database-check"></i>
-									</a>
+									</a> -->
 								</span>
 							</span>
 						</template>

@@ -24,6 +24,7 @@ export default {
 		...mapGetters("auth/login", ["authStatus", "user"]),
 	},
 	methods: {
+		...mapActions("core/notificacion", { enviarCorreo: "enviar", verificarCorreo: "verificar" }),
 		...mapActions("auth/login", ["getUser", "oasInit", "oasLogin", "oasLoginData", "authLogin"]),
 		validate() {
 			var result = this.$refs.loginGroup.instance.validate();
@@ -111,9 +112,25 @@ export default {
 						root.oasLoginData({
 							qs: qs,
 							user: result.user,
-							callback: function(loggedUser) {
+							callback: async function(loggedUser) {
+								// console.clear();
 								console.log(window.vm.$sep);
-								console.log("oasLoginData result", loggedUser);
+								console.log("oasLoginData result ", loggedUser);
+								let rolId = loggedUser.user.local.user_role_id;
+								let rolName = loggedUser.user.local.user_role_name;
+								console.log("rolId =>", rolId);
+								console.log("rolName =>", rolName);
+								if (rolId === root.get_role_id("administrador")) {
+									console.log(window.vm.$sep);
+									console.log("Enviando correo...");
+									// 202212041924: Consultar actividades pendientes
+									// let result = await root.enviarCorreo({
+									// 	to: "dvargas@outlook.com",
+									// 	subject: "PROBANDO ACCESO",
+									// 	body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec urna eros, lacinia eu ullamcorper",
+									// });
+									console.log("result =>", result);
+								}
 								console.log(JSON.stringify(loggedUser));
 								// 202103120145: Verifica que exista como usuario del sistema
 								root.loaderHide();

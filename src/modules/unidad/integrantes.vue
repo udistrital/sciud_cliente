@@ -1009,9 +1009,9 @@ export default {
 					root.groupResearchers = result.researchers;
 					console.log("root.groupResearchers =>", root.groupResearchers);
 					// 202106170030: Solo activos para roles diferentes a admin y gestor
-					if (root.user_role_id > 2) {
-						root.groupResearchers = root.groupResearchers.filter((o) => o.gm_state_id === 1);
-					}
+					// if (root.user_role_id > 2) {
+					// 	root.groupResearchers = root.groupResearchers.filter((o) => o.gm_state_id === 1);
+					// }
 					if (loaderHide) {
 						root.dsMembers.reload();
 						root.loading = false;

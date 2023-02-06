@@ -108,7 +108,7 @@
                 </table>
                 <br />
                 <center>
-                  <h3>Plan de Acción e Informe de Gestión</h3>
+                  <h3>>Z</h3>
                 </center>
                 <br />
                 <table class="tg" width="100%" v-if="form_a1 != null">
@@ -408,7 +408,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" v-if="is_dev && debug">
       <div class="card-body">
         <strong>datalist:</strong>
         <pre>{{ JSON.stringify(datalist, null, 3) }}</pre>

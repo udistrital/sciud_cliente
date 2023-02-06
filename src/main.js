@@ -119,17 +119,39 @@ vue.mixin({
 		// 	return datalist;
 		// },
 
+		get_date(dateStr) {
+			let arr = dateStr.split("-");
+			let y = parseInt(arr[0]);
+			let m = parseInt(arr[1]) - 1;
+			let d = parseInt(arr[2]);
+			let nd = new Date(y, m, d);
+			console.log(`get_date(${dateStr}) =>`, nd);
+			return nd;
+		},
+
+		get_min_date(dateArray) {
+			return new Date(Math.min.apply(null, dateArray));
+		},
+
+		get_max_date(dateArray) {
+			return new Date(Math.max.apply(null, dateArray));
+		},
+
+		get_day_diff(d1, d2) {
+			return Math.round((d2 - d1) / (1000 * 60 * 60 * 24));
+		},
 
 		date_focus_in(e) {
 			// console.log("date_focus_in =>", e);
 			e.component.open();
 		},
+
 		date_focus_out(e) {
 			// console.log("date_focus_out =>", e);
 			e.component.close();
 		},
 		// 202108250029: Obtiene el id de un rol de grupo
-		
+
 		get_group_role_id: (name) => {
 			let item = window.clasificador.estructura_rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
@@ -140,23 +162,26 @@ vue.mixin({
 			return typeof item !== "undefined" ? item["name"] : null;
 		},
 
-
 		// 202108250030: Obtiene el id de un tipo de grupo
 		get_group_type_id: (name) => {
 			let item = window.clasificador.estructura_tipo.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
-		
+
+		get_sub_type_id: (name) => {
+			let item = window.clasificador.identificadores_subtipo.find((o) => o.name == name);
+			return typeof item !== "undefined" ? item["id"] : null;
+		},
+
 		get_role_id: (name) => {
 			let item = window.clasificador.rol.find((o) => o.name == name);
 			return typeof item !== "undefined" ? item["id"] : null;
 		},
-		
+
 		get_faculty_name: (id) => {
 			let item = window.clasificador.facultad.find((o) => o.id.toString() == id.toString());
 			return typeof item !== "undefined" ? item["nombre"] : null;
 		},
-
 
 		get_faculty_name_by_oas: (oas_id) => {
 			let item = window.clasificador.facultad.find((o) => o.id_oas.toString() == oas_id.toString());
@@ -225,6 +250,13 @@ vue.mixin({
 		yesNo(cellInfo) {
 			return cellInfo.value ? "SI" : "NO";
 		},
+		currency(cellInfo) {
+			console.log("cellInfo =>", cellInfo);
+			return typeof cellInfo.value !== undefined ? "$ " + cellInfo.value.format() : "--";
+		},
+		number(cellInfo) {
+			return typeof cellInfo.value !== undefined ? cellInfo.value.format() : "--";
+		},
 		siNo() {
 			return [
 				{
@@ -236,6 +268,10 @@ vue.mixin({
 					name: "NO",
 				},
 			];
+		},
+		toDate(dateStr) {
+			var parts = dateStr.split("-");
+			return new Date(parts[0], parseInt(parts[1]) - 1, parts[2]);
 		},
 		nullText(cellInfo) {
 			if (cellInfo.valueText.length > 0) {
@@ -350,7 +386,7 @@ vue.mixin({
 			return result;
 		},
 
-		listRolEstructureGroup(){
+		listRolEstructureGroup() {
 			return window.clasificador.estructura_rol;
 		},
 		editModeConv() {
