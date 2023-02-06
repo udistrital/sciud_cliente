@@ -98,7 +98,10 @@ export default (source = "rest", args = {}) => {
 			// 202009090114: TODO: Add prompt on error?
 			console.error("REQUEST ERROR", error);
 			// if (window.config.debug)
+			// console.log("typeof args.hide_errors", typeof args.hide_errors);
+			// if (typeof args.hide_errors === "undefined") {
 			show(error, JSON.stringify(error.request.config, null, "\t"));
+			// }
 			return Promise.reject(error);
 		}
 	);
@@ -128,7 +131,10 @@ export default (source = "rest", args = {}) => {
 					window.vm.$router.push("/inicio");
 				});
 			} else {
+				// console.log("typeof args.hide_errors", typeof args.hide_errors);
+				// if (typeof args.hide_errors === "undefined") {
 				show(`${error}`, msg);
+				// }
 			}
 			return Promise.reject(error);
 		}

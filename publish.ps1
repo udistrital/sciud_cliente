@@ -8,11 +8,14 @@ $date = Get-Date -f "yyyyMMddHHmm"
 $working = $PSScriptRoot
 $jsonPath = "$working\public\data\config.json"
 $targetBase = "\\orion\e$\web\support\udistrital"
+$targetBk = "$targetBase\_bk\siciud-v2-$date"
 $target = "$targetBase\siciud-v2"
+
 Write-Host "Fecha: $date"
 Write-Host "Directorio actual: $working"
-Write-Host "Json: $jsonPath"
+Write-Host "Directorio backup: $targetBk"
 Write-Host "Directorio final: $target"
+Write-Host "Json: $jsonPath"
 
 if (Test-Path $targetBase) {
 	# 202010290745: Modifica el config para prod
@@ -25,9 +28,9 @@ if (Test-Path $targetBase) {
 	Write-Host "TOKEN: $token"
 
 	Try {
-		# Renombra si existe
+		# 202209091101: Realiza el backup del actual
 		if (Test-Path $target) {
-			Rename-Item $target $target-$date
+			Move-Item -Path $target -Destination $targetBk
 		}
 
 		# Compila y mueve

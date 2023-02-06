@@ -402,8 +402,8 @@ export default {
 	},
 	methods: {
 		...mapActions("core/indicador", ["set"]),
-		...mapActions("unidad/producto/universalSentUpAct", {elementoActive: "active" }),
-		
+		...mapActions("unidad/producto/universalSentUpAct", { elementoActive: "active" }),
+
 		validarTipo(e) {
 			// 202104272101: Disable_Validation_Dynamically
 			// https://js.devexpress.com/Documentation/Guide/UI_Components/Common/UI_Widgets/Data_Validation/#Disable_Validation_Dynamically
@@ -414,7 +414,7 @@ export default {
 				return e.value !== null;
 			} else return true;
 		},
-		
+
 		active(data, state) {
 			// console.clear();
 			console.log("active", data);

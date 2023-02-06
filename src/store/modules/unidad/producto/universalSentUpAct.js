@@ -9,14 +9,13 @@ const store = {
 	namespaced: true,
 	state: {
 		items: [],
-		userdata:{},
-		docUserItems:{},
+		userdata: {},
+		docUserItems: {},
 	},
 	actions: {
-		
 		async universalgetOas({ commit, getters }, args) {
 			try {
-				let user_oas_details=[];
+				let user_oas_details = [];
 				console.log("get=> ", args);
 				return await api("oas")
 					.get("terceros_crud/v1/datos_identificacion?query=Numero:" + args.doc)
@@ -26,14 +25,14 @@ const store = {
 						// 202104020819: Se almacena el documento pues será el
 						// usado para buscar si no hay respuesta de la OAS
 						user_oas_details["doc"] = args.doc;
-						console.warn("user_oas_details ",user_oas_details)
+						console.warn("user_oas_details ", user_oas_details);
 						// commit("setOasDetails", user_oas_details);
 						if (this._vm.$isFunction(args.cb)) {
 							return args.cb(user_oas_details);
 						} else {
 							return user_oas_details;
 						}
-				});
+					});
 			} catch (error) {
 				//verifica si dentro del argumento existe una funccion callback
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
@@ -43,17 +42,17 @@ const store = {
 		async getOasUserData({ commit, getters }, args) {
 			try {
 				console.log("getOasUser => ", args);
-					console.log("Consultando API OAS => ", args.doc);
-					return await api()
-						.get("researcher_research_units?identification_number=" + args.doc+"&role_ids=2,1")
-						.then((r) => {
-							return r.data;
-						});
+				console.log("Consultando API OAS => ", args.doc);
+				return await api()
+					.get("researcher_research_units?identification_number=" + args.doc + "&role_ids=2,1")
+					.then((r) => {
+						return r.data;
+					});
 			} catch (error) {
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
 			}
 		},
-		
+
 		async univerdalID({ commit, getters }, args) {
 			try {
 				console.log("getUniversalID get=> ", args);
@@ -62,12 +61,11 @@ const store = {
 					.then((r) => {
 						console.warn("getUniversalID => ", r.data);
 						return r.data;
-				});
+					});
 			} catch (error) {
 				//verifica si dentro del argumento existe una funccion callback
-				console.error(error)
+				console.error(error);
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
-				
 			}
 		},
 
@@ -79,7 +77,7 @@ const store = {
 					.then((r) => {
 						console.log("getUniversal => ", r.data.data);
 						return r.data.data;
-				});
+					});
 			} catch (error) {
 				//verifica si dentro del argumento existe una funccion callback
 				console.error(error);
@@ -87,15 +85,14 @@ const store = {
 			}
 		},
 
-
 		async searchEstructure({ commit, getters }, args) {
 			try {
 				console.log("getEstructuras => ", args);
 				return await api()
-					.get('research_units?faculties='+args.facults+'&filter=[["name","contains","'+args.nameEstruc+'"],"and",["group_state_id","=",1]]')
+					.get("research_units?faculties=" + args.facults + '&filter=[["name","contains","' + args.nameEstruc + '"],"and",["group_state_id","=",1]]')
 					.then((r) => {
 						return r.data.data;
-				});
+					});
 			} catch (error) {
 				//verifica si dentro del argumento existe una funccion callback
 				return this._vm.$isFunction(args.cb) ? args.cb(error) : error;
@@ -104,23 +101,22 @@ const store = {
 
 		getresearchersID({ commit, state }, group_id) {
 			api()
-			.get(`researchers/${group_id}`)
-			.then((r) => {
-				console.warn("state =>", r.data);
-				commit("SeUserID", r.data);
-				// if (this._vm.$isFunction(group_id)) callback(r.data.data);
-			});
+				.get(`researchers/${group_id}`)
+				.then((r) => {
+					console.warn("state =>", r.data);
+					commit("SeUserID", r.data);
+					// if (this._vm.$isFunction(group_id)) callback(r.data.data);
+				});
 		},
-		
+
 		getresearchersDoc({ commit, state }, doc) {
 			api()
-
-			.get(`researcher_research_units?identification_number=${doc}&role_ids=2,1`)
-			.then((r) => {
-				console.warn("state =>", r.data);
-				commit("docDataItems", r.data);
-				// if (this._vm.$isFunction(group_id)) callback(r.data.data);
-			});
+				.get(`researcher_research_units?identification_number=${doc}&role_ids=2,1`)
+				.then((r) => {
+					console.warn("state =>", r.data);
+					commit("docDataItems", r.data);
+					// if (this._vm.$isFunction(group_id)) callback(r.data.data);
+				});
 		},
 
 		getRed({ commit, dispatch, state }, args) {
@@ -140,14 +136,15 @@ const store = {
 
 		getAll({ commit, state }, args) {
 			//console.warn("store subtipos",args.id_subtipos);
+			// let dataRequiere='';
+			// if(typeof args.dataRequiere != undefined) dataRequiere=args.dataRequiere
 			api()
-				.get(args.url+'?filter=[["active","=","true"]]')
+				.get(args.url + '?filter=[["active","=","true"]]')
 				.then((r) => {
 					args.cb(r.data.data);
 					commit("SetData", r.data.data);
 				});
 		},
-
 
 		get({ commit, state }, args) {
 			api()
@@ -165,18 +162,16 @@ const store = {
 				});
 		},
 
-
 		save({ commit, state, dispatch }, args) {
 			let ruta = null;
 			let data;
-			
-			if (args.rute2 !== null && typeof args.rute2 !== 'undefined') data=args.rute2;
-			else {
 
-				if (args.rute === null) data=`research_units/${args.unidadId}/${args.stringEP}`;
-				else data=`${args.rute}/${args.unidadId}/${args.stringEP}`;
-				if (typeof args.rute == "undefined") data=`research_units/${args.unidadId}/${args.stringEP}`;
-				else data=`${args.rute}/${args.unidadId}/${args.stringEP}`;
+			if (args.rute2 !== null && typeof args.rute2 !== "undefined") data = args.rute2;
+			else {
+				if (args.rute === null) data = `research_units/${args.unidadId}/${args.stringEP}`;
+				else data = `${args.rute}/${args.unidadId}/${args.stringEP}`;
+				if (typeof args.rute == "undefined") data = `research_units/${args.unidadId}/${args.stringEP}`;
+				else data = `${args.rute}/${args.unidadId}/${args.stringEP}`;
 			}
 			console.log("CREATE!");
 			console.warn("CREATE! data=>", args.rute);
@@ -194,10 +189,8 @@ const store = {
 			if (args.rute === null) args.rute = "research_units";
 			if (typeof args.rute == "undefined") args.rute = "research_units";
 
-			if (typeof args.newFormat !== 'undefined' && args.newFormat === true)
-				ruta = `/${args.stringEP}/${args.mod}`;
-			else
-				ruta = `${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`;
+			if (typeof args.newFormat !== "undefined" && args.newFormat === true) ruta = `/${args.stringEP}/${args.mod}`;
+			else ruta = `${args.rute}/${args.unidadId}/${args.stringEP}/${args.mod}`;
 
 			console.log("UPDATE!");
 			api()
@@ -210,7 +203,7 @@ const store = {
 		active({ commit, state, dispatch }, args) {
 			console.log("Activa o desactiva elemento", args);
 			console.log("args.paper", args.data);
-			if (typeof args.newFormat !== 'undefined' && args.newFormat === true) {
+			if (typeof args.newFormat !== "undefined" && args.newFormat === true) {
 				console.info("Actualizado mediante patch");
 				api()
 					.patch(args.url, args.data)
@@ -227,10 +220,7 @@ const store = {
 					});
 			}
 		},
-
-
 	},
-
 
 	mutations: {
 		SetData(state, data) {
@@ -248,7 +238,7 @@ const store = {
 			return state.items;
 		},
 
-		userdata:(state, getters) => {
+		userdata: (state, getters) => {
 			return state.userdata;
 		},
 

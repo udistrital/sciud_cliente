@@ -46,7 +46,7 @@
 	<div class="form-group">
 	<label>Naturaleza Jurídica: </label>
 	<DxSelectBox
-		::show-clear-button="true"
+		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."
@@ -79,7 +79,7 @@
 	<div class="form-group">
 	<label>Digito: </label>
 	<DxSelectBox
-		::show-clear-button="true"
+		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."
@@ -96,7 +96,7 @@
 	<div class="form-group">
 	<label>Tipo: </label>
 	<DxSelectBox
-		::show-clear-button="true"
+		:show-clear-button="true"
 		:grouped="false"
 		:search-enabled="false"
 		placeholder="Seleccione..."

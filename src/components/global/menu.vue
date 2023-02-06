@@ -21,18 +21,18 @@
 						Estructuras de Investigación
 					</router-link>
 				</li>
-				<li class="nav-item" v-if="es_admin">
+				<li class="nav-item" > <!--v-if="es_admin"-->
 					<router-link to="/convocatoria" tag="a" class="navbar-nav-link legitRipple" title="Convocatorias...">
 						<i class="icon-pencil6"></i>
 						Convocatorias
 					</router-link>
 				</li>
-				<!-- <li class="nav-item" v-if="es_admin">
-					<router-link to="/proyecto/informacion" tag="a" class="navbar-nav-link legitRipple" title="Proyectos...">
+				<li class="nav-item" v-if="es_admin">
+					<router-link to="/proyecto" tag="a" class="navbar-nav-link legitRipple" title="Proyectos...">
 						<i class="icon-golf2"></i>
 						Proyectos
 					</router-link>
-				</li> -->
+				</li>
 			</ul>
 			<ul class="navbar-nav navbar-nav-highlight ml-md-auto">
 				<li class="nav-item dropdown" v-if="es_admin">
@@ -97,10 +97,10 @@
 					</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
+					<!-- <router-link to="/help" tag="a" class="navbar-nav-link legitRipple">
 						<i class="icon-question3"></i>
 						Ayuda
-					</router-link>
+					</router-link> -->
 				</li>
 			</ul>
 		</div>

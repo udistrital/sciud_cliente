@@ -17,8 +17,6 @@
 		</div>
 
 
-
-
 		<div class="row slide" id="panel-roleUsers-data">
 			<div class="col">
 				<div class="card main">
@@ -64,7 +62,7 @@
 
 												<div class="col-md-3">
 													<div class="form-group">
-														<label>Aplicacion del Permiso:</label>
+														<label>Tipo de Permiso:</label>
 														<DxSelectBox
 															:show-clear-button="true"
 															:grouped="false"
@@ -262,15 +260,26 @@
 							:allow-filtering="false"
 						/>
 						
-						<DxColumn
+						<!-- <DxColumn
 							data-field="role_type_name"
-							caption="Aplicacion del Permiso"
+							caption="Tipo de Permiso"
 							data-type="string"
 							alignment="left"
 							:visible="true"
 							:allow-grouping="false"
 							:allow-filtering="false"
-						/>
+						/> -->
+
+						<DxColumn 
+						:allow-filtering="true" 
+						data-field="role_type_id" 
+						caption="Tipo de Permiso" 
+						data-type="number"
+						alignment="left" 
+						:visible="true" 
+						>
+							<DxLookup :data-source="tiposPermiso" value-expr="id" display-expr="st_name" />
+						</DxColumn>
 
 
 						<DxColumn

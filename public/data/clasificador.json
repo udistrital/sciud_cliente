@@ -7,13 +7,11 @@
 		{ "id": 5, "name": "integrante" },
 		{ "id": 6, "name": "gestor_facultad" }
 	],
-	
 	"estructura_tipo": [
 		{ "id": 3, "name": "grupo" },
 		{ "id": 4, "name": "semillero" },
 		{ "id": 5, "name": "red" }
 	],
-	
 	"estructura_rol": [
 		{ "id": 0, "name": "sin_asignar" },
 		{ "id": 1, "name": "director" },
@@ -22,27 +20,26 @@
 		{ "id": 4, "name": "egresado" },
 		{ "id": 5, "name": "lider_semillero" },
 		{ "id": 6, "name": "invitado" },
-		{ "id": 7, "name": "docente_tutor" } 
+		{ "id": 7, "name": "docente_tutor" },
+		{ "id": 8, "name": "Director propuesta" },
+		{ "id": 9, "name": "Co-investigador Propuesta" }
 	],
-
 	"facultad": [
 		{ "id": 8, "id_oas": 8, "nombre": "Vicerrectoria Académica" },
 		{ "id": 512, "id_oas": 14, "nombre": "Facultad de Ingeniería" },
 		{ "id": 511, "id_oas": 17, "nombre": "Facultad de Ciencias y Educación" },
 		{ "id": 159, "id_oas": 35, "nombre": "Facultad de Artes (ASAB)" },
 		{ "id": 513, "id_oas": 65, "nombre": "Facultad de Medio Ambiente" },
-		{ "id": 514, "id_oas": 66, "nombre": "Facultad Tecnológica" }
+		{ "id": 514, "id_oas": 66, "nombre": "Facultad Tecnológica" },
+		{ "id": 1137, "id_oas": 232, "nombre": "Facultad de Ciencias Matemáticas y Naturales" }
 	],
 	"subtipo": [
 		{ "name": "acompaniamiento_asesoria_categoria", "id": 168 },
-		{ "name": "acompaniamiento_asesoria_documento", "id": 169 },
 		{ "name": "acompaniamiento_asesoria_documento", "id": 169 },
 		{ "name": "acto_legislativo_categoria", "id": 92 },
 		{ "name": "acto_legislativo_documento", "id": 93 },
 		{ "name": "apoyo_creacion_categoria", "id": 164 },
 		{ "name": "apoyo_creacion_documento", "id": 165 },
-		{ "name": "seleccion_vista_rolparticipantes", "id": 234 },
-
 		{ "name": "articulo_categoria", "id": 11 },
 		{ "name": "articulo_tipo_documento", "id": 22 },
 		{ "name": "articulo_tipo", "id": 5 },
@@ -82,6 +79,10 @@
 		{ "name": "empresa_base_documento", "id": 58 },
 		{ "name": "empresa_creativa_categoria", "id": 72 },
 		{ "name": "empresa_creativa_documento", "id": 66 },
+		{ "name": "entidades_documento", "id": 210 },
+		{ "name": "entidades_naturaleza", "id": 208 },
+		{ "name": "entidades_tipos", "id": 209 },
+		{ "name": "estado_criterios_evaluacion", "id": 236 },
 		{ "name": "evento_cientifico_categoria", "id": 108 },
 		{ "name": "evento_cientifico_documento", "id": 110 },
 		{ "name": "evento_cultural_categoria", "id": 116 },
@@ -116,10 +117,12 @@
 		{ "name": "libros_creacion_documento", "id": 151 },
 		{ "name": "libros_formacion_apropiacion_categoria", "id": 142 },
 		{ "name": "libros_formacion_apropiacion_documento", "id": 143 },
+		{ "name": "lista_total_lineas", "id": 53 },
 		{ "name": "manuales_guias_especializados_categoria", "id": 144 },
 		{ "name": "manuales_guias_especializados_documento", "id": 145 },
 		{ "name": "manuales_modelos_categoria", "id": 86 },
 		{ "name": "manuales_modelos_documento", "id": 87 },
+		{ "name": "manuales_usuario", "id": 235 },
 		{ "name": "nota_cientifica_categoria", "id": 20 },
 		{ "name": "nota_cientifica_documento", "id": 30 },
 		{ "name": "obra_area_conocimiento", "id": 10 },
@@ -131,6 +134,17 @@
 		{ "name": "patente_documento", "id": 25 },
 		{ "name": "patente_estado", "id": 6 },
 		{ "name": "patente_tipo", "id": 14 },
+		{ "name": "planaccion_form1_documentos", "id": 222 },
+		{ "name": "planaccion_form1_tipos", "id": 201 },
+		{ "name": "planaccion_form2_estado_documentos", "id": 222 },
+		{ "name": "planaccion_form2_estado_tipos", "id": 203 },
+		{ "name": "planaccion_form2_tipos", "id": 202 },
+		{ "name": "planaccion_form5_tipos_inventario", "id": 234 },
+		{ "name": "planaccion_form6_estado_documentos", "id": 222 },
+		{ "name": "planaccion_form6_estado_tipos", "id": 207 },
+		{ "name": "planaccion_productos_resultado_documentos", "id": 220 },
+		{ "name": "planaccion_productos_resultado_tipos", "id": 204 },
+		{ "name": "planaccion_productos_transferencia_documentos", "id": 222 },
 		{ "name": "planta_categoria", "id": 35 },
 		{ "name": "planta_documento", "id": 45 },
 		{ "name": "planta_industrial_categoria", "id": 36 },
@@ -145,20 +159,25 @@
 		{ "name": "producciones_editoriales_documento", "id": 133 },
 		{ "name": "producto_nutraceutico_categoria", "id": 38 },
 		{ "name": "producto_nutraceutico_documento", "id": 48 },
+		{ "name": "propuesta_grupos", "id": 239 },
 		{ "name": "protocolo_vigilancia_categoria", "id": 90 },
 		{ "name": "protocolo_vigilancia_documento", "id": 91 },
 		{ "name": "protocolos_atencion_categoria", "id": 88 },
 		{ "name": "protocolos_atencion_documento", "id": 89 },
-		{ "name": "proyecto_extencion_categoria", "id": 166 },
-		{ "name": "proyecto_extencion_documento", "id": 167 },
+		{ "name": "proyecto_extension_categoria", "id": 166 },
+		{ "name": "proyecto_extension_documento", "id": 167 },
 		{ "name": "proyecto_idi_categoria", "id": 162 },
 		{ "name": "proyecto_idi_documento", "id": 163 },
+		{ "name": "proyecto_tipo_impacto", "id": 238 },
+		{ "name": "proyecto_indicador_meta_plazo", "id": 241 },
 		{ "name": "proyecto_investigacion_creacion_categoria", "id": 158 },
 		{ "name": "proyecto_investigacion_creacion_documento", "id": 159 },
 		{ "name": "proyecto_investigacion_desarrollo_categoria", "id": 156 },
 		{ "name": "proyecto_investigacion_desarrollo_documento", "id": 157 },
 		{ "name": "proyecto_ley_categoria", "id": 94 },
 		{ "name": "proyecto_ley_documento", "id": 95 },
+		{ "name": "proyectos_informacion_estados", "id": 236 },
+		{ "name": "proyectos_informacion_tipos", "id": 237 },
 		{ "name": "pruducciones_editoriales_categoria", "id": 132 },
 		{ "name": "raza_animal_categoria", "id": 17 },
 		{ "name": "raza_animal_documento", "id": 30 },
@@ -167,6 +186,10 @@
 		{ "name": "raza_pecuaria_documento", "id": 28 },
 		{ "name": "red_conocimiento_categoria", "id": 111 },
 		{ "name": "red_conocimiento_documento", "id": 112 },
+		{ "name": "redes_investigacion_documentos", "id": 215 },
+		{ "name": "redes_investigacion_grupos_documento", "id": 232 },
+		{ "name": "redes_investigacion_tipo_estrusturas_academicas", "id": 214 },
+		{ "name": "redes_investigacion_tipo", "id": 213 },
 		{ "name": "registro_cientifico_categoria", "id": 40 },
 		{ "name": "registro_cientifico_documento", "id": 50 },
 		{ "name": "registro_licencia_obra_categoria", "id": 98 },
@@ -189,12 +212,15 @@
 		{ "name": "secreto_empresarial_documento", "id": 56 },
 		{ "name": "secuencia_genetica_categoria", "id": 119 },
 		{ "name": "secuencia_genetica_documento", "id": 120 },
+		{ "name": "seleccion_vista_rolparticipantes", "id": 234 },
 		{ "name": "signo_distintivo_categoria", "id": 37 },
 		{ "name": "signo_distintivo_documento", "id": 47 },
+		{ "name": "snies_tipo", "id": 233 },
 		{ "name": "software_categoria", "id": 34 },
 		{ "name": "software_documento", "id": 44 },
 		{ "name": "taller_creacion_categoria", "id": 113 },
 		{ "name": "taller_creacion_documento", "id": 114 },
+		{ "name": "tipos_documentos_movilidad", "id": 200 },
 		{ "name": "trabajo_grado_d_categoria", "id": 152 },
 		{ "name": "trabajo_grado_d_documento", "id": 153 },
 		{ "name": "trabajo_grado_m_categoria", "id": 154 },
@@ -208,38 +234,57 @@
 		{ "name": "unidad_tipo", "id": 2 },
 		{ "name": "variedad_vegetal_categoria", "id": 16 },
 		{ "name": "variedad_vegetal_documento", "id": 26 },
-		{ "name": "variedad_vegetal_estado_peticion", "id": 64 },
+		{ "name": "propuesta_tipo_monto_rubro", "id": 242 },
+		{ "name": "Porpuesta_seguimeinto_inventario_estados", "id": 244 },
+		{ "name": "proyecto_seguimiento", "id": 243 },
+		{"name": "Proyecto_Seguimiento_Inventarios_Tipo", "id": 245},
+		{"name": "Proyecto_Seguimiento_estado_producto", "id": 246},
+		{ "name": "variedad_vegetal_estado_peticion", "id": 64 }
+	],
+	"identificadores_subtipo": [
+		{
+			"description_utility": "Estado proyecto-Convocatoria-Movilidad-Estado con id 236",
+			"name": "Aprobado",
+			"id": 1111
+		},
 
-		{ "name": "planaccion_form1_tipos", "id": 201 },
-		{ "name": "planaccion_form1_documentos", "id": 222 },
-		{ "name": "planaccion_form2_tipos", "id": 202 },
-		{ "name": "planaccion_form2_estado_tipos", "id": 203 },
-		{ "name": "planaccion_form2_estado_documentos", "id": 222 },
-		{ "name": "planaccion_productos_resultado_tipos", "id": 204 },
-		{ "name": "planaccion_productos_resultado_documentos", "id": 220 },
-		{ "name": "planaccion_productos_transferencia_documentos", "id": 222 },
-		{ "name": "planaccion_form6_estado_tipos", "id": 207 },
-		{ "name": "planaccion_form6_estado_documentos", "id": 222 },
-		{ "name": "planaccion_form5_tipos_inventario", "id": 234 },
+		{
+			"description_utility": "proveniente del tipo Convocatoria-Movilidad-Estado, con id 236",
+			"name": "borrador",
+			"id": 1109
+		},
+		{
+			"description_utility": "proveniente del tipo Convocatoria-Movilidad-Estado con id 236",
+			"name": "por_subsanar",
+			"id": 1112
+		},
+		{
+			"description_utility": "proveniente del tipo Convocatoria-Movilidad-Estado con id 236",
+			"name": "enviar",
+			"id": 1113
+		},
 
-		{ "name": "redes_investigacion_tipo", "id": 213 },
-		{ "name": "redes_investigacion_tipo_estrusturas_academicas", "id": 214 },
-		{ "name": "redes_investigacion_documentos", "id": 215 },
-		{ "name": "redes_investigacion_grupos_documento", "id": 232 },
+		{
+			"description_utility": "proveniente del tipo Convocatoria-tipo",
+			"name": "id_movilidad",
+			"id": 647
+		},
 
-		{ "name": "entidades_naturaleza", "id": 208 },
-		{ "name": "entidades_tipos", "id": 209 },
-		{ "name": "entidades_documento", "id": 210 },
-		{ "name": "snies_tipo", "id": 233 },
+		{
+			"description_utility": "proveniente de proyecto_seguimiento documentos id: 243 ",
+			"name": "documentos_seguimiento",
+			"id": 1132
+		},
 
-		{ "name": "proyectos_informacion_estados", "id": 236 },
-		{ "name": "proyectos_informacion_tipos", "id": 235 },
-		
-		{ "name": "tipos_documentos_movilidad", "id": 200 },
-
-		{ "name": "manuales_usuario", "id": 235 }
-
-		
-		
+		{
+			"description_utility": "proveniente del tipo Convocatoria-tipo ",
+			"name": "id_proyecto",
+			"id": 648
+		},
+		{
+			"description_utility": "Id de la Facultad de matemáticas en la OAS",
+			"name": "facultad_matematicas",
+			"id": 232
+		}
 	]
 }

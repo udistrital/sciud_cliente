@@ -60,6 +60,12 @@
 													</div>
 													<div class="col-1">
 														<div class="form-group">
+															<label>Obligatorio:</label>
+															<DxSwitch :value.sync="base_obj.cd_required" switched-on-text="SI" switched-off-text="NO" />
+														</div>
+													</div>
+													<div class="col-1">
+														<div class="form-group">
 															<label>Activo:</label>
 															<DxSwitch :value.sync="base_obj.active" switched-on-text="SI" switched-off-text="NO" />
 														</div>
@@ -143,6 +149,7 @@
 											data-field="document_name"
 											data-type="string"
 										/>
+										<DxColumn :width="100" data-field="cd_required" caption="Obligatorio" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 										<DxColumn :width="100" data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" />
 										<DxColumn :width="70" alignment="center" cell-template="tpl" caption="" name="cmds" v-if="editMode" />
 										<template #tpl="{ data }">
@@ -155,6 +162,14 @@
 									</DxDataGrid>
 								</div>
 							</div>
+
+							<div class="card-body" v-if="debug">
+								<pre> 
+									<strong class="font-weight-semibold">baseObj:</strong>
+									{{ JSON.stringify(base_obj, null, 4) }}
+								</pre> 
+							</div>
+
 						</fieldset>
 					</div>
 				</div>
@@ -230,6 +245,7 @@ export default {
 	data: () => ({
 		item: null,
 		id: "panel-convocatoria-documentos",
+		baseEnt:{},
 		base_obj: {
 			document_id: 0,
 			cd_required: true,
@@ -249,6 +265,7 @@ export default {
 					console.log("SOME!");
 				});
 			});
+
 		},
 		edit(item) {
 			console.clear();
@@ -268,10 +285,12 @@ export default {
 					console.log("percent_max =>", root.percent_max);
 				});
 			});
+			
 		},
 		cancel(cb) {
 			$("#fs-doc-sol .row.data").fadeOut(function(params) {
 				root.loaderHide();
+				root.base_obj = root.baseEnt;
 				$("#fs-doc-sol .row.grid").fadeIn(function(params) {
 					root.base_obj = root.$clone(root.base_obj_bk);
 					root.$refs.vGroup.instance.reset();
@@ -280,6 +299,7 @@ export default {
 				});
 			});
 		},
+
 		save: async (validate = true) => {
 			let valid = validate ? root.$refs.vGroup.instance.validate().isValid : true;
 			if (valid) {
@@ -300,7 +320,9 @@ export default {
 					});
 				}, 1000);
 			}
+			root.base_obj = root.baseEnt;
 		},
+
 		gridInit(e) {
 			console.log(root.$sep);
 			console.log("GRID INIT!!");
@@ -316,6 +338,7 @@ export default {
 			});
 		},
 	},
+	
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
 		dataSource: function() {
@@ -346,6 +369,7 @@ export default {
 	},
 	created: async function() {
 		root = this;
+		root.baseEnt = this.$clone(this.base_obj);
 		console.log(root.$sep);
 		root.tipoDocsEmitir = root.subtypesByType("convocatoria_doc_emitir");
 		console.log("root.tipoDocsEmitir =>", root.tipoDocsEmitir);

@@ -90,7 +90,7 @@
 
 <div :class="'col-md-'+(actInfor?'2':'4')">
 	<div class="form-group3">
-	<label>Meta: </label>
+	<label>Meta: </label><!--1026257279  Maira  Alexandra Beltran Diaz-->
 	<DxNumberBox placeholder="Meta " class="form-control" :value.sync="baseObj.goal" :disabled="actInfor" @keyDown="keyDown($event)">
 	<DxValidator> 
 		<DxRequiredRule />

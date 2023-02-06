@@ -1,7 +1,7 @@
 \* data.row.data.name = titulo de participantes data.data.name = titulo para activar o desactivar Variedad Vegetal = Titulo botones Variedad Vegetal = Titulo
-principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable_variety = endpoindt especifico vegetable_varieties = rutas generales *\
+principal variedad = titulo abreviado formdPlan = nombredepaneles vegetable_variety = endpoindt especifico vegetable_varieties = rutas generales *\
 <template>
-	<div class="col mt-3 pl-1 pr-1" id="panelvegvariet">
+	<div class="col mt-3 pl-1 pr-1" id="formdPlan">
 		<div class="row">
 
 			<div class="col">
@@ -38,7 +38,7 @@ principal variedad = titulo abreviado panelvegvariet = nombredepaneles vegetable
 			</div>
 		</div>
 
-		<Documentos id="panelvegvariet-documentos" end-point="vegetable_varieties" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
+		<Documentos id="documentos" end-point="form_d_act_plans" :group="group" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" />
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
 				<div class="col">
@@ -832,13 +832,13 @@ export default {
  
 	mounted() {
     root.ttip = root.$refs.ttip.instance;
-		root.panelData = $("#panelvegvariet .data");
-		root.panelGrid = $("#panelvegvariet .grid");
-		root.panelCmds = $("#panelvegvariet .cmds");
-		root.panelCmdBack = $("#panelvegvariet .cmds-back");
-		root.panelDocs = $("#panelvegvariet-documentos");
+		root.panelData = $("#formdPlan .data");
+		root.panelGrid = $("#formdPlan .grid");
+		root.panelCmds = $("#formdPlan .cmds");
+		root.panelCmdBack = $("#formdPlan .cmds-back");
+		root.panelDocs = $("#formdPlan-documentos");
 		root.loaderMessage = "Cargando Redes Académicas";
-		root.loaderElement = "#panelvegvariet .grid";
+		root.loaderElement = "#formdPlan .grid";
 	},
 	
   

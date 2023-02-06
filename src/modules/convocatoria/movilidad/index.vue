@@ -8,11 +8,17 @@
 				</h1>
 			</div>
 			<div class="header-elements">
-				<span id="panel-roleUsers-cmds">
+				<!-- <span id="panel-roleUsers-cmds">
 					<button type="button" @click.prevent="add()" title="Crear Entidad.." class="btn btn-main btn-labeled btn-labeled-left legitRipple">
 						<b><i class="icon-database-add"></i></b> Postular
 					</button>
-				</span>
+				/span> -->
+				
+                <router-link tag="a" :to="'/convocatoria'" class="btn btn-main btn-labeled btn-labeled-left legitRipple"
+                    title="Regresar al listado de convocatorias">
+                    <b><i class="icon-arrow-left2"></i></b>Volver a Convocatorias
+                </router-link>
+				
 			</div>
 		</div>
 
@@ -24,228 +30,41 @@
 			
 			<div class="col">
 				<div class="card main">
-					<div class="card-header main">Alguna acción</div>
+					<div class="card-header main"></div>
+
+				<div class="card-body pb-0 pt-2">
+						<div class="row mr-3">
+							<div class="col text-left">
+								<h1>
+									<i class="icon-paperplane mr-1 color-main-600"></i>
+									<span class="font-weight-semibold">Evento: </span> &raquo; {{baseObj.event_name}}
+								</h1>
+							</div>
+							<div class="col text-right">
+								<DxButton @click="cancel" class="nb">
+									<template #default>
+										<span class="btn btn-main btn-labeled btn-labeled-left legitRipple">
+											<b><i class="icon-arrow-left2"></i></b> Regresar a eventos
+										</span>
+									</template>
+								</DxButton>
+							</div>
+						</div>
+					</div>
+
+
 					<div class="card-body pb-0 pt-2">
-					
-						<h3>Listado de ponderacion del aspirante:</h3>
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Trayectoria y proyeccion del estudiante en la universidad:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="Documento de identidad"
-										:read-only="true"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
-										</DxNumberBox>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="Trayectoria y proyeccion del estudiante en la universidad">
-										<label>Procentaje total:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="Documento de identidad"
-										:read-only="true"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
-										</DxNumberBox>
-									</div>
-								</div>
-								
-						<h3>Resultado del aspirante:</h3>
 						<DxValidationGroup ref="basicGroup">
-                               <div class="col-12">
-									<div class="row">
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Procentaje total:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="valor %"
-										:read-only="true"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<!-- <DxNumberBoxButton :options="searchButton" name="search" location="after" /> -->
-										</DxNumberBox>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Convocatoria Aceptada?: </label>
-										<DxSwitch :value.sync="baseObj.organisator" switched-on-text="SI" switched-off-text="NO" />
-									</div>
-								</div>
-
-										<!-- <div class="col-md-4">
-											<div class="form-group">
-											<label>Nombre del evento al que se asiste: </label>
-											<DxTextBox placeholder="Nombre del evento al que se asiste" class="form-control" :value.sync="baseObj.name_event">
-											<DxValidator>
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="form-group">
-											<label>N° de ediciones del Evento: </label>
-											<DxTextBox placeholder="N° de ediciones del Evento" class="form-control" :value.sync="baseObj.number_edit_event">
-											<DxValidator>
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div>
-
-										<div class="col-md-4">
-											<div class="form-group">
-											<label>Nombre de la ponencia: </label>
-											<DxTextBox placeholder="Nombre de la ponencia" class="form-control" :value.sync="baseObj.name_participation">
-											<DxValidator>
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div>
-
-										<div class="col-md-12">
-											<label>Lugar: </label>
-										<Geo :lockElement="loaderElement" :syncObject="baseObj" />
-										</div>
-										<div class="col-md-2">
-											<div class="form-group">
-											<label>¿La UD participa como organizador o miembro de mesas de evaluación?: </label>
-											<DxSwitch :value.sync="baseObj.organisator" switched-on-text="SI" switched-off-text="NO" />
-											</div>
-										</div>
-
-										<div class="col-md-5">
-											<div class="form-group">
-											<label>Pagina del evento: </label>
-											<DxTextBox placeholder="Pagina del evento" class="form-control" :value.sync="baseObj.url">
-											<DxValidator>
-												<DxRequiredRule />
-												<DxPatternRule message="Por favor Ingrese la Pagina WEB con los datos completos Ej: http://miweb.com/articulo" :pattern="urlPattern" />
-											</DxValidator>
-											</DxTextBox>
-											</div>
-										</div> -->
-
-										<!-- <div class="col-md-5">
-											<div class="form-group">
-											<label>Grupo por el cual se presenta: </label>
-											<DxSelectBox
-												::show-clear-button="true"
-												:grouped="false"
-												:search-enabled="false"
-												placeholder="Seleccione..."
-												:value.sync="baseObj.reseacrcher_group_id" 
-												class="form-control"
-												:data-source="subtipos" 
-												display-expr="st_name"
-												value-expr="id">
-											</DxSelectBox>
-											</div>
-										</div> -->
-									</div>
-								</div>
-
-
-						<!--
-								<div class="col-12">
-								<div class="row">
-									
-								<div class="col-md-3">
-									<div class="form-group">
-										<label>Documento de identidad:</label>
-										<DxNumberBox
-										class="form-control"
-										:show-clear-button="true"
-										:value.sync="representante.identification_number"
-										placeholder="Documento de identidad"
-										:read-only="modeEdit"
-										>
-										<DxValidator>
-											<DxRequiredRule />
-										</DxValidator>
-										<DxNumberBoxButton :options="searchButton" name="search" location="after" />
-										</DxNumberBox>
-									</div>
-								</div>
-
-								<div class="col-md-3">
-									<div class="form-group">
-									<label>Tipo Documento: </label>
-									<DxSelectBox
-										::show-clear-button="true"
-										:grouped="false"
-										:search-enabled="false"
-										placeholder="Seleccione..."
-										:value.sync="representante.identification_type_id" 
-										class="form-control"
-										:data-source="tipoDocumento" 
-										display-expr="st_name"
-										:read-only="modeEdit"
-										value-expr="id">
-									</DxSelectBox>
-									</div>
-								</div>
-
-
-
-								<div class="col-md-3">
-									<div class="form-group">
-									<label>Nombre Representante: </label>
-									<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.name" :read-only="modeEdit">
-									<DxValidator>
-										<DxRequiredRule />
-									</DxValidator>
-									</DxTextBox>
-									</div>
-								</div> 
-
-
-								<div class="col-md-3">
-									<div class="form-group">
-									<label>Email: </label>
-									<DxTextBox placeholder="Nombre Institución" class="form-control" :value.sync="representante.email" :read-only="modeEdit">
-									<DxValidator>
-										<DxRequiredRule />
-									</DxValidator>
-									</DxTextBox>
-									</div>
-								</div>
-
-								</div>
-								</div> 
-					-->
-
-
-
+							<criteriosEvaluacion :group="{id:1}" :baseObj="baseObj" :key="baseObj.id" :reference="this" ></criteriosEvaluacion>
 						</DxValidationGroup>
 					</div>
-					<div class="card-footer">
+					<!-- <div class="card-footer">
 						<div class="row">
 							<div class="col">
 								<DxButton @click="cancel" class="nb">
 									<template #default>
 										<span class="btn btn-main btn-labeled btn-labeled-left btn-sm legitRipple">
-											<b><i class="icon-database-remove"></i></b> CANCELAR
+											<b><i class="icon-database-remove"></i></b> Regresar al listado
 										</span>
 									</template>
 								</DxButton>
@@ -253,14 +72,14 @@
 							<div class="col text-right">
 								<DxButton @click="save" class="nb">
 									<template #default>
-										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
+										<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple" v-if="btnsave">
 											GUARDAR <b><i class="icon-database-add"></i></b>
 										</span>
 									</template>
 								</DxButton>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
 		</div>
@@ -298,12 +117,12 @@
 						:show-borders="false"
 					>
 						<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-						<DxSorting mode="single" /><!-- single, multiple, none" -->
-						<DxPaging :page-size="10" />
-						<DxFilterRow :visible="false" />
+						<DxSorting mode="multiple" /><!-- single, multiple, none" -->
+						<DxPaging :page-size="50" />
+						<DxFilterRow :visible="true" />
 						<DxLoadPanel :enabled="false" />
 						<DxGroupPanel :visible="totaCount > 0" :allow-column-dragging="true" />
-						<DxGrouping :auto-expand-all="false" />
+						<DxGrouping :auto-expand-all="true" />
 						<DxSummary>
 							<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} artículos" />
 						</DxSummary>
@@ -328,7 +147,14 @@
 							:sort-index="0"
 							width="80"
 						/>
-						<DxColumn
+
+						<!-- <DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
+							:visible='true'  :group-index="0"  /> -->
+
+						<DxColumn :allow-filtering="true"  data-field="state_id" caption="Estado Aplicación" data-type="number" alignment="left" :visible="true" >
+							<DxLookup :data-source="listEstadosEval" value-expr="id" display-expr="st_name" />
+						</DxColumn>
+						<!-- <DxColumn
 							data-field="call_id"
 							caption="ID conv"
 							data-type="number"
@@ -337,13 +163,13 @@
 							:allow-grouping="false"
 							:allow-filtering="false"
 							width="80"
-						/>
+						/> -->
 						<DxColumn
 							data-field="call_name"
 							caption="Convocatoria"
 							data-type="string"
 							alignment="left"
-							:visible="true"
+							:visible="false"
 							:allow-grouping="false"
 							:allow-filtering="false"
 							
@@ -390,7 +216,7 @@
 							:allow-filtering="false"
 						/>
 
-						<DxColumn
+						<!-- <DxColumn
 							data-field="geo_state_name"
 							caption="Estado"
 							data-type="string"
@@ -398,7 +224,7 @@
 							:visible="false"
 							:allow-grouping="false"
 							:allow-filtering="false"
-						/>
+						/> -->
 
 						<DxColumn
 							data-field="geo_city_name"
@@ -420,24 +246,24 @@
 							:allow-filtering="false"
 						/>
 
-						<DxColumn data-field="is_organizer" caption="Organizador UD" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
+						<DxColumn data-field="is_organizer" caption="Organizador UD" data-type="date" alignment="center" :visible="false" :customize-text="yesNo" width="70" />
 
-						<DxColumn
-							data-field="name"
-							caption="URL Evento"
-							data-type="string"
-							alignment="false"
-							:visible="false"
-							:allow-grouping="false"
-							:allow-filtering="false"
-						/>
+						<DxColumn data-field="event_page" :allow-filtering="false" caption="URL" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />
+						<template #tplWeb="{ data }">
+							<a v-if="data.data.event_page != '' && data.data.event_page != null"
+								:title="data.data.event_page" class="cmd-item color-main-600 mr-2"
+								:href="data.data.event_page" Target="_blank">
+								<i class="icon-link"></i> Visitar
+							</a>
+							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
+						</template>
 
 						<DxColumn
 							data-field="research_group_name"
 							caption="Grupo que Presenta"
 							data-type="string"
 							alignment="left"
-							:visible="true"
+							:visible="false"
 							:allow-grouping="false"
 							:allow-filtering="false"
 						/>
@@ -494,7 +320,7 @@
 						
 
 						<!-- <DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
-						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
+						<DxColumn data-field="active"  :allow-filtering="false" caption="Activo" data-type="string" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						
 						<DxColumn :width="80" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
 
@@ -542,15 +368,15 @@
 								</a> -->
 
 								<span v-if="editMode">
-									<a title="Modificar participante..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-										<i class="icon-database-edit"></i>
+									<a title="Evaluar..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-pencil"></i>
 									</a>
-									<a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
+									<!-- <a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 										<i class="icon-database-remove"></i>
 									</a>
 									<a v-else title="Activar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
 										<i class="icon-database-check"></i>
-									</a>
+									</a> -->
 								</span>
 							</span>
 						</template>
@@ -576,7 +402,8 @@
 				</div> 
 				<div class="card">
 					<div class="card-body"><strong>porcentajes convocatoria:</strong> {{ JSON.stringify(promedioconv, null, 3) }}</div>
-				</div> 
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -622,7 +449,7 @@ import {
 	DxValidationGroup,
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
-import  {DxValidator, DxRequiredRule, DxCustomRule, DxEmailRule, DxStringLengthRule, DxPatternRule } from "devextreme-vue/validator";
+import  {DxValidator, DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { mapActions, mapGetters, mapState } from "vuex";
 // https://js.devexpress.com/Demos/WidgetsGallery/Demo/DataGrid/CustomDataSource/Vue/
 export default {
@@ -660,11 +487,13 @@ export default {
 		DxValidationGroup,
 		DxValidator,
 		DxStateStoring,
-		DxEmailRule, DxStringLengthRule, DxPatternRule,
-		Usuario: () => import("@/components/element/usuario"),
-        Geo: () => import("@/components/element/geo"),
+		// DxEmailRule, DxStringLengthRule, DxPatternRule,
+		// Usuario: () => import("@/components/element/usuario"),
+        // Geo: () => import("@/components/element/geo"),
+		criteriosEvaluacion: () => import("@/modules/convocatoria/movilidad/form_aceptacion_aspirantes.vue"),
 	},
 	data: () => ({
+		listEstadosEval:null,
 		tiposPermiso:null,//[{id:1, name: "Roles de Grupo"},{id:2, name: "Roles de semillero"},{id:3, name: "Grupo y Semillero"}],
 		modeEdit:false,
 		dataUserLogin:null,
@@ -694,60 +523,40 @@ export default {
 		datauser:{name:"", cc:""},
 		promedioconv:{},
 		groupResearchers:[],
-		baseObj: {
+		baseObj:{
+			id: null,
 			call_id: null,
 			call_name: null,
 			geo_city_id: null,
-			geo_state_id: null,
+			geo_city_name: null,
 			geo_country_id: null,
+			geo_country_name: null,
+			geo_state_id: null,
 			event_name: null,
 			event_edition_number: null,
 			event_date: null,
 			paper_name: null,
 			is_organizer: null,
 			event_page: null,
-			research_group_id : null,
-			oas_research_id: null,
-			active: true,
-			create_by: 1
+			research_group_id: null,
+			research_group_name: null,
+			researcher_id: null,
+			oas_researcher_id: null,
+			geo_state_name: null,
+			active: null,
 		},
-		representante:{
-			name: null,
-			identification_number: null,
-			email: null,
-			identification_type_id: null,
-			active: true,
-			id: null,
-			identification_type_name: null,
-		},
-		baseObjhist:{
-			legal_representative_id: null,
-			is_current: true,
-			active: true,
-		},
+
 		lookupData: ["Not Started", "Need Assistance", "In Progress"],
 	}),
 	created() {
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-
-		root.getResearchers({
-			id: this.group.id,
-			cb: function(results) {
-				console.log(root.$sep);
-				root.groupResearchers = results.researchers;
-				console.log("root.groupResearchers", root.groupResearchers);
-			},
-		});
-		// root.tiposPermiso = root.subtypesByType("seleccion_vista_rolparticipantes");
-		// root.baseEnt2 = this.$clone(this.representante);
-		// root.naturaleza = root.subtypesByType("roleUsers_naturaleza");
-		// root.tipoEntidad = root.subtypesByType("roleUsers_tipos");
-		// root.tipoDocumento = root.subtypesByType("roleUsers_documento");
+		root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
 	},
     async mounted() {
 		root = this;
-		root.loaderShow("Cargando participantees");
+		root.filterByEstate();
+		root.loaderShow("Cargando participantes");
 		root.validator = root.$refs.basicGroup.instance;
 		root.baseObj.created_by = root.user_id;
 		root.baseObj.updated_by = root.user_id;
@@ -772,7 +581,7 @@ export default {
 
 
 		// console.warn("usuario nombre completo ",  t.NombreCompleto);
-
+		
 
 		let root_id = "#panel-roleUsers";
 		root.panelCmd = $(`${root_id}-cmds`);
@@ -789,9 +598,9 @@ export default {
 			// console.log("root.group", this.group);
 			return DxStore({
 				key: ["id"],
-				endPoint: `/calls/${root.$}/mobility_calls`,
+				endPoint: `/calls/${root.$route.params.itemId}/mobility_calls`,
 				onLoading: function(loadOptions) {
-					root.loaderShow("Cargando participantees", "#panel-produccion .card-body");
+					root.loaderShow("Cargando participantes", "#panel-produccion .card-body");
 				},
 				onLoaded: function(results, baseEntity) {
 					// console.clear();
@@ -823,76 +632,10 @@ export default {
 			} else return true;
 		},
 		
-		// editComp: async (entidad) =>{
-		// 	//let doc=root.baseObj.legal_representative_identification;
-		// 	let datauser= await root.getSerarchDoc({url: 'entities/'+entidad+'/hist_legal_representatives?filter=["is_current","=",true]'});
-		// 	let documet=datauser[0].legal_representative_identification;
-		// 	root.datosDoc = await root.getSerarchDoc({url: 'legal_representatives?identification_number=' + documet});
-		// 	root.representante.identification_number=documet;
-		// 	root.representante=root.datosDoc[0];
-		// 	root.baseObj.legal_representative_id=root.representante.id;
-		// 	// root.representante=root.datosDoc[0];
-		// 	root.modeRep = "edit";
-		// },
-		// imprimir(){
-		// 	console.warn("resultado dato usuario ",this.get_group_role_name(2));
-		// },
-		
-		saveRepresentante() {
-			// if (result.isValid) {
-				// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-				if (root.modeRep == "add") root.representante.created_by = root.user_id;
-				if (root.modeRep == "edit") root.representante.updated_by = root.user_id;
-				let obj = root.representante;
-				let dto = {
-					newFormat: true,
-					// unidadId: root.$route.params.idEnt,
-					stringEP: "legal_representatives",
-					rute2: "legal_representatives",
-					mod: obj.id,
-					objectSend: { legal_representative: obj },
-					cb: function(item) {
-						console.log("item", item);
-						root.baseObjhist.legal_representative_id=item.id;
-						root.baseObj.legal_representative_id=item.id;
-					},
-				};
-				if (root.modeRep == "edit") root.objUpdate(dto);
-				else root.objSave(dto);
-		},
-
-
-		// saveHistory(id) {
-		// 	// console.log("VALID!");
-		// 	// root.scrollTop();
-		// 	// root.panelCmds.fadeOut();
-		// 	// let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " elemento";
-		// 	// root.loaderShow(msg, root.panelData);
-		// 	// if (root.mode == "add") 
-		// 	root.baseObjhist.created_by = root.user_id;
-		// 	// if (root.mode == "edit") root.baseObjhist.updated_by = root.user_id;
-			
-		// 	// root.baseObjhist.is_current=true;
-		// 	let obj = root.baseObjhist;
-		// 	let dto = {
-		// 		newFormat: true,
-		// 		// unidadId: root.$route.params.idEnt,
-		// 		stringEP: root.ruta,
-		// 		rute2: `entities/${id}/hist_legal_representatives/`,
-		// 		mod: obj.id,
-		// 		objectSend: { hist_legal_representative: obj },
-		// 		cb: function(item) {
-		// 			console.log("item", item);
-		// 			// root.grid.refresh();
-		// 			// root.loaderHide();
-		// 			// root.cancel();
-		// 		},
-		// 	};
-		// 	// console.log("root.mode", root.mode);
-		// 	// if (root.mode == "edit") root.objUpdate(dto);
-		// 	root.objSave(dto);
-		// 	// root.cancel();
-		// },
+		filterByEstate() {
+			// let estado = root.listEstadosEval.find(element => element.st_name == 'En Evaluación');
+            // root.grid.filter([[ "state_id", "=", estado.id ]]);
+        },
 		
 		save() {
 			console.log(this.$sep);
@@ -934,58 +677,6 @@ export default {
 			}
 		},
 
-		// save() {
-		// 	console.clear();
-		// 	console.log(root.$sep);
-		// 	root.loaderElement = root.panelData.find(".card");
-		// 	console.log("validator =>", root.validator);
-		// 	var result = root.validator.validate();
-		// 	console.log("result =>", result);
-
-		// 	if (result.isValid) {
-		// 		root.loaderShow("Guardando Entidad");
-
-
-		// 		console.log("VALID!");
-		// 		root.scrollTop();
-		// 		// root.panelCmds.fadeOut();
-		// 		// root.loaderElement = ;
-		// 		let msg = (root.mode == "add" ? "Creando" : "Actualizando") + " Elemento";
-		// 		root.loaderShow(msg, root.panelData);
-		// 		if (root.mode == "add") {
-		// 			root.baseObj.created_by = root.user_id;
-		// 			// root.saveRepresentante();
-		// 		}
-		// 		if (root.mode == "edit") root.baseObj.updated_by = root.user_id;
-		// 		// root.baseObj.legal_representative_id=root.representante.identification_type_id;
-
-		// 		// root.baseObj.product_type_id = root.codEP;
-		// 		// root.baseObj.research_group_id = root.group.id;
-		// 		let obj = root.baseObj;
-		// 		//let json1 = `{ "${mydata}": `+JSON.stringify(obj)+" } ";
-		// 		let dto = {
-		// 			newFormat: true,
-		// 			// unidadId: root.group.id,
-		// 			stringEP: root.endPointRute,
-		// 			rute2: root.endPointRute,
-		// 			mod: obj.id,
-		// 			//objectSend: { regulation : obj },
-		// 			objectSend: JSON.parse(`{ "${root.objEpdata}": ` + JSON.stringify(obj) + "}"),
-		// 			cb: function(item) {
-		// 				console.log(root.$sep);
-		// 				console.log("result =>", result);
-		// 				// root.saveHistory(item.id);
-		// 				root.grid.refresh();
-		// 				root.loaderHide();
-		// 				root.cancel();
-		// 			},
-		// 		};
-		// 		console.log("root.mode", root.mode);
-		// 		if (root.mode == "edit") root.objUpdate(dto);
-		// 		else root.objSave(dto);
-		// 		root.cancel();
-		// 	}
-		// },
 
 		edit(data) {
 
@@ -1011,7 +702,7 @@ export default {
 			console.log("data", data);
 			root.subtypes_current = root.subtypes.filter((o) => o.active);
 			root.baseObj = root.$clone(data);
-			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Editar participante`);
+			root.panelData.find(".card-header").html(`<i class="icon-database-edit"></i>&nbsp;&nbsp;Evaluar Convocatoria de Movilidad`);
 			root.panelCmd.fadeOut();
 			root.panelGrid.fadeOut(function() {
 				root.panelData.fadeIn();
@@ -1082,6 +773,7 @@ export default {
 				root.panelCmd.fadeIn();
 				root.panelGrid.fadeIn();
 			});
+			root.grid.refresh();
 		},
 				
 		gridInit(e) {

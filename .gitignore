@@ -6,6 +6,7 @@ node_modules
 diagram
 # *.code-workspace
 config/database.yml
+*bk*
 *.bk*
 *_bk*
 *obsoletos*
