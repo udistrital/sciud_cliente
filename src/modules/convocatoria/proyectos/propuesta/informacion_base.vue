@@ -65,7 +65,7 @@
                           >
                             <DxValidator>
                               <DxRequiredRule />
-                            </DxValidator>
+                            </DxValidator> 
                           </DxSelectBox>
                         </div>
                       </div>
@@ -85,9 +85,7 @@
                             value-expr="id"
                             :read-only="!permisoGuardar"
                           >
-                            <DxValidator>
-                              <DxRequiredRule />
-                            </DxValidator>
+                            
                           </DxSelectBox>
                         </div>
                       </div>
@@ -428,31 +426,32 @@ export default {
   created: async function () {
     root = this;
     let arg = {};
-    arg.url =
-      'role?filter=[["active","=","true","AND","role_type_id","=","1122"]]';
+    arg.url = 'role';
     root.tiposParticipante = await root.univerdalGet(arg);
+    console.warn("data create: => ", root.tiposParticipante)
     // root.tipo_proyecto = root.subtypesByType("proyectos_informacion_tipos");
   },
-  watch: {
-    crudModelCreate: {
-      handler: function (val, oldVal) {
-        console.log("beep1");
-        if(this.proposal.title != null)  this.$emit("updatedCreate", this.crudModelCreate);
-        // This doesn't work
-      },
-      deep: true,
-      immediate: true,
-    },
-    proposal: {
-      deep: true,
-      immediate: true,
-      handler: function (val, oldVal) {
-        // console.clear();
-        console.log("newProposal =>", val);
-        if(this.proposal.title != null) root.$emit("updateProposal", val);
-      },
-    },
-  },
+
+  // watch: {
+  //   crudModelCreate: {
+  //     handler: function (val, oldVal) {
+  //       console.log("beep1");
+  //       if(this.proposal.title != null)  this.$emit("updatedCreate", this.crudModelCreate);
+  //       // This doesn't work
+  //     },
+  //     deep: true,
+  //     immediate: true,
+  //   },
+  //   proposal: {
+  //     deep: true,
+  //     immediate: true,
+  //     handler: function (val, oldVal) {
+  //       // console.clear();
+  //       console.log("newProposal =>", val);
+  //       if(this.proposal.title != null) root.$emit("updateProposal", val);
+  //     },
+  //   },
+  // },
   async mounted() {
     // console.clear();
     root = this;

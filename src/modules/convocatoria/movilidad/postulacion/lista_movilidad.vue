@@ -26,7 +26,10 @@
 			</div>
 		</div>
 
-		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" :botonUploadVisible="{visible:true}" />
+		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" 
+		:botonUploadVisible="{
+								visible: true
+							}" />
 
 		<DxValidationGroup ref="basicGroup">
 			<div class="row data slide">
@@ -116,9 +119,16 @@
 								<div class="col-md-3">
 									<div class="form-group">
 										<label>Fecha del evento: </label>
-										<DxDateBox class="form-control" name="event_date"
-											:value.sync="baseObj.event_date" id="event_date" placeholder="DD/MM/YYYY"
-											display-format="dd/MM/yyyy" :min="minDate" :max="actualDate" type="date">
+										<DxDateBox 
+												class="form-control"
+												name="event_date"
+												:value.sync="baseObj.event_date"
+												id="event_date"
+												placeholder="DD/MM/YYYY"
+												display-format="dd/MM/yyyy"
+												:min="minDate"
+												type="date"
+											>
 											<DxValidator>
 												<DxRequiredRule />
 											</DxValidator>
@@ -160,7 +170,7 @@
 									</DxButton>
 								</div>
 								<div class="col text-right">
-									<DxButton @click="save" class="nb" v-if="false">
+									<DxButton @click="save" class="nb" v-if="visibleguardar.visible">
 										<!-- v-if="editMode">-->
 										<template #default>
 											<span class="btn btn-main btn-labeled btn-labeled-right btn-sm legitRipple">
@@ -473,7 +483,7 @@ export default {
 		phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
 		id_researcher_group:0,
 		
-		state_id:null,
+		state_id:1113,
 		baseObj: {
 			name: null,
 			category_id: null,
@@ -593,7 +603,7 @@ export default {
 		listDoc2subtipos(parametro) {
 			if (parametro.length >= 1) {
 				parametro.map(function (lista) {
-					let require = lista.cd_required? "(Requerido)": "";
+					let require = lista.cd_required? "*": "";
 					lista.id_ant = lista.id
 					lista.st_name = lista.document_name + " "+ require +"";
 					lista.id = lista.document_id;
@@ -631,7 +641,7 @@ export default {
 		documentos(data) {
 			// console.clear();
 			console.log("documentos", data.row.data);
-			root.loaderShow("Cargando lista Documentos", root.loaderElement);
+			// root.loaderShow("Cargando lista Documentos", root.loaderElement);
 			// 202104111513: Error
 			
 			
@@ -652,15 +662,12 @@ export default {
 					root.loaderHide();
 				},
 			});
-
-				root.visibleguardar.visible=true;
+			root.loaderShow("Cargando Permisos...", root.panelData);
+				// root.visibleguardar.visible=true;
 				
 				//1062=corregir  1065=sin enviar  cargadocs=true o false para cargar ducumentos
 
 
-				if(data.data.state_name=="Sin Enviar" || data.data.state_id.state_name=="Por Subsanar"){
-					this.visibleguardar.visible=true;
-				}
 
 				root.section = "documentos";
 				if (data.row.data.volume !== null) data.row.data.volume = parseInt(data.row.data.volume);
@@ -676,6 +683,18 @@ export default {
 					$("#" + root.id_panel_documentos).fadeIn(function (params) { });
 				});
 
+				
+				let mostrar = setTimeout(function() {
+					if(data.data.state_name=="Sin Enviar" || data.data.state_name=="Por Subsanar"){
+						this.visibleguardar.visible=true;
+					}else{
+						root.visibleguardar.visible=true;
+						// alert("no puede editar documentacion")
+					}
+					root.loaderHide();
+				}, 1000);
+
+				mostrar;
 		},
 
 		retorno() {
@@ -740,10 +759,11 @@ export default {
 		},
 
 		edit(data) {
-
-			
 			root.tiposDocumento=[];
-			
+			if(data.state_name=="Sin Enviar" || data.state_name=="Por Subsanar"){
+				this.visibleguardar.visible=true;
+			}
+			console.warn("data -> ", data);
 			root.getAll({
 				// url: "/research_units/117/group_member/10286",
 				url: "/calls/" + parseInt(data.call_id) + "/call_documents",
