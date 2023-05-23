@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20230512 (Movilidad) - ©{{ year }}
+				SICIUD v2.0.20230523 (Documentos, proyectos. Pruebas) - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -135,14 +135,14 @@ export default {
 				text: "Líder Semillero",
 			},
 
-			/*
-			este usuario no funciona en pruebas
+			
+			
 			{
-				cc: "65432123",
-				title: "Prueba Estudiante Siciud (Gestor)",
-				text: "Gestor",
+				cc: "1014238754",
+				title: "Juan Sevastian telles (Integrante)",
+				text: "Estudiante",
 			},
-
+/*este usuario no funciona en pruebas  1014238754
 			{
 				cc: "1111111104",
 				title: "Prueba Usuario",

@@ -31,7 +31,7 @@
 					<div class="card-body">
 						<span class="font-weight-semibold">editMode:</span> {{ editMode }}
 						<hr class="sep" />
-						<!-- <span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }} -->
+						<span class="font-weight-semibold">inforBase:</span> {{ JSON.stringify(inforBase, null, 3) }}
 					</div>
 				</div>
 			</div>
@@ -64,18 +64,38 @@ export default {
         },
 		group: {},
 		id: "panel-documentos-movilidad",
+		tiposDocumento:[]
 	}),
 	methods: {
 		...mapActions("unidad", ["getUnit"]),
+		...mapActions("unidad/producto/universalSentUpAct", {  getAll: "getAll" }),
+		listDoc2subtipos(parametro) {
+			if (parametro.length >= 1) {
+				parametro.map(function (lista) {
+					let require = lista.cd_required? "*": "";
+					lista.id_ant = lista.id
+					lista.st_name = lista.document_name + " "+ require +"";
+					lista.id = lista.document_id;
+					return lista;
+				});
+				root.tiposDocumento = parametro;
+			}
+		},
 	},
     props:{
         id_mobility: {
 			type: Number,
 			default: null,
 		},
+		inforBase: {
+			type: Object,
+			default: () => {},
+		},
     },
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),
+		
+		
 	},
     
 	created: function() {
@@ -84,7 +104,17 @@ export default {
 		root.tiposDocumento = [];
         root.datax.id=root.id_mobility;
 		console.log("root.tiposDocumento", root.tiposDocumento);
+		// root.$info("dentro="+parseInt(root.mobility_calls.id));
 		
+			root.getAll({
+				url: "/calls/" + parseInt(root.inforBase.call_id) + "/call_documents",
+				cb: function (results) {
+					let listDocuments = results;
+					console.warn("movilidad docs list ", listDocuments);
+					root.listDoc2subtipos(listDocuments);
+					root.loaderHide();
+				},
+			});		
 	},
 	updated: () => {
 		console.log(root.$sep);

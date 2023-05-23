@@ -110,7 +110,7 @@
 
                 <DxItem title="3. Documentos">
 					<template #default>
-						<vistaDocumentos :id_mobility="baseObj.id"/>
+						<vistaDocumentos :id_mobility="baseObj.id" :inforBase="baseObj"/>
 					</template>
 				</DxItem>
 
