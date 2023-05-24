@@ -5,7 +5,7 @@
         <h1>
           <i class="icon-paperplane mr-1 color-main-600"></i>
           <span class="font-weight-semibold">Evaluación Convocatorias</span>
-          &raquo; Aspirantes a Proyecto XXX
+          &raquo; Aspirantes a Proyecto 
         </h1>
       </div>
       <div class="header-elements">
@@ -17,6 +17,17 @@
         >
           <b><i class="icon-arrow-left2"></i></b>Volver a Convocatorias
         </router-link>
+      </div>
+      <div class="header-elements">
+        <router-link
+          tag="a"
+          :to="'/convocatoria'"
+          class="btn btn-main btn-labeled btn-labeled-left legitRipple"
+          title="Regresar al listado de convocatorias"
+        >
+          <b><i class="icon-info"></i></b>Crear Propuesta.
+        </router-link>
+
       </div>
     </div>
 
@@ -130,11 +141,47 @@
                   alignment="center"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                   :sort-index="0"
                   width="80"
                 />
+<!-- 
+                <DxColumn
+                  data-field="call_id"
+                  caption="ID conv"
+                  data-type="number"
+                  alignment="center"
+                  :visible="true"
+                  :allow-grouping="false"
+                  :allow-filtering="false"
+                  width="80"
+                />
 
+                <DxColumn
+                  data-field="call_code"
+                  caption="Convocatoria"
+                  data-type="text"
+                  alignment="center"
+                  :visible="true"
+                  :allow-grouping="false"
+                  :allow-filtering="false"
+                  width="80"
+                /> -->
+
+
+            <DxColumn
+							:allow-filtering="false"
+							caption="Acta"
+							data-type="string"
+							alignment="center"
+							:width="100"
+							:visible="true"
+							cell-template="tplcode"
+						/>
+							<template #tplcode="{ data }">
+								{{data.data.call_id}}-{{ data.data.call_code }}-{{data.data.id}}
+							</template>
+                
                 <!-- <DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
 							:visible='true'  :group-index="0"  /> -->
 
@@ -153,16 +200,8 @@
                     display-expr="st_name"
                   />
                 </DxColumn>
-                <!-- <DxColumn
-							data-field="call_id"
-							caption="ID conv"
-							data-type="number"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="false"
-							:allow-filtering="false"
-							width="80"
-						/> -->
+            
+
                 <DxColumn
                   data-field="title"
                   caption="Titulo"
@@ -356,7 +395,7 @@ import {
   DxTagBox,
   DxTextArea,
   DxTextBox,
-  DxValidationGroup,
+  DxValidationGroup, 
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import {

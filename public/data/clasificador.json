@@ -31,7 +31,7 @@
 		{ "id": 159, "id_oas": 35, "nombre": "Facultad de Artes (ASAB)" },
 		{ "id": 513, "id_oas": 65, "nombre": "Facultad de Medio Ambiente" },
 		{ "id": 514, "id_oas": 66, "nombre": "Facultad Tecnológica" },
-		{ "id": 1137, "id_oas": 232, "nombre": "Facultad de Ciencias Matemáticas y Naturales" }
+		{ "id": 1138, "id_oas": 232, "nombre": "Facultad de Ciencias Matemáticas y Naturales" }
 	],
 	"subtipo": [
 		{ "name": "acompaniamiento_asesoria_categoria", "id": 168 },
