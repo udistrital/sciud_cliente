@@ -153,7 +153,18 @@
                       display-expr="st_name"
                     />
                   </DxColumn>-->
-
+                  <DxColumn
+                    :allow-filtering="false"
+                    caption="Acta"
+                    data-type="string"
+                    alignment="center"
+                    :width="100"
+                    :visible="true"
+                    cell-template="tplcode"
+                  />
+                    <template #tplcode="{ data }">
+                      {{ data.data.created_at.substr(0,4) }}-{{data.data.call_id}}-{{data.data.id}}
+                    </template>
                 <DxColumn
                   data-field="call_code"
                   caption="Cod. Convocatoria"

@@ -138,7 +138,7 @@ export default {
 			
 			
 			{
-				cc: "1014238754",
+				cc: "35458635",
 				title: "Juan Sevastian telles (Integrante)",
 				text: "Estudiante",
 			},
