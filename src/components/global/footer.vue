@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20230523 (Documentos, proyectos. Pruebas) - ©{{ year }}
+				SICIUD v2.0.20230525 (proyectos-convocatoria-id_actas) - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -138,7 +138,7 @@ export default {
 			
 			
 			{
-				cc: "1014238754",
+				cc: "35458635",
 				title: "Juan Sevastian telles (Integrante)",
 				text: "Estudiante",
 			},

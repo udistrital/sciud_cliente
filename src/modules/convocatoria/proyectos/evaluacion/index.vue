@@ -179,7 +179,7 @@
 							cell-template="tplcode"
 						/>
 							<template #tplcode="{ data }">
-								{{data.data.call_id}}-{{ data.data.call_code }}-{{data.data.id}}
+								{{ data.data.created_at.substr(0,4) }}-{{data.data.call_id}}-{{data.data.id}}
 							</template>
                 
                 <!-- <DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
