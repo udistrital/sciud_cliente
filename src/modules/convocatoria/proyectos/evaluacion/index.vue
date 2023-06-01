@@ -18,17 +18,27 @@
           <b><i class="icon-arrow-left2"></i></b>Volver a Convocatorias
         </router-link>
       </div>
-      <div class="header-elements">
+
+      
+				<a
+					href="#"
+					v-if="editMode" 
+					@click.prevent="nuevo()"
+					title="Volver a Unidades..."
+					class="btn btn-sm btn-main btn-labeled btn-labeled-left legitRipple ml-2">
+					<b><i class="icon-database-add"></i></b>Editar o Crear.
+				</a>
+
+      <!-- <div class="header-elements">
         <router-link
           tag="a"
-          :to="'/convocatoria'"
+          :to="'/convocatoria/'+$route.params.itemId+'/proyecto/crear/'+19466738"
           class="btn btn-main btn-labeled btn-labeled-left legitRipple"
           title="Regresar al listado de convocatorias"
         >
           <b><i class="icon-info"></i></b>Crear Propuesta.
         </router-link>
-
-      </div>
+      </div> -->
     </div>
 
     <div class="row slide" id="panel-roleUsers-data">
@@ -75,6 +85,82 @@
         </div>
       </div>
     </div>
+
+    <DxPopup
+      :visible="popupObs"
+      :drag-enabled="false"
+      :close-on-outside-click="false"
+      :show-title="true"
+      width="400"
+      height="250"
+      title="Nuevo plan de acción"
+    >
+      <div>
+        <div class="col">
+          <p>
+            <i class="icon-info mr-1 color-main-600"></i>
+            <span class="font-weight-semibold"> Escriba el numero de documento del investigador para editar o crear propuesta.</span>
+          </p>
+        <DxValidationGroup ref="basicGroup">
+          <div class="col-md-12">
+            <div class="form-group">
+													
+													<DxNumberBox
+														align="right"
+														format="#,##0."
+														:show-clear-button="true"
+														:value.sync="docbuscar"
+														placeholder="Numero de Documento"
+														class="form-control"
+													>
+														<DxValidator>
+															<DxRequiredRule />
+														</DxValidator>
+													</DxNumberBox>
+												</div>
+          </div>
+        </DxValidationGroup>
+
+        </div>
+      </div>
+
+		<div class="card-footer">
+              <div class="row">
+                <div class="col">
+                  <DxButton @click="popupObs = false" class="nb">
+                    <template #default>
+                      <span
+                        class="
+                          btn btn-main btn-labeled btn-labeled-left btn-sm
+                          legitRipple
+                        "
+                      >
+                        <b><i class="icon-database-remove"></i></b> CANCELAR
+                      </span>
+                    </template>
+                  </DxButton>
+                </div>
+                <div class="col text-right">
+                  
+                    <DxButton @click="crearEditar" class="nb" v-if="editMode">
+                    <template #default>
+                      <span
+                        class="
+                          btn btn-main btn-labeled btn-labeled-right btn-sm
+                          legitRipple
+                        "
+                      >
+                        GUARDAR <b><i class="icon-database-add"></i></b>
+                      </span>
+                    </template>
+                  </DxButton>
+                </div>
+              </div>
+            </div>
+
+
+    </DxPopup>
+
 
     <div class="row" id="panel-roleUsers-grid">
       <div class="col">
@@ -395,7 +481,8 @@ import {
   DxTagBox,
   DxTextArea,
   DxTextBox,
-  DxValidationGroup, 
+  DxValidationGroup,
+  DxPopup 
 } from "devextreme-vue";
 import { DxButton as DxNumberBoxButton } from "devextreme-vue/number-box";
 import {
@@ -408,6 +495,7 @@ import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   name: "inicio",
   components: {
+    DxPopup,
     DxButton,
     DxColumn,
     DxColumnChooser,
@@ -447,6 +535,8 @@ export default {
       import("@/modules/convocatoria/movilidad/form_aceptacion_aspirantes.vue"),
   },
   data: () => ({
+    docbuscar:null,
+    popupObs:false,
     listEstadosEval: null,
     tiposPermiso: null, //[{id:1, name: "Roles de Grupo"},{id:2, name: "Roles de semillero"},{id:3, name: "Grupo y Semillero"}],
     modeEdit: false,
@@ -595,6 +685,11 @@ export default {
 
     ...mapActions("unidad", ["getResearcher"]),
 
+    crearEditar(){
+      // alert(root.docbuscar)
+      root.go(0, '/convocatoria/'+root.$route.params.itemId+'/proyecto/crear/'+root.docbuscar, `Buscando Documento`)
+    },
+
     validarTipo(e) {
       // 202104272101: Disable_Validation_Dynamically
       // https://js.devexpress.com/Documentation/Guide/UI_Components/Common/UI_Widgets/Data_Validation/#Disable_Validation_Dynamically
@@ -619,6 +714,15 @@ export default {
         "Cargando Propuesta <br/> Propuesta"
       );
     },
+
+    nuevo() {
+			let msg="¿Está seguro que desea crear una postulación desde administrador?<br>Nota: Recuerde que este no podrá ser eliminado o editado.";
+			this.$confirm(msg, function(si_no) {
+				if (si_no) {
+					root.popupObs=true;
+				}
+			});
+		},
 
     cancel() {
       root.mode = null;

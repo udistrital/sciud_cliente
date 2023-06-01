@@ -113,21 +113,6 @@ let routes = new router({
 			component: () => import("@/modules/convocatoria/movilidad/postulacion/aplicar.vue"),
 		},
 
-		// //convocatoria movilidad desde grupo de investigacion
-		// 		{
-		// 			path: "/unidad/:unidadId/movilidad",
-		// 			name: "movilidad",
-		// 			meta: { title: "plan-accion", requiresAuth: true },
-		// 			component: () => import("@/modules/unidad/movilidad/index.vue"),
-		// 		},
-
-		// 		{
-		// 			name: "convocatoria-movilidad-plantilla",
-		// 			path: "/unidad/:unidadId/movilidad/:itemId/plantilla",
-
-		// 			meta: { title: "", requiresAuth: true },
-		// 			component: () => import("@/modules/unidad/movilidad/plantilla.vue"),
-		// 		},
 
 		{
 			name: "convocatoria-info",
@@ -224,6 +209,13 @@ let routes = new router({
 			path: "/convocatoria/:itemId/proyecto",
 			meta: { title: "Conv-propuesta", requiresAuth: true },
 			component: () => import("@/modules/convocatoria/proyectos/evaluacion/index"),
+		},
+
+		{
+			name: "convocatoria-proyecto-crear",
+			path: "/convocatoria/:convocatoriaId/proyecto/crear/:documento",
+			meta: { title: "Conv-propuesta-crear", requiresAuth: true },
+			component: () => import("@/modules/convocatoria/proyectos/propuesta/registro_administrador"),
 		},
 
 		{
