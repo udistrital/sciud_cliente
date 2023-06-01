@@ -334,20 +334,21 @@ export default {
 		root = this;
 		root.docLink = root.baseUrl + "view/index.html";
 		console.log("root.tipos", root.tipos);
-
+		root.visibleButton = this.editMode;
 		// console.warn("coton de carga: ", root.visibleButton );
 		// console.warn("coton de carga: ", root.botonUploadVisible );
 		setTimeout(function(){
+			
+			console.warn("...... Boton de carga: ", root.visibleButton);
 			if (typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible != null) {
 				if (Object.entries(root.botonUploadVisible).length != 0) {
 					root.visibleButton = root.botonUploadVisible.visible; //visible es valor booleano (true and false)
 					// root.editMode=true;
 					console.warn("...... Boton de carga: ", root.visibleButton);
 				}
-			} else {
-				root.visibleButton = this.editMode;
-				console.warn("...... Boton de carga: ", root.visibleButton);
-			}
+			} 
+				
+
 
 			// para relacionar un id especidico para la carga de un documento de proyectos
 			if (typeof root.botonUploadVisible.id != "undefined" && root.botonUploadVisible.id != null) {

@@ -20,6 +20,10 @@
 							:tipos="tiposDocumento"
 							end-point="mobility_calls"
 							lock-element="#panel-documentos .card-body"
+							:botonUploadVisible="{
+								visible: true,
+								id: id_seguimiento_documento,
+							}"
 						/>
 					</div>
 				</div>
