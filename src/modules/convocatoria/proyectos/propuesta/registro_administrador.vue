@@ -114,6 +114,7 @@
                           :propuesta="propuesta"
                           :convocatoria="convocatoria"
                           :permisoGuardar="visibleguardar"
+                          :documento_investigador="parseInt($route.params.documento)"
                         ></Informacion>
                       </div>
                     </div>

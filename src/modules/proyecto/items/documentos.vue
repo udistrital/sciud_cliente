@@ -20,10 +20,7 @@
 							:show-on-load="true"
 							:tipos="tiposDocumento"
 							end-point="proposals"
-							:botonUploadVisible="{
-								visible: true,
-								id: id_seguimiento_documento,
-							}"
+							
 						/>
 					</div>
 				</div>
