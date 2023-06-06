@@ -833,7 +833,8 @@ export default {
 			},
 		});
 		await root.getSinData({
-			url: `/calls/${root.convocatoria.id}/call_items`,
+			url: `/calls/${root.proposal.call_id}/call_items`,
+
 			cb: async function(results) {
 				if (results.data.length > 0) {
 					console.log(root.$sep);

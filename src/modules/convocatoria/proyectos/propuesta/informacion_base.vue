@@ -454,16 +454,22 @@ export default {
   // },
   async mounted() {
     // console.clear();
+    let data;
+    if(root.documento_investigador==null || root.documento_investigador==""){
+      data=root.user.local.identification_number;
+    }else{
+      data=root.documento_investigador;
+    }
     root = this;
     root.proposal.proposal_status_id = root.get_sub_type_id("borrador");
     root.dataUserLogin = await root.universalgetOas({
-      doc: root.user.local.identification_number,
+      doc: data,
     });
     await root.getSinData({
       // url: "/research_units/117/group_member/10286",
       url:
         "/researcher_research_units/?identification_number=" +
-        parseInt(root.user.local.identification_number),
+        parseInt(data),
       cb: function (results) {
         let objeto = results;
         root.groupResearchers.gropusmember = objeto;
@@ -515,6 +521,10 @@ export default {
       type: Boolean,
       default: () => false,
     },
+    documento_investigador:{
+      type: Number,
+      default: () =>null
+    }
   },
   data: () => ({
     tiposParticipante: null,
