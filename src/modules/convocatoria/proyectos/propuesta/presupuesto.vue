@@ -748,6 +748,7 @@ export default {
 				if (results.data.length > 0) {
 					console.log(root.$sep);
 					root.rubros_bk = window.vm.$objectSort(results.data, "item_name");
+					root.rubros = window.vm.$objectSort(results.data, "item_name");
 					// root.rubros_bk = root.$clone(root.rubros);
 					console.log("root.rubros =>", root.rubros);
 				}

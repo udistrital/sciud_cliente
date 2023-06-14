@@ -524,7 +524,7 @@ export default {
         // let resoultFind = objeto.find(buscador => buscador.research_group_id === parseInt(root.inforBase.research_group_id));
         // if (resoultFind != undefined) root.groupResearchers.datagroupmenber = resoultFind;
         // root.loaderHide();
-        // console.warn("datos internos integrante ", objeto);
+        console.warn("datos internos integrante ", objeto);
       },
     });
   },
