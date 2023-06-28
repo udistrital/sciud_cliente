@@ -834,7 +834,7 @@ export default {
 		});
 		await root.getSinData({
 			url: `/calls/${root.proposal.call_id}/call_items`,
-
+			
 			cb: async function(results) {
 				if (results.data.length > 0) {
 					console.log(root.$sep);
@@ -1081,7 +1081,7 @@ export default {
 							newFormat: true,
 							mod: root.proposal.id,
 							stringEP: "proposals",
-							rute2: "calls/" + root.$route.params.convocatoriaId + "/proposals",
+							rute2: "calls/" + root.proposal.call_id + "/proposals",
 							objectSend: JSON.parse(`{ "proposal": ` + JSON.stringify(root.proposal) + "}"),
 							cb: function(item) {
 								console.log(root.$sep);

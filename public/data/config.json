@@ -5,14 +5,14 @@
 	"api": {
 		"rest": {
 			"token_name": "siciud_token",
-			"url_dev": "https://autenticacion.portaloas.udistrital.edu.co/apioas/siciud_crud/v1",
+			"url_dev": "http://api2.intranetoas.udistrital.edu.co:8515/api/v1",
 			"url_dev1": "http://pruebasapi2.intranetoas.udistrital.edu.co:8515/api/v1",
 			"url_dev2": "http://api2.intranetoas.udistrital.edu.co:8515/api/v1",
 			"url_prod": "https://autenticacion.portaloas.udistrital.edu.co/apioas/siciud_crud/v1"
 		},
 		"oas": {
 			"token_name": "oas_token",
-			"token_value": null,
+			"token_value": "e9728bc0-692a-3d40-afdd-df6eac1bf1d4",
 			"url": "https://autenticacion.portaloas.udistrital.edu.co/apioas/"
 		}
 	},

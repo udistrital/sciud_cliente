@@ -337,12 +337,13 @@ export default {
 		root.visibleButton = this.editMode;
 		// console.warn("coton de carga: ", root.visibleButton );
 		// console.warn("coton de carga: ", root.botonUploadVisible );
+		
 		setTimeout(function(){
-			
+			root.loaderShow("Cargando Configuración...");
 			console.warn("...... Boton de carga: ", root.visibleButton);
 			if (typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible != null) {
 				if (Object.entries(root.botonUploadVisible).length != 0) {
-					root.visibleButton = root.botonUploadVisible.visible; //visible es valor booleano (true and false)
+					root.visibleButton = Boolean(root.botonUploadVisible.visible); //visible es valor booleano (true and false)
 					// root.editMode=true;
 					console.warn("...... Boton de carga: ", root.visibleButton);
 				}
@@ -358,10 +359,10 @@ export default {
 
 			console.warn("this.editMode: ", this.editMode);
 			console.warn("boton de carga: ", root.visibleButton);
+			
+		},1000);
 
-		},500);
-
-
+		setTimeout(function(){root.loaderHide()},1500)
 
 	},
 	mounted() {

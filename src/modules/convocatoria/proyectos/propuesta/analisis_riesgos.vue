@@ -3,7 +3,12 @@
     <div class="row">
       <div class="col">
         <div class="p-0">
+          <div class="alert alert-warning" role="alert" v-if="listaGrupos.length>0">
+            ¡Usted no ha diligenciado el análisis de actividades y es importante para completar esta pestaña!<br>Realizada esta actividad recargar la pagina para actualizar los cambios.
+            </div>
           <div class="page-header header-elements-md-inline mb-2">
+            
+            
             <div class="page-title p-0 m-0">
               <h1>
                 <i class="icon-factory mr-1 color-main-600"></i>
@@ -11,6 +16,7 @@
                 <span class="item-title">&nbsp;</span>
               </h1>
             </div>
+            
             <div class="header-elements">
               <span class="cmds">
                 <button
@@ -23,6 +29,7 @@
                   <b><i class="icon-database-add"></i></b> {{ titleBtn }}
                 </button>
               </span>
+
               <span class="cmds-back slide">
                 <button
                   type="button"
