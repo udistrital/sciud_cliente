@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20230606 (actualizacion de propuesta y seguimiento proyectos) - ©{{ year }}
+				SICIUD v2.0.20230628 (Parche actualizacion presupuesto y proyectos) - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -142,13 +142,13 @@ export default {
 				title: "Juan Sevastian telles (Integrante)",
 				text: "Estudiante",
 			},
-/*este usuario no funciona en pruebas  1014238754
+
 			{
-				cc: "1111111104",
+				cc: "1022383537",
 				title: "Prueba Usuario",
 				text: "Docente Tutor",
 			},
-
+/*este usuario no funciona en pruebas  1014238754
 			{
 				cc: "98765432",
 				title: "German Arturo Lopez Martinez (Integrante)",

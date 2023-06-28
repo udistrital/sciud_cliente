@@ -255,7 +255,7 @@ export default {
 					root.propuesta = data;
 
 					root.get({
-						url: "calls/" + data.id,
+						url: "calls/" + data.call_id,
 						cb: function(results) {
 							root.convocatoria = results;
 							root.loaderHide();

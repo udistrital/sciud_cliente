@@ -622,7 +622,7 @@ export default {
     async getRolesParticipantes(){
       let arg = {};
       arg.url =
-        'role?filter=[["active","=","true","AND","role_type_id","=","1122"]]';
+        'role?filter=[["active","=","true","AND","role_type_id","=","1123"]]';
       let list = await root.univerdalGet(arg);
       list.forEach(function(objet) {
         objet.name=objet.name.split(" !", 1);

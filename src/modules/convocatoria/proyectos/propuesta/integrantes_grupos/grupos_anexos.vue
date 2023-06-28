@@ -248,7 +248,7 @@
             <!-- <DxColumn data-field="parent_id" caption="Tipo" data-type="string" alignment="center" :visible="true" :allow-grouping="false" width="120" /> -->
 
             <!-- <DxColumn data-field="url" caption="Tipo" data-type="string" alignment="center" :visible="true" :width="100" cell-template="tplWeb" />  -->
-            <DxColumn
+            <!-- <DxColumn
               data-field="active"
               caption="Activo"
               data-type="date"
@@ -256,7 +256,7 @@
               :visible="true"
               :customize-text="yesNo"
               width="70"
-            />
+            /> -->
             <DxColumn
               :width="90"
               alignment="center"
@@ -281,7 +281,8 @@
                     <i class="icon-database-edit"></i>
                   </a>
                 </span>
-                <span v-if="permisoGuardar">
+                
+                <!--<span v-if="permisoGuardar">
                   <a
                     v-if="data.data.active"
                     title="Desactivar Libro..."
@@ -300,7 +301,7 @@
                   >
                     <i class="icon-database-check"></i>
                   </a>
-                </span>
+                </span>-->
               </span>
             </template>
           </DxDataGrid>
