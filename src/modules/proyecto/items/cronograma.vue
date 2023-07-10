@@ -495,8 +495,8 @@ export default {
 			if (typeof this.propuesta.id === "undefined") return null;
 			console.log("root.propuesta", root.propuesta);
 			return DxStore({
-				key: ["id"],
-				endPoint: `/calls/${root.propuesta.id}/schedule_activities`,
+				key: ["id"], 
+				endPoint: `/proposals/${root.propuesta.id}/schedule_activities`,
 				loadBaseEntity: false,
 				onLoading: function() {
 					root.loaderShow("Cargando Actividades");
