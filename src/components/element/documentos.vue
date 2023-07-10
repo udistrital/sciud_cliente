@@ -334,36 +334,29 @@ export default {
 		root = this;
 		root.docLink = root.baseUrl + "view/index.html";
 		console.log("root.tipos", root.tipos);
-		root.visibleButton = this.editMode;
+
 		// console.warn("coton de carga: ", root.visibleButton );
 		// console.warn("coton de carga: ", root.botonUploadVisible );
-		
-		setTimeout(function(){
-			root.loaderShow("Cargando Configuración...");
-			console.warn("...... Boton de carga: ", root.visibleButton);
-			if (typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible != null) {
-				if (Object.entries(root.botonUploadVisible).length != 0) {
-					root.visibleButton = Boolean(root.botonUploadVisible.visible); //visible es valor booleano (true and false)
-					// root.editMode=true;
-					console.warn("...... Boton de carga: ", root.visibleButton);
-				}
-			} 
-				
 
-
-			// para relacionar un id especidico para la carga de un documento de proyectos
-			if (typeof root.botonUploadVisible.id != "undefined" && root.botonUploadVisible.id != null) {
-				root.listVisible = false;
-				root.baseObj.document_type_id = root.botonUploadVisible.id;
+		if (typeof root.botonUploadVisible != "undefined" && root.botonUploadVisible != null) {
+			if (Object.entries(root.botonUploadVisible).length != 0) {
+				root.visibleButton = root.botonUploadVisible.visible; //visible es valor booleano (true and false)
+				// root.editMode=true;
+				console.warn("...... Boton de carga: ", root.visibleButton);
 			}
+		} else {
+			root.visibleButton = this.editMode;
+			console.warn("...... Boton de carga: ", root.visibleButton);
+		}
 
-			console.warn("this.editMode: ", this.editMode);
-			console.warn("boton de carga: ", root.visibleButton);
-			
-		},1000);
+		// para relacionar un id especidico para la carga de un documento de proyectos
+		if (typeof root.botonUploadVisible.id != "undefined" && root.botonUploadVisible.id != null) {
+			root.listVisible = false;
+			root.baseObj.document_type_id = root.botonUploadVisible.id;
+		}
 
-		setTimeout(function(){root.loaderHide()},1500)
-
+		console.warn("this.editMode: ", this.editMode);
+		console.warn("boton de carga: ", root.visibleButton);
 	},
 	mounted() {
 		this.$forceUpdate();

@@ -61,8 +61,8 @@
 																	format="#0' %'"
 																	class="form-control"
 																	:read-only="false"
-																	:min="5"
-																	:step="5"
+																	:min="1"
+																	:step="1"
 																>
 																	<DxValidator>
 																		<DxRequiredRule />
@@ -80,8 +80,8 @@
 																	format="#0' %'"
 																	class="form-control"
 																	:read-only="false"
-																	:min="5"
-																	:step="5"
+																	:min="1"
+																	:step="1"
 																>
 																	<DxValidator>
 																		<DxRequiredRule />
