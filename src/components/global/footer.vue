@@ -9,7 +9,7 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20230706 (corrección de caracteristicas proyectos) - ©{{ year }}
+				SICIUD v2.0.20230714 (proyectos cronograma c1) - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
 					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
 				>
@@ -144,9 +144,9 @@ export default {
 			},
 
 			{
-				cc: "72302730",
+				cc: "8734136",
 				title: "Prueba Usuario",
-				text: "Docente Tutor",
+				text: "Docente Tutor (alexa)",
 			},
 /*este usuario no funciona en pruebas  1014238754
 			{

@@ -385,9 +385,10 @@ export default {
 		root = this;
 		let today = new Date();
 		let year = today.getFullYear(), newyear=year+1;
+		let old = today.getFullYear(), oldyear=old-1;
 		
 		if(year===2021) root.tipoproceso=[{id:newyear, st_name:newyear}];
-		else root.tipoproceso=[{id:newyear, st_name:newyear},{id:year, st_name:year}];
+		else root.tipoproceso=[{id:oldyear, st_name:oldyear},{id:newyear, st_name:newyear},{id:year, st_name:year}];
 
 
 		root.rutaprincipal=String(location.href).slice(0,-this.$route.path.length)+"/unidad";

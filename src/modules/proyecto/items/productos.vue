@@ -164,6 +164,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
 						:show-borders="false"
+						:word-wrap-enabled="true"
 					>
 						<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
 						<DxSorting mode="single" /><!-- single, multiple, none" -->
@@ -223,11 +224,21 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 							:visible="true"
 							:allow-grouping="false"
 						/>
+						<DxColumn
+							data-field="created_at"
+							caption="Fecha Registro"
+							:customize-text="nullText"
+							data-type="date"
+							alignment="center"
+							:visible="true"
+							:allow-grouping="false"
+							:width="80"
+						/>
 						<DxColumn data-field="validated" caption="Validado" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<DxColumn data-field="active" caption="Activo" data-type="date" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
 						<!-- <DxColumn caption="Fecha" :calculate-cell-value="fechaDocumento" width="100" /> -->
-						<DxColumn caption="Fecha" alignment="center" :visible="true" cell-template="tplDoc" width="100" />
-						<template #tplDoc="{ data }"><span :id="'fecha-doc-' + data.data.id"></span></template>
+						<!-- <DxColumn caption="Fecha" alignment="center" :visible="true" cell-template="tplDoc" width="100" />
+						<template #tplDoc="{ data }"><span :id="'fecha-doc-' + data.data.id"></span></template> -->
 						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" v-if="editMode" />
 						<template #tplWeb="{ data }">
 							<a
