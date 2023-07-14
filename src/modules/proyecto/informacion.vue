@@ -69,7 +69,7 @@
 								<template #default>
 									<div class="card">
 										<div class="card-body">
-											<Cronograma :id_proposal="propuesta.id" :propuesta="propuesta" :edit="modoEditar" :permisoGuardar="visibleguardar"></Cronograma>
+											<Cronograma :id_proposal="propuesta.id" :propuesta="propuesta" :edit="modoEditar" :permisoGuardar="!visibleguardar"></Cronograma>
 										</div>
 									</div>
 								</template>
