@@ -115,6 +115,7 @@
 						:hover-state-enabled="true"
 						:row-alternation-enabled="true"
 						:show-borders="false"
+						:word-wrap-enabled="true"
 					>
 						<DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
 						<DxSorting mode="multiple" /><!-- single, multiple, none" -->
@@ -182,7 +183,7 @@
 							alignment="left"
 							:visible="true"
 							:allow-grouping="false"
-							:allow-filtering="false"
+							:allow-filtering="true"
 						/>
 
 						<DxColumn

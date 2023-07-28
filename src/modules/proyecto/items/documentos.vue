@@ -14,14 +14,14 @@
 						</div>
 						<!-- <div class="card-body" v-html="requisitoArchivo()"></div> -->
 						<Documentos
-							:id="id"
-							:parent="this"
-							:main-obj="datax"
-							:show-on-load="true"
-							:tipos="tiposDocumento"
-							end-point="proposals"
-							
-						/>
+              :id="id"
+              :parent="this"
+              :main-obj="datax"
+              :show-on-load="true"
+              :tipos="tiposDocumento"
+              end-point="proposals"
+              :botonUploadVisible="{ visible: permisoGuardar }"
+            />
 					</div>
 				</div>
 			</div>
@@ -138,8 +138,7 @@ export default {
 		console.clear();
 		root = this;
 		console.log(root.$sep);
-		let doc_segui = root.subtypesByType("proyecto_seguimiento");
-		root.documentos(root.propuesta, doc_segui);
+		
 
 		root.id_seguimiento_documento = root.get_sub_type_id("documentos_seguimiento");
 
@@ -172,6 +171,8 @@ export default {
 		this.$forceUpdate();
 		root.stateUpDocument = { visible: root.permisoGuardar };
 		console.warn("stateUpDocument", root.stateUpDocument);
+		let doc_segui = root.subtypesByType("proyecto_seguimiento");
+		root.documentos(root.propuesta, doc_segui);
 	},
 };
 </script>

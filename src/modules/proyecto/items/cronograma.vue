@@ -41,6 +41,14 @@
       </div>
     </div>
 
+    <Documentos
+	:id="id_panel_documentos" 
+      end-point="activity_schedules"
+      :main-obj="base_obj"
+      :parent="this"
+      :tipos="tiposDocumento"
+    />
+
     <div class="row data slide">
       <div class="col">
         <div class="card">
@@ -308,10 +316,16 @@
               :width="80"
               cell-template="tpl_dias"
             />
-
             <template #tpl_dias="{ data }">
               {{ data.data.duration }} días
             </template>
+
+			<DxColumn :visible="true" caption="Estado" alignment="center" :width="100" cell-template="tpl-estado" />
+							<template #tpl-estado="{ data }">
+								<span class="cmds">
+									{{ getEstado(data.data) }}
+								</span>
+							</template>
 
             <DxColumn
               data-field="active"
@@ -331,6 +345,16 @@
             />
             <template #tpl="{ data }">
               <span class="cmds">
+                <a
+                  v-if="permisoGuardar"
+                  title="Observar documentos..."
+                  class="cmd-item color-main-600 mr-2"
+                  @click.prevent="documentos(data)"
+                  href="#"
+                >
+                  <i class="icon-file-pdf"></i>
+                </a>
+
                 <a
                   title="Editar..."
                   class="cmd-item color-main-600"
@@ -484,6 +508,7 @@ export default {
     DxValidator,
     DxValidationGroup,
     DxSwitch,
+    Documentos: () => import("@/components/element/documentos"),
   },
   props: {
     convocatoria: {
@@ -511,15 +536,15 @@ export default {
     titlecolum: "Cronograma de Actividades",
     titleBtn: "Nueva actividad",
     title: "Cronograma de Actividades",
+	id_panel_documentos: "documentosCronograma",
     base_obj_copy: {},
     base_obj: {
-      id: 0,
-      proposal_id: 0,
+      proposal_id: null,
       name: null,
       description: null,
       start_date: new Date(),
       end_date: new Date(),
-      duration: 0,
+      duration: null,
       deliverable: null,
       objective_ids: [],
       active: true,
@@ -558,15 +583,18 @@ export default {
   created() {
     root = this;
     root.base_obj_copy = root.$clone(root.base_obj);
+	root.tiposDocumento = root.subtypesByType("proyecto_seguimiento");
   },
   async mounted() {
     console.clear();
+    root.id_panel_documentos=this.namePanel + "documentos";
     root.base_obj.proposal_id = root.propuesta.id;
     root.base_obj_copy = root.$clone(root.base_obj);
     root.panelData = $("#" + root.namePanel + " .data");
     root.panelGrid = $("#" + root.namePanel + " .grid");
     root.panelCmds = $("#" + root.namePanel + " .cmds");
     root.panelCmdBack = $("#" + root.namePanel + " .cmds-back");
+	root.panelDocs = $("#" + this.namePanel + "-documentos");
     root.loaderMessage = "Cargando Objetivos";
     root.loaderElement = "#" + root.namePanel + " .grid";
     if (root.startDate == null) root.startDate = root.actualDate;
@@ -580,6 +608,7 @@ export default {
     });
   },
   computed: {
+    ...mapGetters("core/tipo", ["subtypesByType"]),
     actualDate() {
       return new Date();
     },
@@ -610,10 +639,36 @@ export default {
       elementoActive: "active",
     }),
 
+	dateDiffInDays: (a, b) => {
+			const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+			// Discard the time and time-zone information.
+			const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+			const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+			return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+		},
+
+    getEstado: (item) => {
+			console.clear();
+			console.log("item =>", item);
+			let sd = new Date();
+			var f = item.end_date.split("-");
+			var ed = new Date(f[0], f[1] - 1, f[2]);
+			var diff = root.dateDiffInDays(sd, ed);
+			if (diff < 0) {
+				return "Vencida";
+			} else if (diff > 0 && diff < 15) {
+				return "Por vencer";
+			} else {
+				return "A tiempo";
+			}
+		},
+		
     setDuration() {},
+
     objectivesChange(e) {
       console.log("e =>", e);
     },
+
     beginUpdate(e) {
       console.log("e =>", e);
     },
@@ -635,9 +690,10 @@ export default {
         console.log("typeof =>", typeof root.base_obj.start_date);
         // root.base_obj.duration = Math.round((root.base_obj.end_date - root.base_obj.start_date) / (1000 * 60 * 60 * 24));
         // root.base_obj.duration = Math.round((root.base_obj.end_date - root.base_obj.start_date) / (1000 * 60 * 60 * 24)) + " días";
-        root.base_obj.duration =
-          root.get_day_diff(root.base_obj.start_date, root.base_obj.end_date) +
-          " días";
+        // root.base_obj.duration =
+        //   root.get_day_diff(root.base_obj.start_date, root.base_obj.end_date) +
+        //   " días";
+		root.base_obj.duration = parseInt(root.get_day_diff(root.base_obj.start_date, root.base_obj.end_date));
       }
     },
 
@@ -659,9 +715,48 @@ export default {
       });
     },
 
+    documentos(data) {
+      // console.clear();
+      console.log("documentos", data.row.data);
+      root.section = "documentos";
+      // 202104111513: Error
+      if (data.row.data.volume !== null)
+        data.row.data.volume = parseInt(data.row.data.volume);
+      let rd = data.row.data;
+      if (rd.volume !== null) rd["volume"] = parseInt(rd.volume);
+      console.log("rd", rd);
+      console.log("data =>", data);
+      root.base_obj = root.$clone(data.data);
+
+      $("#cronograma_propu .item-title").html(
+        `<span class="font-weight-semibold"> &raquo; Documentos</span> &raquo; ${data.row.data.product_type_name}`
+      );
+      root.panelCmds.fadeOut();
+      root.panelGrid.fadeOut(function (params) {
+        root.panelCmdBack.fadeIn();
+        $("#" + root.id_panel_documentos).fadeIn(function(params) {});
+      });
+    },
+
+    retornoVer() {
+      console.log(root.section);
+      root.panelCmdBack.fadeOut();
+      $("#" + root.namePanel + " .item-title").html("");
+      root.base_obj = this.$clone(root.baseEnt);
+      root.section = null;
+    },
+
     retorno() {
       console.log(root.section);
       root.panelCmdBack.fadeOut();
+      if (root.section == "documentos"){
+        console.log("Regresar!");
+        console.log("root.panelDocs", root.panelDocs);
+        $("#" + root.id_panel_documentos).fadeOut(function(params){
+          root.panelCmds.fadeIn();
+          root.panelGrid.fadeIn(function (params) {});
+        });
+      }
       $("#" + root.namePanel + " .item-title").html("");
       root.base_obj = this.$clone(root.baseEnt);
       root.section = null;

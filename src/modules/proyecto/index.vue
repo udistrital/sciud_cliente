@@ -5,7 +5,7 @@
         <h1>
           <i class="icon-paperplane mr-1 color-main-600"></i>
           <span class="font-weight-semibold">Seguimiento de Proyectos</span>
-          &raquo; Aspirantes Aprobados
+          &raquo; Lista de Aprobados
         </h1>
       </div>
       <div class="header-elements">
@@ -80,47 +80,50 @@
               </div>
             </div>
             <div id="grid slide" class="pb-2">
+
+
               <DxDataGrid
-                class="main"
-                width="100%"
-                @initialized="gridInit"
-                @content-ready="onContentReady"
-                :allow-column-reordering="true"
-                no-data-text="No hay artículos registrados"
-                :data-source="dataSource"
-                :remote-operations="true"
-                :hover-state-enabled="true"
-                :row-alternation-enabled="true"
-                :show-borders="false"
-              >
-                <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                <DxSorting mode="multiple" /><!-- single, multiple, none" -->
-                <DxPaging :page-size="50" />
-                <DxFilterRow :visible="true" />
-                <DxLoadPanel :enabled="false" />
-                <DxGroupPanel
-                  :visible="totaCount > 0"
-                  :allow-column-dragging="true"
-                />
-                <DxGrouping :auto-expand-all="true" />
-                <DxSummary>
-                  <DxGroupItem
-                    summary-type="count"
-                    column="group_type_name"
-                    display-format="{0} artículos"
-                  />
-                </DxSummary>
-                <DxPager
-                  :show-info="true"
-                  :show-page-size-selector="true"
-                  :show-navigation-buttons="true"
-                  :allowed-page-sizes="dgPageSizes"
-                  info-text="Página {0} de {1} ({2} artículos)"
-                />
-                <DxSearchPanel
-                  :visible="false"
-                  :highlight-case-sensitive="true"
-                />
+            class="main"
+            width="100%"
+            @initialized="gridInit"
+            @content-ready="onContentReady"
+            :allow-column-reordering="true"
+            no-data-text="No hay elementos registrados"
+            :data-source="dataSource"
+            :remote-operations="true"
+            :hover-state-enabled="true"
+            :row-alternation-enabled="true"
+            :show-borders="false"
+            :word-wrap-enabled="true"
+          >
+            <DxColumnChooser :enabled="false" mode="dragAndDrop" />
+            <!-- <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" /> -->
+            <DxSorting mode="single" /><!-- single, multiple, none" -->
+            <DxPaging :page-size="10" />
+            <DxFilterRow :visible="false" />
+            <DxLoadPanel :enabled="false" />
+            <DxGroupPanel
+              :visible="totaCount > 0"
+              :allow-column-dragging="true"
+            />
+            <DxGrouping :auto-expand-all="true" />
+            <DxSummary>
+              <DxGroupItem
+                summary-type="count"
+                column="group_type_name"
+                display-format="{0} elementos"
+              />
+            </DxSummary>
+            <DxPager
+              :show-info="true"
+              :show-page-size-selector="true"
+              :show-navigation-buttons="true"
+              :allowed-page-sizes="dgPageSizes"
+              info-text="Página {0} de {1} ({2} elementos)"
+            />
+            <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+            
+
                 <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
                 <DxColumn
                   data-field="id"
@@ -165,6 +168,7 @@
                     <template #tplcode="{ data }">
                       {{ data.data.created_at.substr(0,4) }}-{{data.data.call_id}}-{{data.data.id}}
                     </template>
+                <!--
                 <DxColumn
                   data-field="call_code"
                   caption="Cod. Convocatoria"
@@ -173,8 +177,8 @@
                   :visible="true"
                   :allow-grouping="false"
                   :allow-filtering="false"
-                />
-                -->
+                />-->
+                
                 <DxColumn
                   data-field="title"
                   caption="Titulo"
@@ -182,7 +186,7 @@
                   alignment="left"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                 />
 
                 <DxColumn
@@ -202,7 +206,7 @@
                   alignment="left"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                   width="50%"
                 />
 

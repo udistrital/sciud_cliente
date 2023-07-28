@@ -271,11 +271,12 @@
         <div class="col">
           <p>
             <i class="icon-info mr-1 color-main-600"></i>
-            <span class="font-weight-semibold"> Seleccione el año de vigencia para crear el plan de acción y presione el botón guardar.</span>
+            <span class="font-weight-semibold" v-if="isAdmin"> Digite el año de vigencia para crear el plan de acción y presione el botón guardar.</span>
+			<span class="font-weight-semibold" v-else> Seleccione el año de vigencia para crear el plan de acción y presione el botón guardar.</span>
           </p>
-         <DxValidationGroup ref="basicGroup">
+         <DxValidationGroup ref="basicGroup" >
 			<div class="col-md-12">
-                  <div class="form-group">
+                  <div class="form-group" v-if="!isAdmin">
                     <label>Año de vigencia : </label>
                     <DxSelectBox
                       :show-clear-button="true"
@@ -294,6 +295,23 @@
                       </DxValidator>
                     </DxSelectBox>
                   </div>
+
+				<div class="form-group" v-if="isAdmin">
+                    <label>Año de vigencia : </label>
+                    <DxNumberBox
+						align="right"
+						format="0000"
+						:show-clear-button="true"
+						:value.sync="baseObj.execution_validity"
+						placeholder="Año de Vigencia"
+						class="form-control"
+					>
+						<DxValidator>
+							<DxRequiredRule />
+						</DxValidator>
+					</DxNumberBox>
+				</div>
+    
                 </div>
 			</DxValidationGroup>
 
@@ -385,10 +403,10 @@ export default {
 		root = this;
 		let today = new Date();
 		let year = today.getFullYear(), newyear=year+1;
-		let old = today.getFullYear(), oldyear=old-1;
+		// let old = today.getFullYear(), oldyear=old-1;
 		
 		if(year===2021) root.tipoproceso=[{id:newyear, st_name:newyear}];
-		else root.tipoproceso=[{id:oldyear, st_name:oldyear},{id:newyear, st_name:newyear},{id:year, st_name:year}];
+		else root.tipoproceso=[{id:newyear, st_name:newyear},{id:year, st_name:year}];
 
 
 		root.rutaprincipal=String(location.href).slice(0,-this.$route.path.length)+"/unidad";

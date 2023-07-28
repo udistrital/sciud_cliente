@@ -9,10 +9,10 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20230714 (proyectos cronograma c1) - ©{{ year }}
+				SICIUD v2.0.20230731 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
-					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
-				>
+					>Oficina de Investigaciones - CIDC Universidad Distrital</a>
+					<!--Centro de Investigaciones y Desarrollo Científico (CIDC)-->
 			</span>
 			<!-- <span class="text-center"> User: {{ user }}</span> -->
 			<ul class="navbar-nav ml-lg-auto" v-if="oasToken">
@@ -36,6 +36,8 @@
 				</li>
 			</ul>
 		</div>
+
+
 		<DxTooltip ref="ttip">
 			<template>
 				<p id="ttip-msg">Tooltip content</p>
@@ -80,11 +82,12 @@ export default {
 		defaultVisible: false,
 		showDev: true,
 		items: [
+			/*
 			{
 				cc: "79602309", //79602309
 				title: "Diego Alfonso Vargas Villegas (Administrador)",
 				text: "Administrador Diego",
-			},
+			},*/
 			{
 				cc: "1013622639",
 				title: "Carlos (Administrador)",
@@ -96,7 +99,7 @@ export default {
 				title: "edwar",
 				text: "Edwar Pruebas",
 			},
-
+			/*
 			//1023867324 dato cambiado para ingreso y simulacion de gestor
 			{
 				cc: "80843691",
@@ -141,10 +144,10 @@ export default {
 				cc: "1014238754",
 				title: "Juan Sevastian telles (Integrante)",
 				text: "Estudiante",
-			},
+			},*/
 
 			{
-				cc: "8734136",
+				cc: "1014238754",
 				title: "Prueba Usuario",
 				text: "Docente Tutor (alexa)",
 			},
