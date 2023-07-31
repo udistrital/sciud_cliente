@@ -27,7 +27,7 @@
 						Convocatorias
 					</router-link>
 				</li>
-				<li class="nav-item" v-if="es_admin">
+				<li class="nav-item"> <!--v-if="es_admin"-->
 					<router-link to="/proyecto" tag="a" class="navbar-nav-link legitRipple" title="Proyectos...">
 						<i class="icon-golf2"></i>
 						Proyectos

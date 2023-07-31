@@ -13,7 +13,7 @@
 			<div class="header-elements">
 				<a
 					href="#"
-					@click.prevent="go(0, '/proyecto', `Cargando Estructuras`)"
+					@click.prevent="go(0, '/proyecto', `Cargando Proyectos`)"
 					title="Volver a Listado..."
 					class="
             btn btn-sm btn-main btn-labeled btn-labeled-left
@@ -38,7 +38,7 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						<DxTabPanel :show-nav-buttons="true" :animation-enabled="true" :multiple="true" ref="tabPanel">
+						<DxTabPanel :key="id" :show-nav-buttons="true" :animation-enabled="true" :multiple="true" ref="tabPanel">
 							<DxItem title="Presupuesto" :disabled="!modoEditar">
 								<template #default>
 									<div class="card">
@@ -55,7 +55,7 @@
 								</template>
 							</DxItem>
 
-							<DxItem title="Documentos del Proyecto" :disabled="!modoEditar">
+							<DxItem :key="id" title="Documentos del Proyecto" :disabled="!modoEditar">
 								<template #default>
 									<div class="card">
 										<div class="card-body">
@@ -65,7 +65,7 @@
 								</template>
 							</DxItem>
 
-							<DxItem title="Cronograma" :disabled="!modoEditar">
+							<DxItem :key="id" title="Cronograma" :disabled="!modoEditar">
 								<template #default>
 									<div class="card">
 										<div class="card-body">
@@ -76,7 +76,7 @@
 							</DxItem>
 
 							<!-- en desarrollo -->
-							<DxItem title="Productos" :disabled="!modoEditar">
+							<DxItem :key="id" title="Productos" :disabled="!modoEditar">
 								<template #default>
 									<div class="card">
 										<div class="card-body">
@@ -203,12 +203,24 @@ export default {
 		root.estado.subsanar = root.get_sub_type_id("por_subsanar");
 		root.estado.enviar = root.get_sub_type_id("enviar");
 		console.warn("root.estado => ", root.estado);
+		let end = new Date()
+		root.id = end.getTime();
+
 	},
 	async mounted() {
 		root.dataUserLogin = await root.universalgetOas({
 			doc: root.user.local.identification_number,
 		});
 		root.getDataPropostal();
+		
+		setTimeout(function(){
+			root.loaderShow("Cargando proyecto", "#panel-produccion .card-body");
+			let end = new Date()
+			root.id = end.getTime();
+		}, 500);
+		setTimeout(function(){
+			root.loaderHide();
+		}, 3000);
 	},
 	data: () => ({
 		estado: {
@@ -216,6 +228,7 @@ export default {
 			borrador: 0,
 			enviar: 0,
 		},
+		id:null,
 		visibleguardar: false,
 		convocatoria: {},
 		existe_propuesta: false,

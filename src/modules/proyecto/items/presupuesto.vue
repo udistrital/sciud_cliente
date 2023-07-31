@@ -844,6 +844,7 @@ export default {
 				}
 			},
 		});
+		
 	},
 	computed: {
 		...mapGetters("core/tipo", ["subtypesByType"]),

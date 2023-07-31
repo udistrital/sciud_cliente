@@ -57,7 +57,7 @@ export default {
   name: "datosBasicos",
   components: {
     // Header: () => import("./_header"),
-    Documentos: () => import("@/components/element/documentos"),
+    Documentos: () => import("@/components/element/documentospro"),
   },
   data: () => ({
     datax: {
@@ -179,6 +179,7 @@ export default {
     root.tiposDocumento = [];
     root.datax.id = root.propuesta.id;
     console.log("root.tiposDocumento", root.tiposDocumento);
+    
   },
 
   updated: () => {

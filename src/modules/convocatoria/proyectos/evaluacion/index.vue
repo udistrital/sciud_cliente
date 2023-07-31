@@ -91,9 +91,9 @@
       :drag-enabled="false"
       :close-on-outside-click="false"
       :show-title="true"
-      width="400"
-      height="250"
-      title="Nuevo plan de acción"
+      width="450"
+      height="350"
+      title="Edición o Creación de proyecto"
     >
       <div>
         <div class="col">
@@ -101,23 +101,27 @@
             <i class="icon-info mr-1 color-main-600"></i>
             <span class="font-weight-semibold"> Escriba el numero de documento del investigador para editar o crear propuesta.</span>
           </p>
+<br>
+<div class="alert alert-warning" role="alert">
+  <b>Recuerde: </b>Esta funcion simula al investigador registrando o creando la propuesta, es responsabilidad del investigador los datos adjuntos en esta.
+</div>
         <DxValidationGroup ref="basicGroup">
           <div class="col-md-12">
             <div class="form-group">
 													
-													<DxNumberBox
-														align="right"
-														format="#,##0."
-														:show-clear-button="true"
-														:value.sync="docbuscar"
-														placeholder="Numero de Documento"
-														class="form-control"
-													>
-														<DxValidator>
-															<DxRequiredRule />
-														</DxValidator>
-													</DxNumberBox>
-												</div>
+							<DxNumberBox
+								align="right"
+								format="#,##0."
+								:show-clear-button="true"
+								:value.sync="docbuscar"
+								placeholder="Numero de Documento"
+                class="form-control"
+							>
+								<DxValidator>
+									<DxRequiredRule />
+									</DxValidator>
+								</DxNumberBox>
+							</div>
           </div>
         </DxValidationGroup>
 
@@ -150,7 +154,7 @@
                           legitRipple
                         "
                       >
-                        GUARDAR <b><i class="icon-database-add"></i></b>
+                        Buscar<b><i class="icon-search"></i></b>
                       </span>
                     </template>
                   </DxButton>
@@ -188,6 +192,7 @@
                 :remote-operations="true"
                 :hover-state-enabled="true"
                 :row-alternation-enabled="true"
+                :word-wrap-enabled="true"
                 :show-borders="false"
               >
                 <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
@@ -295,7 +300,7 @@
                   alignment="left"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                 />
 
                 <DxColumn
@@ -315,7 +320,7 @@
                   alignment="left"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                 />
 
                 <DxColumn

@@ -28,6 +28,20 @@
           "
           ><b><i class="icon-arrow-left2"></i></b> Convocatorias</a
         >
+        <a
+          href="#"
+          @click.prevent="
+            go(convocatoria.id, '/proyecto', `Cargando Estructuras`)
+          "
+          title="Volver a Convocatorias..."
+          class="
+            btn btn-sm btn-main btn-labeled btn-labeled-left
+            legitRipple
+            ml-2
+          "
+          v-if="!isAdmin"
+          ><b><i class="icon-arrow-left2"></i></b> Proyectos</a>
+        
 
         <!-- <a
 					href="#"
@@ -41,7 +55,7 @@
 					><b><i class="icon-arrow-left2"></i></b> Exportar</a
 				> -->
 
-        <a
+        <!-- <a
           @click.prevent="renderDoc()"
           href="#"
           title="Exportar Propuesta a Word..."
@@ -51,7 +65,7 @@
             legitRipple
           "
           >Exportar propuesta<b><i class="icon-file-word"></i></b
-        ></a>
+        ></a> -->
 
         <a
           @click.prevent="enviarPropuesta()"

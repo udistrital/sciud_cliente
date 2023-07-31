@@ -9,10 +9,10 @@
 
 		<div class="navbar-collapse collapse" id="navbar-footer">
 			<span class="navbar-text">
-				SICIUD v2.0.20230714 (proyectos cronograma c1) - ©{{ year }}
+				SICIUD v2.0.20230731 - ©{{ year }}
 				<a href="http://cidc.udistrital.edu.co" target="_blank" title="Centro de Investigaciones y Desarrollo Científico..."
-					>Centro de Investigaciones y Desarrollo Científico (CIDC)</a
-				>
+					>Oficina de Investigaciones - CIDC Universidad Distrital</a>
+					<!--Centro de Investigaciones y Desarrollo Científico (CIDC)-->
 			</span>
 			<!-- <span class="text-center"> User: {{ user }}</span> -->
 			<ul class="navbar-nav ml-lg-auto" v-if="oasToken">
@@ -36,6 +36,8 @@
 				</li>
 			</ul>
 		</div>
+
+
 		<DxTooltip ref="ttip">
 			<template>
 				<p id="ttip-msg">Tooltip content</p>
@@ -80,15 +82,21 @@ export default {
 		defaultVisible: false,
 		showDev: true,
 		items: [
+			/*
 			{
 				cc: "79602309", //79602309
 				title: "Diego Alfonso Vargas Villegas (Administrador)",
 				text: "Administrador Diego",
-			},
+			},*/
 			{
 				cc: "1013622639",
 				title: "Carlos (Administrador)",
 				text: "Administrador Carlos",
+			},
+			{
+				cc: "1070918619",
+				title: "Alexa Garzon (Administrador)",
+				text: "Administrador Alexa Garzon",
 			},
 
 			{
@@ -97,76 +105,11 @@ export default {
 				text: "Edwar Pruebas",
 			},
 
-			//1023867324 dato cambiado para ingreso y simulacion de gestor
 			{
-				cc: "80843691",
-				title: "Gestor Facultad",
-				text: "Gestor Facultad",
-			},
-
-			// 80843691 dato cambiado para ingreso y simulacion de gestor
-			{
-				cc: "9872650",
-				title: "lector",
-				text: "lector",
-			},
-
-			{
-				cc: "52899935",
-				title: "Prueba Estudiante Siciud (Directora)",
-				text: "Directora",
-			},
-
-			{
-				cc: "52899935",
-				title: "Prueba Estudiante Siciud (Directora)",
-				text: "Directora",
-			},
-
-			{
-				cc: "1026278985",
-				title: "Luis Javier Enrique Romero Puentes (Integrante)",
-				text: "Estudiante Integrante",
-			},
-
-			{
-				cc: "53009619",
-				title: "Luzangela Piñeros Botero (Líder Semillero)",
-				text: "Líder Semillero",
-			},
-
-			
-			
-			{
-				cc: "1014238754",
-				title: "Juan Sevastian telles (Integrante)",
-				text: "Estudiante",
-			},
-
-			{
-				cc: "8734136",
+				cc: "1033790183",
 				title: "Prueba Usuario",
-				text: "Docente Tutor (alexa)",
+				text: "usuaruis rectificar",
 			},
-/*este usuario no funciona en pruebas  1014238754
-			{
-				cc: "98765432",
-				title: "German Arturo Lopez Martinez (Integrante)",
-				text: "Integrante",
-			},
-
-			*/
-
-			//seccion administrativa visible
-			// {
-			// 	cc: "43105248",
-			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-			// 	text: "Int. Semillero",
-			// },
-			/*
-			este usuario no funciona en pruebas
-			
-			*/
 
 			//fin seccion administrativa visible
 		],

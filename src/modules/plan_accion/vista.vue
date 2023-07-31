@@ -107,9 +107,9 @@
                   </tbody>
                 </table>
                 <br />
-                <center>
-                  <h3>>Z</h3>
-                </center>
+                <!-- <center>
+                  <h3>Información</h3>
+                </center> -->
                 <br />
                 <table class="tg" width="100%" v-if="form_a1 != null">
                   <thead>

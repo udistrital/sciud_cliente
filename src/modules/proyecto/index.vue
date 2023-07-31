@@ -5,7 +5,7 @@
         <h1>
           <i class="icon-paperplane mr-1 color-main-600"></i>
           <span class="font-weight-semibold">Seguimiento de Proyectos</span>
-          &raquo; Aspirantes Aprobados
+          &raquo; Lista de Aprobados
         </h1>
       </div>
       <div class="header-elements">
@@ -80,47 +80,50 @@
               </div>
             </div>
             <div id="grid slide" class="pb-2">
+
+
               <DxDataGrid
-                class="main"
-                width="100%"
-                @initialized="gridInit"
-                @content-ready="onContentReady"
-                :allow-column-reordering="true"
-                no-data-text="No hay artículos registrados"
-                :data-source="dataSource"
-                :remote-operations="true"
-                :hover-state-enabled="true"
-                :row-alternation-enabled="true"
-                :show-borders="false"
-              >
-                <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" />
-                <DxSorting mode="multiple" /><!-- single, multiple, none" -->
-                <DxPaging :page-size="50" />
-                <DxFilterRow :visible="true" />
-                <DxLoadPanel :enabled="false" />
-                <DxGroupPanel
-                  :visible="totaCount > 0"
-                  :allow-column-dragging="true"
-                />
-                <DxGrouping :auto-expand-all="true" />
-                <DxSummary>
-                  <DxGroupItem
-                    summary-type="count"
-                    column="group_type_name"
-                    display-format="{0} artículos"
-                  />
-                </DxSummary>
-                <DxPager
-                  :show-info="true"
-                  :show-page-size-selector="true"
-                  :show-navigation-buttons="true"
-                  :allowed-page-sizes="dgPageSizes"
-                  info-text="Página {0} de {1} ({2} artículos)"
-                />
-                <DxSearchPanel
-                  :visible="false"
-                  :highlight-case-sensitive="true"
-                />
+            class="main"
+            width="100%"
+            @initialized="gridInit"
+            @content-ready="onContentReady"
+            :allow-column-reordering="true"
+            no-data-text="No tiene proyectos asignados hasta el momento"
+            :data-source="dataSource"
+            :remote-operations="true"
+            :hover-state-enabled="true"
+            :row-alternation-enabled="true"
+            :show-borders="false"
+            :word-wrap-enabled="true"
+          >
+            <DxColumnChooser :enabled="false" mode="dragAndDrop" />
+            <!-- <DxColumnChooser :enabled="totaCount > 0" mode="dragAndDrop" /> -->
+            <DxSorting mode="single" /><!-- single, multiple, none" -->
+            <DxPaging :page-size="10" />
+            <DxFilterRow :visible="false" />
+            <DxLoadPanel :enabled="false" />
+            <DxGroupPanel
+              :visible="totaCount > 0"
+              :allow-column-dragging="true"
+            />
+            <DxGrouping :auto-expand-all="true" />
+            <DxSummary>
+              <DxGroupItem
+                summary-type="count"
+                column="group_type_name"
+                display-format="{0} elementos"
+              />
+            </DxSummary>
+            <DxPager
+              :show-info="true"
+              :show-page-size-selector="true"
+              :show-navigation-buttons="true"
+              :allowed-page-sizes="dgPageSizes"
+              info-text="Página {0} de {1} ({2} elementos)"
+            />
+            <DxSearchPanel :visible="false" :highlight-case-sensitive="true" />
+            
+
                 <!-- https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxDataGrid/Configuration/columns/ -->
                 <DxColumn
                   data-field="id"
@@ -138,7 +141,7 @@
                 <!-- <DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
                               :visible='true'  :group-index="0"  /> -->
 
-                <!--<DxColumn
+                <DxColumn
                     :allow-filtering="true"
                     data-field="proposal_status_id"
                     caption="Estado Aplicación"
@@ -152,7 +155,7 @@
                       value-expr="id"
                       display-expr="st_name"
                     />
-                  </DxColumn>-->
+                  </DxColumn>
                   <DxColumn
                     :allow-filtering="false"
                     caption="Acta"
@@ -165,6 +168,7 @@
                     <template #tplcode="{ data }">
                       {{ data.data.created_at.substr(0,4) }}-{{data.data.call_id}}-{{data.data.id}}
                     </template>
+                <!--
                 <DxColumn
                   data-field="call_code"
                   caption="Cod. Convocatoria"
@@ -173,8 +177,8 @@
                   :visible="true"
                   :allow-grouping="false"
                   :allow-filtering="false"
-                />
-                -->
+                />-->
+                
                 <DxColumn
                   data-field="title"
                   caption="Titulo"
@@ -182,7 +186,7 @@
                   alignment="left"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                 />
 
                 <DxColumn
@@ -202,7 +206,7 @@
                   alignment="left"
                   :visible="true"
                   :allow-grouping="false"
-                  :allow-filtering="false"
+                  :allow-filtering="true"
                   width="50%"
                 />
 
@@ -278,14 +282,23 @@
 
                 <template #tpl="{ data }">
                   <span class="cmds">
-                    <span v-if="editMode">
+                    <span>  <!--v-if="editMode"-->
                       <a
-                        title="Evaluar..."
+                      v-if="data.data.proposal_status_name=='Aprobada'"
+                        title="proyecto..."
                         class="cmd-item color-main-600"
                         @click.prevent="edit(data.data)"
                         href="#"
                       >
                         <i class="icon-pencil"></i>
+                      </a>
+                      <a
+                        title="ver convocatoria..."
+                        class="cmd-item color-main-600"
+                        @click.prevent="verConvocatoria(data.data)"
+                        href="#"
+                      >
+                        <i class="icon-file-eye"></i>
                       </a>
                       <!-- <a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
                                           <i class="icon-database-remove"></i>
@@ -466,14 +479,15 @@ export default {
     promedioconv: {},
     groupResearchers: [],
     baseObj: {},
-
+    userDocument:null,
     lookupData: ["Not Started", "Need Assistance", "In Progress"],
   }),
 
   created() {
     root = this;
     root.baseEnt = this.$clone(this.baseObj);
-    //   root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
+    root.isAdmin = (this.user_role_id === this.get_role_id('administrador'));
+    root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
     root.estado_proyecto = root.get_sub_type_id("Aprobado");
   },
 
@@ -486,7 +500,8 @@ export default {
     root.baseObj.updated_by = root.user_id;
     // this.getAllRoles();
 
-    let usersys = root.user;
+    root.dataUserLogin = root.user.local.identification_number;
+    root.userDocument = root.dataUserLogin.local.identification_number;
 
     let id = parseInt(root.user.local.identification_number);
 
@@ -513,11 +528,21 @@ export default {
     dataSource: function () {
       // if (typeof this.group.id === "undefined") return null;
       // console.log("root.group", this.group);
+      let data=null;
+      let stringFilter="";
+      let userDocumentp=root.user.local.identification_number;
+      if(root.isAdmin){
+        data=`/proposals`;
+        stringFilter='filter=["proposal_status_id","=",' + root.estado_proyecto + "]"
+      }else{
+        data="proposals/by-internal-member";
+        stringFilter="researcher_identification="+userDocumentp;
+      }
       return DxStore({
         key: ["id"],
-        stringParam:
-          'filter=["proposal_status_id","=",' + root.estado_proyecto + "]",
-        endPoint: `/proposals`,
+        
+        stringParam: stringFilter,
+        endPoint: data,
 
         onLoading: function (loadOptions) {
           root.loaderShow(
@@ -569,12 +594,13 @@ export default {
     },
 
     edit(data) {
+      let URLdomain = `/proyecto/${data.id}`;
+      location.href = URLdomain;
+    },
+    verConvocatoria(data) {
       // root.$info("Cargando propuesta")
-      root.go(
-        data.id,
-        `/proyecto/${data.id}`,
-        "Cargando Propuesta <br/> Propuesta"
-      );
+      // alert(data.id)
+      root.go(data.call_id,`/convocatoria/${data.call_id}/propuesta`, "Cargando Propuesta <br/> Propuesta" );
     },
 
     cancel() {

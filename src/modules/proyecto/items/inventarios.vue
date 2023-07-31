@@ -19,10 +19,10 @@
                 <button
                   type="button"
                   @click.prevent="add()"
-                  v-if="editMode && !actInfor"
+                  
                   title="Nuevo Elemento.."
                   class="btn btn-main btn-labeled btn-labeled-left"
-                >
+                ><!--v-if="editMode && !actInfor"-->
                   <b><i class="icon-database-add"></i></b> {{titleBtn}}
                 </button>
               </span>

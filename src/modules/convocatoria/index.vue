@@ -51,12 +51,16 @@
 								width="100%"
 								@initialized="gridInit"
 								@content-ready="onContentReady"
-								:allow-column-reordering="true"
 								:data-source="dsEstructuras"
+
+								:allow-column-reordering="true"
 								:remote-operations="true"
 								:hover-state-enabled="true"
 								:row-alternation-enabled="true"
-								:word-wrap-enabled="false"
+
+								:word-wrap-enabled="true"
+
+								
 								:show-borders="false"
 							>
 								<!-- type="custom" :custom-load="loadState" :custom-save="saveState" -->
@@ -70,9 +74,12 @@
 								<DxPaging :page-size="dgPageSize" />
 								<DxSorting :mode="es_admin ? 'multiple' : 'single'" /><!-- single, multiple, none" -->
 								<DxStateStoring :enabled="false" type="sessionStorage" />
+
 								<DxSummary>
 									<DxGroupItem summary-type="count" column="group_type_name" display-format="{0} convocatorias" />
 								</DxSummary>
+
+								
 								<DxPager
 									:show-info="true"
 									:show-page-size-selector="true"
