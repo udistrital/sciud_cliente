@@ -88,7 +88,7 @@
             @initialized="gridInit"
             @content-ready="onContentReady"
             :allow-column-reordering="true"
-            no-data-text="No hay elementos registrados"
+            no-data-text="No tiene proyectos asignados hasta el momento"
             :data-source="dataSource"
             :remote-operations="true"
             :hover-state-enabled="true"
@@ -141,7 +141,7 @@
                 <!-- <DxColumn data-field='state_name' caption='Aplicación' data-type='string' alignment='center'
                               :visible='true'  :group-index="0"  /> -->
 
-                <!--<DxColumn
+                <DxColumn
                     :allow-filtering="true"
                     data-field="proposal_status_id"
                     caption="Estado Aplicación"
@@ -155,7 +155,7 @@
                       value-expr="id"
                       display-expr="st_name"
                     />
-                  </DxColumn>-->
+                  </DxColumn>
                   <DxColumn
                     :allow-filtering="false"
                     caption="Acta"
@@ -282,14 +282,23 @@
 
                 <template #tpl="{ data }">
                   <span class="cmds">
-                    <span v-if="editMode">
+                    <span>  <!--v-if="editMode"-->
                       <a
-                        title="Evaluar..."
+                      v-if="data.data.proposal_status_name=='Aprobada'"
+                        title="proyecto..."
                         class="cmd-item color-main-600"
                         @click.prevent="edit(data.data)"
                         href="#"
                       >
                         <i class="icon-pencil"></i>
+                      </a>
+                      <a
+                        title="ver convocatoria..."
+                        class="cmd-item color-main-600"
+                        @click.prevent="verConvocatoria(data.data)"
+                        href="#"
+                      >
+                        <i class="icon-file-eye"></i>
                       </a>
                       <!-- <a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
                                           <i class="icon-database-remove"></i>
@@ -470,14 +479,15 @@ export default {
     promedioconv: {},
     groupResearchers: [],
     baseObj: {},
-
+    userDocument:null,
     lookupData: ["Not Started", "Need Assistance", "In Progress"],
   }),
 
   created() {
     root = this;
     root.baseEnt = this.$clone(this.baseObj);
-    //   root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
+    root.isAdmin = (this.user_role_id === this.get_role_id('administrador'));
+    root.listEstadosEval = root.subtypesByType("estado_criterios_evaluacion");
     root.estado_proyecto = root.get_sub_type_id("Aprobado");
   },
 
@@ -490,7 +500,8 @@ export default {
     root.baseObj.updated_by = root.user_id;
     // this.getAllRoles();
 
-    let usersys = root.user;
+    root.dataUserLogin = root.user.local.identification_number;
+    root.userDocument = root.dataUserLogin.local.identification_number;
 
     let id = parseInt(root.user.local.identification_number);
 
@@ -517,11 +528,21 @@ export default {
     dataSource: function () {
       // if (typeof this.group.id === "undefined") return null;
       // console.log("root.group", this.group);
+      let data=null;
+      let stringFilter="";
+      let userDocumentp=root.user.local.identification_number;
+      if(root.isAdmin){
+        data=`/proposals`;
+        stringFilter='filter=["proposal_status_id","=",' + root.estado_proyecto + "]"
+      }else{
+        data="proposals/by-internal-member";
+        stringFilter="researcher_identification="+userDocumentp;
+      }
       return DxStore({
         key: ["id"],
-        stringParam:
-          'filter=["proposal_status_id","=",' + root.estado_proyecto + "]",
-        endPoint: `/proposals`,
+        
+        stringParam: stringFilter,
+        endPoint: data,
 
         onLoading: function (loadOptions) {
           root.loaderShow(
@@ -573,12 +594,13 @@ export default {
     },
 
     edit(data) {
+      let URLdomain = `/proyecto/${data.id}`;
+      location.href = URLdomain;
+    },
+    verConvocatoria(data) {
       // root.$info("Cargando propuesta")
-      root.go(
-        data.id,
-        `/proyecto/${data.id}`,
-        "Cargando Propuesta <br/> Propuesta"
-      );
+      // alert(data.id)
+      root.go(data.call_id,`/convocatoria/${data.call_id}/propuesta`, "Cargando Propuesta <br/> Propuesta" );
     },
 
     cancel() {

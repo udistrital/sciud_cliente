@@ -526,7 +526,9 @@ export default {
               );
           },
         });
+
     }, 500);
+    
   },
   computed: {
     ...mapGetters("unidad", ["researchers"]),

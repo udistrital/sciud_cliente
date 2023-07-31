@@ -36,7 +36,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 			</div>
 		</div>
 
-		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" ref="propuesta" />
+		<Documentos :id="id_panel_documentos" :end-point="endPointRute" :main-obj="baseObj" :parent="this" :tipos="tiposDocumento" ref="propuesta" :botonUploadVisible="{ visible: true }" />
 		<Participantes :id="id_panel_participantes" :end-point="endPointRute" :product="baseObj" :group="group" ref="participantes" :parent="this" />
 
 		<DxValidationGroup ref="basicGroup">
@@ -239,7 +239,7 @@ namePanel=nombredepaneles root.endPointRute = regulation enlace regulation=endpo
 						<!-- <DxColumn caption="Fecha" :calculate-cell-value="fechaDocumento" width="100" /> -->
 						<!-- <DxColumn caption="Fecha" alignment="center" :visible="true" cell-template="tplDoc" width="100" />
 						<template #tplDoc="{ data }"><span :id="'fecha-doc-' + data.data.id"></span></template> -->
-						<DxColumn :width="130" alignment="center" cell-template="tpl" caption="" v-if="editMode" />
+						<DxColumn :width="130" alignment="center" cell-template="tpl" caption=""  />
 						<template #tplWeb="{ data }">
 							<a
 								v-if="data.data.url != '' && data.data.url != null"
@@ -421,6 +421,7 @@ export default {
 		},
 	},
 	data: () => ({
+		editMode:null,
 		namePanel: "seguimiento_productos_",
 		codEP: null,
 		popupObs: false,
@@ -471,7 +472,8 @@ export default {
 		// console.clear();
 		root = this;
 		root.baseEnt = this.$clone(this.baseObj);
-
+		root.isAdmin = (this.user_role_id === this.get_role_id('administrador'));
+		root.editMode=root.isAdmin;
 		root.tipoproceso = root.subtypesByType("planaccion_productos_resultado_tipos");
 		root.tiposDocumento = root.subtypesByType("proyecto_seguimiento");
 	},

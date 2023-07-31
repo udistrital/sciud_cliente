@@ -93,83 +93,23 @@ export default {
 				title: "Carlos (Administrador)",
 				text: "Administrador Carlos",
 			},
+			{
+				cc: "1070918619",
+				title: "Alexa Garzon (Administrador)",
+				text: "Administrador Alexa Garzon",
+			},
 
 			{
 				cc: "1016082469",
 				title: "edwar",
 				text: "Edwar Pruebas",
 			},
-			/*
-			//1023867324 dato cambiado para ingreso y simulacion de gestor
-			{
-				cc: "80843691",
-				title: "Gestor Facultad",
-				text: "Gestor Facultad",
-			},
-
-			// 80843691 dato cambiado para ingreso y simulacion de gestor
-			{
-				cc: "9872650",
-				title: "lector",
-				text: "lector",
-			},
 
 			{
-				cc: "52899935",
-				title: "Prueba Estudiante Siciud (Directora)",
-				text: "Directora",
-			},
-
-			{
-				cc: "52899935",
-				title: "Prueba Estudiante Siciud (Directora)",
-				text: "Directora",
-			},
-
-			{
-				cc: "1026278985",
-				title: "Luis Javier Enrique Romero Puentes (Integrante)",
-				text: "Estudiante Integrante",
-			},
-
-			{
-				cc: "53009619",
-				title: "Luzangela Piñeros Botero (Líder Semillero)",
-				text: "Líder Semillero",
-			},
-
-			
-			
-			{
-				cc: "1014238754",
-				title: "Juan Sevastian telles (Integrante)",
-				text: "Estudiante",
-			},*/
-
-			{
-				cc: "1014238754",
+				cc: "1033790183",
 				title: "Prueba Usuario",
-				text: "Docente Tutor (alexa)",
+				text: "usuaruis rectificar",
 			},
-/*este usuario no funciona en pruebas  1014238754
-			{
-				cc: "98765432",
-				title: "German Arturo Lopez Martinez (Integrante)",
-				text: "Integrante",
-			},
-
-			*/
-
-			//seccion administrativa visible
-			// {
-			// 	cc: "43105248",
-			// 	title: "Edis Aleida Villa Martinez (Integrante Semillero)",
-			// 	text: "Int. Semillero",
-			// },
-			/*
-			este usuario no funciona en pruebas
-			
-			*/
 
 			//fin seccion administrativa visible
 		],

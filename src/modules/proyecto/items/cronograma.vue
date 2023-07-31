@@ -42,11 +42,13 @@
     </div>
 
     <Documentos
-	:id="id_panel_documentos" 
+      :id="id_panel_documentos"
+      :key="id"
       end-point="activity_schedules"
       :main-obj="base_obj"
       :parent="this"
       :tipos="tiposDocumento"
+      :botonUploadVisible="{ visible: true }"
     />
 
     <div class="row data slide">
@@ -320,12 +322,18 @@
               {{ data.data.duration }} días
             </template>
 
-			<DxColumn :visible="true" caption="Estado" alignment="center" :width="100" cell-template="tpl-estado" />
-							<template #tpl-estado="{ data }">
-								<span class="cmds">
-									{{ getEstado(data.data) }}
-								</span>
-							</template>
+            <DxColumn
+              :visible="true"
+              caption="Estado"
+              alignment="center"
+              :width="100"
+              cell-template="tpl-estado"
+            />
+            <template #tpl-estado="{ data }">
+              <span class="cmds">
+                {{ getEstado(data.data) }}
+              </span>
+            </template>
 
             <DxColumn
               data-field="active"
@@ -354,33 +362,34 @@
                 >
                   <i class="icon-file-pdf"></i>
                 </a>
-
-                <a
-                  title="Editar..."
-                  class="cmd-item color-main-600"
-                  @click.prevent="edit(data.data)"
-                  href="#"
-                >
-                  <i class="icon-database-edit"></i>
-                </a>
-                <a
-                  v-if="data.data.active"
-                  title="Desactivar..."
-                  class="cmd-item color-main-600 mr-2"
-                  @click.prevent="active(data, false)"
-                  href="#"
-                >
-                  <i class="icon-database-remove"></i>
-                </a>
-                <a
-                  v-else
-                  title="Activar..."
-                  class="cmd-item color-main-600 mr-2"
-                  @click.prevent="active(data, true)"
-                  href="#"
-                >
-                  <i class="icon-database-check"></i>
-                </a>
+                <span v-if="isAdmin">
+                  <a
+                    title="Editar..."
+                    class="cmd-item color-main-600"
+                    @click.prevent="edit(data.data)"
+                    href="#"
+                  >
+                    <i class="icon-database-edit"></i>
+                  </a>
+                  <a
+                    v-if="data.data.active"
+                    title="Desactivar..."
+                    class="cmd-item color-main-600 mr-2"
+                    @click.prevent="active(data, false)"
+                    href="#"
+                  >
+                    <i class="icon-database-remove"></i>
+                  </a>
+                  <a
+                    v-else
+                    title="Activar..."
+                    class="cmd-item color-main-600 mr-2"
+                    @click.prevent="active(data, true)"
+                    href="#"
+                  >
+                    <i class="icon-database-check"></i>
+                  </a>
+                </span>
               </span>
             </template>
           </DxDataGrid>
@@ -536,7 +545,7 @@ export default {
     titlecolum: "Cronograma de Actividades",
     titleBtn: "Nueva actividad",
     title: "Cronograma de Actividades",
-	id_panel_documentos: "documentosCronograma",
+    id_panel_documentos: "documentosCronograma",
     base_obj_copy: {},
     base_obj: {
       proposal_id: null,
@@ -579,22 +588,26 @@ export default {
     participationid: null,
     urlPattern: /^(http|https):\/\/[^ "]+$/,
     phonePattern: /^\+\s*1\s*\(\s*[02-9]\d{2}\)\s*\d{3}\s*-\s*\d{4}$/,
+    id: null,
   }),
   created() {
     root = this;
     root.base_obj_copy = root.$clone(root.base_obj);
-	root.tiposDocumento = root.subtypesByType("proyecto_seguimiento");
+    root.tiposDocumento = root.subtypesByType("proyecto_seguimiento");
+
+    let end = new Date();
+    root.id = end.getTime();
   },
   async mounted() {
     console.clear();
-    root.id_panel_documentos=this.namePanel + "documentos";
+    root.id_panel_documentos = this.namePanel + "documentos";
     root.base_obj.proposal_id = root.propuesta.id;
     root.base_obj_copy = root.$clone(root.base_obj);
     root.panelData = $("#" + root.namePanel + " .data");
     root.panelGrid = $("#" + root.namePanel + " .grid");
     root.panelCmds = $("#" + root.namePanel + " .cmds");
     root.panelCmdBack = $("#" + root.namePanel + " .cmds-back");
-	root.panelDocs = $("#" + this.namePanel + "-documentos");
+    root.panelDocs = $("#" + this.namePanel + "-documentos");
     root.loaderMessage = "Cargando Objetivos";
     root.loaderElement = "#" + root.namePanel + " .grid";
     if (root.startDate == null) root.startDate = root.actualDate;
@@ -639,30 +652,30 @@ export default {
       elementoActive: "active",
     }),
 
-	dateDiffInDays: (a, b) => {
-			const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-			// Discard the time and time-zone information.
-			const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-			const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
-			return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-		},
+    dateDiffInDays: (a, b) => {
+      const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+      // Discard the time and time-zone information.
+      const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+      const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+      return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+    },
 
     getEstado: (item) => {
-			console.clear();
-			console.log("item =>", item);
-			let sd = new Date();
-			var f = item.end_date.split("-");
-			var ed = new Date(f[0], f[1] - 1, f[2]);
-			var diff = root.dateDiffInDays(sd, ed);
-			if (diff < 0) {
-				return "Vencida";
-			} else if (diff > 0 && diff < 15) {
-				return "Por vencer";
-			} else {
-				return "A tiempo";
-			}
-		},
-		
+      console.clear();
+      console.log("item =>", item);
+      let sd = new Date();
+      var f = item.end_date.split("-");
+      var ed = new Date(f[0], f[1] - 1, f[2]);
+      var diff = root.dateDiffInDays(sd, ed);
+      if (diff < 0) {
+        return "Vencida";
+      } else if (diff > 0 && diff < 15) {
+        return "Por vencer";
+      } else {
+        return "A tiempo";
+      }
+    },
+
     setDuration() {},
 
     objectivesChange(e) {
@@ -693,7 +706,9 @@ export default {
         // root.base_obj.duration =
         //   root.get_day_diff(root.base_obj.start_date, root.base_obj.end_date) +
         //   " días";
-		root.base_obj.duration = parseInt(root.get_day_diff(root.base_obj.start_date, root.base_obj.end_date));
+        root.base_obj.duration = parseInt(
+          root.get_day_diff(root.base_obj.start_date, root.base_obj.end_date)
+        );
       }
     },
 
@@ -734,7 +749,7 @@ export default {
       root.panelCmds.fadeOut();
       root.panelGrid.fadeOut(function (params) {
         root.panelCmdBack.fadeIn();
-        $("#" + root.id_panel_documentos).fadeIn(function(params) {});
+        $("#" + root.id_panel_documentos).fadeIn(function (params) {});
       });
     },
 
@@ -749,10 +764,10 @@ export default {
     retorno() {
       console.log(root.section);
       root.panelCmdBack.fadeOut();
-      if (root.section == "documentos"){
+      if (root.section == "documentos") {
         console.log("Regresar!");
         console.log("root.panelDocs", root.panelDocs);
-        $("#" + root.id_panel_documentos).fadeOut(function(params){
+        $("#" + root.id_panel_documentos).fadeOut(function (params) {
           root.panelCmds.fadeIn();
           root.panelGrid.fadeIn(function (params) {});
         });
