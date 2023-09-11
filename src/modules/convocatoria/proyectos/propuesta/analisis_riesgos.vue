@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <div class="p-0">
-          <div class="alert alert-warning" role="alert" v-if="listaGrupos.length>0">
+          <div class="alert alert-warning" role="alert" v-if="listaGrupos.length<=0">
             ¡Usted no ha diligenciado el análisis de actividades y es importante para completar esta pestaña!<br>Realizada esta actividad recargar la pagina para actualizar los cambios.
             </div>
           <div class="page-header header-elements-md-inline mb-2">

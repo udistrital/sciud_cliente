@@ -338,9 +338,8 @@
                   :width="80"
                   alignment="center"
                   cell-template="tpl"
-                  caption=""
+                  caption="Examinar"
                   name="cmds"
-                  :fixed="true"
                   fixed-position="right"
                 />
 
@@ -363,36 +362,6 @@
                   >
                 </template>
 
-                <template #tplEmail="{ data }">
-                  <span
-                    v-if="data.value && data.value.toString().trim() !== 'NULL'"
-                  >
-                    <a
-                      class="color-main-600"
-                      :href="'mailto:' + data.value"
-                      :title="'Escribir a \'' + data.value.trim() + '\'...'"
-                      ><i class="icon-envelop3"></i>
-                    </a>
-                    <a
-                      href=""
-                      class="ml-2 color-main-600"
-                      v-if="
-                        data.value && data.value.toString().trim() !== 'NULL'
-                      "
-                      @click.prevent="
-                        $toClipboard(data.value.toString().trim())
-                      "
-                      :title="
-                        'Copiar \'' +
-                        data.value.toString().trim() +
-                        '\'\r\nal portapapeles'
-                      "
-                      ><i class="icon-copy2"></i>
-                    </a>
-                  </span>
-                  <span v-else> -- </span>
-                </template>
-
                 <template #tpl="{ data }">
                   <span class="cmds">
                     <span v-if="editMode">
@@ -402,7 +371,7 @@
                         @click.prevent="edit(data.data)"
                         href="#"
                       >
-                        <i class="icon-pencil"></i>
+                        <i class="icon-file-check"></i>
                       </a>
                       <!-- <a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
 										<i class="icon-database-remove"></i>

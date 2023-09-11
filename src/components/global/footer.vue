@@ -106,9 +106,9 @@ export default {
 			},
 
 			{
-				cc: "1033790183",
-				title: "Prueba Usuario",
-				text: "usuaruis rectificar",
+				cc: "51606049",
+				title: "Prueba Gestor Camilo",
+				text: "usuaruis rectificar Camilo",
 			},
 
 			//fin seccion administrativa visible
