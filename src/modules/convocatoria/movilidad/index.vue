@@ -4,7 +4,7 @@
 			<div class="page-title d-flex">
 				<h1>
 					<i class="icon-paperplane mr-1 color-main-600"></i>
-					<span class="font-weight-semibold">Convocatorias</span> &raquo; Movilidad
+					<span class="font-weight-semibold">Convocatorias</span> &raquo; Aspirantes Movilidad
 				</h1>
 			</div>
 			<div class="header-elements">
@@ -268,63 +268,19 @@
 							:allow-grouping="false"
 							:allow-filtering="false"
 						/>
-
-					<!-- 						
-						<DxColumn
-							data-field="role_type_name"
-							caption="Aplicacion del Permiso"
-							data-type="string"
-							alignment="left"
-							:visible="true"
-							:allow-grouping="false"
-							:allow-filtering="false"
-						/>
-
-
-						<DxColumn
-							data-type="string"
-							:allow-filtering="false"
-							:allow-sorting="true"
-							:customize-text="nullText"
-							alignment="left"
-							caption="Permiso Otorgado"
-							data-field="data_user_rol"
-							cell-template="tpl-data_user_rol"
-						/>
-
-						<template #tpl-data_user_rol="{ data }">
-							<! -- programando {{data.data.id}} mas {{data.data.role_type_id}} -- >
-							{{get_group_role_name(data.data.parent_id)!== null? get_group_role_name(data.data.parent_id).charAt(0).toUpperCase()+get_group_role_name(data.data.parent_id).slice(1) : "--Sin Aplicar--"}}
-						</template>
-
-						<DxColumn
-							data-field="created_at"
-							caption="Fecha Creacion"
-							data-type="date"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="true"
-							
-						/>
-
 						
-						<DxColumn
-							data-field="updated_at"
-							caption="Fecha Actulización"
-							data-type="date"
-							alignment="center"
-							:visible="true"
-							:allow-grouping="true"
-							
-						/> -->
-
-						
-
-						<!-- <DxColumn data-field="observation" caption="Observaciones" data-type="string" alignment="center" :visible="true" cell-template="tplObs" /> -->
 						<DxColumn data-field="active"  :allow-filtering="false" caption="Activo" data-type="string" alignment="center" :visible="true" :customize-text="yesNo" width="70" />
-						
+						<DxColumn
+									:width="100"
+									:allow-filtering="false"
+									alignment="center"
+									cell-template="tpl"
+									caption="Examinar"
+									name="cmds"
+								/>
+<!--
 						<DxColumn :width="80" alignment="center" cell-template="tpl" caption="" name="cmds" :fixed="true" fixed-position="right" />
-
+-->
 						<template #tplUrl="{ data }">
 							<a v-if="data.data.web_page != ''" :title="data.data.url" class="cmd-item color-main-600 mr-2" :href="data.data.web_page" Target="_blank">
 								<i class="icon-link"></i> Visitar
@@ -332,52 +288,14 @@
 							<a v-else title="No dispone de Url" class="cmd-item color-main-600 mr-2" href="#">-</a>
 						</template>
 
-						<template #tplEmail="{ data }">
-							<span v-if="data.value && data.value.toString().trim() !== 'NULL'">
-								<a class="color-main-600" :href="'mailto:' + data.value" :title="'Escribir a \'' + data.value.trim() + '\'...'"
-									><i class="icon-envelop3"></i>
-								</a>
-								<a
-									href=""
-									class="ml-2 color-main-600"
-									v-if="data.value && data.value.toString().trim() !== 'NULL'"
-									@click.prevent="$toClipboard(data.value.toString().trim())"
-									:title="'Copiar \'' + data.value.toString().trim() + '\'\r\nal portapapeles'"
-									><i class="icon-copy2"></i>
-								</a>
-							</span>
-							<span v-else> -- </span>
-						</template>
 
 						<template #tpl="{ data }">
 							<span class="cmds">
-								<!-- <a
-									title="Dependencias..."
-									href="#"
-									@click.prevent="go(data.value, `/admin/roleUsers/${data.data.id}/dependencias`, 'Cargando Datos')"
-									class="cmd-item color-main-600"
-								>
-									<i class="icon-tree5"></i>
-								</a>
-								<a
-									title="Representacion y Contactos..."
-									href="#"
-									@click.prevent="go(data.value, `/admin/roleUsers/${data.data.id}`, 'Cargando Datos')"
-									class="cmd-item color-main-600"
-								>
-									<i class="icon-vcard"></i>
-								</a> -->
-
+						
 								<span v-if="editMode">
-									<a title="Evaluar..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
-										<i class="icon-pencil"></i>
+									<a title="Examinar..." class="cmd-item color-main-600" @click.prevent="edit(data.data)" href="#">
+										<i class="icon-file-eye"></i>
 									</a>
-									<!-- <a v-if="data.data.active" title="Desactivar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, false)" href="#">
-										<i class="icon-database-remove"></i>
-									</a>
-									<a v-else title="Activar participante..." class="cmd-item color-main-600 mr-2" @click.prevent="active(data, true)" href="#">
-										<i class="icon-database-check"></i>
-									</a> -->
 								</span>
 							</span>
 						</template>

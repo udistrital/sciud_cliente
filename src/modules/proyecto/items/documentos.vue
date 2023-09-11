@@ -34,6 +34,9 @@
             <hr class="sep" />
             <span class="font-weight-semibold">tiposDocumento:</span>
             {{ tiposDocumento }}
+
+            <span class="font-weight-semibold">convocatoria:</span>
+            {{ convocatoria }}
             <!-- <span class="font-weight-semibold">group:</span> {{ JSON.stringify(group, null, 3) }} -->
           </div>
         </div>
@@ -41,8 +44,8 @@
     </div>
   </div>
 </template>
-  
-  <script>
+
+<script>
 // https://vuejs.org/v2/guide/single-file-components.html#What-About-Separation-of-Concerns
 let $ = window.jQuery,
   root = null;
@@ -65,6 +68,7 @@ export default {
       id: null,
       name: "Documentos Requeridos",
     },
+    documentosTiposSubtipos:null,
     tiposDocumento: [],
     group: {},
     id: "panel-documentos-propuesta",
@@ -114,6 +118,7 @@ export default {
     },
 
     listDoc2subtipos(parametro) {
+      
       if (parametro.length >= 1) {
         // alert("leyo")
         parametro.map(function (lista) {
@@ -123,7 +128,8 @@ export default {
           lista.id = lista.document_id;
           return lista;
         });
-        root.tiposDocumento = parametro;
+        root.tiposDocumento = parametro.concat(root.documentosTiposSubtipos);
+
       }
     },
 
@@ -131,11 +137,11 @@ export default {
       // console.clear();
       console.warn("documentos", data);
       root.loaderShow("Cargando lista Documentos");
-      console.warn("id list docs", data.id);
-
+      console.warn("id list docs", data.call_id);
+      
       await root.getAll({
         // url: "/research_units/117/group_member/10286",
-        url: "/calls/" + parseInt(data.id) + "/call_documents",
+        url: "/calls/" + parseInt(data.call_id) + "/call_documents",
         cb: function (results) {
           let listDocuments = results;
           console.warn("propuesta docs list ", listDocuments);
@@ -178,8 +184,8 @@ export default {
     console.log(root.$sep);
     root.tiposDocumento = [];
     root.datax.id = root.propuesta.id;
-    console.log("root.tiposDocumento", root.tiposDocumento);
-    root.tiposDocumento = root.subtypesByType("proyecto_seguimiento");
+    root.documentosTiposSubtipos = root.subtypesByType("unidad_rol_participante");
+    console.log("root.tiposDocumento", root.tiposDocumento);  
   },
 
   updated: () => {
@@ -197,4 +203,3 @@ export default {
   },
 };
 </script>
-  

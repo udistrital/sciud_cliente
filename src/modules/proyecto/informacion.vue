@@ -59,7 +59,8 @@
 								<template #default>
 									<div class="card">
 										<div class="card-body">
-											<Documentos :id_proposal="propuesta.id" :propuesta="propuesta" :permisoGuardar="!visibleguardar"></Documentos>
+											<Documentos :id_proposal="propuesta.id" :propuesta="propuesta" :convocatoria="propuesta" :permisoGuardar="!visibleguardar"></Documentos>
+
 										</div>
 									</div>
 								</template>
